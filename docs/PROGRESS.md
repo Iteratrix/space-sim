@@ -2,6 +2,35 @@
 
 Written for whoever picks this up next (human or agent). Newest at the top.
 
+## Day 2, afternoon: the loop closes
+
+- **Agents play the page.** `web/test/play.py` drives the real browser (Playwright,
+  DOM-driven, one action per call, one profile per agent, screenshots they read).
+  Two GUI playtests (`docs/design/playtest-gui-1.md`, `-2.md`) found the tutorial
+  narrating dice it never moved, controls lagging their scenes, robots unassignable
+  from the page, dice vanishing on completion, unpersisted assignments, bars showing
+  stocks not flows. All the engine/page items are fixed; the content went back to a
+  writer.
+- **Writers' guide** (`docs/design/writers-guide.md`): the bible every content agent
+  reads first — the three registers with the vocabulary ladder, how each seat speaks,
+  the anatomy of a scene with annotated examples, the tutorial's rules, projects, a
+  twelve-point checklist. Content agents run on the Opus line.
+- **Tutorial v2**: twenty scenes; the ring is empty at MM 1 and gains a seat as each
+  question arises (`seat:*` flags gate seats during the tutorial); allocation is asked,
+  not narrated; a missed-window scene; `tutorial_open` lets texture in after RSW-1;
+  three teaching texture scenes (pressures, roster order, throw position); the
+  handoff is the moment the language turns (the engine holds `first_convoy` until
+  `tutorial_done`).
+- Engine additions for writers: `top = true` exact casting, the `assign` effect,
+  `roster_*` flags, sentence-case lexicon drift, one scene per tutorial count,
+  `on_complete_add` on projects, ledger deltas, rotation strips logged.
+- **Research 14** (`docs/research/14-closed-loop-gamedev.md`): nobody has published
+  this loop; Play2Code (source-blind GUI player + coder, 30%→72%) and MeepleLM
+  (persona critics) are the nearest; recommended next: a jury of disjoint model
+  families as critic, world-state variants in the sweep, five fixed playtester
+  personas with an MDA diary, and "feel" assertions on the diary (no more than N
+  quiet counts) as a CI gate.
+
 ## Day 2 (2026-09-07): projects and the hand, the register, the tutorial, the web front
 
 - **Projects and dice** (`crates/sim/src/project.rs`, `data/projects/`): content-defined
