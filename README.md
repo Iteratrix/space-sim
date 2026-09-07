@@ -15,6 +15,8 @@ confederation of the belt when the inner system comes back.
 | `NOTES.md` | running design decisions, in the order they were made |
 | `docs/design/canon.md` | the settled design reference the code and content point at |
 | `docs/design/storylet-format.md` | the content format |
+| `docs/design/agent-protocol.md` | how to drive a game over JSON, and the batch tools |
+| `docs/PROGRESS.md` | state of the build and what comes next |
 | `docs/design/voidborn-*.md` | the two creative pitches |
 | `docs/research/` | thirteen research reports (physics, economics, industry, history, games) |
 | `crates/orbit` | Kepler propagation, Lambert transfers, the body catalogue; validated against JPL Horizons |
