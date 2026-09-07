@@ -93,3 +93,18 @@
   went pantropy: your mirror. Its condition is seeded by the trail-off cause.
   Mars-Ceres windows every ~3.2 years: another clock. In act 3, two sedentary
   states to play against each other (Barfield).
+
+## Corrections from magnetics and machine-minds reports (2026-09-06)
+
+- "Sailors are adults only" is a dose policy the ring sets, not a wall.
+  Coil + water gives a 40-year sailor life at ~15-20% excess cancer mortality;
+  children aboard pay ~20%. The shield coil is an unreplaceable sponsor heirloom.
+- Two-currency travel: propellant buys hurry and plane changes; magsail time
+  buys patience (0.2-0.6 km/s per year, in-plane only, no propellant).
+- Boron (for MgB2 coils) and helium (for every cryocooler) are the chokepoint
+  imports; an act-1 boron stockpile is a seed.
+- Machine minds: hardware attrition (5-30%/yr, half-life 2-12 years) is the
+  killer, not dose. Reflex layer (rad-hard, belt-repairable) vs mind layer
+  (mortal COTS). The belt can make small, slow analog minds at tier 4: the old
+  imported minds are dying gods, the belt-born are children. Licence is an
+  Outer Space Treaty obligation (Art VI supervision, Art VIII title).
