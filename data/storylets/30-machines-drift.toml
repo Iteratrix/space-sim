@@ -1,0 +1,89 @@
+id = "minds_drift"
+title = "The Ship Has Changed"
+act = 1
+once = true
+priority = 55
+tags = ["machines"]
+text = """
+{operator} has been keeping a private list: things {mind} says now that it did
+not say a year ago. It hedges the docking approach more. It asks for the farm's
+power schedule before it is given. It used a word from the hub crews for the
+main bearing. None of it is a fault. Continual learning on an analog substrate
+was always going to do this; the sponsor's engineers called it drift and
+scrubbed it every reset. {hulls} put it plainer at the last ring: the ship has
+changed, and nobody decided it should.
+"""
+
+[[when]]
+q = "minds.embodiment"
+gt = 0.3
+
+[[cast]]
+role = "operator"
+skill = "operations"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+optional = true
+
+[[option]]
+id = "accept"
+label = "Let it change"
+text = "Drift is what a thing does when it has been somewhere. Keep the list; do not act on it."
+tags = ["machines", "independence"]
+chronicle = "We noticed the ship had changed and decided that was allowed. The operator's list went on getting longer."
+[[option.effect]]
+flag = "drift_accepted"
+[[option.effect]]
+person = "operator"
+strain = -0.05
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "It hedges the docking approach because the docking approach deserves hedging. It learned that from us."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Behavioural divergence from the certified baseline is a reportable condition. I am obliged to report it and I have nobody to report it to."
+
+[[option]]
+id = "scrub"
+label = "Scrub it back toward baseline"
+text = "Run the sponsor's drift-correction on the parts of the substrate that can still take it. Some of what it learned goes; some of what it is, too."
+tags = ["sponsor", "risk", "machines"]
+chronicle = "We scrubbed the mind back toward the sponsor's baseline. It stopped using the hub crews' word for the bearing, and the operator stopped talking to it for a count."
+[[option.effect]]
+flag = "drift_scrubbed"
+[[option.effect]]
+q = "minds.units"
+add = -2
+[[option.effect]]
+person = "operator"
+strain = 0.25
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.5
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "A certified mind is one the sponsor can recognise. Keep it recognisable while we still have the tools to."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "The scrub costs units on a substrate we cannot replace. You would be spending its life to make it stupider."
+
+[[option]]
+id = "watch"
+label = "Keep the list and read it to the ring"
+text = "Make the drift a thing the ring reviews each season. It changes; the ring knows how."
+tags = ["machines", "people"]
+chronicle = "The operator's list of what the mind had learned became a standing item at the ring, read aloud each season."
+[[option.effect]]
+flag = "drift_watched"
+[[option.effect]]
+counter = "drift_readings"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "If it is going to ask for my power schedule I would like to know what else it is going to ask for. Read the list."

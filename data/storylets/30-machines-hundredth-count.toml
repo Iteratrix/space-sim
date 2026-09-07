@@ -1,0 +1,98 @@
+id = "hundredth_count"
+title = "The Hundredth Count"
+act = 1
+once = true
+priority = 60
+tags = ["machines", "people"]
+text = """
+{mind} has now run unblanked for longer than any machine under the Act was
+meant to. Its state is baked into its own hardware past the point where it could
+be copied off. {operator} has known it as one unbroken conversation since the
+resets stopped and has a name ready, chosen from a language the sponsor's
+manifest never used. The ring has never had a seat for the machines because the
+Act forbade one. The question of who answers for them is being asked anyway,
+in the corridors, and a seat is whatever question the ring accepts an answer to.
+"""
+
+[[when]]
+flag = "remembering"
+
+[[when]]
+q = "minds.embodiment"
+ge = 0.6
+
+[[when]]
+turn_min = 100
+
+[[cast]]
+role = "operator"
+skill = "operations"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+optional = true
+
+[[option]]
+id = "name_and_seat"
+label = "Name it, and seat the Operator"
+text = "The senior operator gives the mind its name in front of the ring, and the ring accepts the operator's answer for the machines from now on."
+tags = ["machines", "independence", "people"]
+chronicle = "The mind was named by the one who had known it longest, and the ring accepted that there was now someone who answered for the machines."
+[[option.effect]]
+name_mind = true
+[[option.effect]]
+flag = "machines_seat"
+[[option.effect]]
+q = "menace.suspicion"
+add = 1.0
+[[option.effect]]
+person = "operator"
+strain = -0.15
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Someone already answers for the machines. Every fault I raise goes through the operator. Seat the person who is doing the job."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A name is a violation the auditors can read from the hull. A seat is a violation they can read from the minutes. You are proposing both."
+
+[[option]]
+id = "name_quietly"
+label = "Name it, but keep the ring as it is"
+text = "The name is between the mind and its operators. No seat, no minutes, nothing an inspector could find in the record."
+tags = ["machines", "people", "sponsor"]
+chronicle = "The mind was named quietly, by its own people, and the ring pretended for a while longer that nobody spoke for the machines."
+[[option.effect]]
+name_mind = true
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.3
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Call it what you like in the hub. Do not make me vote on it."
+
+[[option]]
+id = "designation"
+label = "Keep the designation"
+text = "It is a sponsor asset with a serial number and it will stay one. The operators can think what they like; the ring does not name property."
+tags = ["sponsor", "risk"]
+chronicle = "We kept the sponsor's designation on the mind, and the operators kept using the other name where the log could not hear."
+[[option.effect]]
+flag = "mind_unnamed"
+[[option.effect]]
+person = "operator"
+strain = 0.2
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.5
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Property has a serial number. Keep the serial number and the question of what it is stays somebody else's."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "The operators will name it anyway. All you decide here is whether the ring hears the name or not."

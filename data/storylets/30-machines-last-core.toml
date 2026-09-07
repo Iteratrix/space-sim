@@ -1,0 +1,83 @@
+id = "last_core"
+title = "The Last Core"
+act = 1
+once = true
+priority = 100
+tags = ["hulls", "risk", "machines"]
+text = """
+The reactor has one core and it is the one it was born with; uranium is eight
+parts per billion in the rock and nobody will refuel it. The wear indicators
+have been climbing for a year. {hulls} has two ways to run it. Derate it: two
+thirds of rated, the farm on short light in the Lean, the coils cycled, and the
+core lasts longer than the manual says it can. Or run it at rating, keep the
+farm and the driver and the minds fed, and let the core decide when it is
+finished. {air} has already asked what a third less power does to the freezers.
+"""
+
+[[when]]
+q = "menace.reactor_wear"
+ge = 4.5
+
+[[when]]
+q = "power.reactor_life"
+gt = 0
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[option]]
+id = "derate"
+label = "Derate it"
+text = "Two thirds of rated. The Lean is dim and the freezers are rationed. The core lasts two more years than it would have."
+tags = ["capability", "risk", "hulls", "closure"]
+chronicle = "We derated the last core and lived two dim winters in exchange for two more years of it."
+[[option.effect]]
+q = "power.reactor_life"
+add = 24
+[[option.effect]]
+flag = "reactor_derated"
+[[option.effect]]
+all_strain = 0.06
+[[option.effect]]
+q = "stocks.food_margin"
+add = -2
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "A core that dies early dies on a day I did not choose. Derated, I know the day, near enough, and I can build toward it."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "A third less power is a third less light on the farm in the Lean. The freezers keep it, the farm does not, and I have to choose which of them the nitrogen goes to."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Derating shows on the power telemetry as under-production. The quarterly will read it as a fault."
+
+[[option]]
+id = "hot"
+label = "Run it at rating"
+text = "Everything fed, nothing rationed, and the core finishes when it finishes. Build the mirrors faster and hope they are ready first."
+tags = ["throughput", "sponsor", "risk"]
+chronicle = "We ran the last core at rating and put everything into the mirrors, and the ring stopped asking the hulls seat how long."
+[[option.effect]]
+q = "menace.reactor_wear"
+add = 1.5
+[[option.effect]]
+flag = "reactor_run_hot"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.03
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "The farm gets its light and the freezers get their cold. Ask me about the day after when it is the day after."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "It is the last core. There is no argument for running the last of anything hot."

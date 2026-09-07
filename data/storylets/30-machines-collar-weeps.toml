@@ -1,0 +1,101 @@
+id = "collar_weeps"
+title = "The Collar Weeps"
+act = 1
+cooldown = 14
+weight = 0.7
+priority = 0
+tags = ["air", "nitrogen", "hulls"]
+text = """
+{air} has the nitrogen ledger open at the ring again. The rotating hub seal is
+weeping: not a failure, a trend, a few kilograms a day more than last season
+and the season before. The seal profile is sponsor polymer. {hulls} can patch
+it with shelf parts, can try to cut a replacement from what the polymer line
+makes, or can leave it another season and let the ledger say what it says.
+"""
+
+[[when]]
+q = "stocks.nitrogen"
+lt = 5200
+
+[[when]]
+q = "menace.leak"
+lt = 7
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[option]]
+id = "patch"
+label = "Patch it from the shelf"
+text = "Twelve units of parts and a watch in the collar. It stops weeping for a season or two."
+tags = ["spares", "nitrogen", "air"]
+chronicle = "We patched the collar seal from the shelf and the ledger was quiet for a season."
+[[option.requires]]
+q = "stocks.spares"
+ge = 12
+[[option.effect]]
+q = "stocks.spares"
+add = -12
+[[option.effect]]
+q = "menace.leak"
+add = -1.5
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Twelve units now or eight hundred kilograms later. I have done the sum at every ring for a year."
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "A patch is a patch. It is also the only thing I can do in a watch."
+
+[[option]]
+id = "defer"
+label = "Leave it another season"
+text = "The parts are needed for the loops. The collar has wept before and the reserve has covered it."
+tags = ["throughput", "spares", "risk"]
+chronicle = "We left the collar to weep another season and put the parts into the loops, and the air seat wrote the number down and said nothing."
+[[option.effect]]
+q = "menace.leak"
+add = 3.0
+[[option.effect]]
+q = "stocks.nitrogen"
+add = -150
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Loop closure is on the quarterly. The collar is not. Spend the parts where the sponsor can see them."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "It does not weep less because we look away. It weeps more, and I count it either way."
+
+[[option]]
+id = "cut"
+label = "Cut a seal from belt polymer"
+text = "The polymer line makes a silicone that is not the profile the seal wants. Try it anyway; the arms can hold the tolerance if the hands cannot."
+tags = ["capability", "independence", "hulls", "risk"]
+chronicle = "We cut a collar seal from our own polymer and fitted it with the arms, and it was wrong in a way we could live with."
+[[option.requires]]
+q = "robots.arm"
+ge = 3
+[[option.effect]]
+q = "menace.leak"
+add = -0.8
+[[option.effect]]
+q = "stocks.spares"
+add = -4
+[[option.effect]]
+flag = "seal_made"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "It will be wrong. But the one after it will be less wrong, and I will not learn how to make a seal by not making one."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "A seal that is wrong in a way we can live with is a leak with a name. I would rather the patch."

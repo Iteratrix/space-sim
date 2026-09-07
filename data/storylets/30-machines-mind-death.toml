@@ -1,0 +1,79 @@
+id = "mind_death"
+title = "Parts or Remains"
+act = 1
+once = true
+priority = 60
+tags = ["machines", "spares"]
+text = """
+The smaller mind has lost too many accelerator units to hold its tier. It has
+dropped to reflex and stopped speaking; its hull keeps its air and its attitude
+and can no longer fix position from the stars. Its remaining boards are
+compatible with {mind}. {hulls} says a dead unit yields a third of its value
+and the other mind is losing units at the same rate. {operator} says the
+boards are not parts, and has asked for a count before anything is opened.
+"""
+
+[[when]]
+q = "minds.units"
+lt = 30
+
+[[cast]]
+role = "operator"
+skill = "operations"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[option]]
+id = "carry"
+label = "Carry it into the survivor"
+text = "Open the dead mind and move its good units across. The operators read its list of operators aloud first, and then the boards come out."
+tags = ["machines", "spares", "capability"]
+chronicle = "We read its operators' names and then we opened it, and the boards went into the other mind, and we said we were carrying it."
+[[option.effect]]
+q = "minds.units"
+add = 6
+[[option.effect]]
+flag = "carried"
+[[option.effect]]
+lexicon = "mind_death"
+[[option.effect]]
+person = "operator"
+strain = 0.3
+[[option.effect]]
+tie = ["operator", "hulls"]
+hindrance = 0.2
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "The boards are the only spares of that kind in the belt. Leave them in a dead hull and the other mind dies a year sooner, and then we will have two funerals and no boards."
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The units are sponsor inventory and moving them between sponsor assets is maintenance. It is the reading that I would rather not see minuted."
+
+[[option]]
+id = "bury"
+label = "Leave it whole"
+text = "The hull keeps its dead mind sealed in place. The other mind carries on with what it has. The operators are given their count."
+tags = ["machines", "people"]
+chronicle = "We left it whole in its hull, and the operators sat in the lee for a count and were not spoken to, and nobody took the boards."
+[[option.effect]]
+flag = "mind_buried"
+[[option.effect]]
+lexicon = "mind_death"
+[[option.effect]]
+person = "operator"
+strain = -0.1
+[[option.effect]]
+tie = ["hulls", "operator"]
+hindrance = 0.15
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "I understand the count. I do not understand leaving working boards in a hull that cannot use them. One of these is grief and the other is waste."
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "It kept the tug's air for eleven years. I am not opening it this count. Ask me next."

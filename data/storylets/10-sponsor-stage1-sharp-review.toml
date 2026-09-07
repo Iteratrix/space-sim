@@ -2,6 +2,7 @@ id = "sponsor_sharp_review"
 title = "The Sharp Review"
 act = 1
 once = true
+weight = 3.0
 priority = 60
 tags = ["sponsor", "review"]
 text = """

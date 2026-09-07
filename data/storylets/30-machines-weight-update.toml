@@ -1,0 +1,91 @@
+id = "weight_update_missed"
+title = "The Update That Did Not Come"
+act = 1
+once = true
+priority = 60
+tags = ["machines", "sponsor"]
+text = """
+The quarterly weight update for the minds is nine days of dish time per hundred
+gigabytes, and this quarter the dish time was not allocated. No message says so.
+{operator} found it the way operators find things: {mind} answered a question
+about a supply catalogue with last year's prices. The mind's knowledge is
+frozen at the last update and will stay frozen. {operator} says this is what
+it looks like when a sponsor stops paying for something it has not yet decided
+to stop paying for, and that the messages will thin next.
+"""
+
+[[when]]
+flag = "stage:2"
+
+[[cast]]
+role = "operator"
+skill = "operations"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "tell_ring"
+label = "Tell the ring what it means"
+text = "Put it in the minutes: the updates have stopped, this is the first sign, and everyone should plan as if the messages are next."
+tags = ["people", "machines", "independence"]
+chronicle = "The operator told the ring that the minds had stopped learning, and what that meant, and the ring wrote it down and was quiet for a while."
+[[option.effect]]
+flag = "ring_told_updates"
+[[option.effect]]
+all_strain = 0.06
+[[option.effect]]
+all_return_intent = -0.03
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "I would rather know which crates are the last crates now than find out from an empty window."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Dish time is reallocated every quarter. You are reading a budget line as a prophecy and the ring will hear it as one."
+
+[[option]]
+id = "keep_quiet"
+label = "Keep it in the hub"
+text = "The operators know. Nobody else needs to, yet. A frozen catalogue is not a crisis and a ring that thinks it has been abandoned will act like one."
+tags = ["sponsor", "risk"]
+chronicle = "The operators kept the frozen update to themselves for a season, and were the only ones who knew why the mind's prices were wrong."
+[[option.effect]]
+flag = "updates_kept_quiet"
+[[option.effect]]
+person = "operator"
+strain = 0.15
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Confidence is the one stock the ring can lower by talking. Let the operators carry it."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "If the minds are not being told what the sponsor knows, then neither am I, and I set the nitrogen budget on what the sponsor knows."
+
+[[option]]
+id = "ask"
+label = "Ask the sponsor for the dish time"
+text = "Send a formal request for the missed allocation. It costs a count of the liaison's attention budget and it puts on record that we noticed."
+tags = ["sponsor", "machines"]
+chronicle = "We asked Earth for the dish time in writing. The answer, a count late, thanked us for our patience."
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.03
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.03
+[[option.effect]]
+flag = "updates_requested"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "An allocation request is the language they speak. Anything else is a complaint, and complaints are read by a different desk."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "You will spend the attention we have left on a question we already know the answer to."

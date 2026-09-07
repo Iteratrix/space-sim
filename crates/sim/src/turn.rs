@@ -3,7 +3,7 @@
 use crate::params::Params;
 use crate::person::{Estate, GroupIndices, PersonId, Tenure};
 use crate::state::{Ending, Game, Licence, SponsorStage};
-use az::Az;
+use az::{Az, SaturatingAs};
 use rand::Rng;
 
 /// What happened this count, before any storylet fires.
@@ -359,12 +359,16 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         p.condition.boredom = (p.condition.boredom + 0.01 - load * 0.02).clamp(0.0, 1.0);
         match p.tenure {
             Tenure::Rotator { ends } => {
-                if turn + 6 >= ends {
-                    p.condition.return_intent = (p.condition.return_intent + 0.05).min(1.0);
-                }
-                if stage >= SponsorStage::Austerity {
-                    p.condition.return_intent = (p.condition.return_intent + 0.02).min(1.0);
-                }
+                let pull_home =
+                    (p.traits.baseline_attachment - 0.5) * 0.04 + (p.condition.strain - 0.3) * 0.04;
+                let near_end = if turn + 6 >= ends { 0.02 } else { 0.0 };
+                let austerity = if stage >= SponsorStage::Austerity {
+                    0.02
+                } else {
+                    0.0
+                };
+                p.condition.return_intent =
+                    (p.condition.return_intent + pull_home + near_end + austerity).clamp(0.0, 1.0);
             }
             Tenure::Resident => {
                 let drift =
@@ -506,6 +510,9 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
         game.sponsor.attention = (game.sponsor.attention * 0.9).max(0.0);
         return;
     }
+    if game.sponsor.stage >= SponsorStage::Austerity {
+        game.sponsor.attention *= 0.975;
+    }
     game.sponsor.runway -= 1.0;
     let conjunction = game
         .calendar
@@ -525,9 +532,9 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
     let expected = game.sponsor.phi_expected;
     let delta = ((phi - expected) / expected.max(0.5)).clamp(-1.0, 1.0);
     game.sponsor.confidence =
-        (game.sponsor.confidence + delta * 0.2 - game.menace.suspicion * 0.015 - 0.02)
+        (game.sponsor.confidence + delta * 0.12 - game.menace.suspicion * 0.008 - 0.02)
             .clamp(0.0, 1.0);
-    game.sponsor.phi_expected = expected * 1.15;
+    game.sponsor.phi_expected = (expected * 1.1).min(params.sponsor.phi_target_per_review * 2.5);
     let stage_drag = if game.sponsor.stage >= SponsorStage::Austerity {
         0.85
     } else {
@@ -543,7 +550,7 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
         note(game, events, "News from home, fragmentary: something happened to the budget. The liaison will not say what.".into());
     }
     let runway_health = (game.sponsor.runway / 60.0).min(1.0);
-    let c = 0.5 * game.sponsor.confidence + 0.3 * game.sponsor.attention + 0.2 * runway_health;
+    let c = 0.4 * game.sponsor.confidence + 0.4 * game.sponsor.attention + 0.2 * runway_health;
     let ps = &params.sponsor;
     let next = if game.sponsor.runway <= 0.0 || c < ps.sale_confidence - 0.1 {
         SponsorStage::NoShip
@@ -600,10 +607,11 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         return;
     }
     game.window_started = Some(game.turn);
+    let attention_factor = (game.sponsor.attention / 0.3).min(1.0);
     let comes = game.sponsor.stage < SponsorStage::NoShip
-        && game.sponsor.attention > 0.1
+        && game.sponsor.attention > 0.08
         && game.sponsor.runway > 0.0
-        && rng.random::<f64>() < 0.5 + 0.5 * game.sponsor.confidence;
+        && rng.random::<f64>() < (0.5 + 0.5 * game.sponsor.confidence) * attention_factor;
     if !comes {
         game.missed_convoys += 1;
         game.menace.grievance = (game.menace.grievance + 1.0).min(10.0);
@@ -660,7 +668,17 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
             SponsorStage::Austerity => 0.5,
             SponsorStage::SkippedRotation | SponsorStage::Sale | SponsorStage::NoShip => 0.0,
         };
-        let n_new = (count_f(left) * replacement_ratio).round().az::<usize>();
+        let population = game.present().count();
+        let keen = game.sponsor.stage <= SponsorStage::UpdatesStopped
+            && population < params.population.expansion_cap;
+        let expansion = if keen {
+            (params.population.expansion_per_convoy * game.sponsor.confidence).round()
+        } else {
+            0.0
+        };
+        let n_new = (count_f(left) * replacement_ratio + expansion)
+            .round()
+            .saturating_as::<usize>();
         for _ in 0..n_new {
             arrive_one(game, params, rng);
             arrived += 1;
@@ -772,7 +790,7 @@ fn endings(game: &mut Game, events: &mut Events) {
     }
     let silent = game.sponsor.stage >= SponsorStage::NoShip
         || (game.missed_convoys >= 2 && game.sponsor.attention < 0.2);
-    if silent && game.counts_since_convoy >= 30 {
+    if silent && game.counts_since_convoy >= 24 {
         game.ending = Some(Ending::Silence {
             last_convoy: game.last_convoy.unwrap_or(0),
             population,

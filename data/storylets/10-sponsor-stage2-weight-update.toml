@@ -2,6 +2,7 @@ id = "sponsor_weight_update"
 title = "The Missing Update"
 act = 1
 once = true
+weight = 3.0
 priority = 60
 tags = ["sponsor", "machines", "review"]
 text = """

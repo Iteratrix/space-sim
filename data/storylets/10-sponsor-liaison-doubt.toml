@@ -1,0 +1,108 @@
+id = "sponsor_liaison_doubt"
+title = "What the Liaison Knows"
+act = 1
+weight = 1.2
+cooldown = 30
+tags = ["sponsor", "liaison"]
+text = """
+{liaison} asked for a word after the ring, alone, and then did not say much.
+The dish time has been cut twice this year and the second cut was not
+announced. The people {liaison} used to write to at the sponsor have been
+replaced by an address. There is something else, something from a private
+channel, that {liaison} started to say and then called "not confirmed".
+{liaison} answers for the sponsor at the ring. The ring has to decide what
+to do with a liaison who knows more than the sponsor is saying.
+"""
+
+[[when]]
+q = "sponsor.attention"
+lt = 0.5
+
+[[when]]
+stage_max = 5
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+optional = true
+
+[[option]]
+id = "press"
+label = "Press for the rest of it"
+text = "Ask {liaison} to say the unconfirmed thing to the ring, on the record. Whatever it is, the outpost plans better with it than without."
+tags = ["independence", "risk", "sponsor"]
+chronicle = "The ring asked {liaison} to say the unconfirmed thing aloud, and {liaison} did. It was about the budget, and it was worse than the reviews had been letting on."
+[[option.effect]]
+flag = "liaison_confided"
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.03
+[[option.effect]]
+all_return_intent = -0.04
+[[option.effect]]
+person = "liaison"
+strain = 0.08
+[[option.effect]]
+q = "menace.grievance"
+add = 0.4
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "I plan spares against the ship that is coming. If the ship is not coming I need to know a year before, not a count after. Make {liaison} say it."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "You asked me last count what I was not telling you. If I answer that here it goes in the chronicle, and the chronicle goes in the audit, and then the thing I am not telling you becomes the thing I told you."
+
+[[option]]
+id = "protect"
+label = "Let {liaison} keep it, and plan as if it were true"
+text = "Do not make {liaison} choose between the sponsor and the ring. Read the silence and act on the reading."
+tags = ["caution", "capability", "spares"]
+chronicle = "The ring let {liaison} keep what {liaison} knew, and quietly began planning as though it were already true. Spares went into the outpost's own store that count."
+[[option.effect]]
+flag = "planning_for_silence"
+[[option.effect]]
+q = "stocks.spares"
+add = 10
+[[option.effect]]
+person = "liaison"
+strain = -0.05
+[[option.effect]]
+tie = ["hulls", "liaison"]
+work_positive = 0.15
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "{liaison} is the only person here whose job is to be loyal to someone who is not here. Do not ask for a betrayal you could get by paying attention."
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "I do not need the sentence. I need the schedule to assume half the dish time and a lighter convoy, and I can do that without anyone saying why."
+
+[[option]]
+id = "report"
+label = "Have {liaison} send it up the line as a formal query"
+text = "Turn the rumour into a question the sponsor has to answer. If the address answers, we learn something. If it does not, we learn more."
+tags = ["sponsor", "risk"]
+chronicle = "The ring had {liaison} put the unconfirmed thing to the sponsor as a formal query. The answer came a count late, said nothing, and said it very carefully."
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.03
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.7
+[[option.effect]]
+flag = "queried_the_sponsor"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "A query is my job. A rumour is not. Give me the query and I will send it, and then whatever comes back is theirs and not mine."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Every formal question we send tells them what we are afraid of. I would rather they did not know we had started to be afraid."

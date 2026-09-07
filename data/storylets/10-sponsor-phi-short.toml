@@ -1,0 +1,131 @@
+id = "sponsor_phi_short"
+title = "The Number"
+act = 1
+weight = 1.5
+cooldown = 16
+tags = ["sponsor", "review", "throughput"]
+text = """
+The review is in two counts and the number is short. Not by much; by the
+fifteen per cent the sponsor added to the target last time and the fifteen
+before that. {hours} has three ways to make it right, laid out on the same
+sheet. One is a tonnage figure that counts the batch on the pad as shipped.
+One is the reserve water, which is in the tanks and could be on the driver
+by the review. One is the number as it is. {extraction} has been asked to
+say how much the reserve is really worth and has not answered yet.
+"""
+
+[[when]]
+q = "throughput.phi"
+lt = 12.0
+
+[[when]]
+q = "sponsor.counts_to_review"
+le = 2
+
+[[when]]
+turn_min = 40
+
+[[when]]
+stage_max = 4
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "extraction"
+seat = "extraction"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "cook"
+label = "Count the batch on the pad"
+text = "It will be shipped next count. Say it was shipped this one. The sponsor's figure and the driver's figure will disagree by one batch forever."
+tags = ["throughput", "sponsor", "risk"]
+chronicle = "The review number counted a batch that was still on the pad. It was a small lie in a column of true ones, and it was the first."
+[[option.effect]]
+q = "throughput.shipped"
+add = 25
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.03
+[[option.effect]]
+q = "menace.suspicion"
+add = 2.0
+[[option.effect]]
+counter = "numbers_cooked"
+[[option.effect]]
+flag = "numbers_cooked"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "It is accrual. Every ledger on Earth does it. The batch is real, the pad is real, and the date is a convention."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "You asked me last count how closely the audit checks the driver log against the manifest. Line by line. Every line."
+
+[[option]]
+id = "ship_reserve"
+label = "Ship the reserve water"
+text = "Forty tonnes of shield and drinking margin, on the driver by the review. The number is honest. The tanks are not."
+tags = ["throughput", "water", "risk"]
+chronicle = "The reserve water went onto the driver to make the review number. The number was honest and the tanks were forty tonnes down when the next thing went wrong."
+[[option.effect]]
+q = "stocks.water"
+add = -40
+[[option.effect]]
+q = "throughput.shipped"
+add = 40
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.06
+[[option.effect]]
+q = "menace.leak"
+add = 0.3
+[[option.effect]]
+flag = "reserve_shipped"
+[[option.requires]]
+q = "stocks.water"
+ge = 100
+[[option.advice]]
+seat = "extraction"
+stance = "against"
+text = "The reserve is the reserve. I mine fourteen tonnes a count on a good count. Forty is three good counts, and I have not had three good counts in a row since the Bright."
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "It is the one thing on this rock that is both in the tank and on the target. Ship it and mine it back."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "That water is shielding before it is anything else. You are proposing to sell the wall."
+
+[[option]]
+id = "honest"
+label = "Send the number as it is"
+text = "Short is short. Let the review say so, and let the sponsor decide what it thinks of a target that goes up fifteen per cent whether the driver does or not."
+tags = ["caution", "sponsor", "capability"]
+chronicle = "The review number went in short and true. The sponsor's target had gone up again, and the outpost had decided, without saying so, to stop chasing it."
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.05
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.5
+[[option.effect]]
+all_strain = -0.02
+[[option.effect]]
+flag = "phi_honest"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "A target that compounds is a target that was designed to be missed. Miss it on purpose and keep your water."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A short number with no explanation is read as a trend. Two of them are read as a decision. The board is very good at reading decisions."

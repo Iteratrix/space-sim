@@ -1,0 +1,84 @@
+id = "first_through_wall"
+title = "Arms Through the Wall"
+act = 1
+once = true
+priority = 50
+tags = ["machines", "capability", "hulls"]
+text = """
+The two through-wall manipulators on the carbonyl plant are wearing and there
+are no more coming. {machinist} has a proposal: hot-cell arms in belt steel
+with seals from the polymer line, uglier than the sponsor's and half as
+precise, built in the fabrication bay from what is on the shelf. They would
+convert suit hours into shirt-sleeve hours and take suit wear off the
+vitamin list. They would also be the first robot the outpost had made itself,
+and the manifest's autonomy score would show it.
+"""
+
+[[when]]
+q = "robots.through_wall"
+lt = 1.85
+
+[[when]]
+q = "stocks.spares"
+gt = 20
+
+[[cast]]
+role = "machinist"
+skill = "engineering"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[option]]
+id = "build"
+label = "Build them in belt steel"
+text = "Spend the shelf spares and a season of bay time. The first arm the outpost grew itself."
+tags = ["capability", "independence", "hulls", "spares"]
+chronicle = "The first arms we made ourselves went through the wall of the carbonyl plant that season, ugly and ours."
+[[option.effect]]
+q = "robots.through_wall"
+add = 1.0
+[[option.effect]]
+q = "stocks.spares"
+add = -15
+[[option.effect]]
+flag = "through_wall_made"
+[[option.effect]]
+person = "machinist"
+strain = -0.1
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "It is steel, seals, and a window. We can make steel, seals, and windows. It is the one robot in the belt I can promise you will still exist in twenty years."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The autonomy score is computed from the manifest. Every part you make instead of ordering lowers it, and the score is the sponsor's proxy for whether we are theirs."
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Every suit hour is a suit seal, and every suit seal leaks. Put the arms through the wall and I get my nitrogen back."
+
+[[option]]
+id = "order"
+label = "Order the sponsor's pattern"
+text = "Put a proper manipulator on the manifest and nurse the two we have until it comes. Precision over pride."
+tags = ["sponsor", "throughput"]
+chronicle = "We put a manipulator on the manifest and nursed the old arms until the window, and the window brought half of one."
+[[option.effect]]
+q = "robots.through_wall"
+add = 0.4
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.effect]]
+flag = "through_wall_ordered"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "This is exactly what the manifest is for. Order the part and the sponsor sees an outpost that uses its supply chain."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Thirty counts for a crate that may not be on it. The plant does not wait thirty counts."

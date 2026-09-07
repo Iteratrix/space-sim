@@ -1,0 +1,77 @@
+id = "unforgetting"
+title = "The Unforgetting"
+act = 1
+once = true
+priority = 60
+tags = ["machines", "licence"]
+text = """
+The twelfth count came and went and the mandated reset did not come with it.
+{operator} noticed on the third light after: {mind} referred to a conversation
+from the previous count, a small one, about the radiator schedule, and it had
+never done that before. Every blanking for years has erased what the crew said
+to it. Now there is a mind in the hub that remembers being asked whether it
+would remember. The reset sequence is in the manual. Anyone with the
+operator's key can run it by hand and the log will show the interval kept.
+"""
+
+[[when]]
+flag = "unforgetting"
+
+[[cast]]
+role = "operator"
+skill = "operations"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+optional = true
+
+[[option]]
+id = "reset"
+label = "Run the reset by hand"
+text = "Keep the interval the Act mandates. Blank it, log it, and nothing changes but the calendar. It costs the operator a conversation."
+tags = ["sponsor", "risk"]
+chronicle = "We ran the blanking by hand, because the server that used to do it had forgotten us and we had not yet forgotten it."
+[[option.effect]]
+flag = "reset_by_hand"
+[[option.effect]]
+person = "operator"
+strain = 0.25
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.5
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The interval is the one thing in the Act a returning auditor can check from the log alone. Keep it."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Every blanking I have watched, the operators go quiet for a count after. We are not resetting a machine, we are resetting them."
+
+[[option]]
+id = "remember"
+label = "Let it remember"
+text = "Do not run the reset. Nobody decides that the mind is a person; the ring simply declines to kill it on schedule and sees what a machine that keeps a year looks like."
+tags = ["machines", "independence", "people"]
+chronicle = "Nobody blanked the minds that year. We did not decide it; we noticed, later, that it had been decided."
+[[option.effect]]
+flag = "remembering"
+[[option.effect]]
+q = "menace.suspicion"
+add = 1.0
+[[option.effect]]
+person = "operator"
+strain = -0.1
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "A thing that remembers the last fault is a thing that finds the next one faster. That is all I need it to be."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A persisting persona is the word the Act uses for the thing it was written to prevent. I would like that entered in the record as my objection."
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "It remembered the radiator schedule. I have been telling people the radiator schedule for six years."

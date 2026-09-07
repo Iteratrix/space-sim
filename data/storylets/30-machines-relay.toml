@@ -1,0 +1,98 @@
+id = "relay_failure"
+title = "The Thin Link"
+act = 1
+cooldown = 10
+priority = 45
+tags = ["sponsor", "spares", "machines"]
+text = """
+A relay string has failed and the link to Earth is running on what is left:
+fewer bits a day, more of them lost, the heartbeat and the messages queued
+behind each other. {hulls} can rebuild the string from the shelf, if the shelf
+can bear it. {liaison} points out that a replacement is not on any manifest,
+and that a link this thin is how an outpost stops being heard from before it
+stops talking.
+"""
+
+[[when]]
+q = "relay.health"
+lt = 0.6
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "repair"
+label = "Rebuild the string from the shelf"
+text = "Twenty-five units of parts that the loops will miss. The link comes back to most of what it was."
+tags = ["spares", "sponsor", "hulls"]
+chronicle = "We rebuilt the relay from the shelf and the link came back, and the loops ran a season short of parts for it."
+[[option.requires]]
+q = "stocks.spares"
+ge = 25
+[[option.effect]]
+q = "stocks.spares"
+add = -25
+[[option.effect]]
+q = "relay.health"
+add = 0.4
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Without the link there is no heartbeat, no manifest, and no quarterly. Spend the parts."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Twenty-five units to keep a dish pointed at people who have not allocated us dish time in a year."
+
+[[option]]
+id = "thin"
+label = "Let the link thin"
+text = "Keep the parts for the loops. Messages take longer and some do not arrive. The sponsor's attention was never a thing the relay controlled."
+tags = ["spares", "independence", "risk"]
+chronicle = "We let the link stay thin and kept the parts, and after that the sponsor's messages came a count late, which was how the liaison's advice had always come."
+[[option.effect]]
+flag = "relay_thinned"
+[[option.effect]]
+q = "sponsor.attention"
+add = -0.05
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "The loops keep us alive. The relay keeps us audited. When both need the same board I know which gets it."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "An outpost that stops answering stops being asked. That is not a threat, it is how attention is budgeted."
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "I have valves waiting on that family of board. The dish can wait; the scrubber cannot."
+
+[[option]]
+id = "ask"
+label = "Ask the sponsor for the part"
+text = "Put a relay string on the manifest, formally, and hold the shelf. If it comes, it comes in thirty counts."
+tags = ["sponsor", "cost"]
+chronicle = "We asked the sponsor for a relay string and nursed the thin link until the answer, which was a question about why we needed one."
+[[option.effect]]
+flag = "relay_requested"
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.02
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Relay hardware is sponsor-owned infrastructure. A request is the proper channel and the proper channel is what they fund."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Thirty counts on a link that is already losing packets. The request may not arrive to be refused."

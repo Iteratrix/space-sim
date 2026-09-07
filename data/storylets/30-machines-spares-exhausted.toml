@@ -1,0 +1,103 @@
+id = "spares_exhausted"
+title = "What to Open"
+act = 1
+cooldown = 12
+priority = 40
+tags = ["spares", "machines", "capability"]
+text = """
+The spares crate is the last one and the shelf is thin. {hours} has the
+consumption line: at this rate the loops start patching themselves with
+whatever is nearest within a few seasons. {hulls} has walked the outpost with
+a list of what could be opened for parts: a dex unit, whose actuators fit half
+the valves on the shelf; the relay, whose boards are the same family as the
+loop controllers; the smaller mind, whose accelerator units are worth their
+weight in anything. Every one of them is something the outpost will want back.
+"""
+
+[[when]]
+q = "stocks.spares"
+lt = 150
+
+[[when]]
+q = "counts_since_convoy"
+ge = 20
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[option]]
+id = "dex"
+label = "Open a dex unit"
+text = "One dexterous unit, the class the belt cannot rebuild, for eight units of parts that fit."
+tags = ["spares", "capability"]
+chronicle = "We opened a dex unit for its actuators, and the shelf was fuller and the fleet was one fewer of the kind nobody can make."
+[[option.requires]]
+q = "robots.dex"
+ge = 1
+[[option.effect]]
+q = "robots.dex"
+add = -1
+[[option.effect]]
+q = "stocks.spares"
+add = 8
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "The dex units are dying anyway. Better their parts go into the loops than into a crate we cannot open."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "A dex unit is four hundred hours a year we do not have to find. Eight units of parts is two counts of loop consumption. The sum is not close."
+
+[[option]]
+id = "relay"
+label = "Open the relay"
+text = "Take boards from the relay's redundant string. The link to Earth gets thinner; the loops get twelve units of the right family."
+tags = ["spares", "independence", "risk"]
+chronicle = "We took the relay's spare string for the loops. The link was thinner after that and nobody on the other end mentioned it."
+[[option.effect]]
+q = "relay.health"
+add = -0.3
+[[option.effect]]
+q = "stocks.spares"
+add = 12
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "The relay has a redundant string that has never been used. The loops have no redundant anything."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The relay is the only thing in this outpost that can tell the sponsor we exist. Opening it is not a spares decision."
+
+[[option]]
+id = "mind"
+label = "Open the smaller mind"
+text = "Six accelerator units from the tug's mind. It drops a tier and speaks less. The parts are worth more than anything else on the list."
+tags = ["spares", "risk"]
+chronicle = "We took six units from the tug's mind for the loops, and its operator was told after, and it spoke less that year."
+[[option.requires]]
+q = "minds.units"
+ge = 20
+[[option.effect]]
+q = "minds.units"
+add = -8
+[[option.effect]]
+q = "stocks.spares"
+add = 10
+[[option.effect]]
+q = "menace.grievance"
+add = 0.5
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Those units are the highest-value parts in the belt and they are sitting in a tug that flies twice a year."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "The tug's mind runs the tug's air. I am not counting a hull's breathing against a shelf of valves."

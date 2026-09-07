@@ -1,0 +1,114 @@
+id = "phasing"
+title = "Phasing"
+act = 1
+cooldown = 12
+weight = 0.6
+tags = ["people", "families"]
+text = """
+{one} and {other} have started arranging their watches so that they end at the
+same time, and everyone in the can noticed a count before they said anything.
+It is not a problem. {third} has made it one: two watches skipped, a remark at
+the meal, and a request to the ring to be moved off {one}'s shift that gave no
+reason. The sponsor's fraternisation policy exists and nobody has read it since
+the ship.
+"""
+
+[[cast]]
+role = "one"
+skill = "agronomy"
+min_skill = 1
+
+[[cast]]
+role = "other"
+skill = "life_support"
+min_skill = 1
+
+[[cast]]
+role = "third"
+
+[[option]]
+id = "let_be"
+label = "Their business. Move {third} off the shift and say nothing"
+text = "The ring does not run the bunks."
+tags = ["people", "caution"]
+chronicle = "{one} and {other} kept their watches and {third} was moved to another shift without a reason given. The ring did not discuss it further."
+[[option.effect]]
+tie = ["one", "other"]
+work_positive = 0.2
+[[option.effect]]
+tie = ["other", "one"]
+work_positive = 0.2
+[[option.effect]]
+tie = ["third", "one"]
+hindrance = 0.2
+[[option.effect]]
+person = "third"
+strain = 0.05
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "I move people between shifts every count. This is a shift change. Do not make it a policy."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "You have not solved anything for {third}, you have moved it to a different shift. It will come back at the meal."
+
+[[option]]
+id = "separate"
+label = "Split {one} and {other} across the rota"
+text = "Different shifts, different sleep cycles. The sponsor's policy, more or less."
+tags = ["sponsor", "hours"]
+chronicle = "The ring put {one} and {other} on opposite shifts, which is what the sponsor's policy would have said if anyone had looked it up. They found the gaps anyway."
+[[option.effect]]
+tie = ["one", "other"]
+work_positive = -0.1
+[[option.effect]]
+person = "one"
+strain = 0.12
+[[option.effect]]
+person = "other"
+strain = 0.12
+[[option.effect]]
+person = "third"
+strain = -0.08
+[[option.effect]]
+tie = ["one", "third"]
+hindrance = 0.15
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The policy is there because it has been a problem on every station before this one. Separate them on the rota and it is a non-event on the record."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "They are the two who know the loop. Putting them on opposite shifts means the loop is never fully attended by anyone who likes being there."
+
+[[option]]
+id = "witness"
+label = "Make it a lay, witnessed, with terms"
+text = "A first marriage in the can, on our own terms, written down. {third} attends."
+tags = ["families", "independence"]
+chronicle = "{one} and {other} put their lay before the ring with {hours} as witness, the first in the outpost. {third} attended, and everyone noticed that too."
+[[option.effect]]
+tie = ["one", "other"]
+work_positive = 0.3
+[[option.effect]]
+tie = ["other", "one"]
+work_positive = 0.3
+[[option.effect]]
+person = "third"
+strain = 0.1
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+flag = "first_lay"
+[[option.effect]]
+counter = "lays_witnessed"
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Every ship I ever crewed had one of these and the ones that went well were the ones that got said out loud. Say it out loud."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A marriage registered by an outpost has no standing anywhere and the sponsor will want to know why we are registering things."

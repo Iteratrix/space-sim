@@ -1,0 +1,122 @@
+id = "sponsor_sale_lay"
+title = "New Owners"
+act = 1
+once = true
+weight = 3.0
+priority = 70
+tags = ["sponsor", "sale", "people"]
+text = """
+The outpost has been sold. The new owners' first message is a list of what
+they do recognise, and the lay is not on it: every contract is "under
+transition", every accrued share is "subject to valuation". {rotator} has
+three years of lay on the books and reads the message as a theft. {hours}
+has done the sum of what the outpost itself holds that could stand in for
+the lay: water, spares, propellant, hours. It could pay. It would be paying
+Earth's debt from its own tanks. {liaison} does not know who the new owners
+are, and says so.
+"""
+
+[[when]]
+flag = "stage:5"
+
+[[cast]]
+role = "rotator"
+rotator = true
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "honour"
+label = "Honour the lay from our own stocks"
+text = "Pay every contract's share in water, spares, and hours, at the old schedule. The outpost becomes the owner of its own obligations, and poorer."
+tags = ["people", "independence", "water", "spares", "cost"]
+chronicle = "The ring honoured the lay the new owners had voided, out of its own tanks and stores. It was the first debt the outpost paid that Earth did not hold."
+[[option.effect]]
+q = "stocks.water"
+add = -40
+[[option.effect]]
+q = "stocks.spares"
+add = -20
+[[option.effect]]
+q = "stocks.propellant"
+add = -8
+[[option.effect]]
+q = "menace.grievance"
+add = -2.0
+[[option.effect]]
+all_return_intent = -0.08
+[[option.effect]]
+person = "rotator"
+strain = -0.1
+[[option.effect]]
+flag = "lay_honoured"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "I can find forty tonnes and twenty spares. I cannot find thirty people who will work for an owner who took their pay. Pay it."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Twenty spares is five counts of the loops. You are proposing to pay a wage in the parts that keep the wage-earners breathing."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "You asked last count who to write to at the new owners. I still do not have a name. If we pay out the lay before we do, we have set a precedent for someone we have never met."
+
+[[option]]
+id = "partial"
+label = "Pay what the water allows, and no more"
+text = "Settle a part of every lay in water now, and write the rest as owed by the outpost. A debt the outpost carries is at least a debt the outpost can see."
+tags = ["people", "water", "cost", "caution"]
+chronicle = "The ring paid part of the voided lay in water and wrote the rest as owed. The book it was written in belonged to the outpost, not to any owner."
+[[option.effect]]
+q = "stocks.water"
+add = -20
+[[option.effect]]
+q = "menace.grievance"
+add = -0.8
+[[option.effect]]
+counter = "lay_owed"
+add = 1
+[[option.effect]]
+flag = "lay_partial"
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Twenty tonnes I can replace in two counts if the driver holds. Forty I cannot, not this Fortune. Pay twenty and write the rest."
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "A debt that is written down does less harm than one that is denied. People can carry owed. They cannot carry stolen."
+
+[[option]]
+id = "refuse"
+label = "Let the new owners answer for it"
+text = "The lay was Earth's promise. Refuse to pay Earth's debts from Fortuna's tanks, and let the anger go where it belongs."
+tags = ["independence", "caution", "cost"]
+chronicle = "The ring did not pay the lay the new owners had voided. The anger went to Earth, and some of it, having nowhere else to land, stayed home."
+[[option.effect]]
+q = "menace.grievance"
+add = 1.5
+[[option.effect]]
+all_return_intent = 0.1
+[[option.effect]]
+person = "rotator"
+strain = 0.12
+[[option.effect]]
+flag = "lay_voided"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "We did not sell the outpost and we did not void the lay. Do not spend the shielding paying for a decision made on a floor we have never seen."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "Every rotator on the roster is now working for nothing they can name. I will lose hours to that faster than I would lose water to paying it."

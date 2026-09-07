@@ -2,6 +2,7 @@ id = "sponsor_austerity_headcount"
 title = "Austerity"
 act = 1
 once = true
+weight = 3.0
 priority = 70
 tags = ["sponsor", "people", "austerity"]
 text = """

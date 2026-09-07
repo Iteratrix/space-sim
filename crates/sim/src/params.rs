@@ -63,6 +63,8 @@ pub struct Population {
     pub rotator_fraction: f64,
     pub contract_counts: u32,
     pub families_allowed: bool,
+    pub expansion_per_convoy: f64,
+    pub expansion_cap: usize,
 }
 
 #[allow(missing_docs)]

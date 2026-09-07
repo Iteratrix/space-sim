@@ -1,0 +1,100 @@
+id = "sponsor_missed_window"
+title = "The Empty Window"
+act = 1
+once = true
+weight = 3.0
+priority = 60
+tags = ["sponsor", "silence"]
+text = """
+The window opened, stayed open for its two counts, and closed. Nothing came
+through it. There was no message saying nothing would come. {hours} has
+already recounted the spares and the propellant on the assumption of one
+more window. {liaison} has the last message from Earth open and it is about
+throughput, from before the window, and says nothing about a ship. The
+outpost needs a sentence to say about this to itself.
+"""
+
+[[when]]
+q = "missed_convoys"
+ge = 1
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "schedule"
+label = "A scheduling slip; the next window will carry double"
+text = "Say what the sponsor would say if the sponsor were saying anything. Convoys slip. Budgets are annual. The next one will be heavier."
+tags = ["sponsor", "caution"]
+chronicle = "The outpost told itself the empty window was a scheduling slip and that the next one would carry double. It was the kind of sentence people said in the corridors."
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+q = "menace.grievance"
+add = -0.3
+[[option.effect]]
+flag = "silence_explained"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "You asked me last count whether the convoy was manifested. It was. A manifested convoy that does not sail is a slip, not a decision. I have seen slips."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "I will believe double when I see the tonnage. Until then I am running the loops as if the spares in the store are the spares there are."
+
+[[option]]
+id = "test"
+label = "They are watching to see what we do"
+text = "The sponsor has dish time. It could have said nothing was coming. It chose not to. Read that as a question."
+tags = ["sponsor", "throughput", "risk"]
+chronicle = "The outpost decided the empty window was a test and threw itself at the driver to pass it. It was a way of not having to think about the other explanation."
+[[option.effect]]
+q = "throughput.shipped"
+add = 10
+[[option.effect]]
+all_strain = 0.05
+[[option.effect]]
+q = "menace.grievance"
+add = 0.4
+[[option.effect]]
+flag = "silence_as_test"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "If it is a test, the answer is tonnes. If it is not a test, tonnes still cost nothing we were not already spending."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "You are proposing that thirty-six people work harder for an audience that may have left the room. I would rather they slept."
+
+[[option]]
+id = "count"
+label = "Start counting the silences"
+text = "Say nothing about why. Write it down as the first, so that if there is a second the outpost has a word for it already."
+tags = ["independence", "caution"]
+chronicle = "The outpost did not explain the empty window. It wrote it down as the first silence, so that a second would have a number."
+[[option.effect]]
+counter = "silences_counted"
+add = 1
+[[option.effect]]
+q = "menace.grievance"
+add = 0.2
+[[option.effect]]
+all_return_intent = -0.03
+[[option.effect]]
+flag = "counting_silences"
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Water does not care why the ship did not come. Count the window, adjust the reserve, and stop asking the sky for reasons."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "If you give it a number you have decided there will be more. I am not ready to tell Earth that we have started counting."

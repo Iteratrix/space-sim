@@ -1,0 +1,98 @@
+id = "wrights_born"
+title = "The Wrights"
+act = 1
+once = true
+priority = 60
+tags = ["machines", "capability", "spares"]
+text = """
+The dexterous units are the ones nobody can repair: the sponsor's manual says
+return to depot, and there is no depot. Two of the four are down. {wright} has
+been keeping the third alive with parts from the second, without asking, and
+has a notebook of procedures that are not in any manual. {hulls} says the
+arms and the haulers will go the same way and there is a choice to make about
+whether repairing the unrepairable is a hobby or a craft the outpost keeps.
+"""
+
+[[when]]
+q = "robots.dex"
+lt = 3.0
+
+[[cast]]
+role = "wright"
+skill = "engineering"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[option]]
+id = "teach"
+label = "Make it a craft"
+text = "Give the notebook a shelf and the repairer two apprentices and the hours to fail. Unstructured repair becomes a thing the outpost does on purpose."
+tags = ["capability", "spares", "independence", "hours"]
+chronicle = "We gave the repairer apprentices and hours, and the notebook of things nobody could fix became the first book the Wrights kept."
+[[option.effect]]
+flag = "wrights"
+[[option.effect]]
+q = "robots.dex"
+add = 0.5
+[[option.effect]]
+all_strain = 0.04
+[[option.effect]]
+person = "wright"
+strain = -0.1
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Every fleet I have read about goes dex, arm, hauler, plant, in that order, and the outposts that lasted were the ones that had someone who could not read the manual and fixed it anyway."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Field repair of a depot-only unit voids the warranty and the autonomy score both. The sponsor reads the score."
+
+[[option]]
+id = "request"
+label = "Ask the sponsor for replacements"
+text = "Put two dex units on the next manifest and stop the improvising. The manual says depot; let the depot do it."
+tags = ["sponsor", "throughput"]
+chronicle = "We asked for new dex units on the manifest and told the repairer to stop taking things apart. The repairer did not stop."
+[[option.effect]]
+flag = "dex_requested"
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.effect]]
+person = "wright"
+strain = 0.2
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Replacement is a line on a manifest. Improvisation is a line in an audit."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "The manifest is thirty counts away and the scrubber actuator is a dex part. I will be breathing the answer before it arrives."
+
+[[option]]
+id = "strip"
+label = "Strip the dead ones for the arms"
+text = "The dex actuators keep three arm units alive for a year. Fabrication over fingers."
+tags = ["spares", "capability", "throughput"]
+chronicle = "We stripped the dead dex units for their actuators and the arms ran another year on them. Nobody wrote down how."
+[[option.effect]]
+q = "robots.dex"
+add = -0.8
+[[option.effect]]
+q = "robots.arm"
+add = 0.6
+[[option.effect]]
+q = "stocks.spares"
+add = 6
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "An arm makes parts. A dex unit uses them. If I can only keep one alive I know which."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Cannibalising sponsor assets shows on the inventory count as loss. I will have to explain a loss."

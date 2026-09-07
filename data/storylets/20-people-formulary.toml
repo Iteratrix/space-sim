@@ -1,0 +1,104 @@
+id = "doctors_dilemma"
+title = "The Formulary"
+act = 1
+cooldown = 16
+tags = ["people", "medicine"]
+text = """
+{bodies} has counted the formulary twice and got the same number both times.
+Half of what came out on the first ship has expired and the rest is a shelf
+that would not fill a kit bag. {patient} needs a course of what is on that
+shelf, and so, probably, will someone else before the next convoy. The medical
+officer can stretch it thin across everyone who might need it, or spend it on
+the one who needs it now.
+"""
+
+[[when]]
+q = "stocks.medicine"
+lt = 30
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[cast]]
+role = "patient"
+
+[[option]]
+id = "ration"
+label = "Ration it: half courses, everyone, until the ship"
+text = "Nobody gets the full course. Nobody gets nothing."
+tags = ["medicine", "caution"]
+chronicle = "The medical officer cut every course in half and posted the shelf count on the door, so that everyone could see what was not there."
+[[option.effect]]
+person = "patient"
+strain = 0.15
+[[option.effect]]
+all_strain = 0.04
+[[option.effect]]
+q = "stocks.medicine"
+mul = 0.85
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "A half course is a bad course. But a shelf with nothing on it when the next one comes in with a fever is worse, and I have to be able to say I kept something."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "You do not run a pump at half pressure and call it maintained. Fix the one that is broken."
+
+[[option]]
+id = "spend"
+label = "Use the last of it on {patient}"
+text = "A full course for one. The shelf is empty afterwards and everyone knows it."
+tags = ["medicine", "people", "risk"]
+chronicle = "The medical officer gave {patient} the last full course in the formulary. The shelf was bare afterwards and the whole outpost watched the door."
+[[option.requires]]
+q = "stocks.medicine"
+ge = 3
+[[option.effect]]
+q = "stocks.medicine"
+mul = 0.1
+[[option.effect]]
+person = "patient"
+strain = -0.2
+[[option.effect]]
+tie = ["patient", "bodies"]
+reliance = 0.3
+[[option.effect]]
+all_strain = 0.03
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "I have one patient in front of me and a shelf that might treat a patient I do not have. The one in front of me wins. That is what the oath says, when there is one."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "It is not one shelf, it is thirty-six people and one shelf. Spend it on one and the other thirty-five are uninsured until the window."
+
+[[option]]
+id = "manifest"
+label = "Put a medicine crate at the top of the next manifest and hold {patient} until it comes"
+text = "Admit the shortage to Earth. Wait."
+tags = ["sponsor", "medicine", "caution"]
+chronicle = "The ring put a medicine crate at the head of the manifest and told {patient} to wait for the window. The sponsor asked why the first crate had not been enough."
+[[option.requires]]
+stage_max = 3
+[[option.effect]]
+person = "patient"
+strain = 0.2
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.03
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.03
+[[option.effect]]
+counter = "medicine_requested"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "A medical shortage is the one line item nobody on the board argues with. Ask, and ask loudly."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "The window is a long way off, and a course that starts in six counts is not the same course."

@@ -11,10 +11,12 @@ keep_radius_m = 50.0
 keep_rpm = 3.0
 
 [population]
-start = 36                     # act-1 crew at first count [canon §2: 110-240 at trail-off]
+start = 48                     # act-1 crew at first count [canon §2: 110-240 at trail-off]
 rotator_fraction = 0.7         # share on fixed contracts [07, 09]
 contract_counts = 30           # ~2 Earth windows
 families_allowed = false       # sponsor policy at start [10 §3.2]
+expansion_per_convoy = 12      # extra people per convoy while the sponsor is keen
+expansion_cap = 140            # the sponsor stops growing the outpost here
 
 [sponsor]
 runway_counts = 240            # months of funding at start; shocks eat it [04]
@@ -26,7 +28,7 @@ markup = 0.25                  # store markup on manifests [04: RAC +30%]
 lay_fraction = 0.65            # sponsor's share of net [06: 60-70%]
 shock_prob_per_review = 0.12   # exogenous runway shocks [04]
 shock_runway_hit = 24          # counts of runway lost per shock
-attention_decay_per_review = 0.07
+attention_decay_per_review = 0.09
 weight_update_stop_confidence = 0.55   # composite health threshold; first observable sign [11, 13]
 austerity_confidence = 0.45
 skip_rotation_confidence = 0.35

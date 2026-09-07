@@ -1,0 +1,99 @@
+id = "sponsor_empty_chair"
+title = "The Chair"
+act = 1
+once = true
+priority = 100
+tags = ["sponsor", "silence"]
+text = """
+There will be no ship. The message does not say so; it says nothing, and
+the count before it said nothing, and {liaison} has stopped pretending the
+dish time is coming back. {hours} has stopped keeping the review date. There is a chair at the ring that has always been
+the sponsor's, with {liaison} in it answering for Earth. The ring has to
+decide what that chair is now.
+"""
+
+[[when]]
+flag = "stage:6"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+skill = "logistics"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+optional = true
+
+[[option]]
+id = "keep_empty"
+label = "Leave it empty"
+text = "The chair stays. Nobody sits in it. When the ring speaks to the sponsor it speaks to the chair, and the chair says nothing back."
+tags = ["independence", "sponsor"]
+chronicle = "The ring kept the sponsor's chair and left it empty. Everyone who spoke to it knew who was not there."
+[[option.effect]]
+flag = "chair_empty"
+[[option.effect]]
+q = "menace.grievance"
+add = -0.5
+[[option.effect]]
+all_strain = 0.03
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "An empty chair is honest. It says what happened. I would rather argue with a fact than with a person who is standing in for one."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "People do worse with a hole than with a person. Every count that chair sits empty, someone will look at it, and I will see it in their sleep."
+
+[[option]]
+id = "holdout"
+label = "Seat {liaison} in it, to answer for Earth"
+text = "Keep the office and the person. {liaison} goes on answering last month's questions, from memory, for a sponsor who is not asking."
+tags = ["sponsor", "caution", "people"]
+chronicle = "The ring kept {liaison} in the sponsor's chair, to answer for an Earth that had stopped answering. It was a kindness to someone, and nobody was sure to whom."
+[[option.effect]]
+flag = "chair_holdout"
+[[option.effect]]
+person = "liaison"
+strain = 0.1
+[[option.effect]]
+q = "menace.grievance"
+add = 0.3
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "The manifests still need a format. The reviews still need a date. Someone has to keep the sponsor's clock even if the sponsor has stopped reading it."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "You are asking {liaison} to be the voice of a thing that has left. That is a job for a machine, and we have two of those."
+
+[[option]]
+id = "give_it"
+label = "Give the chair to the outpost"
+text = "Strike the office. The question that chair asked, who answers to the sponsor, has no answer now; let it be the seat for whoever answers for the whole."
+tags = ["independence", "risk"]
+chronicle = "The ring struck the sponsor's office and gave its chair to the outpost as a whole. It was the first seat the outpost made for itself."
+[[option.effect]]
+flag = "chair_outpost"
+[[option.effect]]
+q = "menace.grievance"
+add = -1.0
+[[option.effect]]
+all_return_intent = -0.05
+[[option.effect]]
+person = "liaison"
+strain = -0.05
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "A seat is a question. That one has been answered. Ask a new one."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "Do it later. There are people on this rock who are not ready to hear that the chair is ours, because it means the ship is not coming, and they have not said that out loud yet."

@@ -43,12 +43,12 @@ pub const WORDS: &[Word] = &[
     Word {
         old: "day",
         new: "watch",
-        trigger: "first_count",
+        trigger: "first_silence",
     },
     Word {
         old: "days",
         new: "watches",
-        trigger: "first_count",
+        trigger: "first_silence",
     },
     Word {
         old: "the Sun",
@@ -102,14 +102,59 @@ pub const WORDS: &[Word] = &[
     },
 ];
 
-/// Renders text through the words whose triggers have fired.
+/// Renders text through the words whose triggers have fired. Matches whole words only.
 #[must_use]
 pub fn render(game: &Game, text: &str) -> String {
     let mut out = text.to_owned();
     for Word { old, new, trigger } in WORDS {
         if game.lexicon_triggers.contains(*trigger) {
-            out = out.replace(old, new);
+            out = replace_word(&out, old, new);
         }
     }
     out
+}
+
+fn is_word_char(c: char) -> bool {
+    c.is_alphanumeric() || c == '_'
+}
+
+fn replace_word(text: &str, old: &str, new: &str) -> String {
+    let mut out = String::with_capacity(text.len());
+    let mut rest = text;
+    while let Some(pos) = rest.find(old) {
+        let before_ok = rest[..pos]
+            .chars()
+            .next_back()
+            .is_none_or(|c| !is_word_char(c));
+        let after_ok = rest[pos + old.len()..]
+            .chars()
+            .next()
+            .is_none_or(|c| !is_word_char(c));
+        out.push_str(&rest[..pos]);
+        if before_ok && after_ok {
+            out.push_str(new);
+        } else {
+            out.push_str(old);
+        }
+        rest = &rest[pos + old.len()..];
+    }
+    out.push_str(rest);
+    out
+}
+
+#[cfg(test)]
+mod tests {
+    use super::replace_word;
+
+    #[test]
+    fn whole_words_only() {
+        assert_eq!(
+            replace_word("the day today", "day", "watch"),
+            "the watch today"
+        );
+        assert_eq!(
+            replace_word("days and day", "day", "watch"),
+            "days and watch"
+        );
+    }
 }

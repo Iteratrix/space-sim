@@ -1,0 +1,147 @@
+id = "no_evacuation"
+title = "Nobody Is Coming for This"
+act = 1
+cooldown = 18
+weight = 0.7
+tags = ["people", "medicine", "risk"]
+text = """
+{patient} went down on the watch with a pain in the belly that has not
+stopped, and {bodies} has the diagnosis narrowed to two things, one of which
+is an operation and the other of which is also an operation. On Earth this is
+an ambulance. Here the nearest hospital is a window away and the window is not
+open. The formulary is what it is; the surgical kit was packed for cuts and
+burns; the medical officer has a manual, an uplink with a lag, and two hands.
+"""
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[cast]]
+role = "patient"
+
+[[option]]
+id = "operate"
+label = "Operate here, with the manual and what is in the kit"
+text = "The medical officer cuts. It costs the formulary and it costs the medic."
+tags = ["medicine", "risk", "capability"]
+chronicle = "{bodies} operated on {patient} in the mess with the manual open and two engineers holding lights. It took the rest of the formulary and most of a count to know it had worked."
+[[option.requires]]
+q = "stocks.medicine"
+ge = 2
+[[option.effect]]
+q = "stocks.medicine"
+add = -4
+[[option.effect]]
+person = "patient"
+strain = 0.3
+[[option.effect]]
+person = "bodies"
+strain = 0.2
+[[option.effect]]
+tie = ["patient", "bodies"]
+reliance = 0.4
+[[option.effect]]
+all_strain = 0.04
+[[option.effect]]
+flag = "operated_here"
+[[option.effect]]
+counter = "operations_in_the_can"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "I am not a surgeon. I have a manual and a lag and I am what there is. Hold the light steady and do not talk to me."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "If it goes wrong we have lost a medic as well as a patient, because nobody will trust the next cut. Consider the odds before the knife."
+
+[[option]]
+id = "talk_through"
+label = "Put Earth on the link and have them talk {bodies} through it"
+text = "Telemedicine with a lag. Every instruction arrives late; the sponsor learns what we are."
+tags = ["medicine", "sponsor"]
+chronicle = "Earth talked {bodies} through the operation on {patient}, each instruction arriving late. It held. The sponsor put the whole exchange in the quarterly."
+[[option.requires]]
+q = "sponsor.attention"
+ge = 0.3
+[[option.effect]]
+person = "patient"
+strain = 0.3
+[[option.effect]]
+person = "bodies"
+strain = 0.25
+[[option.effect]]
+q = "stocks.medicine"
+add = -3
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.05
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.effect]]
+tie = ["patient", "bodies"]
+reliance = 0.3
+[[option.effect]]
+flag = "operated_here"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "This is the one thing the sponsor's medical desk is for. Use it, and let them see us using it."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Twenty minutes of lag between the question and the answer. I have watched that kill a pump. A person is not slower."
+
+[[option]]
+id = "nurse"
+label = "No knife. Bed, fluids, and watching"
+text = "Treat what can be treated and hope the rest resolves. A long recovery if it does."
+tags = ["medicine", "caution"]
+chronicle = "{patient} was put to bed and watched around the clock, and it resolved, slowly. It was three counts before {patient} stood a watch again."
+[[option.effect]]
+person = "patient"
+strain = 0.4
+[[option.effect]]
+person = "patient"
+return_intent = 0.3
+[[option.effect]]
+all_strain = 0.06
+[[option.effect]]
+counter = "long_recoveries"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Some of these resolve. Not most. But a wrong cut with no blood bank is not a risk, it is a certainty, and I am not sure enough."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "Three counts of one person in bed and one person watching is six person-counts out of the farm. Say so before you choose it."
+
+[[option]]
+id = "wait_for_ship"
+label = "Keep {patient} comfortable and wait for the window"
+text = "The evacuation protocol says a ship. There is no ship. There is comfort."
+tags = ["caution", "sponsor"]
+chronicle = "The ring followed the evacuation protocol, which said to wait for a ship. {patient} died on the fourth day. It was the first death and nobody had decided what to do with the body."
+[[option.effect]]
+person = "patient"
+die = true
+[[option.effect]]
+all_strain = 0.15
+[[option.effect]]
+q = "menace.grievance"
+add = 1.0
+[[option.effect]]
+flag = "first_death"
+[[option.effect]]
+counter = "deaths"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The protocol exists so that nobody has to make this decision alone. It says stabilise and evacuate. I do not have another protocol."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "The protocol was written for a place with a ship. Stabilise and wait is a phrase for a death certificate."

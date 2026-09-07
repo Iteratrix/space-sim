@@ -1,0 +1,103 @@
+id = "rotator_stays"
+title = "One Does Not Board"
+act = 1
+cooldown = 14
+tags = ["people", "independence"]
+text = """
+{stayer} came to the ring with the opposite request. The contract ends at the
+window; {stayer} does not want the seat. Not for the lay, not for anything the
+sponsor can offer. The reasons given are practical: the work is unfinished,
+the replacement will not know the loop. The reasons not given are the ones
+everyone hears. The sponsor's headcount does not have a line for this.
+"""
+
+[[when]]
+turn_min = 10
+
+[[cast]]
+role = "stayer"
+rotator = true
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[option]]
+id = "accept"
+label = "Accept. {stayer} is a resident now"
+text = "Off the rotation list. Whatever the sponsor's paper says."
+tags = ["people", "independence"]
+chronicle = "{stayer} did not board and the ring wrote it down as residence. The sponsor's headcount was one long for a year before anyone on Earth noticed."
+[[option.effect]]
+person = "stayer"
+resident = true
+[[option.effect]]
+person = "stayer"
+strain = -0.1
+[[option.effect]]
+all_return_intent = -0.03
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.effect]]
+flag = "stayed_by_choice"
+[[option.effect]]
+counter = "stayed_by_choice"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "A person who knows the loop and wants to stay is worth three who know it and are counting the counts. Yes."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "There is no category on the headcount for someone who declined a ship. I will have to invent one, and inventions get audited."
+
+[[option]]
+id = "new_paper"
+label = "Stay, on a new contract with a new end date"
+text = "Another two windows. The sponsor understands renewals."
+tags = ["sponsor", "hours"]
+chronicle = "{stayer} signed another contract with another end date. Everyone understood it was a formality, including the sponsor, who preferred formalities."
+[[option.effect]]
+person = "stayer"
+return_intent = -0.25
+[[option.effect]]
+person = "stayer"
+strain = -0.05
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.02
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A renewal is a line the sponsor already has. It keeps the hands and it keeps the paper clean."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "A person with an end date has a third quarter. You are buying one. If they want to stay, let them stay."
+
+[[option]]
+id = "send_home"
+label = "The contract ends at the window. {stayer} boards"
+text = "The rotation is the sponsor's, and a crew that chooses its own headcount is not a crew."
+tags = ["sponsor", "caution"]
+chronicle = "The ring put {stayer} on the ship as the contract required. {stayer} boarded without a word and the ones who watched remembered it."
+[[option.effect]]
+person = "stayer"
+return_intent = 0.4
+[[option.effect]]
+person = "stayer"
+strain = 0.2
+[[option.effect]]
+all_strain = 0.03
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The rotation schedule is the one promise the sponsor keeps. If we break it from this end they will stop keeping it from theirs."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "You are sending home the one person here who is not counting the counts. Think about what that does to the ones who are."

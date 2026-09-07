@@ -1,0 +1,116 @@
+id = "sponsor_conjunction_decision"
+title = "Behind the Sun"
+act = 1
+weight = 1.5
+cooldown = 20
+tags = ["sponsor", "conjunction"]
+text = """
+Earth is behind the Sun. Nothing gets through for three counts, and the
+sponsor's standing orders assume the link. The driver has a launch window on
+a batch that {extraction} says is short of the shipping spec by a whisker
+and would pass if anybody were there to say so. {hours} points out that for
+the first time since the first count, nobody is there to say so. {liaison}
+is at the ring with nothing to relay, and looks like someone who has
+noticed what that feels like.
+"""
+
+[[when]]
+flag = "conjunction"
+
+[[when]]
+stage_max = 5
+
+[[cast]]
+role = "extraction"
+seat = "extraction"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "ship"
+label = "Ship the batch on the ring's own say-so"
+text = "Sign it off here. The sponsor's rule was written for a link that exists; when the link does not, the ring is the rule."
+tags = ["throughput", "independence", "risk"]
+chronicle = "With Earth behind the Sun the ring signed off a batch the sponsor would have held, and shipped it. It was the first decision the outpost made with nobody listening."
+[[option.effect]]
+q = "throughput.shipped"
+add = 20
+[[option.effect]]
+q = "stocks.propellant"
+add = -4
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.6
+[[option.effect]]
+flag = "shipped_in_blackout"
+[[option.effect]]
+counter = "blackout_decisions"
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "The batch is dry to within a tenth of a per cent. On Earth it would go out with a note. Write the note ourselves."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Everything shipped shows on the audit log with a sign-off field, and for three counts that field will say a name that is not the sponsor's. Someone will read it."
+
+[[option]]
+id = "hold"
+label = "Hold the batch until the link is back"
+text = "Do what the sponsor would do. Hold it, lose the launch, and ask when Earth comes round."
+tags = ["sponsor", "caution"]
+chronicle = "With Earth behind the Sun the ring held a batch it could have shipped, because the rule said ask and there was nobody to ask. The launch was lost."
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.effect]]
+q = "menace.grievance"
+add = 0.3
+[[option.effect]]
+flag = "held_in_blackout"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "You asked last count what happens when a sign-off is missing from the log. Nothing, if the batch was held. A great deal, if it was shipped."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "A lost launch is twenty tonnes I do not get back, and the driver crew stood down for a batch that was fine. That is a cost with no line to charge it to."
+
+[[option]]
+id = "use_the_dark"
+label = "Ship it, and move the spares while nobody is watching"
+text = "Sign the batch and, while the audit log has no reader, walk the capability crates out of the sponsor's store into the outpost's own."
+tags = ["independence", "spares", "capability", "risk"]
+chronicle = "With Earth behind the Sun the ring shipped the batch and quietly moved the store's spares into its own lockers. The log recorded it; nobody on Earth was reading the log."
+[[option.effect]]
+q = "throughput.shipped"
+add = 20
+[[option.effect]]
+q = "stocks.propellant"
+add = -4
+[[option.effect]]
+q = "stocks.spares"
+add = 18
+[[option.effect]]
+q = "menace.suspicion"
+add = 1.8
+[[option.effect]]
+flag = "spares_moved_in_blackout"
+[[option.effect]]
+counter = "blackout_decisions"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Every part in that store is on a shelf I cannot open without a form that goes to Earth. For three counts the form goes nowhere. I have a list."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The log is not paused. It is buffered. When the Sun moves, three counts of entries arrive at once, and the one that says spares moved will be read first."

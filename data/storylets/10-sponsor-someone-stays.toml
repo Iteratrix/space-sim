@@ -1,0 +1,115 @@
+id = "sponsor_someone_stays"
+title = "Someone Wants to Stay"
+act = 1
+weight = 1.5
+cooldown = 14
+tags = ["sponsor", "people", "rotation"]
+text = """
+The window is open and the ship is loading. {rotator} has come to the ring
+with the contract in hand and asked not to be on it. No reason given that
+would fit on a form; something about the light in the Keep at dim, and
+having stopped reading the messages from home. The sponsor counts residents
+as a cost line that never closes. {bodies} has {rotator}'s dose and strain
+in front of them. The ship leaves in two counts.
+"""
+
+[[when]]
+window = "open"
+
+[[when]]
+stage_max = 4
+
+[[when]]
+turn_min = 10
+
+[[cast]]
+role = "rotator"
+rotator = true
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+optional = true
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "stay"
+label = "Let {rotator} stay"
+text = "Tear up the return berth. {rotator} is a resident from this count, with a resident's lay and no ship to plan around."
+tags = ["people", "independence", "families"]
+chronicle = "{rotator} asked to stay and the ring said yes. The berth went home empty and the sponsor's roster gained a line it did not have a column for."
+[[option.effect]]
+person = "rotator"
+resident = true
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.03
+[[option.effect]]
+flag = "someone_stayed"
+[[option.effect]]
+counter = "chose_to_stay"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "The strain curve on someone who has stopped wanting to leave goes down, not up. I have seen it twice. Let this one stay and I will have seen it three times."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "You asked last count how the board sees residents. As a permanent cost with no exit clause. Every one we add is a line that never closes, and they count the lines."
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A resident is a pair of hands I can plan beyond thirty counts. I will take that over a berth any day the driver is running."
+
+[[option]]
+id = "send_home"
+label = "Hold {rotator} to the contract"
+text = "The contract says home. The sponsor pays for a rotation, not a settlement, and a berth refused is a berth the sponsor paid for and did not get."
+tags = ["sponsor", "caution", "cost"]
+chronicle = "{rotator} asked to stay and the ring held the contract. The ship left with {rotator} on it, looking at the rock the whole burn out."
+[[option.effect]]
+person = "rotator"
+leave = true
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.effect]]
+q = "menace.grievance"
+add = 0.6
+[[option.effect]]
+all_return_intent = 0.03
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "A contract that ends when it says it ends is the only kind the board trusts. Keep the board trusting contracts. We will need it to."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "The flight home is nine months in a can with a person who did not want to be in it. I would not sign that off on Earth and I will not here."
+
+[[option]]
+id = "one_more"
+label = "One more contract, and then we will see"
+text = "Neither yes nor no. Renew {rotator} for another term on the sponsor's paper, and let the question come back in thirty counts."
+tags = ["people", "sponsor", "caution"]
+chronicle = "{rotator} asked to stay and the ring gave one more contract instead of an answer. Thirty more counts, and the same question with a different sky."
+[[option.effect]]
+person = "rotator"
+return_intent = -0.3
+[[option.effect]]
+person = "rotator"
+strain = 0.05
+[[option.effect]]
+flag = "renewed_instead"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A renewal is a form the sponsor already has. Residency is a form it does not. Use the one that exists."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Someone who has stopped reading the messages from home is not going to start again in thirty counts. Say yes now, or say no; do not say later."
