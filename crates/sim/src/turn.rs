@@ -139,6 +139,7 @@ fn extraction_and_shipping(game: &mut Game, params: &Params) {
     let haul = (game.robots.haul / f64::from(params.robots.haul).max(1.0)).clamp(0.3, 1.2);
     let mined = params.extraction.water_t_per_count * pr * lf * haul;
     game.stocks.water_t += mined;
+    game.stocks.nitrogen_kg += mined * params.extraction.nitrogen_kg_per_t_water;
     let driver_ok = pr >= 0.75 && lf >= 0.5 && game.stocks.propellant_t > 0.0;
     if driver_ok {
         let reserve = 120.0;
@@ -176,7 +177,9 @@ fn consumables(game: &mut Game, params: &Params, events: &mut Events) {
         }
     }
     game.stocks.medicine = (game.stocks.medicine * 0.98 - n * 0.05).max(0.0);
-    let farm_ok = farm_power_ok(game, params) && game.stocks.nitrogen_kg > 200.0;
+    let farm_ok = farm_power_ok(game, params)
+        && game.stocks.nitrogen_kg > 200.0
+        && game.stocks.water_t > 10.0;
     game.stocks.food_margin_counts += if farm_ok { 0.05 } else { -0.5 };
     game.stocks.food_margin_counts = game.stocks.food_margin_counts.clamp(0.0, 24.0);
 }
@@ -683,6 +686,7 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
             arrive_one(game, params, rng);
             arrived += 1;
         }
+        game.power.pv_m2 += count_f(arrived) * params.convoy.pv_m2_per_person;
     }
     let staying: Vec<PersonId> = game
         .present()

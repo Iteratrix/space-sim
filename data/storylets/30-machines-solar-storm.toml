@@ -1,0 +1,78 @@
+id = "solar_storm"
+title = "The Storm Shadow"
+act = 1
+cooldown = 12
+weight = 0.8
+priority = 30
+tags = ["dose", "throughput", "risk"]
+text = """
+The active region that flared last sun-turn has come round again and the
+particle counters on the hull are climbing. {outside} is on the rock with a
+skiff crew, a sweep from the nearest storm shadow, in the middle of a driver
+load. {bodies} has the dose curve and it goes vertical in about a watch. Bring
+the crew in and the load is lost. Finish the load and the ledger gets a line
+that does not come off.
+"""
+
+[[when]]
+q = "solar_phase"
+gt = 0.8
+
+[[cast]]
+role = "outside"
+skill = "extraction"
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+optional = true
+
+[[option]]
+id = "finish"
+label = "Finish the load"
+text = "A watch more on the rock under a rising counter. The throughput is kept; the crew takes the dose."
+tags = ["throughput", "dose", "risk"]
+chronicle = "The crew finished the load under the counter and came in with a line on the ledger that does not come off."
+[[option.effect]]
+person = "outside"
+dose = 0.08
+[[option.effect]]
+person = "outside"
+strain = 0.15
+[[option.effect]]
+lexicon = "first_burning"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A lost load is a lost load. A dose is a number on a ledger nobody on Earth reads."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "Eighty millisieverts in a watch, on someone already at the skiff-crew rate. Two of those and I ground them for life. This is the first one."
+
+[[option]]
+id = "shelter"
+label = "Bring them in"
+text = "Drop the load and get the crew under water. The driver throws nothing this count."
+tags = ["dose", "people"]
+chronicle = "We brought the crew in under the storm shadow and lost the load, and the driver stood empty through the Burning."
+[[option.effect]]
+q = "throughput.shipped"
+add = -15
+[[option.effect]]
+person = "outside"
+strain = -0.05
+[[option.effect]]
+lexicon = "first_burning"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "The dose ledger is the only ledger that does not reset. Bring them in."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The quarterly does not have a column for solar weather. It has a column for tonnes."
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "The load will be there next sweep. The crew, if the counter is right, will not be the same crew."

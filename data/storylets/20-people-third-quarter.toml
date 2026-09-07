@@ -1,6 +1,7 @@
 id = "third_quarter"
 title = "The Long Middle"
 act = 1
+weight = 0.8
 cooldown = 10
 tags = ["people", "hours"]
 text = """

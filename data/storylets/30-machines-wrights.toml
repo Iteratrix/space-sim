@@ -18,12 +18,12 @@ q = "robots.dex"
 lt = 3.0
 
 [[cast]]
-role = "wright"
-skill = "engineering"
-
-[[cast]]
 role = "hulls"
 seat = "hulls"
+
+[[cast]]
+role = "wright"
+skill = "engineering"
 
 [[option]]
 id = "teach"

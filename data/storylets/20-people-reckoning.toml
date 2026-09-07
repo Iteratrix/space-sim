@@ -1,0 +1,109 @@
+id = "who_learns_the_reckoning"
+title = "Who Learns the Reckoning"
+act = 1
+once = true
+tags = ["people", "capability", "independence"]
+text = """
+The sponsor is cutting, the next ship may carry nobody, and every skill in
+the can is one person deep. The one that frightens {hours} is the reckoning: windows, phasing, what a hull
+costs to bring home. The mind can run the tables, but the mind is reset on
+schedule and the sponsor holds the tables. {apprentice} has asked to learn it.
+{reckoner}, if there still is one, has never taught anyone.
+"""
+
+[[when]]
+stage_min = 3
+
+[[when]]
+turn_min = 24
+
+[[cast]]
+role = "reckoner"
+skill = "navigation"
+min_skill = 3
+optional = true
+
+[[cast]]
+role = "apprentice"
+rotator = false
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[option]]
+id = "teach"
+label = "Take {apprentice} off the roster and teach the reckoning"
+text = "A resident learns the windows by hand. Hours out of the ledger for a convoy."
+tags = ["capability", "independence", "hours"]
+chronicle = "{apprentice} was taken off the roster to learn the reckoning by hand, tables and all. It cost a convoy of hours and it meant {outpost} could find its own way home if it ever had to."
+[[option.effect]]
+flag = "navigator_taught"
+[[option.effect]]
+person = "apprentice"
+strain = 0.1
+[[option.effect]]
+person = "apprentice"
+return_intent = -0.2
+[[option.effect]]
+tie = ["apprentice", "reckoner"]
+reliance = 0.3
+[[option.effect]]
+all_strain = -0.02
+[[option.effect]]
+counter = "skills_taught"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "One person deep is no person deep. I will find the hours. I would rather find them now than find out we needed them."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The sponsor provides navigation as a service. Training our own is a capability line, and capability lines are the ones that get asked about."
+
+[[option]]
+id = "trust_the_mind"
+label = "Leave the reckoning to the mind's tables"
+text = "It has never been wrong. It has never been unlicensed either."
+tags = ["machines", "hours"]
+chronicle = "The ring left the reckoning to the mind. The tables were always right, and everyone understood that the tables were the sponsor's."
+[[option.effect]]
+flag = "reckoning_by_mind"
+[[option.effect]]
+counter = "left_to_the_mind"
+[[option.effect]]
+person = "apprentice"
+strain = 0.05
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "The mind does it in a second and does not get tired. Teach people to check it, not to replace it."
+[[option.advice]]
+seat = "extraction"
+stance = "against"
+text = "The day the licence lapses is the day we need a person who can do it on paper, and that day we will not have time to teach one."
+
+[[option]]
+id = "ask_sponsor"
+label = "Ask the sponsor for a navigator on the next ship"
+text = "Admit the gap in the headcount and wait for Earth to fill it."
+tags = ["sponsor", "caution"]
+chronicle = "The ring asked Earth for a navigator on the next ship and put the request at the top of the headcount. Earth said it would see what could be done."
+[[option.requires]]
+stage_max = 3
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.03
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.03
+[[option.effect]]
+counter = "headcount_requests"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "A staffing gap is a normal request. It is the only kind of request the sponsor answers without a meeting."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "The last two headcount requests came back as a note about austerity. I am not planning around a third."

@@ -3,10 +3,10 @@ title = "The Last Ship"
 act = 1
 once = true
 weight = 4.0
-priority = 80
+priority = 100
 tags = ["sponsor", "people", "rotation"]
 text = """
-A ship is in the window, cargo only by the manifest, but {liaison} has read
+A ship is on approach for the window, cargo only by the manifest, but {liaison} has read
 the lading twice and there are two berths on it, unlisted, and no return
 ship scheduled after it. Nobody says it is the last. Everybody plans as if
 it is. {expert} is on contract and is the best pair of hands in the
@@ -19,12 +19,13 @@ which is a way of asking the ring to decide.
 stage_min = 4
 
 [[when]]
-window = "open"
+q = "counts_to_window"
+le = 2
 
 [[cast]]
 role = "expert"
 skill = "engineering"
-min_skill = 2
+min_skill = 1
 rotator = true
 
 [[cast]]

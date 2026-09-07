@@ -232,8 +232,17 @@ fn play(engine: &Engine, args: &Args) {
             save_game(&game, path);
         }
         if let Some(ending) = &game.ending {
-            if !args.json {
-                println!("\n{}", describe_ending(ending));
+            if args.json {
+                println!(
+                    "{}",
+                    serde_json::json!({ "summary": sim::report::summary(&game) })
+                );
+            } else {
+                println!(
+                    "\n{}\n{}",
+                    describe_ending(ending),
+                    sim::report::summary(&game)
+                );
             }
             break;
         }
@@ -311,6 +320,7 @@ struct RunResult {
     closure: f64,
     stage: u8,
     chronicle: Vec<String>,
+    summary: String,
 }
 
 fn run_one(engine: &Engine, seed: u64, policy: Policy, max_turns: u32, trace: bool) -> RunResult {
@@ -346,6 +356,7 @@ fn run_one(engine: &Engine, seed: u64, policy: Policy, max_turns: u32, trace: bo
         closure: game.closure,
         stage: game.sponsor.stage.index(),
         chronicle: engine.chronicle(&game),
+        summary: sim::report::summary(&game),
     }
 }
 
@@ -501,6 +512,7 @@ fn main() {
                     println!("{line}");
                 }
             }
+            println!("\n{}", r.summary);
             println!(
                 "\n-- {} turns, ending {:?}, population {}, residents {}, closure {:.2}, stage {}",
                 r.turns,

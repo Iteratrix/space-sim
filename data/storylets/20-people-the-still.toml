@@ -1,0 +1,101 @@
+id = "the_still"
+title = "The Still"
+act = 1
+weight = 0.5
+cooldown = 18
+tags = ["people", "air"]
+text = """
+{brewer} has a still. Everyone knows where it is except the ring, formally,
+and the ring knows now because {air} found the sugar draw in the loop budget.
+Every station in the record brewed, and every station's disciplinary log is
+mostly what happened after. It is also the only licensed ritual most of them
+had. The sponsor's policy is dry. The can is not.
+"""
+
+[[when]]
+turn_min = 6
+
+[[cast]]
+role = "brewer"
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[option]]
+id = "license"
+label = "License it: a bar, a ration, a night"
+text = "The loop pays a known sugar draw. The ring owns the ration."
+tags = ["people", "air"]
+chronicle = "The ring gave {brewer} a licence and a ration and a corner of the mess to pour it in, one night in the round. The loop budget got a line called sugar and nobody argued with it."
+[[option.effect]]
+all_strain = -0.06
+[[option.effect]]
+q = "stocks.food_margin"
+add = -0.3
+[[option.effect]]
+flag = "bar_licensed"
+[[option.effect]]
+tie = ["brewer", "air"]
+work_positive = 0.2
+[[option.effect]]
+counter = "rituals"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "If it is licensed I know the draw. If it is not I find it in the loop budget by surprise. I would rather know."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "Nine per cent of everything I will ever treat here comes out of that still, and every fight. A ration is a fight with a schedule."
+
+[[option]]
+id = "forbid"
+label = "Break it up. The policy is dry"
+text = "The still goes. The next one is better hidden."
+tags = ["sponsor", "caution"]
+chronicle = "The ring broke up the still and cited the policy. There was another one within two counts and the ring was not told where."
+[[option.effect]]
+all_strain = 0.04
+[[option.effect]]
+person = "brewer"
+strain = 0.15
+[[option.effect]]
+tie = ["brewer", "air"]
+hindrance = 0.25
+[[option.effect]]
+q = "menace.grievance"
+add = 0.4
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "A dry station is a line in the sponsor's safety case. Do not make me explain a bar."
+[[option.advice]]
+seat = "extraction"
+stance = "against"
+text = "Every dry station I wintered on had a still and every one of them had a worse still after they broke the first."
+
+[[option]]
+id = "look_away"
+label = "Look the other way"
+text = "No licence, no ration, no line in the budget. The sugar draw stays a mystery."
+tags = ["hours", "risk"]
+chronicle = "The ring decided it had not found a still. {air} adjusted the loop budget for a sugar draw with no name and the nights went on as they had."
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+q = "menace.grievance"
+add = 0.2
+[[option.effect]]
+q = "stocks.food_margin"
+add = -0.3
+[[option.effect]]
+counter = "looked_away"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A licence is a document and a document is a thing the audit reads. Do not write it down."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "An unlicensed draw is an unmeasured draw. I do not want a mystery in my loop budget."

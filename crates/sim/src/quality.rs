@@ -56,6 +56,10 @@ pub enum Quality {
     PowerDemand,
     /// Reactor life remaining, counts.
     ReactorLife,
+    /// Photovoltaic area, m².
+    PvArea,
+    /// Mirror concentrator area, m².
+    MirrorArea,
     /// Relay health, 0-1.
     RelayHealth,
     /// Tonnes shipped to date.
@@ -122,7 +126,7 @@ pub enum Quality {
 
 impl Quality {
     /// All qualities.
-    pub const ALL: [Self; 55] = [
+    pub const ALL: [Self; 57] = [
         Self::Turn,
         Self::Act,
         Self::CountsSinceConvoy,
@@ -147,6 +151,8 @@ impl Quality {
         Self::PowerCapacity,
         Self::PowerDemand,
         Self::ReactorLife,
+        Self::PvArea,
+        Self::MirrorArea,
         Self::RelayHealth,
         Self::Shipped,
         Self::Received,
@@ -208,6 +214,8 @@ impl Quality {
             Self::PowerCapacity => "power.capacity",
             Self::PowerDemand => "power.demand",
             Self::ReactorLife => "power.reactor_life",
+            Self::PvArea => "power.pv_m2",
+            Self::MirrorArea => "power.mirror_m2",
             Self::RelayHealth => "relay.health",
             Self::Shipped => "throughput.shipped",
             Self::Received => "throughput.received",
@@ -271,6 +279,8 @@ impl Quality {
             | Self::Shipped
             | Self::Received
             | Self::ReactorLife
+            | Self::PvArea
+            | Self::MirrorArea
             | Self::RobotsPlant
             | Self::RobotsHaul
             | Self::RobotsArm

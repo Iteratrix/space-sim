@@ -1,0 +1,126 @@
+id = "first_voiding"
+title = "Outside"
+act = 1
+once = true
+tags = ["people", "dose", "risk"]
+text = """
+{walker} has taken a suit and a surface pod and gone out onto the rock, alone,
+and has sent one message: not coming in until the window. Not a fault, not a
+breakdown that anyone could see from the outside; {walker} had been quiet for
+counts and is now somewhere under the sky with two grams of aluminium between
+skin and everything. {bodies} has done the sum: a window outside the shielding
+is most of a sievert, and a flare is death. Nobody has a word for what this is.
+"""
+
+[[when]]
+q = "people.mean_strain"
+gt = 0.35
+
+[[when]]
+turn_min = 36
+
+[[cast]]
+role = "walker"
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[option]]
+id = "let_go_logged"
+label = "Let {walker} stay out, and log the dose honestly"
+text = "A window outside. The ledger takes the number and the sponsor reads it."
+tags = ["dose", "people", "independence"]
+chronicle = "{walker} stayed on the surface a whole window and came in thin and quiet with most of a sievert in the ledger. It was written down. Nobody could say what had been done, only that it had been done first."
+[[option.effect]]
+person = "walker"
+dose = 0.7
+[[option.effect]]
+person = "walker"
+strain = -0.4
+[[option.effect]]
+person = "walker"
+return_intent = -0.3
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.05
+[[option.effect]]
+lexicon = "first_voiding"
+[[option.effect]]
+flag = "voided:1"
+[[option.effect]]
+counter = "voidings"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "I cannot make {walker} come in without three people and a fight on the surface, and that is more dose than talking. Let it be a choice, and let the ledger say so."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A crew member voluntarily taking a year's coil dose in a count is a psychiatric event in the sponsor's book and it will be read as one."
+
+[[option]]
+id = "let_go_quiet"
+label = "Let {walker} stay out, and keep it off the uplink"
+text = "The ledger takes the number. The sponsor does not."
+tags = ["dose", "independence", "risk"]
+chronicle = "{walker} stayed on the surface a whole window. The dose went in the ledger and not in the quarterly. It was the first thing {outpost} kept from Earth on purpose."
+[[option.effect]]
+person = "walker"
+dose = 0.7
+[[option.effect]]
+person = "walker"
+strain = -0.4
+[[option.effect]]
+person = "walker"
+return_intent = -0.3
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.8
+[[option.effect]]
+lexicon = "first_voiding"
+[[option.effect]]
+flag = "voided:1"
+[[option.effect]]
+counter = "voidings"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "The number is ours. The sponsor gets the tonnage. Nobody on Earth needs a line about a person sitting on a rock."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The dose ledger is on the audit log. If it is in one place and not the other, somebody will eventually have the two side by side."
+
+[[option]]
+id = "bring_in"
+label = "Go out and bring {walker} in"
+text = "Three people, a suit each, an argument on the surface. Dose for all of them."
+tags = ["dose", "caution", "medicine"]
+chronicle = "Three went out after {walker} and brought {walker} in by the second watch. Everyone involved took dose and {walker} did not speak to any of them for a count."
+[[option.effect]]
+person = "walker"
+dose = 0.08
+[[option.effect]]
+person = "walker"
+strain = 0.1
+[[option.effect]]
+person = "bodies"
+dose = 0.04
+[[option.effect]]
+tie = ["walker", "bodies"]
+hindrance = 0.25
+[[option.effect]]
+all_strain = 0.02
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "The sum is three people at surface dose for a watch against one person at surface dose for a window. The sum says go. I am not sure the sum is the whole question."
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "A flare comes and we have a body on the surface. Bring {walker} in and argue about it under rock."

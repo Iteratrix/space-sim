@@ -1,0 +1,95 @@
+id = "first_midwinter"
+title = "The First Midwinter"
+act = 1
+once = true
+tags = ["people", "air"]
+text = """
+A year of counts. There is no winter here and no midwinter; the drum's lights
+run the same twenty-four hours they ran on the first day. But every station in
+the record that lasted had a feast on a date it chose, and the ones that did
+not have one had a worse year. {air} has been keeping something back in the
+farm's cold store that nobody has asked about. {hours} has the calendar and
+could put a mark on it.
+"""
+
+[[when]]
+turn_min = 12
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[option]]
+id = "feast"
+label = "A feast from what the farm has been hoarding"
+text = "One night, everything on the table, the lights up. Fixed on the calendar."
+tags = ["people", "air"]
+chronicle = "On the twelfth count {air} opened the cold store and the outpost ate everything in it under full light. The date went on the calendar as Midwinter, though there is no winter."
+[[option.effect]]
+all_strain = -0.1
+[[option.effect]]
+q = "stocks.food_margin"
+add = -0.5
+[[option.effect]]
+flag = "midwinter"
+[[option.effect]]
+lexicon = "first_midwinter"
+[[option.effect]]
+counter = "rituals"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "I have been saving the strawberries since the eighth count and I would like a reason. Give me a date."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "A night of everyone off watch is a night of nobody on watch. Half a count of food margin for a party. I will do it if the ring says, but I will write the number down."
+
+[[option]]
+id = "read_the_ledger"
+label = "A count of the marks: the dose ledger read aloud, then the meal"
+text = "Not a party. A reckoning. Everyone hears what the year has cost everyone."
+tags = ["people", "dose"]
+chronicle = "On the twelfth count the medical officer read every name and every millisievert aloud before the meal. Nobody had known the totals. It became the thing the date was for."
+[[option.effect]]
+all_strain = -0.05
+[[option.effect]]
+flag = "midwinter"
+[[option.effect]]
+lexicon = "first_midwinter"
+[[option.effect]]
+lexicon = "dose_ledger"
+[[option.effect]]
+counter = "rituals"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "They should know the number. It is their number. Once a year, out loud, with the meal after so that it is not only a number."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Reading dose totals aloud at a party is exactly the sort of thing that turns up in a sponsor's risk review, and I will be the one asked about the party."
+
+[[option]]
+id = "no_ritual"
+label = "The sponsor's calendar is enough"
+text = "There is an anniversary on the quarterly. That is a date."
+tags = ["sponsor", "caution"]
+chronicle = "The ring decided the outpost did not need a feast of its own. The anniversary was noted on the quarterly and the farm's cold store stayed shut."
+[[option.effect]]
+all_strain = 0.02
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.01
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "We are an outpost of a company. The company has an anniversary. Inventing holidays is the first step on a road the sponsor has seen other stations walk."
+[[option.advice]]
+seat = "extraction"
+stance = "against"
+text = "The winter I had no midwinter was the worst one. You do not need to believe in it. You need the night."

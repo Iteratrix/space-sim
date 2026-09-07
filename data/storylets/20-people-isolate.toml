@@ -1,0 +1,124 @@
+id = "the_isolate"
+title = "The One at the Edge"
+act = 1
+weight = 0.6
+cooldown = 9
+tags = ["people"]
+text = """
+{isolate} eats after everyone else has finished and stands the watches alone
+when the roster allows it. Nobody dislikes {isolate}. Nobody would go on a
+three-year mission with {isolate} either, if asked, and the record is clear
+about where that ends: an error at work, then a name for it, then a group that
+has agreed without meeting that {isolate} is the problem. {warm} is the one
+person in the can that people talk to, and has noticed.
+"""
+
+[[when]]
+q = "people.mean_strain"
+gt = 0.25
+
+[[cast]]
+role = "isolate"
+
+[[cast]]
+role = "warm"
+skill = "social"
+min_skill = 1
+
+[[option]]
+id = "draw_in"
+label = "{warm} draws {isolate} back in"
+text = "The expressive leader does the work. It is work."
+tags = ["people"]
+chronicle = "{warm} started taking the late meal with {isolate}, and then so did others. It cost {warm} something and nobody wrote down what."
+[[option.effect]]
+tie = ["isolate", "warm"]
+work_positive = 0.3
+[[option.effect]]
+tie = ["isolate", "warm"]
+reliance = 0.2
+[[option.effect]]
+person = "isolate"
+strain = -0.15
+[[option.effect]]
+person = "warm"
+strain = 0.06
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "This is the intervention the literature actually supports. One person who is good at people, doing it on purpose. It does not need a policy."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "{warm} is on the roster too. Every meal is an hour. I am not against it, I want it in the ledger."
+
+[[option]]
+id = "reassign"
+label = "Move {isolate} to a shared watch with a different task"
+text = "A role change. Meaningful work in company, not the same task alone."
+tags = ["people", "hours"]
+chronicle = "The ring moved {isolate} onto the shared farm watch, where nobody works alone. It was a smaller thing than it looked and it worked better than it should have."
+[[option.effect]]
+person = "isolate"
+strain = -0.1
+[[option.effect]]
+tie = ["isolate", "warm"]
+work_positive = 0.1
+[[option.effect]]
+all_strain = 0.01
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Give me {isolate} on the beds. The farm is the one watch where you cannot be alone if you try."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "I lose a pair of hands that knows the drum to a watch that does not need them. Do it if you must, and tell me who replaces them."
+
+[[option]]
+id = "rotate_out"
+label = "Put {isolate} on the next ship"
+text = "Rotation is the one cure the sponsor still offers."
+tags = ["sponsor", "people", "cost"]
+chronicle = "{isolate} went home on the next ship, early, as the sponsor's policy on morale cases allowed. The can was easier afterwards and nobody was proud of it."
+[[option.requires]]
+stage_max = 3
+[[option.effect]]
+person = "isolate"
+leave = true
+[[option.effect]]
+all_strain = -0.02
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "There is a category on the rotation form for this and it does not require a diagnosis. Use it while the form still exists."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "You are sending someone home for being quiet. The next quiet one will hear that."
+
+[[option]]
+id = "leave_be"
+label = "Leave {isolate} be"
+text = "Some people want the edge. The record says otherwise, but the record has not met everyone."
+tags = ["caution", "hours"]
+chronicle = "The ring left {isolate} to the late meal and the lone watches. The error, when it came, was small, and the name for it was not."
+[[option.effect]]
+person = "isolate"
+strain = 0.15
+[[option.effect]]
+tie = ["warm", "isolate"]
+hindrance = 0.1
+[[option.effect]]
+counter = "isolates_ignored"
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "I was the one at the edge on the ice for a whole winter and I was fine. Not everyone who eats alone is drowning."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "The chain is withdrawal, error, scapegoat. We are at the first link and it is the cheapest one to break."

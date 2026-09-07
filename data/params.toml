@@ -41,6 +41,7 @@ tof_max_days = 900.0
 tof_step_days = 15.0
 base_tonnes = 60.0             # tonnes delivered per convoy at full confidence
 person_kw = 10.0               # farm + ECLSS power per person [03, 12: 5-15 kW]
+pv_m2_per_person = 190.0       # PV shipped with each arrival: 10 kW at 2.4 AU
 
 [stocks]
 water_t = 400.0
@@ -106,6 +107,7 @@ embodiment_per_count = 0.03
 water_t_per_count = 14.0       # bake-out throughput at full labour
 driver_t_per_count = 40.0      # mass driver shipping capacity
 driver_kw = 180.0
+nitrogen_kg_per_t_water = 4.0  # ammonium recovered in the bake-out; Ch clays ~0.2-0.3 wt% N [03]
 
 [social]
 displacement_outward_ratio = 5.0

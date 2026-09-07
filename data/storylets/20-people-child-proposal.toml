@@ -1,0 +1,118 @@
+id = "child_proposal"
+title = "The Question the Policy Was Written For"
+act = 1
+once = true
+tags = ["people", "families", "dose"]
+text = """
+{asker} has asked the ring for a child. Not permission, exactly; the sponsor's
+medical policy says no children on station and does not say who would stop
+one. {bodies} has the numbers: the Keep runs at twelve millisieverts a year,
+which is less than some cities; gestation here roughly doubles a childhood
+cancer risk that starts small; the policy was written for a coil ship and
+copied to the rock without anyone reading it. {asker} is a resident. There is
+no ship in the plan that takes {asker} home to do this.
+"""
+
+[[when]]
+q = "people.residents"
+ge = 6
+
+[[when]]
+stage_max = 3
+
+[[cast]]
+role = "asker"
+rotator = false
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[option]]
+id = "defy"
+label = "The policy was written for a hull. The Keep is not a hull. Yes"
+text = "No permission asked. The dose book says it is survivable and the ring says so."
+tags = ["families", "independence", "risk"]
+chronicle = "The ring told {asker} yes, and wrote the dose numbers next to the decision so that anyone reading later would know it was not made blind. The sponsor was not asked."
+[[option.effect]]
+flag = "families_defied"
+[[option.effect]]
+q = "menace.suspicion"
+add = 1.5
+[[option.effect]]
+person = "asker"
+strain = -0.15
+[[option.effect]]
+person = "asker"
+return_intent = -0.3
+[[option.effect]]
+all_return_intent = -0.04
+[[option.effect]]
+tie = ["asker", "bodies"]
+reliance = 0.3
+[[option.effect]]
+counter = "policies_defied"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Twelve millisieverts. I would sign that on Earth. The policy is a hull policy with the word hull crossed out, and I will not enforce a crossing-out."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A child on the headcount is a line the sponsor cannot explain to its insurers. That is not a policy, that is the end of the outpost as the sponsor understands it."
+
+[[option]]
+id = "ask"
+label = "Put it to the sponsor as a formal request, with the dose numbers"
+text = "Wait for the answer. The answer is a window away and probably no."
+tags = ["sponsor", "families", "caution"]
+chronicle = "The ring sent the request to Earth with the dose numbers attached and told {asker} to wait for the window. The sponsor answered with a longer policy."
+[[option.effect]]
+flag = "families_asked"
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.05
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.03
+[[option.effect]]
+person = "asker"
+strain = 0.15
+[[option.effect]]
+person = "asker"
+return_intent = 0.1
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Ask. With numbers. The worst case is a no we already have, and the best case is a policy someone actually wrote for a rock."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "You are asking a board that has never seen this place to rule on what a body can bear in it. They will say no and then we are defying them instead of ignoring them."
+
+[[option]]
+id = "refuse"
+label = "The policy is the policy. Not here, not yet"
+text = "The Bodies seat does not disagree with the numbers. The ring does not want the fight."
+tags = ["sponsor", "caution"]
+chronicle = "The ring told {asker} no, and read the policy aloud so that it would be the policy saying it. {asker} asked about the next ship."
+[[option.effect]]
+person = "asker"
+strain = 0.2
+[[option.effect]]
+person = "asker"
+return_intent = 0.35
+[[option.effect]]
+tie = ["asker", "bodies"]
+hindrance = 0.2
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A pregnancy is a person off the roster for a year and a person on the ration for eighteen. I do not have the hours. Say no and say why."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "You want me to tell a patient the risk is unacceptable when I have just told the ring it is not. Find someone else to say it."

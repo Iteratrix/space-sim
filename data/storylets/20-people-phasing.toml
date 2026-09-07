@@ -88,7 +88,7 @@ id = "witness"
 label = "Make it a lay, witnessed, with terms"
 text = "A first marriage in the can, on our own terms, written down. {third} attends."
 tags = ["families", "independence"]
-chronicle = "{one} and {other} put their lay before the ring with {hours} as witness, the first in the outpost. {third} attended, and everyone noticed that too."
+chronicle = "{one} and {other} put their lay before the ring with the ring as witness, the first in the outpost. {third} attended, and everyone noticed that too."
 [[option.effect]]
 tie = ["one", "other"]
 work_positive = 0.3

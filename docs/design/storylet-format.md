@@ -109,7 +109,7 @@ Readable everywhere; writable ones are marked `w`.
 | `sponsor.counts_to_review` | |
 | `stocks.water` w (t), `stocks.propellant` w (t), `stocks.nitrogen` w (kg), `stocks.spares` w, `stocks.boron` w (kg), `stocks.helium` w (kg), `stocks.medicine` w, `stocks.food_margin` w (counts) | |
 | `closure` w (0-1) | mass closure |
-| `power.capacity`, `power.demand` (kW), `power.reactor_life` w (counts) | |
+| `power.capacity`, `power.demand` (kW), `power.reactor_life` w (counts), `power.pv_m2` w, `power.mirror_m2` w (m²) | |
 | `relay.health` w (0-1) | |
 | `throughput.shipped` w, `throughput.received` w, `throughput.phi` | tonnes; φ = shipped/received |
 | `people.population`, `people.residents`, `people.rotators`, `people.children` | |

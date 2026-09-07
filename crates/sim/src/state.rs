@@ -384,6 +384,8 @@ impl Game {
             Quality::PowerCapacity => self.power.capacity_kw,
             Quality::PowerDemand => self.power.demand_kw,
             Quality::ReactorLife => f64::from(self.power.reactor_life),
+            Quality::PvArea => self.power.pv_m2,
+            Quality::MirrorArea => self.power.mirror_m2,
             Quality::RelayHealth => self.relay_health,
             Quality::Shipped => self.shipped_t,
             Quality::Received => self.received_t,
@@ -475,6 +477,8 @@ impl Game {
             Quality::ReactorLife => {
                 self.power.reactor_life = value.max(0.0).round().saturating_as::<u32>();
             }
+            Quality::PvArea => self.power.pv_m2 = value.max(0.0),
+            Quality::MirrorArea => self.power.mirror_m2 = value.max(0.0),
             Quality::RobotsPlant => self.robots.plant = value.max(0.0),
             Quality::RobotsHaul => self.robots.haul = value.max(0.0),
             Quality::RobotsArm => self.robots.arm = value.max(0.0),

@@ -1,0 +1,99 @@
+id = "first_death_rites"
+title = "What Is Done With the Body"
+act = 1
+once = true
+tags = ["people", "closure", "water"]
+text = """
+There has been a death and there is a body in the cold locker, and the ring
+has to decide what happens to it, because no procedure covers it and the next
+ship, if there is one, is not equipped to carry it. {air} has said the thing
+out loud: sixteen kilos of carbon, two of nitrogen, forty litres of water,
+phosphorus the farm is short of. {bodies} has said the other thing: it is a
+person. What {outpost} does now it will do every time.
+"""
+
+[[when]]
+flag = "first_death"
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[option]]
+id = "plant"
+label = "Plant the body in the farm beds, under a named tile"
+text = "Nothing leaves the loop. The farm takes what it is short of. The name stays on the tile."
+tags = ["closure", "air", "independence"]
+chronicle = "The body was planted in the farm beds under a tile with the name on it. {air} said the beds would be better for it, and meant it as chemistry, and nobody minded."
+[[option.effect]]
+flag = "rock_plants"
+[[option.effect]]
+all_strain = -0.05
+[[option.effect]]
+q = "menace.grievance"
+add = -0.3
+[[option.effect]]
+counter = "planted"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Everything that goes into the beds comes back as food. I would want it for myself. It is not a small thing to be a farm."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "There is a form for repatriation of remains and the sponsor expects it filled in. Composting a colleague is not one of the boxes."
+
+[[option]]
+id = "launch"
+label = "Launch the body on a line, sewn in, feet first"
+text = "The sea custom. Forty litres of water go with it, out of the loop, forever."
+tags = ["people", "risk"]
+chronicle = "The body went out on a line from the surface, sewn in cloth, and everyone who could stood at the glazing. Forty litres of water went with it and {air} wrote the loss in the book."
+[[option.effect]]
+flag = "hull_launches"
+[[option.effect]]
+q = "stocks.water"
+add = -0.05
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+lexicon = "first_line_launch"
+[[option.effect]]
+counter = "launched"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Every ship since there were ships has done it this way. It is the only rite anyone here already knows."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "Forty litres and two kilos of nitrogen out of a loop that leaks forty-five a count already. It is a rite. It is also a theft from whoever is thirsty next year."
+
+[[option]]
+id = "cold_store"
+label = "Keep the body frozen for the sponsor's ship"
+text = "The procedure, such as it is. A body in the locker for a window or two, and every rumour a body in a locker attracts."
+tags = ["sponsor", "caution"]
+chronicle = "The body stayed in the cold locker for the sponsor's ship, and the ship was a long time coming. By the time it came there were three stories about how the death had happened and nobody believed the first one."
+[[option.effect]]
+flag = "body_stored"
+[[option.effect]]
+all_strain = 0.05
+[[option.effect]]
+q = "menace.grievance"
+add = 0.6
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "There will be an inquiry. An inquiry wants a body. If we have disposed of it ourselves the inquiry becomes about us."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "A body in a locker for a year is the ICE record's worst chain: rumours, no autopsy, a contractor stonewalling, and one or two people never quite trusted again. I have read the case. Do not make me live in it."

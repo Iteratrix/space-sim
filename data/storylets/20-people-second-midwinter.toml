@@ -1,0 +1,111 @@
+id = "second_midwinter"
+title = "The Second Midwinter"
+act = 1
+once = true
+tags = ["people", "air"]
+text = """
+The date is coming round again and this time people know it is a date. The
+new hands off the last ship have heard about it and think it is a joke;
+{veteran} was here for the first one and does not. {newcomer} asked, at the
+meal, whether it was compulsory. The ritual either becomes a thing that is
+done here, or it becomes a thing that was done once.
+"""
+
+[[when]]
+flag = "midwinter"
+
+[[when]]
+fired = "first_midwinter"
+
+[[when]]
+turn_min = 24
+
+[[cast]]
+role = "veteran"
+rotator = false
+
+[[cast]]
+role = "newcomer"
+rotator = true
+
+[[option]]
+id = "keep"
+label = "Hold it again, and hold it bigger"
+text = "The second time is the one that makes it a custom."
+tags = ["people", "independence"]
+chronicle = "The second Midwinter was held with the new hands watching, and by the end of the night they were not watching. It is a custom now."
+[[option.effect]]
+all_strain = -0.08
+[[option.effect]]
+q = "stocks.food_margin"
+add = -0.5
+[[option.effect]]
+flag = "midwinter_kept"
+[[option.effect]]
+tie = ["newcomer", "veteran"]
+reliance = 0.2
+[[option.effect]]
+tie = ["newcomer", "veteran"]
+work_positive = 0.15
+[[option.effect]]
+counter = "rituals"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "I have been saving again. That is what the date is for, now."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "It cost half a count of margin last year and I am being asked for more. I can find it. I want it noticed that I am finding it."
+
+[[option]]
+id = "veterans_only"
+label = "Let {veteran} and the old hands hold it; the rest may come"
+text = "A thing the first crew does. In or out."
+tags = ["people", "risk"]
+chronicle = "The second Midwinter was held by those who had been at the first. The new hands were welcome and knew they were guests. That distinction lasted."
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+person = "veteran"
+strain = -0.1
+[[option.effect]]
+person = "newcomer"
+strain = 0.08
+[[option.effect]]
+tie = ["newcomer", "veteran"]
+hindrance = 0.15
+[[option.effect]]
+flag = "midwinter_kept"
+[[option.effect]]
+counter = "rituals"
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Every ship has the ones who crossed the line and the ones who have not. It gives the new ones something to become."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "You are inventing an in-group in a can of thirty-six. The record on that is not good."
+
+[[option]]
+id = "lapse"
+label = "Let it lapse"
+text = "It was a good night. It does not have to be a calendar."
+tags = ["hours", "caution"]
+chronicle = "There was no second Midwinter. Some people ate together on the date and did not call it anything."
+[[option.effect]]
+unflag = "midwinter"
+[[option.effect]]
+all_strain = 0.03
+[[option.effect]]
+person = "veteran"
+strain = 0.1
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Half a count of margin, every year, forever, for a night. Say it plainly and let the ring decide with the number in front of it."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "Then what did I save the strawberries for."

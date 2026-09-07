@@ -1,0 +1,82 @@
+id = "water_reserve"
+title = "The Reserve and the Throw"
+act = 1
+cooldown = 16
+weight = 0.6
+priority = 0
+tags = ["water", "throughput", "sponsor"]
+text = """
+The mass driver throws water because water is what the sponsor's metric is
+made of. The reserve line on the tank is the same line every count: whatever
+the bake-out makes above it goes down the driver. {extraction} has the tank
+gauge and it is on the line. {hours} has the quarterly and it is on the
+line too. The window is shut; nothing thrown this season arrives any sooner
+for being thrown now. The question is whether the reserve is a floor or a
+target.
+"""
+
+[[when]]
+q = "stocks.water"
+lt = 122
+
+[[when]]
+q = "earth_window_open"
+eq = 0
+
+[[cast]]
+role = "extraction"
+seat = "extraction"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[option]]
+id = "pause"
+label = "Stop the throw until the window"
+text = "Let the tank climb. The quarterly shows a flat season and the shielding on the hulls gets a little thicker."
+tags = ["water", "capability", "dose"]
+chronicle = "We stopped the throw for a season and let the tank climb, and the quarterly showed it, and the hulls were a hand's width safer."
+[[option.effect]]
+flag = "throw_paused"
+[[option.effect]]
+q = "stocks.water"
+add = 15
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.05
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "The window is shut. Water thrown now sits in a pod on a trajectory for a season anyway. Let it sit in the tank instead, where it is shielding."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A flat quarter is a quarter the board asks about. I will be asked whether the driver is broken, and the honest answer is worse."
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Every tonne in the tank is a tonne between the hulls and the Dark. The ledger would like the tonne."
+
+[[option]]
+id = "throw"
+label = "Keep throwing"
+text = "The metric is the metric. The reserve holds the outpost; it does not need to hold more."
+tags = ["throughput", "sponsor"]
+chronicle = "We kept the throw going through the shut window, and the reserve held at the line, and the quarterly was good."
+[[option.effect]]
+q = "stocks.water"
+add = -10
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.effect]]
+all_strain = 0.04
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Phi is tonnes thrown over tonnes received, over the life of the outpost. A flat season never comes back."
+[[option.advice]]
+seat = "extraction"
+stance = "against"
+text = "The reserve is the water the hulls are made of. It is a floor. I would like it minuted as a floor."

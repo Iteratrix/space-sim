@@ -1,6 +1,7 @@
 id = "rotator_stays"
 title = "One Does Not Board"
 act = 1
+weight = 0.6
 cooldown = 14
 tags = ["people", "independence"]
 text = """

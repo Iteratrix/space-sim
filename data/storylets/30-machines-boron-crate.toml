@@ -1,0 +1,92 @@
+id = "boron_crate"
+title = "The Boron Crate"
+act = 1
+once = true
+priority = 50
+tags = ["capability", "spares", "sponsor"]
+text = """
+There is a crate of boron in the store and three seats want it. {hulls}
+wants it kept: a coil set cannot be rewound without tonnes of the stuff and
+this crate is the start of tonnes. {air} wants a share for the farm, where it
+is a micronutrient the regolith does not have. The reactor's control shims are
+boron too, and they are a wear item. The sponsor, if it noticed the crate,
+would want to know why a throughput outpost holds a strategic material it has
+no listed use for.
+"""
+
+[[when]]
+q = "stocks.boron"
+gt = 100
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[option]]
+id = "keep"
+label = "Vault it for the coils"
+text = "Seal the crate and start the tally. A coil set is years and tonnes away; this is the first line of the ledger."
+tags = ["capability", "independence", "hulls"]
+chronicle = "We vaulted the boron for a coil we could not yet wind, and started a ledger with one line on it."
+[[option.effect]]
+flag = "boron_vaulted"
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.3
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "A coil is a hull that keeps sailors alive past forty. Every gram of that crate is coil. Do not let anyone garden with it."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A vaulted strategic material with no manifest use is a paragraph in somebody's report. I would rather it were a fertiliser."
+
+[[option]]
+id = "shims"
+label = "Cut control shims for the reactor"
+text = "A hundred kilograms into the reactor's wear items. The core runs a little longer and the crate is a little lighter."
+tags = ["capability", "hulls", "risk"]
+chronicle = "We cut reactor shims from the boron and the core ran a season longer on them, and the crate was lighter for it."
+[[option.effect]]
+q = "stocks.boron"
+add = -100
+[[option.effect]]
+q = "power.reactor_life"
+add = 6
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "The shims are the one boron part I can cut on the bench today. The coil is a decade of wanting. Spend some on what is real."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "The reactor gets six more counts and the farm gets nothing. The farm is what eats when the reactor is gone."
+
+[[option]]
+id = "farm"
+label = "A share for the farm"
+text = "Forty kilograms to the regolith beds as micronutrient. Yield goes up a fraction and the margin with it."
+tags = ["air", "closure", "people"]
+chronicle = "We gave the farm its share of the boron and the beds answered with a better season, and the coil ledger started a line short."
+[[option.effect]]
+q = "stocks.boron"
+add = -40
+[[option.effect]]
+q = "stocks.food_margin"
+add = 2
+[[option.effect]]
+q = "closure"
+add = 0.003
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Forty kilograms. The coil people can have the rest. The beds have been short of it since the first planting and I have the yield curve to prove it."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Forty now, forty next season, and in ten years the coil ledger is a list of harvests."

@@ -11,6 +11,7 @@ pub mod names;
 pub mod params;
 pub mod person;
 pub mod quality;
+pub mod report;
 pub mod ring;
 pub mod setup;
 pub mod state;

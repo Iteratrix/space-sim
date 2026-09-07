@@ -95,6 +95,7 @@ pub struct Convoy {
     pub tof_step_days: f64,
     pub base_tonnes: f64,
     pub person_kw: f64,
+    pub pv_m2_per_person: f64,
 }
 
 #[allow(missing_docs)]
@@ -186,6 +187,7 @@ pub struct Extraction {
     pub water_t_per_count: f64,
     pub driver_t_per_count: f64,
     pub driver_kw: f64,
+    pub nitrogen_kg_per_t_water: f64,
 }
 
 #[allow(missing_docs)]

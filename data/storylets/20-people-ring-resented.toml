@@ -1,0 +1,102 @@
+id = "ring_resented"
+title = "Six Chairs and Thirty Backs"
+act = 1
+cooldown = 10
+tags = ["people", "independence"]
+text = """
+There are six people who answer questions and thirty who do the work, and the
+thirty have noticed. {voice} said it at the meal: the ring meets, the ring
+decides, the ring writes the chronicle, and nobody on the drum floor chose any
+of them. It is not a mutiny. It is the thing that comes before the thing that
+comes before one. {hours} sits in the ring and heard it.
+"""
+
+[[when]]
+q = "people.coherence"
+lt = 0.9
+
+[[when]]
+turn_min = 3
+
+[[cast]]
+role = "voice"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[option]]
+id = "open_ring"
+label = "A seventh chair: whoever the drum floor sends"
+text = "One seat that answers for nothing but the people who do the work."
+tags = ["people", "independence"]
+chronicle = "The ring added a chair for whoever the drum floor sent, and the drum floor sent {voice}. The meetings got longer and the meals got quieter in a better way."
+[[option.effect]]
+tie = ["voice", "hours"]
+reliance = 0.2
+[[option.effect]]
+tie = ["voice", "hours"]
+work_positive = 0.15
+[[option.effect]]
+all_strain = -0.05
+[[option.effect]]
+flag = "ring_opened"
+[[option.effect]]
+counter = "ring_reforms"
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Every station I know that ran as a council instead of a command lasted longer. The floor needs a voice in the room or it will use the one it has in the corridor."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The ring exists because the sponsor's org chart says these six posts exist. A seventh post is a post the sponsor did not create, and that is a question in a review."
+
+[[option]]
+id = "hold"
+label = "The ring is the ring. The drum floor does the drum"
+text = "Seats are skills. Nobody voted for the medical officer either."
+tags = ["sponsor", "caution"]
+chronicle = "The ring told the drum floor that seats were skills and not votes. {voice} did not raise it again at the meal. It was raised elsewhere."
+[[option.effect]]
+person = "voice"
+strain = 0.1
+[[option.effect]]
+tie = ["voice", "hours"]
+hindrance = 0.2
+[[option.effect]]
+q = "menace.grievance"
+add = 0.5
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "I answer for the drum because I am the one who can fix the drum. I am not going to be voted into that or out of it."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "Nobody is asking to vote on the bearing. They are asking to be heard about the roster. Those are different and you are answering the wrong one."
+
+[[option]]
+id = "work_the_floor"
+label = "The ring stands the worst watches for a count"
+text = "Participation. The leader who withdraws makes cliques; the one who works the floor makes a crew."
+tags = ["people", "hours"]
+chronicle = "For a count every seat in the ring stood the night watches on the drum floor beside everyone else. Nobody said anything about it and everything about it was said."
+[[option.effect]]
+person = "hours"
+strain = 0.15
+[[option.effect]]
+tie = ["voice", "hours"]
+work_positive = 0.25
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+counter = "ring_worked_the_floor"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "The record is clear about this one. A leader who is seen doing the work is a leader. A leader who is seen deciding is a committee."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "A count of my nights on the drum is a count of the ledger late. I will do it. I want it understood what it costs."

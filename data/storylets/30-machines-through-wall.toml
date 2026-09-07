@@ -23,12 +23,12 @@ q = "stocks.spares"
 gt = 20
 
 [[cast]]
-role = "machinist"
-skill = "engineering"
-
-[[cast]]
 role = "hulls"
 seat = "hulls"
+
+[[cast]]
+role = "machinist"
+skill = "engineering"
 
 [[option]]
 id = "build"
