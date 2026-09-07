@@ -76,3 +76,20 @@
   C-families); a machine-mind society left behind by a fully automated sponsor
   outpost (holds hardware, cannot reproduce either). Relations open and close
   on conjunction windows.
+
+## What the belt is good at; Mars (2026-09-06)
+
+- Terrestrial societies are good at dense and heavy; a belt society is good at
+  vast, thin, cold, patient, precise. Concretely: km-scale film structures
+  (mirrors, concentrators, antennas), near-free vacuum and cryogenics in shade,
+  herding geology within a neighbourhood, the observatory/ephemeris vantage,
+  scaffold-free tissue engineering, low-g hospice, the top of the well.
+  Microgravity exotic materials are mostly hype; ZBLAN fibre and protein
+  crystals are the real ones.
+- Mars as the second sponsor, mid act 2: a peer with its own grievance, not a
+  patron. Trade: belt water into Mars orbit as depot propellant (shallow well
+  makes this real), nitrogen from ammoniated clays; Mars as the vitamin-part
+  supplier once it reaches 10^4-10^5 people. Mars went terraforming where you
+  went pantropy: your mirror. Its condition is seeded by the trail-off cause.
+  Mars-Ceres windows every ~3.2 years: another clock. In act 3, two sedentary
+  states to play against each other (Barfield).
