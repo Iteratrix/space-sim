@@ -666,6 +666,13 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
         if next >= SponsorStage::Sale {
             game.menace.grievance = (game.menace.grievance + 2.0).min(10.0);
         }
+        if next == SponsorStage::Sale {
+            let phi = game.quality(crate::quality::Quality::Phi);
+            game.sponsor.phi_expected = phi.max(params.sponsor.phi_target_per_review) * 1.2;
+            game.sponsor.confidence = 0.3;
+            game.menace.suspicion = 0.0;
+            game.flags.insert("new_owners".into());
+        }
     }
 }
 

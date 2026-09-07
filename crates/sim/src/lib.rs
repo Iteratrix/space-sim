@@ -101,6 +101,17 @@ impl Engine {
             .map(|e| lexicon::render(game, &e.text))
     }
 
+    /// Resolves a firing by option id rather than index; the safer call for agents.
+    pub fn resolve_by_id(
+        &self,
+        game: &mut Game,
+        firing: &Firing,
+        option_id: &str,
+    ) -> Option<String> {
+        let choice = firing.options.iter().position(|o| o.id == option_id)?;
+        self.resolve(game, firing, choice)
+    }
+
     /// Renders the chronicle through the current lexicon.
     #[must_use]
     pub fn chronicle(&self, game: &Game) -> Vec<String> {

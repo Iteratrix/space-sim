@@ -223,6 +223,9 @@ fn resolve_firings(
             {
                 break n - 1;
             }
+            if let Some(i) = f.options.iter().position(|o| o.id == line) {
+                break i;
+            }
             if !args.json {
                 println!("  choose 1-{}", f.options.len());
             }
