@@ -28,15 +28,29 @@ Written for whoever picks this up next (human or agent). Newest at the top.
 - Design: `docs/design/canon.md` is the reference; `NOTES.md` the decision log;
   `docs/research/01-13` the research; two Voidborn pitches in `docs/design/`.
 
-**Tuned state (100 games):** every game reaches the Silence. Random policy: act 1
-lasts 134-213 counts (mean ~172); ring policy 125-182 (mean ~152). Population at
-the trail-off 45-76 (mean ~60), nearly all residents by then; final sponsor stage
-spread over 4-6. Fifty-one storylets, all of which fire; a content-quality pass
-ran after the first critique.
+**Tuned state (100 games per policy, end of the overnight build):** every game
+reaches the Silence; none starves. Act 1 lasts 149-197 counts (mean ~170, about
+14 years) under the random and ring policies, ~195 under "always option 1".
+Population at the trail-off 88-157 (mean ~115-147 by policy), inside canon's
+110-240 band; final sponsor stage spread over 1-6. Mean dose ~0.5 Sv; minds usually
+outlive the act. Fifty-one storylets, all firing; two critiques and one
+content-quality pass applied. 200 games run in ~4 s in release. CI is green.
+
+**Reviews:** `docs/design/review-engine-1.md` and `review-engine-2.md`. Applied
+from review 2: the famine chain (spares at zero no longer selects the no-sponsor
+attrition table while the sponsor lives; farm deaths slower and only from an empty
+margin), the sponsor's phi expectation now ramps from 1 by 40%/review to a cap of
+8 (it started at an unreachable 6), exponential mind attrition, tie hindrance that
+grows and decays at rates that let coherence move, skiff tours as a one-time career
+(second tours only after 96 counts and never for seat holders), cataract onset on
+Gy (Sv/2.5), the Unforgetting announced on any missed reset. Not applied: robots
+as capped rather than flat hours and a human-premium term, `p_miss` by stage,
+hashes and the chosen option id in saves, conjunction as a licence interrupt,
+the phantom 20 t/count of bulk when the tank is empty (it is regolith; label it).
 
 **Known gaps and next steps, in order**
 
-1. `docs/design/review-engine-1.md` is the first critique. Applied from it: robot
+1. `docs/design/review-engine-1.md` was the first critique. Applied from it: robot
    hours in the labour model (no-robot floor now ~150, tested), ties for arrivals,
    skiff rotation and a probabilistic cataract onset, cast rotation away from
    recently cast people, authored advice rendered and stance-aware, must-scene
@@ -48,9 +62,9 @@ ran after the first critique.
    addressing a specific mind, moving the ~40 magic numbers in `turn.rs` into
    `params.toml`, Sale resetting the sponsor's metrics, an "option chosen"
    condition.
-2. Act 1 length is about right under the ring policy and a little long under random;
-   population at the trail-off (mean ~60) is below canon's 110-240 band, which wants
-   a stronger expansion mechanic gated by PV headroom. Levers: `sponsor.attention_decay_per_review`,
+2. Act 1 is a year or two long against canon's 10-13; the levers are
+   `sponsor.attention_decay_per_review`, the 1.4 expectation growth in
+   `turn.rs::sponsor`, and the Silence rule in `turn.rs::endings`. Levers: `sponsor.attention_decay_per_review`,
    the composite-health weights in `turn.rs::sponsor`, the Silence rule in `turn.rs::endings`.
 3. Content coverage: run `montecarlo --games 200` and look at `never fired` and
    `options never chosen`; loosen or cut.

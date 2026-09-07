@@ -14,7 +14,7 @@ Two of thirty-six produce most of the friction, and these are the two.
 
 [[when]]
 q = "people.conflict_concentration"
-gt = 0.12
+gt = 0.03
 
 [[cast]]
 role = "first"
