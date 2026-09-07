@@ -1,3 +1,4 @@
+[hidden]{display:none!important}
 :root{--bg:#0f1115;--panel:#161a21;--ink:#d8dbe0;--dim:#8a919c;--line:#2a303a;--accent:#d9a441;--warn:#c9573b;--ok:#6fb37a;--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,Consolas,monospace}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,sans-serif;height:100%}
