@@ -13,8 +13,11 @@ Two of thirty-six produce most of the friction, and these are the two.
 """
 
 [[when]]
-q = "people.conflict_concentration"
-gt = 0.03
+q = "people.coherence"
+lt = 0.75
+
+[[when]]
+turn_min = 12
 
 [[cast]]
 role = "first"
