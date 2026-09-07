@@ -1,0 +1,95 @@
+id = "sponsor_sharp_review"
+title = "The Sharp Review"
+act = 1
+once = true
+priority = 60
+tags = ["sponsor", "review"]
+text = """
+The review came back and for the first time the tone was not warm. Somebody
+on the board has drawn a line through the throughput target and written a
+new number above it. {liaison} has read the message three times and says the
+word they keep coming back to is "trajectory". {hours} has run the driver's
+numbers against the new line and it does not meet it. The reply goes tonight.
+"""
+
+[[when]]
+flag = "stage:1"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[option]]
+id = "promise"
+label = "Promise the number"
+text = "Tell them the trajectory bends this year. Then bend it: longer driver shifts, less time on the loops."
+tags = ["throughput", "sponsor", "hours"]
+chronicle = "The reply promised the sponsor its new number, and the outpost began working the hours that a promise like that costs."
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.08
+[[option.effect]]
+all_strain = 0.06
+[[option.effect]]
+q = "throughput.shipped"
+add = 12
+[[option.effect]]
+flag = "promised_phi"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The question you asked me last count was what the board wanted to hear. This is it. A promise buys a review; that is what promises are for."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "The driver crews are already on fours. You are promising Earth a number in hours that I have to take out of sleep."
+
+[[option]]
+id = "explain"
+label = "Explain the physics"
+text = "Send them the transfer calendar and the driver's duty cycle. The number they want is not a matter of effort."
+tags = ["capability", "independence", "risk"]
+chronicle = "The reply sent the sponsor a transfer calendar and a duty cycle in place of a promise. It was correct and it was read as an excuse."
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.04
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.8
+[[option.effect]]
+flag = "explained_phi"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Forty tonnes a count is the driver's ceiling with the propellant we have. I can write that in a way that a board can read, and it will still be forty."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A calendar is not an answer to a board. A board asks who is responsible, and a calendar is nobody."
+
+[[option]]
+id = "ask"
+label = "Ask what changed on their side"
+text = "Do not answer the number. Ask why the number moved. The answer, if it comes, will arrive a count late and tell us more than the review did."
+tags = ["sponsor", "risk"]
+chronicle = "The reply asked the sponsor, politely, what had changed on Earth. The answer took a count, and it was not about throughput."
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.04
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.effect]]
+flag = "asked_what_changed"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "I do not know why it moved. I would like to. If we ask now, I will know by the time you ask me again."
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "When a spec changes without an engineering reason, the reason is somewhere else in the building. Find it before you build to it."

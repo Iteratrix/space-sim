@@ -152,6 +152,7 @@ pub struct Person {
     /// Contract.
     pub tenure: Tenure,
     /// Skills, 0-5.
+    #[serde(with = "skill_map")]
     pub skills: BTreeMap<Skill, u8>,
     /// Personality.
     pub traits: Traits,
@@ -178,7 +179,7 @@ impl Person {
 
     /// Whether this person is a rotator with a contract end.
     #[must_use]
-    pub fn contract_end(&self) -> Option<u32> {
+    pub const fn contract_end(&self) -> Option<u32> {
         match self.tenure {
             Tenure::Rotator { ends } => Some(ends),
             Tenure::Resident => None,
@@ -201,8 +202,31 @@ pub struct Tie {
 
 /// The sparse tie graph.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Default)]
+#[serde(from = "TieList", into = "TieList")]
 pub struct Ties {
     edges: BTreeMap<(PersonId, PersonId), Tie>,
+}
+
+#[derive(Serialize, Deserialize)]
+struct TieList(Vec<(PersonId, PersonId, Tie)>);
+
+impl From<TieList> for Ties {
+    fn from(TieList(list): TieList) -> Self {
+        Self {
+            edges: list.into_iter().map(|(a, b, t)| ((a, b), t)).collect(),
+        }
+    }
+}
+
+impl From<Ties> for TieList {
+    fn from(ties: Ties) -> Self {
+        Self(
+            ties.edges
+                .into_iter()
+                .map(|((a, b), t)| (a, b, t))
+                .collect(),
+        )
+    }
 }
 
 impl Ties {
@@ -253,4 +277,26 @@ pub struct GroupIndices {
     pub return_share: f64,
     /// Share of present adults born in the belt or orbit.
     pub belt_born_share: f64,
+}
+
+mod skill_map {
+    use super::Skill;
+    use serde::{Deserialize, Deserializer, Serialize, Serializer};
+    use std::collections::BTreeMap;
+
+    pub fn serialize<S: Serializer>(map: &BTreeMap<Skill, u8>, ser: S) -> Result<S::Ok, S::Error> {
+        let out: BTreeMap<&str, u8> = map.iter().map(|(k, v)| (k.key(), *v)).collect();
+        out.serialize(ser)
+    }
+
+    pub fn deserialize<'de, D: Deserializer<'de>>(de: D) -> Result<BTreeMap<Skill, u8>, D::Error> {
+        let raw: BTreeMap<String, u8> = BTreeMap::deserialize(de)?;
+        raw.into_iter()
+            .map(|(k, v)| {
+                Skill::parse(&k)
+                    .map(|s| (s, v))
+                    .ok_or_else(|| serde::de::Error::custom(format!("unknown skill {k}")))
+            })
+            .collect()
+    }
 }

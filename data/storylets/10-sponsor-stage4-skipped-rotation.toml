@@ -1,0 +1,122 @@
+id = "sponsor_skipped_rotation"
+title = "The Skipped Rotation"
+act = 1
+once = true
+priority = 70
+tags = ["sponsor", "people", "rotation"]
+text = """
+The message is short. No crew ship this window; cargo only; the next
+rotation "will be scheduled". {rotator} has eleven counts left on contract
+and read it standing up. Half the outpost is on contract and every one of
+them is doing the same arithmetic. {resident} has said nothing, which the
+rotators have already noticed, because the residents have just become the
+people who were right. {liaison} says the sponsor's words are "deferred",
+not "cancelled", and does not sound convinced.
+"""
+
+[[when]]
+flag = "stage:4"
+
+[[cast]]
+role = "rotator"
+rotator = true
+
+[[cast]]
+role = "resident"
+rotator = false
+optional = true
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+optional = true
+
+[[option]]
+id = "promise"
+label = "Promise them the next ship"
+text = "Tell the rotators the ring will hold the sponsor to the word deferred. Make it the outpost's promise, not Earth's."
+tags = ["people", "sponsor"]
+chronicle = "The ring told the rotators the next ship would carry them, and made it the outpost's promise. The outpost would find out what its promises were worth."
+[[option.effect]]
+q = "menace.grievance"
+add = 0.8
+[[option.effect]]
+all_return_intent = 0.05
+[[option.effect]]
+person = "rotator"
+strain = 0.1
+[[option.effect]]
+flag = "promised_next_ship"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "You asked last count whether deferred meant anything. It means the line item still exists. Lines that exist sometimes get funded. Promise on that."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "The third quarter of a contract is when people break, and you are about to make every contract on the roster a third quarter with no end."
+
+[[option]]
+id = "localise_lay"
+label = "Settle the lay here"
+text = "Pay the rotators' lay from the outpost's own stocks in water and hours, as if their contracts were done. They are residents by any measure that matters; say so."
+tags = ["people", "independence", "water", "cost"]
+chronicle = "The ring settled the rotators' lay from its own water and hours, and wrote them into the roster as residents. Nobody had asked the sponsor, and the sponsor did not ask back."
+[[option.effect]]
+q = "stocks.water"
+add = -30
+[[option.effect]]
+all_return_intent = -0.12
+[[option.effect]]
+q = "menace.grievance"
+add = -0.8
+[[option.effect]]
+person = "rotator"
+resident = true
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.05
+[[option.effect]]
+flag = "lay_settled_locally"
+[[option.advice]]
+seat = "extraction"
+stance = "against"
+text = "Thirty tonnes of water is two counts of the driver's whole take. You are paying wages in the one thing we ship. I want that recorded."
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A rotator who thinks the ship is coming works to the ship. A resident works to the outpost. I would pay thirty tonnes for that difference on the schedule."
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Give them an end to the contract, even a paper one. The body needs the count to stop somewhere."
+
+[[option]]
+id = "let_it_burn"
+label = "Say nothing and let them be angry"
+text = "There is no promise the ring can keep and no lay it can afford. Let the rotators say what they need to say, at whom they need to say it."
+tags = ["people", "caution"]
+chronicle = "The ring made no promise about the ship. The rotators were angry for a season, mostly at Earth and some of it closer, and the residents were quietly relieved and said nothing."
+[[option.effect]]
+q = "menace.grievance"
+add = 1.5
+[[option.effect]]
+all_strain = 0.06
+[[option.effect]]
+tie = ["rotator", "resident"]
+hindrance = 0.25
+[[option.effect]]
+flag = "rotation_fury"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "You cannot fix a thing the sponsor broke by lying about it. Let them be angry at the right people while the right people are still listening."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "The sponsor is a long way away to be angry at, and {resident} is in the next bunk. I know where this lands. I will be treating it."

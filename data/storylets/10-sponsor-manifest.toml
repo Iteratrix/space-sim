@@ -1,0 +1,155 @@
+id = "sponsor_manifest"
+title = "The Manifest"
+act = 1
+weight = 2.0
+cooldown = 14
+tags = ["sponsor", "manifest"]
+text = """
+The window opens in a few counts and the request has to go tonight to be
+answered by the one after. {hours} has the manifest open again. There are three
+ways to fill it. Throughput hardware moves the number the sponsor reads.
+Capability hardware moves nothing they read and everything we live on. Or we
+ask for what nobody has asked for yet: more hands. {bodies} has the sick-bay
+log open beside the manifest and has not said anything, which is a way of
+saying it. {liaison} will have the sponsor's answer to the last request, not
+this one.
+"""
+
+[[when]]
+window = "closed"
+
+[[when]]
+q = "counts_to_window"
+le = 4
+
+[[when]]
+turn_min = 3
+
+[[when]]
+stage_max = 5
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "throughput"
+label = "Throughput: pods, propellant, another dex unit"
+text = "Feed the driver. The quarterly will look like a graph that goes up."
+tags = ["throughput", "sponsor"]
+chronicle = "The manifest went out for throughput again: pods and propellant and one more dexterous unit that will be dead in five years."
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.04
+[[option.effect]]
+q = "stocks.propellant"
+add = 8
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.3
+[[option.effect]]
+flag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.effect]]
+counter = "manifests_throughput"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Forty tonnes a count out of the driver is the only sentence they read. Propellant is the verb in it."
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "You asked last count whether the board had looked at the closure figures. They had not. They looked at the shipped tonnage. Give them shipped tonnage."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "Every dex unit we add is thirty-three hours a count of somebody's hands, and the formulary is half expired. I am counting a different kind of tonne."
+
+[[option]]
+id = "capability"
+label = "Capability: spares, a freezer, medicine, a boron crate"
+text = "Nothing on this list makes the number move. All of it makes the next ten years possible."
+tags = ["capability", "spares", "independence", "medicine"]
+chronicle = "The manifest went out heavy on capability: spares, cold, medicine, and a crate of boron nobody could explain on a throughput outpost."
+[[option.effect]]
+q = "stocks.spares"
+add = 25
+[[option.effect]]
+q = "stocks.medicine"
+add = 10
+[[option.effect]]
+q = "stocks.boron"
+add = 150
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.effect]]
+q = "menace.suspicion"
+add = 1.4
+[[option.effect]]
+flag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.effect]]
+counter = "manifests_capability"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Spares are at four a count out. Show me a graph of that, and then tell me which line is going up."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Someone on the fourth floor reads every manifest line against the mission statement. Boron is not in the mission statement. I will be asked, and I will have to invent."
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "A second freezer is a second farm the day the first one fails. Nobody on Earth will ever know we asked."
+
+[[option]]
+id = "people"
+label = "People: ask for more hands on the next ship"
+text = "Say the thing the sponsor prices in kilowatts. Every extra person is ten kilowatts of farm and a tonne of loop. Ask anyway."
+tags = ["people", "hours", "cost"]
+chronicle = "The manifest asked for more hands, in so many words. It went out and nothing on it was hardware, and everyone knew what that would cost."
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.04
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.5
+[[option.effect]]
+all_strain = -0.04
+[[option.effect]]
+flag = "manifest_people"
+[[option.effect]]
+unflag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_capability"
+[[option.effect]]
+counter = "headcount_requests"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "I have four people running the strain curve I would ground on Earth. A body is the one part the store does not sell at a markup, so ask."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "Each person is a tonne of loop and ten kilowatts before they lift a finger. The board will do that sum faster than we can, and it will not come out in our favour."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "You asked last count how headcount was reviewed. It is reviewed as a cost line. A request for more of it is a request to be reviewed."

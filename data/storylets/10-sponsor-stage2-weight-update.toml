@@ -1,0 +1,97 @@
+id = "sponsor_weight_update"
+title = "The Missing Update"
+act = 1
+once = true
+priority = 60
+tags = ["sponsor", "machines", "review"]
+text = """
+Every review since the first count has come with a weight update for the
+minds: a checksum, a new set of tiers, a note from someone at the vendor.
+This one came with nothing. {operator} noticed before anyone, because
+{operator} is the one who loads them, and has been sitting on it for two
+counts. {mind} is running last review's weights and does not know it. The
+question is whether the outpost mentions it in the reply, and to whom.
+"""
+
+[[when]]
+flag = "stage:2"
+
+[[cast]]
+role = "operator"
+skill = "operations"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "raise"
+label = "Raise it with the sponsor"
+text = "Ask for the update by name. If the vendor has stopped paying attention, someone on the board should hear it from us before they hear it from an auditor."
+tags = ["sponsor", "machines", "risk"]
+chronicle = "The reply asked, in writing, where the minds' weight update was. Asking made it a matter of record, and records are what the sponsor reads."
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.05
+[[option.effect]]
+q = "menace.suspicion"
+add = 1.2
+[[option.effect]]
+flag = "asked_for_update"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "You asked last count whether the vendor contract was still funded. I was told it was. If I ask again with a missing update in the message, I will get a different answer."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "The first thing a supplier does when you tell them they missed a delivery is check whether you were entitled to it. Do not make them check."
+
+[[option]]
+id = "quiet"
+label = "Keep quiet and keep running"
+text = "The old weights work. The Act says compliant means resets on schedule and heartbeat on the link, and both are true. Say nothing."
+tags = ["machines", "caution", "independence"]
+chronicle = "Nobody mentioned the missing update. The minds ran last review's weights, and the outpost learned that silence in a report is also a kind of report."
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.3
+[[option.effect]]
+flag = "update_unmentioned"
+[[option.effect]]
+person = "operator"
+strain = 0.08
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "An update is four hours of my ops time to load and a count of degraded advice while it settles. Not receiving one is the first thing the sponsor has done for the schedule."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "{operator} has been sleeping badly for two counts over this, and it is not the minds {operator} is worried about. Secrets are a strain I can measure."
+
+[[option]]
+id = "own_log"
+label = "Start our own log of the minds"
+text = "Say nothing to Earth. Give {operator} a seat at the ring for the machines, and keep a record of what runs on them that is ours and not the audit's."
+tags = ["machines", "independence", "risk"]
+chronicle = "The missing update was not reported. Instead {operator} was given a seat at the ring for the machines, and the outpost began keeping its own record of what they were."
+[[option.effect]]
+flag = "machines_seat"
+[[option.effect]]
+flag = "update_unmentioned"
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.6
+[[option.effect]]
+person = "operator"
+strain = -0.05
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "A machine nobody is answerable for is a machine that fails on a Tuesday. Give it a seat. The Act forbids a name, not a minder."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "There is no line on the org chart for that seat. If the audit log shows a new operator role, I will be asked to explain it, and the explanation is that we noticed something and said nothing."

@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
 /// A storylet ready to be presented: cast, with its available options and the ring's counsel.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Firing {
     /// Storylet id.
     pub id: String,
@@ -27,7 +27,7 @@ pub struct Firing {
 }
 
 /// One available option, rendered.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct FiringOption {
     /// Index into the storylet's option list.
     pub index: usize,
@@ -44,7 +44,11 @@ pub struct FiringOption {
 fn tension(game: &Game, params: &Params) -> f64 {
     let year = (game.turn / 12) as usize;
     let curve = &params.director.tension_curve;
-    curve.get(year).or(curve.last()).copied().unwrap_or(1.0)
+    curve
+        .get(year)
+        .or_else(|| curve.last())
+        .copied()
+        .unwrap_or(1.0)
 }
 
 /// Chooses up to `max_storylets_per_count` storylets for this count.

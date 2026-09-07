@@ -8,6 +8,7 @@ use crate::person::{PersonId, Skill};
 use crate::quality::Quality;
 use crate::ring::Seat;
 use crate::state::{Ending, Game};
+use az::SaturatingAs;
 use serde::Deserialize;
 use std::collections::BTreeMap;
 
@@ -222,7 +223,7 @@ impl Condition {
             Self::TurnMax(t) => game.turn <= *t,
             Self::Window(open) => game.earth_window_open() == *open,
             Self::Fired(id) => game.fired.get(id).is_some_and(|r| r.count > 0),
-            Self::NotFired(id) => !game.fired.get(id).is_some_and(|r| r.count > 0),
+            Self::NotFired(id) => game.fired.get(id).is_none_or(|r| r.count == 0),
             Self::StageMin(s) => game.sponsor.stage.index() >= *s,
             Self::StageMax(s) => game.sponsor.stage.index() <= *s,
         }
@@ -230,7 +231,7 @@ impl Condition {
 }
 
 /// How a role is cast.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum CastBy {
     /// The holder of a ring seat.
     Seat(Seat),
@@ -241,7 +242,7 @@ pub enum CastBy {
 }
 
 /// A role to be filled from the roster.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Cast {
     /// Role name used in text as `{role}`.
     pub role: String,
@@ -308,7 +309,7 @@ pub enum Effect {
 }
 
 /// Advice one seat gives about one option, written by the author.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Advice {
     /// The seat speaking.
     pub seat: Seat,
@@ -617,7 +618,9 @@ impl Storylet {
                         "for" => Stance::For,
                         "against" => Stance::Against,
                         other => {
-                            return Err(invalid(format!("stance must be for/against, not {other}")));
+                            return Err(invalid(format!(
+                                "stance must be for/against, not {other}"
+                            )));
                         }
                     };
                     Ok(Advice {
@@ -718,7 +721,7 @@ impl Storylet {
                     .filter(|p| eligible(p))
                     .max_by_key(|p| {
                         (
-                            (p.condition.strain * 1000.0) as u32,
+                            (p.condition.strain * 1000.0).saturating_as::<u32>(),
                             std::cmp::Reverse(p.id),
                         )
                     })
@@ -749,7 +752,7 @@ impl Storylet {
 }
 
 /// Roles filled for one firing.
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Casting {
     /// Role name to person.
     pub roles: BTreeMap<String, PersonId>,
@@ -761,17 +764,21 @@ impl Casting {
     pub fn render(&self, game: &Game, text: &str) -> String {
         let mut out = text.to_owned();
         for (role, id) in &self.roles {
-            out = out.replace(&format!("{{{role}}}"), &game.person(*id).name);
+            out = out.replace(&placeholder(role), &game.person(*id).name);
         }
-        out = out.replace("{outpost}", &game.outpost_name);
+        out = out.replace(&placeholder("outpost"), &game.outpost_name);
         let mind = game
             .minds
             .iter()
             .find(|m| m.alive)
             .map_or_else(|| "the mind".to_owned(), |m| m.display().to_owned());
-        out = out.replace("{mind}", &mind);
-        out.replace("{turn}", &game.turn.to_string())
+        out = out.replace(&placeholder("mind"), &mind);
+        out.replace(&placeholder("turn"), &game.turn.to_string())
     }
+}
+
+fn placeholder(name: &str) -> String {
+    format!("{{{name}}}")
 }
 
 /// Applies an option's effects and writes its chronicle line.

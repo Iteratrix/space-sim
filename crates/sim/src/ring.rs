@@ -91,13 +91,12 @@ impl Seat {
     pub const fn skill(self) -> Skill {
         match self {
             Self::Hulls => Skill::Engineering,
-            Self::Hours => Skill::Logistics,
+            Self::Hours | Self::Liaison => Skill::Logistics,
             Self::Extraction => Skill::Extraction,
             Self::Bodies => Skill::Medical,
             Self::Air => Skill::LifeSupport,
             Self::Machines => Skill::Operations,
             Self::Children => Skill::Social,
-            Self::Liaison => Skill::Logistics,
         }
     }
 
@@ -214,7 +213,7 @@ pub fn seats(game: &Game) -> BTreeMap<Seat, PersonId> {
 }
 
 /// One piece of advice, rendered.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Counsel {
     /// Seat.
     pub seat: Seat,
@@ -268,8 +267,7 @@ pub fn counsel(
             .find(|a| a.seat == seat)
             .map(|a| (a.stance, a.text.clone()));
         let (text, authored) = match authored {
-            Some((Stance::For, t)) => (t, true),
-            Some((Stance::Against, t)) => (t, true),
+            Some((Stance::For | Stance::Against, t)) => (t, true),
             None => (
                 format!(
                     "{} ({}) leans toward \"{}\".",

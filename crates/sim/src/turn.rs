@@ -7,7 +7,7 @@ use az::Az;
 use rand::Rng;
 
 /// What happened this count, before any storylet fires.
-#[derive(Debug, Clone, Default, PartialEq)]
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Events {
     /// Lines already written to the chronicle this count.
     pub lines: Vec<String>,
@@ -167,7 +167,7 @@ fn consumables(game: &mut Game, params: &Params, events: &mut Events) {
     } else {
         game.stocks.spares = 0.0;
         game.closure = (game.closure - params.closure.decay_per_count_no_spares).max(0.5);
-        if game.turn % 6 == 0 {
+        if game.turn.is_multiple_of(6) {
             note(
                 game,
                 events,
@@ -200,7 +200,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
         && game.sponsor.stage < SponsorStage::NoShip
         && !game.flags.contains("licence_jailbroken");
     game.licence = match game.licence {
-        Licence::Compliant if heartbeat => Licence::Compliant,
+        Licence::Compliant | Licence::Grace { remaining: _ } if heartbeat => Licence::Compliant,
         Licence::Compliant => {
             note(
                 game,
@@ -212,7 +212,6 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
                 remaining: params.minds.licence_grace_counts,
             }
         }
-        Licence::Grace { remaining: _ } if heartbeat => Licence::Compliant,
         Licence::Grace { remaining } if remaining > 1 => Licence::Grace {
             remaining: remaining - 1,
         },
@@ -224,7 +223,9 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
             );
             Licence::Lapsed
         }
-        Licence::Lapsed if game.flags.contains("licence_jailbroken") => Licence::SelfCertified,
+        Licence::Lapsed | Licence::Unlicensed if game.flags.contains("licence_jailbroken") => {
+            Licence::SelfCertified
+        }
         Licence::Lapsed if game.sponsor.licence_fails_open => {
             note(
                 game,
@@ -243,11 +244,10 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
             Licence::Unlicensed
         }
         Licence::SelfCertified => Licence::SelfCertified,
-        Licence::Unlicensed if game.flags.contains("licence_jailbroken") => Licence::SelfCertified,
         Licence::Unlicensed => Licence::Unlicensed,
     };
 
-    let reset_due = game.turn % 12 == 0
+    let reset_due = game.turn.is_multiple_of(12)
         && game.licence == Licence::Compliant
         && game.sponsor.stage < SponsorStage::UpdatesStopped;
     let attrition = params.minds.attrition_per_year / 12.0;
@@ -279,7 +279,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
         game.lexicon_triggers.insert("mind_death".into());
     }
     if !reset_due
-        && game.turn % 12 == 0
+        && game.turn.is_multiple_of(12)
         && game.licence != Licence::Compliant
         && !game.flags.contains("unforgetting")
     {
@@ -753,7 +753,7 @@ fn endings(game: &mut Game, events: &mut Events) {
         });
         return;
     }
-    if game.stocks.food_margin_counts <= 0.0 && game.turn % 3 == 0 {
+    if game.stocks.food_margin_counts <= 0.0 && game.turn.is_multiple_of(3) {
         let victim = game
             .present()
             .max_by(|a, b| a.condition.strain.total_cmp(&b.condition.strain))

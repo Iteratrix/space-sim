@@ -1,0 +1,152 @@
+id = "sponsor_austerity_headcount"
+title = "Austerity"
+act = 1
+once = true
+priority = 70
+tags = ["sponsor", "people", "austerity"]
+text = """
+The review says austerity. The manifest is cut by a third and the headcount
+is "under review", which {liaison} says means one berth home on the next ship
+that will not be refilled. The sponsor has left the choosing to the ring,
+which is either respect or the thing that looks like it. {hours} has the
+roster. {rotator} is on contract and could go home early with the lay
+settled. {resident} came out to stay and has no home berth to go to, and
+would be going anyway. {bodies} has strain scores for both and will not read
+them aloud.
+"""
+
+[[when]]
+flag = "stage:3"
+
+[[cast]]
+role = "rotator"
+rotator = true
+
+[[cast]]
+role = "resident"
+rotator = false
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+optional = true
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "cut_rotator"
+label = "Send {rotator} home early"
+text = "A contract is a contract. Settle the lay, put {rotator} on the ship, and let the residents keep the outpost they chose."
+tags = ["people", "sponsor", "cost"]
+chronicle = "The ring gave the sponsor its berth: {rotator} went home early with the lay settled, and the residents stayed on, one pair of hands lighter."
+[[option.effect]]
+person = "rotator"
+leave = true
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.05
+[[option.effect]]
+q = "menace.grievance"
+add = 0.5
+[[option.effect]]
+tie = ["resident", "rotator"]
+work_positive = 0.1
+[[option.effect]]
+flag = "austerity_cut_rotator"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A rotator is a lay to settle and a berth that was already booked. It is the cheapest cut on the sheet and I have counted the sheet twice."
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "You asked me last count what the board would accept. The board accepts a contract ending. It does not have a category for a resident."
+
+[[option]]
+id = "cut_resident"
+label = "Send {resident} home"
+text = "{resident} has no berth to go to. That is a reason to be kinder about it, not a reason to keep the person who stays."
+tags = ["people", "sponsor", "risk"]
+chronicle = "The ring chose {resident} for the sponsor's berth, someone who had come out to stay. The rotators noticed what that meant for the word resident."
+[[option.effect]]
+person = "resident"
+leave = true
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.05
+[[option.effect]]
+q = "menace.grievance"
+add = 1.2
+[[option.effect]]
+all_return_intent = 0.05
+[[option.effect]]
+flag = "austerity_cut_resident"
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "A resident has no home to be sent to. I have watched what that does to a person's numbers on the flight home, and it is worse than staying."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "Residents are the only hands I can plan more than thirty counts out. A rotator is a loan; a resident is capital."
+
+[[option]]
+id = "refuse"
+label = "Refuse the cut"
+text = "Tell the sponsor the outpost is at the labour floor already, and a berth home is a berth they can save by not sending the ship."
+tags = ["people", "independence", "risk"]
+chronicle = "The ring refused to name anyone for the sponsor's berth. It was the first instruction the outpost declined, and the sponsor did not reply to the refusal."
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.08
+[[option.effect]]
+q = "menace.suspicion"
+add = 1.5
+[[option.effect]]
+q = "menace.grievance"
+add = -0.5
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+flag = "austerity_refused"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Every cut lands on the health hours first, because they are the ones nobody sees until they matter. Tell them no."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A refusal goes into the same file as the throughput number. It will be the first thing read at the next review and the number will be the second."
+
+[[option]]
+id = "cut_hours"
+label = "Cut hours instead of people"
+text = "Keep everyone. Take the sponsor's saving out of the driver schedule and the fabrication bay and give them a smaller number."
+tags = ["people", "hours", "capability"]
+chronicle = "The ring kept everyone and gave the sponsor a smaller number instead of a name. The driver ran short shifts for a season and the review noticed."
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.05
+[[option.effect]]
+q = "throughput.shipped"
+add = -15
+[[option.effect]]
+q = "menace.grievance"
+add = -0.8
+[[option.effect]]
+flag = "austerity_cut_hours"
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "You are proposing to take the saving out of the one line they read. I can find those hours; I cannot hide where they came from."
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "I would rather be slow than short-handed. A driver on half shifts still ships. A bay with nobody in it makes nothing."

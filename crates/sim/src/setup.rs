@@ -2,7 +2,7 @@
 
 use crate::params::Params;
 use crate::person::{
-    Birthplace, Condition, Estate, Person, PersonId, Skill, Tenure, Tie, Ties, Traits,
+    Birthplace, Condition, Estate, GroupIndices, Person, PersonId, Skill, Tenure, Tie, Ties, Traits,
 };
 use crate::state::{
     Calendar, Game, Licence, Menace, Mind, PowerPlant, Robots, Sponsor, SponsorStage, Stocks,
@@ -11,10 +11,12 @@ use az::Az;
 use orbit::{Arrival, Catalogue, Departure, Jd};
 use rand::{Rng, SeedableRng};
 use rand_chacha::ChaCha8Rng;
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 /// Counts of calendar to precompute: 60 years.
 pub const CALENDAR_COUNTS: usize = 720;
+/// Cost recorded when no zero-revolution arc exists; finite so that saves stay JSON.
+pub const UNREACHABLE_KMS: f64 = 99.0;
 
 /// Errors from building a game.
 #[derive(Debug, thiserror::Error)]
@@ -52,7 +54,7 @@ pub fn calendar(params: &Params, cat: &Catalogue) -> Result<Calendar, SetupError
             Departure::FromLeo,
             Arrival::Excess,
         )
-        .map_or(f64::INFINITY, |c| c.total_kms());
+        .map_or(UNREACHABLE_KMS, |c| c.total_kms());
         let back = orbit::transfer::best_at(
             &home,
             &earth,
@@ -62,7 +64,7 @@ pub fn calendar(params: &Params, cat: &Catalogue) -> Result<Calendar, SetupError
             Departure::Excess,
             Arrival::Aerocapture,
         )
-        .map_or(f64::INFINITY, |c| c.total_kms());
+        .map_or(UNREACHABLE_KMS, |c| c.total_kms());
         outbound.push(out);
         homeward.push(back);
         let sh = home.state_at(jd);
@@ -90,7 +92,7 @@ fn draw_traits(rng: &mut impl Rng) -> Traits {
     let d = |rng: &mut dyn rand::RngCore| -> f64 {
         let a: f64 = rng.random();
         let b: f64 = rng.random();
-        ((a + b) / 2.0).clamp(0.02, 0.98)
+        f64::midpoint(a, b).clamp(0.02, 0.98)
     };
     Traits {
         neuroticism: d(rng),
@@ -186,7 +188,7 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
         licence: Licence::Compliant,
         people: Vec::new(),
         ties: Ties::default(),
-        indices: Default::default(),
+        indices: GroupIndices::default(),
         shipped_t: 0.0,
         received_t: 0.0,
         labour_capacity_h: 0.0,
@@ -198,11 +200,11 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
         window_started: None,
         last_convoy: None,
         calendar,
-        flags: Default::default(),
-        counters: Default::default(),
-        fired: Default::default(),
+        flags: BTreeSet::default(),
+        counters: BTreeMap::default(),
+        fired: BTreeMap::default(),
         chronicle: Vec::new(),
-        lexicon_triggers: Default::default(),
+        lexicon_triggers: BTreeSet::default(),
         ending: None,
     };
     game.lexicon_triggers.insert("first_count".into());

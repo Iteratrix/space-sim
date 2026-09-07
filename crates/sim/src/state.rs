@@ -2,6 +2,7 @@
 
 use crate::person::{GroupIndices, Person, PersonId, Ties};
 use crate::quality::Quality;
+use az::SaturatingAs;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -197,7 +198,7 @@ pub struct Calendar {
 }
 
 /// A line of the chronicle, as written; rendering through the lexicon happens at display time.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ChronicleEntry {
     /// Count.
     pub turn: u32,
@@ -208,7 +209,7 @@ pub struct ChronicleEntry {
 }
 
 /// Per-storylet firing record.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub struct FiringRecord {
     /// Times fired.
     pub count: u32,
@@ -297,6 +298,9 @@ pub struct Menace {
     /// Reactor wear.
     pub reactor_wear: f64,
 }
+
+/// A count is "open" when the outbound cost is within this ratio of the cycle's best.
+pub const WINDOW_RATIO: f64 = 1.2;
 
 /// How a game ended.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -468,7 +472,9 @@ impl Game {
             Quality::RelayHealth => self.relay_health = value.clamp(0.0, 1.0),
             Quality::Shipped => self.shipped_t = value.max(0.0),
             Quality::Received => self.received_t = value.max(0.0),
-            Quality::ReactorLife => self.power.reactor_life = value.max(0.0).round() as u32,
+            Quality::ReactorLife => {
+                self.power.reactor_life = value.max(0.0).round().saturating_as::<u32>()
+            }
             Quality::RobotsPlant => self.robots.plant = value.max(0.0),
             Quality::RobotsHaul => self.robots.haul = value.max(0.0),
             Quality::RobotsArm => self.robots.arm = value.max(0.0),
@@ -532,11 +538,7 @@ impl Game {
         let Some(&cost) = self.calendar.outbound_cost.get(turn as usize) else {
             return false;
         };
-        cost <= self.calendar.outbound_best * self.calendar_window_ratio()
-    }
-
-    fn calendar_window_ratio(&self) -> f64 {
-        1.2
+        cost <= self.calendar.outbound_best * WINDOW_RATIO
     }
 
     /// Counts until the next open window (0 if open now).

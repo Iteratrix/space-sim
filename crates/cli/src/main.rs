@@ -77,6 +77,8 @@ struct Args {
     counts: usize,
     policy: Policy,
     json: bool,
+    save: Option<String>,
+    load: Option<String>,
     quiet: bool,
     trace: bool,
     max_turns: u32,
@@ -92,6 +94,8 @@ fn parse_args() -> Args {
         counts: 120,
         policy: Policy::Random,
         json: false,
+        save: None,
+        load: None,
         quiet: false,
         trace: false,
         max_turns: 400,
@@ -102,7 +106,7 @@ fn parse_args() -> Args {
             "--games" => out.games = args.next().and_then(|v| v.parse().ok()).unwrap_or(200),
             "--counts" => out.counts = args.next().and_then(|v| v.parse().ok()).unwrap_or(120),
             "--max-turns" => {
-                out.max_turns = args.next().and_then(|v| v.parse().ok()).unwrap_or(400)
+                out.max_turns = args.next().and_then(|v| v.parse().ok()).unwrap_or(400);
             }
             "--policy" => {
                 out.policy = args
@@ -111,6 +115,8 @@ fn parse_args() -> Args {
                     .unwrap_or(Policy::Random);
             }
             "--json" => out.json = true,
+            "--save" => out.save = args.next(),
+            "--load" => out.load = args.next(),
             "--quiet" => out.quiet = true,
             "--trace" => out.trace = true,
             _ => {}
@@ -179,10 +185,32 @@ fn print_firing(engine: &Engine, game: &Game, f: &Firing) {
     let _ = engine;
 }
 
+fn save_game(game: &Game, path: &str) {
+    match serde_json::to_string(game) {
+        Ok(json) => {
+            if let Err(e) = std::fs::write(path, json) {
+                eprintln!("save failed: {e}");
+            }
+        }
+        Err(e) => eprintln!("save failed: {e}"),
+    }
+}
+
 fn play(engine: &Engine, args: &Args) {
-    let mut game = engine.new_game(args.seed).expect("new game");
-    let stdin = std::io::stdin();
-    let mut lines = stdin.lock().lines();
+    let mut game = args.load.as_ref().map_or_else(
+        || engine.new_game(args.seed).expect("new game"),
+        |path| {
+            let text = std::fs::read_to_string(path).unwrap_or_else(|e| {
+                eprintln!("load failed: {e}");
+                std::process::exit(1)
+            });
+            serde_json::from_str(&text).unwrap_or_else(|e| {
+                eprintln!("load failed: {e}");
+                std::process::exit(1)
+            })
+        },
+    );
+    let mut lines = std::io::stdin().lines();
     println!("{}", engine.chronicle(&game).join("\n"));
     loop {
         let (events, firings) = engine.advance(&mut game);
@@ -199,6 +227,9 @@ fn play(engine: &Engine, args: &Args) {
             for e in &events.lines {
                 println!("  * {}", sim::lexicon::render(&game, e));
             }
+        }
+        if let Some(path) = &args.save {
+            save_game(&game, path);
         }
         if let Some(ending) = &game.ending {
             if !args.json {
@@ -220,10 +251,11 @@ fn play(engine: &Engine, args: &Args) {
                 if line == "q" || line == "quit" {
                     return;
                 }
-                if let Ok(n) = line.parse::<usize>() {
-                    if n >= 1 && n <= f.options.len() {
-                        break n - 1;
-                    }
+                if let Ok(n) = line.parse::<usize>()
+                    && n >= 1
+                    && n <= f.options.len()
+                {
+                    break n - 1;
                 }
                 if !args.json {
                     println!("  choose 1-{}", f.options.len());
@@ -273,6 +305,7 @@ struct RunResult {
     turns: u32,
     ending: Option<Ending>,
     fired: BTreeMap<String, u32>,
+    chosen: BTreeMap<String, u32>,
     population: usize,
     residents: usize,
     closure: f64,
@@ -283,16 +316,20 @@ struct RunResult {
 fn run_one(engine: &Engine, seed: u64, policy: Policy, max_turns: u32, trace: bool) -> RunResult {
     use rand::SeedableRng;
     let mut game = engine.new_game(seed).expect("new game");
-    let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(seed ^ 0xC0FFEE);
+    let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(seed ^ 0x00C0_FFEE);
     let mut fired: BTreeMap<String, u32> = BTreeMap::new();
+    let mut chosen: BTreeMap<String, u32> = BTreeMap::new();
     while game.ending.is_none() && game.turn < max_turns {
         let (_, firings) = engine.advance(&mut game);
-        if trace && game.turn % 6 == 0 {
+        if trace && game.turn.is_multiple_of(6) {
             eprintln!("{}", status_line(&game));
         }
         for f in &firings {
             let choice = policy.choose(f, &mut rng);
             *fired.entry(f.id.clone()).or_default() += 1;
+            *chosen
+                .entry(format!("{}/{}", f.id, f.options[choice].id))
+                .or_default() += 1;
             engine.resolve(&mut game, f, choice);
         }
     }
@@ -300,6 +337,7 @@ fn run_one(engine: &Engine, seed: u64, policy: Policy, max_turns: u32, trace: bo
         turns: game.turn,
         ending: game.ending.clone(),
         fired,
+        chosen,
         population: game.present().count(),
         residents: game
             .present()
@@ -314,6 +352,7 @@ fn run_one(engine: &Engine, seed: u64, policy: Policy, max_turns: u32, trace: bo
 fn montecarlo(engine: &Engine, args: &Args) {
     let mut endings: BTreeMap<String, usize> = BTreeMap::new();
     let mut fired: BTreeMap<String, u32> = BTreeMap::new();
+    let mut chosen: BTreeMap<String, u32> = BTreeMap::new();
     let mut turns = Vec::new();
     let mut pops = Vec::new();
     let mut residents = Vec::new();
@@ -336,6 +375,9 @@ fn montecarlo(engine: &Engine, args: &Args) {
         *endings.entry(key.into()).or_default() += 1;
         for (id, n) in r.fired {
             *fired.entry(id).or_default() += n;
+        }
+        for (id, n) in r.chosen {
+            *chosen.entry(id).or_default() += n;
         }
         turns.push(f64::from(r.turns));
         pops.push(r.population.az::<f64>());
@@ -369,7 +411,7 @@ fn montecarlo(engine: &Engine, args: &Args) {
     println!("storylets fired (per game):");
     let total_games = args.games.az::<f64>();
     let mut fired: Vec<_> = fired.into_iter().collect();
-    fired.sort_by(|a, b| b.1.cmp(&a.1));
+    fired.sort_by_key(|(_, n)| std::cmp::Reverse(*n));
     for (id, n) in &fired {
         println!("  {:<32} {:>6.2}", id, f64::from(*n) / total_games);
     }
@@ -381,6 +423,18 @@ fn montecarlo(engine: &Engine, args: &Args) {
         .collect();
     if !never.is_empty() {
         println!("never fired: {never:?}");
+    }
+    let never_chosen: Vec<String> = engine
+        .content
+        .iter()
+        .flat_map(|s| s.options.iter().map(move |o| format!("{}/{}", s.id, o.id)))
+        .filter(|k| !chosen.contains_key(k))
+        .collect();
+    if !never_chosen.is_empty() {
+        println!(
+            "options never chosen ({}): {never_chosen:?}",
+            never_chosen.len()
+        );
     }
 }
 
