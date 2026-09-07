@@ -59,44 +59,50 @@ and voices, clocks, a book.
 ### Desktop
 
 ```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│  FORTUNA STATION · count 41 · the fourth convoy is in 3        [☰] [Chronicle]│
-├─────────────┬────────────────────────────────────────────────┬───────────────┤
-│  CLOCKS     │  SCENE                                          │  THE RING     │
-│             │                                                 │               │
-│  ◔ Earth    │   The Question the Policy Was Written For      │  ┌───┐ hulls  │
-│    window   │                                                 │  │ o │ Zara  │
-│  ◑ review   │   Eli Ibarra has asked the ring for a child.    │  └───┘ Novak  │
-│  ◕ reactor  │   Not permission, exactly; the sponsor's        │   "Take it    │
-│  ○ contract │   medical policy says no children on station    │    to the     │
-│    (11)     │   and does not say who would stop one. Yara     │    Bodies..." │
-│  ◒ Sun      │   Haddad has the numbers: the Keep runs at      │               │
-│             │   twelve millisieverts a year ...               │  ┌───┐ hours  │
-│  ─────────  │                                                 │  │ o │ Vik    │
-│  LEDGER     │   ▸ Read the policy aloud and say no            │  └───┘ Acht.  │
-│  water  ▮▮▮▮│   ▸ Say yes, and write it down as ours          │   "Nine times │
-│  air    ▮▮▮ │   ▸ Say nothing; the policy was for a coil ship │    in ten..." │
-│  parts  ▮▮  │                                                 │               │
-│  power  ▮▮▮▮│                                                 │  ┌───┐ bodies │
-│  hours  ▮▮▮ │                                                 │  │ o │ Yara   │
-│  ─────────  │                                                 │  └───┘ Haddad │
-│  PRESSURES  │                                                 │   "Twelve a   │
-│  suspicion ·│                                                 │    year is    │
-│  grievance ·│                                                 │    less..."   │
-│  the leak  ·│                                                 │               │
-│  the sponsor│                                                 │  ┌───┐ air    │
-│  ○○○○●●     │                                                 │  ┌───┐ liaison│
-│             │                                                 │  ╎   ╎ (late) │
-└─────────────┴────────────────────────────────────────────────┴───────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│  FORTUNA STATION · count 41 · the fourth convoy is in 3          [☰] [Chronicle] │
+├──────────────────┬──────────────────────────────────────────────┬────────────────┤
+│  COUNTDOWNS      │  SCENE                                        │  THE RING      │
+│  ◔ convoy   3    │                                               │                │
+│  ◑ review   9    │   The Question the Policy Was Written For    │  ┌───┐ hulls   │
+│  ○ contract 11   │                                               │  │ o │ Zara   │
+│  ◕ reactor       │   Eli Ibarra has asked the ring for a child.  │  └───┘ Novak   │
+│  ◒ Sun           │   Not permission, exactly; the sponsor's      │   "Take it to  │
+│                  │   medical policy says no children on station  │    the Bodies" │
+│  PROJECTS        │   and does not say who would stop one ...     │                │
+│  ◐ Dig the Keep  │                                               │  ┌───┐ hours   │
+│    ⚀⚃⚄ ▣        │   ▸ Read the policy aloud and say no          │  │ o │ Vik     │
+│  ◔ Re-line the   │   ▸ Say yes, and write it down as ours        │  └───┘ Acht.   │
+│    bearing ⚁     │   ▸ Say nothing; the policy was for a coil    │   "Nine times  │
+│  ∞ the Throw     │                                               │    in ten..."  │
+│    ⚂⚂ ▣▣  ▸hold  │                                               │                │
+│  · Teach the     │                                               │  ┌───┐ bodies  │
+│    reckoning     │                                               │  │ o │ Yara    │
+│                  │                                               │  └───┘ Haddad  │
+│  THE HAND  ⚃⚁⚀  │                                               │   "Twelve a    │
+│   (18 of 61 free)│                                               │    year is..." │
+│  ───────────────-│                                               │                │
+│  water   ▮▮▮▮▮▯  │                                               │  ┌───┐ air     │
+│  margin  ▮▮▮▯▯▯  │                                               │  ┌───┐ liaison │
+│  spares  ▮▮▯▯▯▯  │                                               │  ╎   ╎ (late)  │
+│  power   ▮▮▮▮▯▯  │                                               │                │
+│  hours   ▮▮▮▯▯▯  │                                               │                │
+│  throw   ▮▮▮▮▮▮  │                                               │                │
+│  people  ▮▮▮▮▯▯  │                                               │                │
+│  ◔ ◔ ◔  ○○○●●●● │                                               │                │
+│  susp griev leak │                                               │                │
+└──────────────────┴──────────────────────────────────────────────┴────────────────┘
 ```
 
 Three columns, fixed roles:
 
-- **Left, the clocks and the ledger** (always visible, never scrolls). Five to
-  seven clocks at the top, the resource ledger as short bars beneath, the
-  pressures beneath that, the sponsor's stage as a track of dots at the bottom.
-  Nothing here has a number on it by default. Hover or tap gives the number and
-  one sentence ("Water: 388 t. The loops lose 9 t a count. The bake-out makes 12.").
+- **Left, the clocks, the hand, and the ledger** (always visible; scrolls only
+  when projects overflow). Countdowns at the top, projects beneath with the dice
+  assigned to each drawn on the clock, the unassigned hand under that, then the
+  seven resource bars, then the three pressure rings and the sponsor's track of
+  dots. Nothing here has a number on it by default except the countdown remaining
+  and the hand's count. Hover or tap gives the number and one sentence ("Water:
+  388 t. The loops lose 9 t a count. The bake-out makes 12.").
 - **Centre, the scene** (the only thing that changes every count). Title,
   situation text with the cast's names as quiet links, the options as a list.
   When there is no scene this count, the centre shows the count's events as a
@@ -107,6 +113,10 @@ Three columns, fixed roles:
   office title in act 2), the holder's name, and their counsel for the current
   scene as one or two sentences. Cards do not reorder; a seat that appears is
   added at the bottom, a seat that goes silent stays in place and empties.
+
+The three standing controls live where their subject is: the **manifest split**
+on the convoy countdown (§4), the **throw position** on the Throw project (§4),
+the **roster ranking** in the hand (§4). None of them is a panel.
 
 Header: outpost name, the count, one sentence that is the game's own summary of
 what matters next ("the fourth convoy is in 3", "the reactor has a year", "no ship
@@ -122,7 +132,7 @@ KoDP's management screens: you visit them; they are never required to play.
 ```
 ┌────────────────────────┐
 │ FORTUNA · 41 · convoy 3│
-│ ◔ ◑ ◕ ○ ◒   water▮▮▮▮ │  ← one strip: clocks as small rings, two bars
+│ ◔3 ◑9 ○11 ◕ ◒  ⚃⚁⚀ 18 │  ← one strip: countdowns as small rings, the hand's count
 ├────────────────────────┤
 │ The Question the       │
 │ Policy Was Written For │
@@ -137,16 +147,18 @@ KoDP's management screens: you visit them; they are never required to play.
 │   it down as ours      │
 │ ▸ Say nothing          │
 ├────────────────────────┤
-│ [Ring ▴]  [Ledger] [Ch]│
+│ [Ring ▴] [Clocks] [Ch] │
 └────────────────────────┘
 ```
 
 The ring becomes a bottom sheet: swipe up to see the seats' counsel for the
 scene you are looking at, each seat one line with the face, the question and the
-sentence. The clocks compress to a strip of five small rings; tapping the strip
-opens the full clock panel. The ledger and pressures are a second sheet. The
-chronicle is the third. Nothing in the phone layout is a different *thing* from
-the desktop; it is the same three regions with two of them folded.
+sentence. The clocks compress to a strip of small rings and the hand's count;
+tapping the strip opens the full clock rail (countdowns, projects, the hand, the
+ledger, the pressures) as a second sheet, where dice are assigned by tap-tap
+(§4b). The chronicle is the third sheet. Nothing in the phone layout is a
+different *thing* from the desktop; it is the same three regions with two of them
+folded.
 
 ---
 
@@ -271,11 +283,20 @@ counts are where the clocks do the talking.
 
 ---
 
-## 4. Clocks and windows
+## 4. Countdowns and windows
 
 Citizen Sleeper's insight is that a clock does not need a number if its segments
 are on screen. Every clock here is a ring of segments, filling clockwise, with a
-symbol in the middle and a one-word label. Full means the thing happens.
+symbol in the middle and a one-word label. Full means the thing happens. This
+section is the countdowns — the clocks that tick without you. §4b is the projects
+— the clocks you fill.
+
+The **manifest split** lives on the convoy countdown: while a window is
+approaching, the ring's centre shows the request as a three-way mark (throughput
+· balanced · capability, or "people" when the sponsor is keen); clicking the
+clock cycles it, and the Liaison's card answers the change a count late. It is
+the only control on a countdown, because it is the only thing about a convoy the
+polity decides.
 
 ```
    ◔ Earth window        segments = counts until the window opens; fills, then
@@ -337,34 +358,126 @@ is a neighbour rather than a hub.
 
 **What the clocks column does during a count.** When End count is pressed the
 clocks tick in sequence over about a second, in the order the engine resolves
-them: the window, the Sun, the reactor, the contracts, the review. A clock that
-completes flares once and its symbol changes if it has a next state. This is the
-whole turn animation; there is no other.
+them: the window, the Sun, the reactor, the contracts, the review, and then the
+projects roll (§4b). A clock that completes flares once and its symbol changes if
+it has a next state. This is the whole turn animation; there is no other.
+
+---
+
+## 4b. Projects and the hand
+
+A project is a clock the polity fills with labour. It sits in the same rail as the
+countdowns, directly under the countdown it is racing, so the race is a glance:
+"Re-line the bearing" under the reactor clock, "Align the driver" under the convoy
+clock, "Teach the reckoning" under the contract clock of the one navigator whose
+contract is ending.
+
+```
+  COUNTDOWNS                        PROJECTS
+  ◕ reactor   ▮▮▮▮▮▮▮▮▮▯▯▯          ◐ Re-line the bearing   ▮▮▮▮▯▯▯▯   ⚄⚃ ▣
+  ○ contract  ▮▮▮▮▮▮▮▮▮▮▮▯ (Kai)    ◔ Teach the reckoning   ▮▮▯▯▯▯     ⚂
+  ◔ convoy    ▮▮▮▮▮▮▮▮▮▮▮▮▮▯▯▯      ◑ Align the driver      ▮▮▮▮▮▮▯▯   ⚁⚁ ▣▣
+                                    ∞ the Throw             ▮▮▮▮▮▮▮▮   ⚂⚂ ▣  ▸ hold at reserve
+                                    · Build a through-wall arm  ▯▯▯▯▯▯▯▯   (no dice)
+
+  THE HAND    ⚃ ⚁ ⚀ ⚀ ⚁           18 of 61 free · 43 eating and breathing
+              Nour  Vik  Ada  Rui  Efe          ▣▣ two arms idle
+```
+
+**Dice.** Each present adult is one die per count. The face is their skill in the
+project's domain (0–5, drawn as pips), dulled by strain: a die at strain 0.6 is
+drawn half-shaded and counts as one pip less. A die shows the person's name under
+it in the hand and only their initial once on a clock. Robots are square dice
+(▣), one per unit, with no face — they fit only *structured* projects (the Throw,
+Align the driver, the bake-out) and are refused by the others with a shake. As
+the fleet decays, squares simply stop appearing in the hand; nothing announces it
+except the Fleet screen's shortening bars and, eventually, a Wright's sentence.
+
+**Subsistence first.** The engine takes Salotti's upkeep before the player sees
+anything. The hand's caption says so in words the ledger's Hours bar repeats:
+"18 of 61 free · 43 eating and breathing". The number of free dice is the game's
+real difficulty dial and the player watches it fall as people arrive faster than
+robots, rise when a dex unit lands, and collapse when spares run out and the
+maintenance load doubles. When it reaches zero the hand shows a single line
+instead of dice — **"Nobody is free this count. Everyone is keeping everyone
+alive."** — and the projects hold their segments; the Throw stalls; the countdowns
+do not care. That message is the legible face of the labour deficit.
+
+**Assignment.** Desktop: drag a die from the hand onto a project clock; it snaps
+into the clock's dice row and stays there. Drag it back to the hand, or onto a
+different clock, to move it. On a phone: tap a die (it lifts and the clocks that
+will accept it brighten), tap a clock. Tap an assigned die to lift it again. A
+project shows its dice as pips on its own row, so the rail reads as a set of
+clocks each with a small crew beside it.
+
+**The roll.** One roll per project per count, not one per die. The project sums
+its dice's pips and adds one skill-gated roll: the highest-skilled die on the
+project rolls a d6; on a 6 the project gains a bonus segment ("the Wright found
+a shortcut"); on a 1 it loses one ("the seal tore on the way in"), and the
+chronicle records the setback in one line. Robots add pips but never roll.
+Strain-dulled dice make bonuses rarer and setbacks commoner because the
+highest-skilled die is more often a dulled one. There is no per-die randomness:
+the hand is deterministic and the player can count it; only the project has
+luck, and only one die's worth.
+
+**Persistence.** An assignment is a routine. Dice stay on their clocks across
+counts until something moves them: the person dies, leaves or is grounded (the
+die vanishes and the clock's row shows a gap for one count), a new die arrives
+(it appears in the hand, not on a clock), or the project completes (its dice fall
+back into the hand with a small tumble). The **roster ranking** is the hand's
+sort order — by skill for the selected project, by strain, or by name — set once
+by clicking the hand's caption; it is the third standing control and it is what
+makes re-dealing after a death a two-second job rather than a roster screen.
+
+**The Throw.** The mass driver is a project that never completes: an ∞ symbol
+where the other clocks have a rim, and a full ring that is a rate, not a
+progress. Its dice set the tonnes per count; the **throw position** is a
+three-way mark on the clock (ship · hold at reserve · stop) that is the second
+standing control. The Throw's segments empty from the top when water falls below
+the reserve line, so the player sees the ledger and the project disagree before
+the sponsor does. The Throw is also where the game teaches the two-currency idea
+early: pulling dice off it to dig the Keep is trading φ for the future, and the
+review countdown is right there.
+
+**Completion.** When a project's last segment fills, the clock flares, its dice
+tumble home, and its completion is a storylet — the engine fires the project's
+scene (the Keep is dug: where do the first families go; the bearing is re-lined:
+the Wright who did it wants a seat) with the chronicle line as the memory. The
+clock then either disappears (one-time projects) or resets with a new label if
+the content has a follow-on ("Re-line the bearing" becomes "Re-line the bearing
+again" with a longer ring and the reactor countdown that much shorter). A
+countdown that completes *before* its project is the same flare in the other
+colour, and the must scene that follows is the one the player was racing.
+
+**What is not here.** No task queue, no priorities grid, no per-person schedule.
+Five or six clocks with dice beside them is the whole surface; if the design ever
+needs a scroll bar on the project rail, the content has too many projects open at
+once.
 
 ---
 
 ## 5. Resources and pressures
 
-The engine tracks eleven stocks. The screen shows five, as bars without numbers,
-and the rest live behind them. This assumes the resources-playability pass lands
-on something like the following aggregation; if it aggregates differently the
-column simply shows its five.
+The engine tracks eleven stocks. The screen shows seven, as bars without numbers,
+as the resources pass settled them; the rest live behind them.
 
-**The ledger (assumed aggregation):**
+**The ledger:**
 
 | bar | aggregates | what "low" means |
 |---|---|---|
-| **water** | water | the tank against the reserve line |
-| **air** | nitrogen, with the leak's share drawn as a hatched tail | the farm's floor |
-| **parts** | spares, medicine, and the closure they maintain | the vitamin dependence |
-| **power** | capacity against demand, the reactor's share shaded | the farm's priority; the driver stalls first |
-| **hours** | labour capacity against demand, robot hours shaded | the deficit that raises strain |
+| **Water** | water | the tank against the reserve line |
+| **Margin** | food margin, nitrogen and the farm's power, as the counts the farm can carry everyone | the floor under the people |
+| **Spares** | spares, medicine, and the closure they maintain | the vitamin dependence |
+| **Power** | capacity against demand, the reactor's share shaded | the farm's priority; the driver stalls first |
+| **Hours** | the hand: free dice against dice eaten by upkeep, robot dice shaded | the deficit that raises strain; this bar *is* the hand's caption, drawn as a bar |
+| **the Throw** | tonnes shipped this count against the driver's capacity, with φ on hover | the sponsor's number, made physical |
+| **People** | present adults, residents shaded, rotators plain, children as a notch | who the polity is |
 
-Propellant, boron, helium, food margin: hidden until a storylet or a fleet makes
-them matter; then they appear as a sixth or seventh bar with a small "new" mark,
-the way a Frostpunk resource appears when the building that uses it is built.
-Throughput (φ) is not a bar at all; it is the sponsor's number and lives on the
-sponsor's track.
+Propellant, boron, helium: hidden until a storylet or a fleet makes them matter;
+then they appear as an eighth bar with a small "new" mark, the way a Frostpunk
+resource appears when the building that uses it is built. Nitrogen is not its own
+bar — it is Margin's hatched tail and the Leak's pressure — because the resources
+pass found players read "air" as a stock when it is really a rate.
 
 Each bar is a horizontal strip of six cells that fill left to right; the reserve
 line (water's 120 t, nitrogen's 200 kg) is drawn as a notch. A bar draining below
@@ -379,24 +492,27 @@ with a bracket labelled "reserve, opened count 61". The second exhaustion has no
 notch to move. The UI's job is to make the first one feel like a door that only
 opens once.
 
-**Pressures.** Three or four menaces, drawn as Fallen London menaces: a short
-vertical track of ten cells with a threshold mark at seven, filling upward.
+**Pressures.** Three menaces — Suspicion, Grievance, the Leak — drawn as segmented
+rings like the clocks, ten segments each, filling clockwise, with the bands named
+rather than numbered. A pressure ring's centre shows the current band's word; the
+band boundaries are drawn as heavier ticks.
 
 ```
-   suspicion   grievance   the leak   (reactor wear appears in the reactor's last years)
-      ·           ▮           ▮
-      ·           ▮           ·
-      ─ 7 ─       ─ 7 ─       ─ 7 ─
-      ▮           ▮           ▮
-      ▮           ▮           ▮
+   Suspicion            Grievance              the Leak
+   ◔ "noticed"          ◑ "muttering"          ◕ "weeping"
+   bands: quiet ·       bands: quiet ·         bands: tight ·
+   noticed · audited ·  muttering · the moot · weeping · rationed ·
+   the audit (7+)       the split (7+)         the collar (7+)
 ```
 
-They are labelled with the polity's words (the lexicon renames "the leak" to "the
-weeping collar" when the content does). Reaching the threshold is the must scene;
-the UI does nothing at the threshold except let the scene come. Frostpunk's lesson
-is that two meters the whole game is about are better than ten; here they are
-grievance (inward) and suspicion (outward), and the leak is the physical one that
-will decide the spin.
+The band names are content (they come from the lexicon and drift with it: "the
+moot" is what grievance's third band is called once the Bright-moot exists).
+Reaching the top band is the must scene; the UI does nothing at the threshold
+except let the scene come, and the ring holds full until the scene lowers it.
+Reactor wear is not a fourth ring; it is the reactor countdown's red segments.
+Frostpunk's lesson is that two meters the whole game is about are better than
+ten; here they are Grievance (inward) and Suspicion (outward), and the Leak is
+the physical one that will decide the spin.
 
 **The sponsor's track.** The seven stages as dots along the bottom of the column,
 the current one filled, the ones behind it dark. No labels until a stage is
@@ -467,11 +583,11 @@ changing shape.
 │              "the Wrights keep the arms alive; the dex will   │
 │               not be replaced"                                │
 │                                                              │
-│  ROUTINES                                                    │
-│   bake-out     [ full | steady | idle ]   14 t/count          │
-│   the throw    [ ship | hold at reserve | stop ]              │
-│   the loops    [ spares first | let it decay ]                │
-│   the skiffs   [ crews of 10% | 5% | grounded ]              │
+│  STANDING ASSIGNMENTS                                        │
+│   the bake-out    ⚃⚁ ▣▣▣     12 t/count   (Tess, Rui)          │
+│   the Throw       ⚂⚂ ▣       hold at reserve                  │
+│   the loops       ⚁          spares first  (Fen)               │
+│   the skiffs      ⚄⚃⚂⚁      crews of 10%  — sponsor policy    │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -497,22 +613,27 @@ ever shorten, except for dex and arm on convoy days, and the sentence changes as
 classes fall (the content already has the scenes; the sentence is drawn from the
 last one that fired).
 
-**Routines.** These are the only direct controls in the game, and they should stay
-few: four or five three-way toggles that set the engine's automatic behaviour
-between scenes. They are what "automation" means to the player — not a
-programming interface but standing orders. In act 1 the sponsor sets most of them
-(greyed, with the sponsor's choice shown: "skiffs: crews of 10% — sponsor
-policy") and the manifest scene is the one the player owns. As the sponsor's
-attention fails, toggles unlock one at a time, each unlock a chronicle line ("Nobody
-on Earth is setting the bake-out rate any more"). By act 2 the player holds them
-all, and the Hands and Wrights appear as two more rows with their own standing
-diamonds. A routine that has not been touched for a long time gets the routine's
-holder's face beside it: the polity does this now, not you.
+**Standing assignments.** There are no switches. What the Fleet screen lists under
+this heading is the same thing the clock rail shows: the dice currently sitting on
+the standing projects — the bake-out, the Throw, the loops, the skiff crews —
+which are projects that never complete and whose dice therefore never tumble
+home. This list is a second view of §4b, sorted by project, with the persons'
+names spelled out; it exists so the player can see the whole standing order in one
+place, and it is where the sponsor's policies show as greyed dice with "sponsor
+policy" beside them in act 1. As the sponsor's attention fails, a greyed row
+un-greys and its dice become the player's, each unlock a chronicle line ("Nobody on
+Earth is setting the bake-out rate any more"). By act 2 the player holds them all,
+and the Hands and Wrights appear as their own standing projects ("keep the minds",
+"keep the arms") with the caste's standing diamonds. A row whose dice have not been
+moved for a long time gets the holder's face beside it: the polity does this now,
+not you.
 
-This is deliberately less than Frostpunk's law book and much less than a
-Rimworld work-priority grid. Canon's automation story is that the belt makes hands
-before minds and that robots do not repair robots; the UI for that is a bar
-shortening under a sentence, not a scheduler.
+Automation, to the player, is the square dice: how many there are, which projects
+they fit, and how they stop appearing. The Wrights' project is the one that slows
+their disappearance. This is deliberately less than Frostpunk's law book and much
+less than a Rimworld work-priority grid. Canon's automation story is that the belt
+makes hands before minds and that robots do not repair robots; the UI for that is
+squares vanishing from a hand, not a scheduler.
 
 ---
 
@@ -535,17 +656,27 @@ they answer: this is the ring.
 in the centre: what the automated effort built, what it did not (the arms are
 dead; the through-wall unit is the only one working; the bake-out plant is
 running at a third). The ledger lights bar by bar as each is explained by a
-seat: water when the Air seat reads the tank, hours when the Hours seat counts
-the arms. The first must scene is the first routine: the bake-out toggle unlocks
-with the Extraction seat's counsel, and the Fleet screen opens for the first time
-with three rows.
+seat: Water when the Air seat reads the tank, Hours when the Hours seat counts
+the arms. Then the hand appears — five dice, three of them free after upkeep, the
+other two greyed under "eating and breathing" — and one project clock beneath the
+countdowns: "Restart the bake-out". The tutorial's first real decision is where
+the three spare dice go: all three on the bake-out (fast, and Tess's skill-4 die
+makes the roll good), or two there and one on "Survey the site" (which opens the
+Keep project two counts earlier). The Extraction seat argues for the first, the
+Hulls seat for the second, and whichever the player picks the dice stay where
+they were put — the tutorial's second lesson, that an assignment is a routine,
+arrives when a die arrives with the convoy and lands in the hand instead of on a
+clock.
 
-**Counts 4–8 — the first burrow.** A capstone-style scene sequence: where to dig,
-how deep, whether to spin. Each is a scene with counsel that disagrees, and each
-lights a pressure: the leak appears with the collar; grievance appears when the
-first watch schedule is argued. The reactor clock appears when the core is
-landed. The player is not told what a pressure is; the Bodies seat says "watch
-the collar" and the bar is there the next count.
+**Counts 4–8 — the first burrow.** "Dig the Keep" appears as the first long
+project, eight segments, under a new countdown: the convoy, whose crew will need
+somewhere to sleep. This is the first race the player can lose, and the tutorial
+lets them (the crew sleeps in the hull for two counts and Grievance shows its
+second band). Where to dig, how deep, whether to spin are scenes with counsel
+that disagrees, and each lights a pressure: the Leak appears with the collar;
+Grievance appears when the first watch schedule is argued. The reactor countdown
+appears when the core is landed. The player is not told what a pressure is; the
+Bodies seat says "watch the collar" and the ring is there the next count.
 
 **Counts 9–14 — the window.** The Earth window clock lights with a ship glyph:
 the sponsor's first convoy is inbound. The manifest scene is the tutorial's
@@ -554,8 +685,10 @@ landed, which is the game's whole logic of lag in one decision. The review clock
 appears with the Liaison's card, whose counsel is visibly a count late ("They ask
 how the arms are. The arms were dead when we landed.").
 
-**Counts 15–18 — the first payload.** The throw is assembled; the routine
-unlocks; the first pods go; φ appears on the sponsor's track as the one number.
+**Counts 15–18 — the first payload.** "Align the driver" completes and tumbles its
+dice home; the Throw appears as the ∞ clock with its three-way position; the
+first pods go; the Throw bar and φ appear together, the one number the sponsor
+reads.
 The Sun clock lights during a storm scene. The arc ends with the convoy landing —
 the clocks column ticking through its whole sequence for the first time — and the
 first chronicle drawer opening on its own, showing the eighteen lines the player
@@ -573,48 +706,60 @@ the player learns that the notch moves once.
 ## 9. Build plan
 
 **The smallest slice worth building.** One screen, desktop layout, with: the
-clocks column (Earth window, review, reactor, contract, Sun), the ledger as five
-bars with hover, the three pressures, the sponsor's track, the scene column with
-options and End count, the ring column with cards and counsel, and the chronicle
-drawer. No Map, no Fleet, no faces (a seeded two-colour glyph in place of each
-face), no lexicon hover. That is act 1 as it exists today, playable in a browser,
-and it is perhaps three days of front-end work against the existing engine.
+clock rail (five countdowns, two or three projects with dice, the hand, drag to
+assign), the seven ledger bars with hover, the three pressure rings, the sponsor's
+track, the scene column with options and End count, the ring column with cards
+and counsel, and the chronicle drawer. No Map, no Fleet, no faces (a seeded
+two-colour glyph in place of each face), no lexicon hover. The engine side of
+that slice is the larger job: projects, the hand and the assignment model do not
+exist yet (labour is a single demand-versus-capacity number today), and they
+should be built in the `sim` crate first, headless, with the CLI driving
+assignments over the JSON protocol, before a pixel is drawn. Perhaps a week for
+both halves against the existing engine.
 
 Then in order: faces; the lexicon hover and drifting chrome; the Map with the one
-slider (the Lambert solver is already in the wasm); the Fleet screen with
-routines (needs the engine's routines, which do not exist yet — they are the
-parameters the sponsor currently sets); the phone reflow; the tutorial arc as
-content plus the region-lighting choreography.
+slider (the Lambert solver is already in the wasm); the Fleet screen with the
+standing assignments; the phone reflow with tap-tap assignment; the tutorial arc
+as content plus the region-lighting choreography.
 
 **The wasm / page split.** The `sim` crate compiles to wasm with `wasm-bindgen`
 exposing five functions and nothing else:
 
 ```
 new_game(seed) -> handle
-advance(handle) -> JSON        // the same object play --json prints: status, events, firings, ending
+advance(handle) -> JSON        // the same object play --json prints: status, events, firings, ending,
+                               // plus: projects completed this count and the roll results
 resolve(handle, firing_id, option_id) -> JSON   // { chronicle }
-view(handle) -> JSON           // qualities, clocks, ring seats, ledger, pressures, lexicon triggers,
-                               // chronicle entries with their per-count vocabulary snapshot
+assign(handle, die_id, project_id | "hand") -> JSON   // moves one die; returns the new hand and rail
+set(handle, control, value) -> JSON   // manifest split · throw position · roster ranking
+view(handle) -> JSON           // countdowns, projects with their dice and segments, the hand
+                               // (free dice with face/strain/name; eaten count), ledger bars with
+                               // deltas and "why", pressures with band names, ring seats, lexicon
+                               // triggers, chronicle entries with per-count vocabulary snapshots
 save(handle) -> JSON / load(json) -> handle
 ```
 
 `advance` and `resolve` exist as the JSON protocol already (`docs/design/agent-
-protocol.md`); `view` is new and small — it is `report::summary` returned as
-structure rather than prose, plus the calendar slice the clocks need and the
+protocol.md`); `assign` and `set` are the two new verbs and `view` is the new
+noun — `report::summary` returned as structure rather than prose, plus the
+calendar slice the countdowns need, the project rail, the hand, and the
 `transfer::best_at` call for the slider. The page is plain TypeScript with no
-framework: three columns, a drawer, a handful of SVG rings. The state lives in the
-wasm; the page is a renderer and an input queue. Saves go to `localStorage` as the
-engine's JSON, which the CLI can also load — one save format, both ends.
+framework: three columns, a drawer, a handful of SVG rings, and drag-and-drop
+over the rail. The state lives in the wasm, including every assignment; the page
+is a renderer and an input queue. Saves go to `localStorage` as the engine's JSON,
+which the CLI can also load — one save format, both ends.
 
 **What the protocol already gives the page for free:** the firing's rendered text
 with names filled in, the available options with tags, the counsel with the
 favoured option index, the chronicle line per resolution, the ending and the
 summary. What it does not yet give, and the engine should add before the page is
-built: the calendar slice (open/closed per count for the next 60), per-entry
-lexicon snapshots, the ring's seats as a list with the question and the holder,
-and a `view` of the ledger with per-count deltas and the one-sentence "why" for
-each bar (those sentences are the engine's to write, since only it knows the
-flows).
+built: projects as entities (segments, domain, structured-or-not, the dice on
+them, the one roll per count and its result), the hand (dice after upkeep, with
+the upkeep count), the three standing controls as state, the calendar slice
+(open/closed per count for the next 60), per-entry lexicon snapshots, the ring's
+seats as a list with the question and the holder, pressure band names, and a
+`view` of the ledger with per-count deltas and the one-sentence "why" for each bar
+(those sentences are the engine's to write, since only it knows the flows).
 
 **Two rules for whoever builds it.** No number is shown that a hover could show
 instead. No panel is added that a scene could deliver instead.
