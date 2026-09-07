@@ -555,12 +555,11 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) {
             .map(|d| d.domain);
         let shown = domain.map_or_else(
             || {
-                let best = Skill::ALL
+                Skill::ALL
                     .into_iter()
                     .map(|s| face(game, *p, s))
                     .max()
-                    .unwrap_or(0);
-                best
+                    .unwrap_or(0)
             },
             |d| face(game, *p, d),
         );
