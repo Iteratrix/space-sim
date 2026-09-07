@@ -204,3 +204,43 @@ fn population_at_the_silence_is_a_people_not_a_station() {
         assert!(pop >= 30, "seed {seed}: only {pop} people at the Silence");
     }
 }
+
+#[test]
+fn minds_usually_outlive_act_one() {
+    let e = engine();
+    let mut alive_at_end = 0;
+    for seed in 400..410 {
+        let mut game = e.new_game(seed).expect("game");
+        while game.ending.is_none() && game.turn < 400 {
+            let (_, firings) = e.advance(&mut game);
+            for f in &firings {
+                e.resolve(&mut game, f, 0);
+            }
+        }
+        alive_at_end += game.minds.iter().filter(|m| m.alive).count();
+    }
+    assert!(
+        alive_at_end >= 10,
+        "only {alive_at_end} of 20 minds alive at the Silence"
+    );
+}
+
+#[test]
+fn nobody_serves_five_skiff_tours() {
+    let e = engine();
+    for seed in 500..505 {
+        let mut game = e.new_game(seed).expect("game");
+        while game.ending.is_none() && game.turn < 400 {
+            let (_, firings) = e.advance(&mut game);
+            for f in &firings {
+                e.resolve(&mut game, f, 0);
+            }
+        }
+        let worst = game
+            .people
+            .iter()
+            .map(|p| p.condition.dose_sv)
+            .fold(0.0, f64::max);
+        assert!(worst < 2.2, "seed {seed}: someone carries {worst:.2} Sv");
+    }
+}

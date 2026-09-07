@@ -194,15 +194,18 @@ fn consumables(game: &mut Game, params: &Params, events: &mut Events) {
         game.flags.remove("spares_out");
     }
     game.stocks.medicine = (game.stocks.medicine * 0.98 - n * 0.05).max(0.0);
-    let farm_ok = farm_power_ok(game, params)
-        && game.stocks.nitrogen_kg > 200.0
-        && game.stocks.water_t > 10.0;
-    game.stocks.food_margin_counts += if farm_ok { 0.05 } else { -0.5 };
+    let farm_ok = farm_power_ok(game, params) && game.stocks.nitrogen_kg > 200.0;
+    let dry = game.stocks.water_t <= 0.0;
+    game.stocks.food_margin_counts += match (farm_ok, dry) {
+        (true, false) => 0.05,
+        (true, true) => -0.2,
+        (false, _) => -0.5,
+    };
     game.stocks.food_margin_counts = game.stocks.food_margin_counts.clamp(0.0, 24.0);
 }
 
 fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Events) {
-    let dead = game.sponsor.stage >= SponsorStage::NoShip || game.stocks.spares <= 0.0;
+    let dead = game.sponsor.stage >= SponsorStage::SkippedRotation && game.stocks.spares <= 0.0;
     let table = if dead {
         &params.robots.attrition_dead
     } else {
@@ -276,7 +279,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
     for mind in game.minds.iter_mut().filter(|m| m.alive) {
         let draw: f64 = rng.random();
         let lump = if draw < 0.08 { 6.0 } else { 0.6 };
-        mind.units = (mind.units - mind.units_at_start * attrition * lump).max(0.0);
+        mind.units = (mind.units * (1.0 - attrition * lump)).max(0.0);
         if reset_due {
             mind.counts_unblanked = 0;
             mind.embodiment *= 0.5;
@@ -299,11 +302,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
         );
         game.lexicon_triggers.insert("mind_death".into());
     }
-    if !reset_due
-        && game.turn.is_multiple_of(12)
-        && game.licence != Licence::Compliant
-        && !game.flags.contains("unforgetting")
-    {
+    if !reset_due && game.turn.is_multiple_of(12) && !game.flags.contains("unforgetting") {
         game.flags.insert("unforgetting".into());
         game.lexicon_triggers.insert("unforgetting".into());
         note(
@@ -339,11 +338,17 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         .max(0.0);
     let short_power = 1.0 - power_ratio(game);
     let confinement = 0.22 + 0.05 * (f64::from(game.turn) / 60.0).min(2.0);
-    let short_power = if farm_power_ok(game, params) {
-        short_power * 0.3
+    let dry_load = if game.stocks.water_t <= 0.0 {
+        0.25
     } else {
-        short_power + 0.3
+        0.0
     };
+    let short_power = dry_load
+        + if farm_power_ok(game, params) {
+            short_power * 0.3
+        } else {
+            short_power + 0.3
+        };
     let load = (confinement + deficit * 0.6 + short_power + game.menace.leak * 0.03).min(1.5);
     let sponsor_present =
         game.sponsor.attention > 0.15 && game.sponsor.stage < SponsorStage::SkippedRotation;
@@ -358,7 +363,7 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
             Estate::Skiff => params.dose.skiff_msv_per_year * (1.3 - 0.4 * solar),
         };
         p.condition.dose_sv += rate_msv / 12.0 / 1000.0;
-        let excess = (p.condition.dose_sv - params.dose.cataract_gy).max(0.0);
+        let excess = (p.condition.dose_sv / 2.5 - params.dose.cataract_gy).max(0.0);
         if !p.condition.cataracts && rng.random::<f64>() < 0.02 * excess / 0.5 {
             p.condition.cataracts = true;
             lines.push(p.name.clone());
@@ -441,8 +446,8 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
             continue;
         };
         let clash = da * db;
-        let growth = (sa * 0.5 + sb * 0.2) * (0.5 + clash) * ea * 0.05 * outward;
-        tie.hindrance = (tie.hindrance + growth - params.social.tie_drift * 0.5).clamp(0.0, 1.0);
+        let growth = (sa * 0.5 + sb * 0.2) * (0.5 + clash) * ea * 0.10 * outward;
+        tie.hindrance = (tie.hindrance + growth - params.social.tie_drift * 0.15).clamp(0.0, 1.0);
         tie.work_positive =
             (tie.work_positive - sa * 0.01 + params.social.tie_drift * 0.3).clamp(0.0, 1.0);
         if rng.random::<f64>() < 0.002 {
@@ -481,7 +486,7 @@ fn rotate_skiffs(game: &mut Game, rng: &mut impl Rng) {
         .filter(|p| p.age_counts(turn) >= 18 * 12)
         .map(|p| p.id)
         .collect();
-    let target = (count_f(adults.len()) * 0.15)
+    let target = (count_f(adults.len()) * 0.10)
         .round()
         .saturating_as::<usize>();
     let mut grounded = 0;
@@ -502,9 +507,28 @@ fn rotate_skiffs(game: &mut Game, rng: &mut impl Rng) {
         .copied()
         .filter(|&id| {
             let p = game.person(id);
-            p.estate == Estate::Kept && (p.estate_since == 0 || turn >= p.estate_since + 24)
+            p.estate == Estate::Kept && p.estate_since == 0
         })
         .collect();
+    if candidates.len() + aboard < target {
+        let seats = crate::ring::seats(game);
+        let holders: Vec<PersonId> = seats.values().copied().collect();
+        let second_tour: Vec<PersonId> = adults
+            .iter()
+            .copied()
+            .filter(|&id| {
+                let p = game.person(id);
+                p.estate == Estate::Kept
+                    && p.estate_since > 0
+                    && turn >= p.estate_since + 96
+                    && !holders.contains(&id)
+                    && !candidates.contains(&id)
+            })
+            .collect();
+        candidates.extend(second_tour);
+    }
+    let seats = crate::ring::seats(game);
+    candidates.retain(|id| !seats.values().any(|h| h == id));
     candidates.sort_by(|&a, &b| {
         let pa = game.person(a);
         let pb = game.person(b);
@@ -622,7 +646,7 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
     game.sponsor.confidence =
         (game.sponsor.confidence + delta * 0.12 - game.menace.suspicion * 0.006 - 0.01)
             .clamp(0.0, 1.0);
-    game.sponsor.phi_expected = (expected * 1.08).min(params.sponsor.phi_target_per_review * 2.0);
+    game.sponsor.phi_expected = (expected * 1.4).min(params.sponsor.phi_target_per_review);
     let stage_drag = if game.sponsor.stage >= SponsorStage::Austerity {
         0.85
     } else {
@@ -924,7 +948,7 @@ fn endings(game: &mut Game, events: &mut Events) {
         });
         return;
     }
-    if game.stocks.food_margin_counts <= 0.0 && game.turn.is_multiple_of(3) {
+    if game.stocks.food_margin_counts <= 0.0 && game.turn.is_multiple_of(6) {
         let victim = game
             .present()
             .max_by(|a, b| a.condition.strain.total_cmp(&b.condition.strain))

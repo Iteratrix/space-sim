@@ -140,7 +140,7 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
             attention: params.sponsor.attention,
             stage: SponsorStage::Enthusiasm,
             next_review: params.sponsor.review_interval,
-            phi_expected: params.sponsor.phi_target_per_review,
+            phi_expected: 1.0,
             requested_capability_share: 0.3,
             families_allowed: params.population.families_allowed,
             licence_fails_open: rng.random::<f64>() < 0.5,
