@@ -1,0 +1,95 @@
+id = "tut_keep_race"
+title = "MM 7: CED Ledger and STE Forecast"
+act = 1
+once = true
+priority = 120
+tags = ["tutorial", "dose", "bodies"]
+text = """
+{bodies} (Medical Officer) has the Cumulative Effective Dose (CED) ledger open
+for the first time on station. Surface habitat under regolith bags: 120
+millisieverts a year, ten a month, every person. The drum, when it exists:
+twelve a year. The sponsor's career limit is 600. The Solar Transient Event
+(STE) forecast from Earth puts the next significant event inside the next four
+months; the surface habitat has a storm shelter rated for it, barely.
+
+KEEP excavation is {keep_status}. The board does not carry a line for dose.
+The ledger does.
+"""
+
+[[when]]
+turn_min = 7
+
+[[when]]
+not_flag = "keep_dug"
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[cast]]
+role = "keep_status"
+seat = "hulls"
+
+[[option]]
+id = "priority_keep"
+label = "SMB directive: free allocation to KEEP excavation until it is dug"
+text = "Pull hands off the plant and the driver. The number will dip. The ledger will not."
+tags = ["dose", "people", "capability"]
+chronicle = "MM 7. CED ledger opened. SMB directive: KEEP excavation priority until complete. BOP and MDLS allocations reduced."
+[[option.effect]]
+flag = "keep_priority"
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.03
+[[option.effect]]
+all_strain = -0.03
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Ten millisieverts a month against one. Nothing else on this station trades at ten to one."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The board's model has KEEP completion at MM 14 and does not couple it to MDLS output. Reducing MDLS allocation will be visible; the CED ledger will not."
+
+[[option]]
+id = "hold_plan"
+label = "Hold the allocation; the KEEP finishes when it finishes"
+text = "The plan is the plan. The shelter is rated."
+tags = ["throughput", "sponsor", "risk"]
+chronicle = "MM 7. CED ledger opened. Allocation unchanged; KEEP excavation on existing schedule. STE shelter procedure reviewed."
+[[option.effect]]
+all_strain = 0.04
+[[option.effect]]
+q = "menace.grievance"
+add = 0.5
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Every reallocation costs a month of learning the new task. The schedule is slow because it is the schedule, not because it is wrong."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "The shelter is rated for an event. It is not rated for four months of people wondering when."
+
+[[option]]
+id = "storm_shelter"
+label = "Sleep in the storm shelter until the drum is dug"
+text = "Fourteen people in a room rated for eight. The ledger stops; the roster does not."
+tags = ["dose", "people", "risk"]
+chronicle = "MM 7. CED ledger opened. Crew relocated to STE shelter for sleep periods pending KEEP completion. Berthing at 175 per cent of rating."
+[[option.effect]]
+flag = "shelter_sleeping"
+[[option.effect]]
+all_strain = 0.08
+[[option.effect]]
+q = "menace.grievance"
+add = 0.8
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Sleep is a third of the exposure. The shelter cuts that third to nothing. The roster will hate me; the ledger will not."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Eight berths, fourteen people, no privacy, for months. I have read the same ICE studies she has. They do not end well in a room that size."

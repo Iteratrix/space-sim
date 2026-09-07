@@ -474,6 +474,14 @@ impl Game {
             Quality::Helium => self.stocks.helium_kg,
             Quality::Medicine => self.stocks.medicine,
             Quality::FoodMargin => self.stocks.food_margin_counts,
+            Quality::Margin => {
+                let n2_months = if self.stocks.nitrogen_kg > 0.0 {
+                    (self.stocks.nitrogen_kg / 45.0).min(24.0)
+                } else {
+                    0.0
+                };
+                self.stocks.food_margin_counts.min(n2_months)
+            }
             Quality::Closure => self.closure,
             Quality::PowerCapacity => self.power.capacity_kw,
             Quality::PowerDemand => self.power.demand_kw,
@@ -603,6 +611,7 @@ impl Game {
             | Quality::CountsToWindow
             | Quality::SponsorStage
             | Quality::CountsToReview
+            | Quality::Margin
             | Quality::PowerCapacity
             | Quality::PowerDemand
             | Quality::Phi

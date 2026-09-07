@@ -50,6 +50,8 @@ pub enum Quality {
     Medicine,
     /// Food margin, counts.
     FoodMargin,
+    /// Consumables margin: the smaller of the food margin and the nitrogen make-up time, counts.
+    Margin,
     /// Mass closure fraction, 0-1.
     Closure,
     /// Power capacity, kW.
@@ -128,7 +130,7 @@ pub enum Quality {
 
 impl Quality {
     /// All qualities.
-    pub const ALL: [Self; 58] = [
+    pub const ALL: [Self; 59] = [
         Self::Turn,
         Self::Act,
         Self::CountsSinceConvoy,
@@ -150,6 +152,7 @@ impl Quality {
         Self::Helium,
         Self::Medicine,
         Self::FoodMargin,
+        Self::Margin,
         Self::Closure,
         Self::PowerCapacity,
         Self::PowerDemand,
@@ -214,6 +217,7 @@ impl Quality {
             Self::Helium => "stocks.helium",
             Self::Medicine => "stocks.medicine",
             Self::FoodMargin => "stocks.food_margin",
+            Self::Margin => "margin",
             Self::Closure => "closure",
             Self::PowerCapacity => "power.capacity",
             Self::PowerDemand => "power.demand",
@@ -305,6 +309,7 @@ impl Quality {
             | Self::CountsToWindow
             | Self::SponsorStage
             | Self::CountsToReview
+            | Self::Margin
             | Self::PowerCapacity
             | Self::PowerDemand
             | Self::Phi

@@ -1,0 +1,106 @@
+id = "tut_expansion"
+title = "MM 28: RSW-2 Arrival and Crew Augmentation"
+act = 1
+once = true
+priority = 140
+tags = ["tutorial", "sponsor", "people", "hours"]
+text = """
+RSW-2 has landed with the SMB's MM 4 request and the board's own addition:
+crew. The sponsor is expanding the station faster than it is sending machines,
+because crew is cheaper than machines on the board's model and the allocation
+board is not in the model. {hours} does the arithmetic aloud: each new line
+eats a line and a half of upkeep until the drum's routine work is automated.
+More people, a smaller free allocation. The hand shrinks as the roster grows.
+
+{liaison} confirms that the board considers the augmentation nominal.
+"""
+
+[[when]]
+turn_min = 28
+
+[[when]]
+turn_max = 34
+
+[[when]]
+q = "counts_since_convoy"
+le = 1
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "accept"
+label = "Accept the augmentation; request units, not crew, for RSW-3"
+text = "Take the hands. Ask for the machines that make hands free."
+tags = ["throughput", "hours", "machines"]
+chronicle = "MM 28. RSW-2 landed. Crew augmentation accepted. RSW-3 request: dexterous and haul units, no crew."
+[[option.effect]]
+flag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.effect]]
+unflag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_balanced"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.03
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A dexterous unit is three hundred hours a month and eats nothing. Ask for the thing that gives hours back."
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The board's staffing model runs to a hundred and forty. Units are a line they will approve; declining crew is not."
+
+[[option]]
+id = "spares"
+label = "Accept the augmentation; request spares and tooling for RSW-3"
+text = "More people is more loops. Ask for what keeps loops closed."
+tags = ["capability", "spares", "air"]
+chronicle = "MM 28. RSW-2 landed. Crew augmentation accepted. RSW-3 request: LSS-C spares and fabrication tooling."
+[[option.effect]]
+flag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.effect]]
+unflag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_balanced"
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.5
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Every person is 0.9 tonnes of water through the loops a month and a tenth of a spares crate. The loops are the roster."
+
+[[option]]
+id = "push_back"
+label = "Log an objection to unplanned augmentation"
+text = "Fourteen became more than twenty without a request. Say so."
+tags = ["independence", "sponsor", "risk"]
+chronicle = "MM 28. RSW-2 landed. Crew augmentation received; SMB objection to unplanned headcount logged with board."
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.9
+[[option.effect]]
+q = "menace.grievance"
+add = -0.4
+[[option.effect]]
+flag = "objected_augmentation"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Berthing is rated. The drum was dug for a number. An objection is a medical note as much as a political one."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "An objection to the board's staffing decision, from the station the board staffs, is a sentence I will be asked to explain. I cannot."

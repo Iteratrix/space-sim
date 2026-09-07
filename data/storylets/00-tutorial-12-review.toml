@@ -1,0 +1,74 @@
+id = "tut_review"
+title = "MM 16: First Quarterly Review"
+act = 1
+once = true
+priority = 130
+tags = ["tutorial", "sponsor"]
+text = """
+The board's first review of the station since crew arrival is at Mission Month
+16, and {liaison} is preparing the packet. It has one figure on its first page:
+tonnes shipped per tonne received. Everything else — the CED ledger, the
+LSS-C fraction, the allocation board — is in an annex the board's model does not
+read. {hours} is asked what the number is. {hours} says what it is.
+
+Sponsor confidence is a stock that the number fills. The packet can be true,
+or it can be shaped.
+"""
+
+[[when]]
+turn_min = 15
+
+[[when]]
+turn_max = 19
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "true"
+label = "Send the number as it is, with the annex"
+text = "The ratio is small because the driver is young. Say so, once, in the annex."
+tags = ["sponsor", "caution"]
+chronicle = "MM 16. First quarterly review packet transmitted: throughput ratio as recorded; CED and LSS-C in annex. No shaping."
+[[option.effect]]
+flag = "phi_honest"
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.3
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A number that is true in MM 16 is a number nobody has to remember in MM 80. Send it."
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The board's review model discounts the first two quarters. A true small number now costs nothing. A shaped one costs everything later."
+
+[[option]]
+id = "shape"
+label = "Report shipped tonnage including pods loaded but not yet thrown"
+text = "Loaded is shipped, if you read the definition generously."
+tags = ["sponsor", "throughput", "risk"]
+chronicle = "MM 16. First quarterly review packet transmitted: shipped tonnage reported inclusive of loaded pods. Definition noted in annex."
+[[option.effect]]
+flag = "numbers_cooked"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.06
+[[option.effect]]
+q = "menace.suspicion"
+add = 1.0
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "A pod on the pad is not a tonne at Earth. Two ledgers is one too many and I keep the ledger."
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "The tonnes exist. They are in the pods. The catch is sixteen months away either way."

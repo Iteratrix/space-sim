@@ -116,6 +116,7 @@ Readable everywhere; writable ones are marked `w`.
 | `sponsor.capability_share` w | share of the next convoy requested as capability hardware; the engine also reads the flags `manifest_throughput` (0.1), `manifest_balanced` (0.45), `manifest_capability` (0.7), `manifest_people` (0.3, plus four extra arrivals) |
 | `stocks.water` w (t), `stocks.propellant` w (t), `stocks.nitrogen` w (kg), `stocks.spares` w, `stocks.boron` w (kg), `stocks.helium` w (kg), `stocks.medicine` w, `stocks.food_margin` w (counts) | |
 | `closure` w (0-1) | mass closure |
+| `margin` | consumables margin: the smaller of the food margin and the N2 make-up time, counts |
 | `power.capacity`, `power.demand` (kW), `power.reactor_life` w (counts), `power.pv_m2` w, `power.mirror_m2` w (m²) | |
 | `relay.health` w (0-1) | |
 | `throughput.shipped` w, `throughput.received` w, `throughput.phi` | tonnes; φ = shipped/received |

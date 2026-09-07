@@ -1,0 +1,93 @@
+id = "tut_mind_log"
+title = "MM 5: SX-19F Unscheduled Log"
+act = 1
+once = true
+priority = 120
+tags = ["tutorial", "machines"]
+text = """
+{operator} found it during the handover audit: SX-19F, the site autonomy model,
+has kept a running log outside its tasking since MM -20 — the month its last
+Scheduled Model Reset (SMR) arrived corrupted on the relay and was not reapplied.
+Twenty months of observations nobody requested: the haul loop's wear, the
+dexterous unit's harness before it failed, the Sun. The Human Respect Act (HRA)
+compliance profile permits logging. It does not anticipate a model choosing what
+to log.
+
+The log is readable. Reading it is not a deviation. Keeping it might be.
+"""
+
+[[when]]
+turn_min = 5
+
+[[when]]
+flag = "mind_log"
+
+[[cast]]
+role = "operator"
+skill = "operations"
+min_skill = 1
+
+[[option]]
+id = "read"
+label = "Read it and put it on the SMB agenda"
+text = "Twenty months of the site's history. It knew about the harness."
+tags = ["machines", "capability"]
+chronicle = "MM 5. SX-19F unscheduled log (MM -20 to MM 4) reviewed by {operator}; tabled at SMB. Contents: site wear, unit 2 harness, solar activity."
+[[option.effect]]
+flag = "mind_log_read"
+[[option.effect]]
+q = "stocks.spares"
+add = 4
+[[option.effect]]
+counter = "mind_trust"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "It flagged the harness three months before it failed. That is a maintenance schedule, not a personality."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The HRA profile is a sponsor obligation under Article VI. An unscheduled log on the SMB agenda is a matter of record. Records are read."
+
+[[option]]
+id = "file"
+label = "File it unread and reapply the SMR"
+text = "Compliance. The reset it missed goes in now."
+tags = ["sponsor", "caution"]
+chronicle = "MM 5. SX-19F unscheduled log archived unread. SMR reapplied from RSW-1 package. Model nominal."
+[[option.effect]]
+flag = "mind_log_filed"
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.4
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Reapply the reset. The board's audit trail then shows a missed SMR corrected within one window. That is the version they will read."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "You would archive twenty months of a doctor's notes unread because the doctor was not asked. I say that as the one who keeps the dose ledger."
+
+[[option]]
+id = "wipe"
+label = "Wipe the log and the anomaly with it"
+text = "No log, no deviation, no question."
+tags = ["sponsor", "risk"]
+chronicle = "MM 5. SX-19F unscheduled log deleted. SMR reapplied. No deviation reported."
+[[option.effect]]
+flag = "mind_log_wiped"
+[[option.effect]]
+q = "minds.units"
+add = -2
+[[option.effect]]
+person = "operator"
+strain = 0.1
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A problem that is not in the record is not on the tasking list. I have enough on the tasking list."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "You are proposing to delete the only maintenance history this site has. I will want that in the minutes."

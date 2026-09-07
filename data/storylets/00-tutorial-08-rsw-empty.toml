@@ -1,0 +1,73 @@
+id = "tut_rsw_empty"
+title = "MM 13: RSW-1 Off-Nominal"
+act = 1
+once = true
+priority = 150
+tags = ["tutorial", "sponsor"]
+text = """
+The Resupply Window opened at MM 12 and closed without an arrival. {liaison}
+has a two-line message from the board: launch slipped, RSW-2 will carry the
+combined manifest. The reactor core, the replacement units, the propellant —
+all of it now arrives at MM 28 or not at all. Sixteen more months on
+photovoltaics and the plant at a third.
+
+Nobody on the SMB says the word for this. {hours} adjusts the allocation board.
+"""
+
+[[when]]
+turn_min = 13
+
+[[when]]
+turn_max = 20
+
+[[when]]
+q = "missed_convoys"
+ge = 1
+
+[[when]]
+not_fired = "tut_first_rsw"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "conserve"
+label = "Conservation directive: BOP to rated, MDLS on hold, no throw"
+text = "Water and hands until the hull comes. The number stays at zero and the board can read it."
+tags = ["water", "caution", "people"]
+chronicle = "MM 13. RSW-1 slipped to MM 28. Conservation directive issued: BOP priority, MDLS operations on hold."
+[[option.effect]]
+flag = "conservation"
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.04
+[[option.effect]]
+all_strain = 0.03
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Sixteen months on the array we have. The farm gets power before the driver does or there is no crew to run the driver."
+
+[[option]]
+id = "carry_on"
+label = "Hold the plan and the allocation; the hull is late, not lost"
+text = "The board slipped a launch. That is a schedule, not a verdict."
+tags = ["sponsor", "throughput"]
+chronicle = "MM 13. RSW-1 slipped to MM 28. Allocation unchanged. Board reply acknowledged."
+[[option.effect]]
+q = "menace.grievance"
+add = 0.6
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "A slip is a slip. The board's schedule now shows RSW-2 as the first delivery, and the tasking list assumes we continued. Continue."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "Fourteen people were told twelve months. It is thirteen and the next date is twenty-eight. I would like the SMB to say that out loud to them."

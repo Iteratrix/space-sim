@@ -1,0 +1,91 @@
+id = "tut_arrival"
+title = "MM 1: Site Handover"
+act = 1
+once = true
+priority = 150
+tags = ["tutorial", "hulls", "hours"]
+text = """
+Mission Month 1. The transfer hull is docked to the surface habitat the
+automated effort assembled thirty-one months ago, and the handover inventory is
+on the table. The robots did what their tasking allowed: the Bake-Out Plant
+(BOP) is running at a third of rated output on a single haul loop; the Mass
+Driver Launch System (MDLS) is assembled, unaligned, and has never thrown a pod
+that was caught; the photovoltaic array (PV-A) is unrolled to 3,200 square
+metres; two dexterous units are logged as non-responsive. There is no
+Kilotonne-class Excavated Environmental Protection habitat (KEEP). The crew will
+sleep under regolith bags at 120 millisieverts a year until there is.
+
+{hulls} (Chief Engineer) and {hours} (Logistics Lead) constitute the Station
+Management Board (SMB) as of this entry. The other seats fill as their questions
+come up. First item: who goes to the surface first, and to what.
+"""
+
+[[when]]
+turn_min = 1
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[option]]
+id = "engineer_first"
+label = "Chief Engineer to the MDLS with the survey kit"
+text = "Find out what the robots actually built before anyone plans around it."
+tags = ["hulls", "capability"]
+chronicle = "MM 1. Site handover complete. {hulls} on surface first: MDLS survey. Two dexterous units confirmed non-responsive. KEEP not started."
+[[option.effect]]
+flag = "tut_survey_first"
+[[option.effect]]
+person = "hulls"
+strain = 0.05
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "The alignment log ends at MM -4 with a checksum error. I want to see the rails before I believe the log."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "A survey is hours that do not appear on any tasking line. The BOP is at a third. Start there and survey on the way."
+
+[[option]]
+id = "plant_first"
+label = "Logistics Lead to the BOP with the haul crew"
+text = "Water is the schedule. Get the plant to rated output and everything else follows."
+tags = ["throughput", "hours", "water"]
+chronicle = "MM 1. Site handover complete. {hours} on surface first: BOP restart. Rated output not yet reached. KEEP not started."
+[[option.effect]]
+flag = "tut_plant_first"
+[[option.effect]]
+q = "stocks.water"
+add = 6
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Every tonne the plant does not make this month is a tonne the manifest has to carry. Plant first."
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The board's tasking list for MM 1 has the BOP at line one and the MDLS at line two. I would follow the list."
+
+[[option]]
+id = "all_hands"
+label = "All hands to the surface habitat, settle in, then task"
+text = "Nine months in a hull. Let people see the sky before they see a tasking list."
+tags = ["people", "risk"]
+chronicle = "MM 1. Site handover complete. All hands to surface habitat; tasking deferred one month. KEEP not started."
+[[option.effect]]
+all_strain = -0.08
+[[option.effect]]
+flag = "tut_all_hands"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Fourteen people, nine months, one hull. I have a sleep log that says give them a day. The dose will still be there tomorrow."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "A month of tasking deferred is a month the sponsor's number is zero. They read the number."

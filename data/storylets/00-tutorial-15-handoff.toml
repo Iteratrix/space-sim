@@ -1,0 +1,71 @@
+id = "tut_handoff"
+title = "MM 43: RSW-3"
+act = 1
+once = true
+priority = 160
+tags = ["tutorial"]
+text = """
+Third window. The allocation board has been running on its own routine for a
+year; nobody looks at the tasking list from Earth before the meal any more,
+because {hours} reads it aloud after. The drum has a sound at night that
+{air} says is the RJSA and everyone else says is the KEEP settling. The CED
+ledger is read on the twelfth of the month. The MDLS throws.
+
+{hulls} proposes that the SMB minutes stop recording the mission month and
+start recording the count since landing. It is the same number. It is not the
+same number.
+"""
+
+[[when]]
+turn_min = 42
+
+[[when]]
+turn_max = 50
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[option]]
+id = "count"
+label = "Minute it as the count from now on"
+text = "Mission Month is the board's clock. The count is ours."
+tags = ["independence", "people"]
+chronicle = "Forty-three counts since we came down. The board says MM 43 and we have stopped correcting them. This is the log now, and it is ours."
+[[option.effect]]
+flag = "tutorial_done"
+[[option.effect]]
+lexicon = "first_convoy"
+[[option.effect]]
+all_strain = -0.03
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "It is the same number. Write it our way."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The board's minutes are in Mission Months. Two calendars is a reconciliation item at every review. I would keep one."
+
+[[option]]
+id = "mm"
+label = "Keep Mission Month in the minutes; the count is for the meal"
+text = "The board's paper stays the board's. What we say to each other is ours."
+tags = ["sponsor", "caution"]
+chronicle = "Forty-three counts since we came down. The minutes still say MM 43, for the board. At the meal nobody says MM. This is the log now."
+[[option.effect]]
+flag = "tutorial_done"
+[[option.effect]]
+lexicon = "first_convoy"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "I keep two ledgers already. A third calendar costs me nothing and costs the board a question."

@@ -18,6 +18,7 @@ pub mod setup;
 pub mod state;
 pub mod storylet;
 pub mod turn;
+pub mod view;
 
 pub use director::Firing;
 pub use params::Params;
@@ -117,6 +118,12 @@ impl Engine {
         game.chronicle
             .last()
             .map(|e| lexicon::render(game, &e.text))
+    }
+
+    /// The structured view a front end renders.
+    #[must_use]
+    pub fn view(&self, game: &Game) -> view::View {
+        view::view(game, &self.projects, &self.params)
     }
 
     /// Moves a die onto a project, or back to the hand (`target == "hand"`).

@@ -1,0 +1,96 @@
+id = "tut_hand"
+title = "MM 2: Crew Allocation"
+act = 1
+once = true
+priority = 140
+tags = ["tutorial", "hours"]
+text = """
+{hours} has the allocation board up. Every crew member is one line; every line
+has a rating in the work it is good at. Fourteen lines, and the station eats
+most of them before anything is built: air, water, food, the loops, each other.
+What is left is the free allocation, and it goes where the SMB puts it. The
+robots carry the routine upkeep on their own; put one on a task and the upkeep
+it was carrying comes back to a human.
+
+Two open tasks: KEEP excavation (twenty-four segments of drum and regolith) and
+MDLS alignment (eight). Two standing tasks that never finish: the BOP, which
+makes water at the rate of the hands on it, and the MDLS itself once it is
+aligned. Drag a line onto a task and it stays there until the SMB moves it.
+{hulls} wants the free allocation on the MDLS. {extraction} wants it on the BOP.
+"""
+
+[[when]]
+turn_min = 2
+
+[[when]]
+fired = "tut_arrival"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "extraction"
+seat = "extraction"
+
+[[option]]
+id = "all_bop"
+label = "Free allocation to the BOP; the robots stay on upkeep"
+text = "Water first. The KEEP and the MDLS wait for the next hull's hands."
+tags = ["water", "throughput"]
+chronicle = "MM 2. Free allocation to BOP. KEEP and MDLS tasks open, unstaffed. Allocation board in use."
+[[option.effect]]
+flag = "tutorial_dice_explained"
+[[option.effect]]
+q = "stocks.water"
+add = 4
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "The plant makes fourteen tonnes a month at rated. It is making five. Everything on this station is downstream of that number."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "The MDLS is eight segments. Put two ratings on it and it throws in a month. Nobody is reading water; they are reading tonnes shipped."
+
+[[option]]
+id = "split_keep"
+label = "Split: two lines to the BOP, one to the KEEP"
+text = "Start the drum now. Twenty-four segments is a long clock and the dose does not wait."
+tags = ["capability", "dose", "people"]
+chronicle = "MM 2. Free allocation split: BOP and KEEP excavation. MDLS alignment unstaffed. Allocation board in use."
+[[option.effect]]
+flag = "tutorial_dice_explained"
+[[option.effect]]
+flag = "tut_keep_started"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "One hundred and twenty millisieverts a year under regolith bags. Twelve under the drum. Every month of excavation you delay is nine millisieverts per person you do not get back."
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Split allocations are slower on both. But the drum is the only task on this board whose clock is the crew's own bodies."
+
+[[option]]
+id = "mdls"
+label = "Free allocation to MDLS alignment; robots off upkeep to the BOP"
+text = "Align the driver and throw. Pull two haul units onto the plant and take the upkeep hit."
+tags = ["throughput", "sponsor", "risk"]
+chronicle = "MM 2. Free allocation to MDLS alignment; two haul units reassigned to BOP. Upkeep load on crew increased. Allocation board in use."
+[[option.effect]]
+flag = "tutorial_dice_explained"
+[[option.effect]]
+all_strain = 0.04
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Eight segments. The driver is the only thing on this rock the sponsor can see from Earth."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "Two haul units off upkeep is eighty hours a month back on people. I will find those hours in the loop maintenance log, later, as a leak."

@@ -1,0 +1,88 @@
+id = "tut_first_rsw"
+title = "MM 12: RSW-1 Arrival"
+act = 1
+once = true
+priority = 150
+tags = ["tutorial", "sponsor"]
+text = """
+RSW-1 has landed: the sponsor's first hull since the crew's own. Its manifest
+was fixed before launch — the SMB's request at MM 4 was for RSW-2 — so what is
+on the pad is what the board thought this station would need thirty months ago:
+pods, propellant, replacement units, and the reactor core the plan always
+assumed. {hours} is counting it against the inventory. {liaison} has the board's
+reply to the MM 4 request: acknowledged, under review, response by RSW-2.
+
+The next window opens at MM 28. The request for RSW-3 goes up before then.
+"""
+
+[[when]]
+turn_min = 12
+
+[[when]]
+turn_max = 18
+
+[[when]]
+q = "counts_since_convoy"
+le = 1
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "inventory"
+label = "Full inventory before anything is unpacked"
+text = "Every crate against the manifest, every deviation logged."
+tags = ["hours", "caution"]
+chronicle = "MM 12. RSW-1 landed. Full inventory completed against manifest; two crates short, logged. Reactor core installed."
+[[option.effect]]
+q = "stocks.spares"
+add = 6
+[[option.effect]]
+counter = "inventories"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Two crates will be missing. They always are. If we do not log it now, in thirty months the board will say we lost them."
+
+[[option]]
+id = "unpack"
+label = "Unpack the units and put them to work today"
+text = "The plant has been at a third for a year. Hands first, paperwork later."
+tags = ["throughput", "water"]
+chronicle = "MM 12. RSW-1 landed. Replacement units commissioned same day; inventory deferred. BOP output increased."
+[[option.effect]]
+q = "stocks.water"
+add = 10
+[[option.effect]]
+q = "stocks.spares"
+add = 2
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "A haul unit on the pad is a haul unit not on the loop. Every day it sits there the plant runs at a third."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The board requires manifest reconciliation within one RSW. Deferred inventory is a finding."
+
+[[option]]
+id = "pod_first"
+label = "Load the first pod from the hull's own ballast"
+text = "The MDLS is not aligned. Load one anyway so that the day it is, something is waiting."
+tags = ["throughput", "sponsor"]
+chronicle = "MM 12. RSW-1 landed. First MDLS pod loaded with hull ballast pending alignment. Inventory partial."
+[[option.effect]]
+flag = "pod_loaded"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "A loaded pod is a reason to finish the alignment. Engineers finish things that have a reason."

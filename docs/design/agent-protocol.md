@@ -29,7 +29,8 @@ Each count produces one object:
 ```
 
 For every entry in `firings`, in order, write one line to stdin: either the 1-based
-position in `options` or the option's `id`. Before a choice you may also send
+position in `options` or the option's `id`. Then, every count (including quiet ones),
+the game reads commands until a line `end`, which advances the count. Before a choice you may also send
 `assign <die> <project|hand>` (dice are `p:<person id>` or `r:<class>:<k>`; projects by
 id) and `set <control> <value>` (`manifest throughput|balanced|capability|people`,
 `throw ship|hold|stop`, `roster skill|strain|name`, `auto_deal on|off`); each answers

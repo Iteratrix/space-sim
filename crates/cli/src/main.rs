@@ -231,6 +231,42 @@ fn report(r: Result<(), String>, json: bool) {
     }
 }
 
+fn command(engine: &Engine, game: &mut Game, line: &str, json: bool) -> bool {
+    if line == "view" {
+        match serde_json::to_string(&engine.view(game)) {
+            Ok(j) => println!("{j}"),
+            Err(e) => eprintln!("{e}"),
+        }
+        return true;
+    }
+    if let Some(rest) = line.strip_prefix("assign ") {
+        let mut it = rest.split_whitespace();
+        if let (Some(die), Some(target)) = (it.next(), it.next()) {
+            report(engine.assign(game, die, target), json);
+        }
+        return true;
+    }
+    if let Some(rest) = line.strip_prefix("set ") {
+        let mut it = rest.split_whitespace();
+        if let (Some(c), Some(v)) = (it.next(), it.next()) {
+            report(engine.set_control(game, c, v), json);
+        }
+        return true;
+    }
+    false
+}
+
+fn next_line(lines: &mut std::io::Lines<std::io::StdinLock<'static>>) -> String {
+    let Some(Ok(line)) = lines.next() else {
+        std::process::exit(0)
+    };
+    let line = line.trim().to_owned();
+    if line == "q" || line == "quit" {
+        std::process::exit(0);
+    }
+    line
+}
+
 fn resolve_firings(
     engine: &Engine,
     game: &mut Game,
@@ -247,25 +283,8 @@ fn resolve_firings(
                 print!("> ");
                 std::io::stdout().flush().ok();
             }
-            let Some(Ok(line)) = lines.next() else {
-                std::process::exit(0)
-            };
-            let line = line.trim();
-            if line == "q" || line == "quit" {
-                std::process::exit(0);
-            }
-            if let Some(rest) = line.strip_prefix("assign ") {
-                let mut it = rest.split_whitespace();
-                if let (Some(die), Some(target)) = (it.next(), it.next()) {
-                    report(engine.assign(game, die, target), args.json);
-                }
-                continue;
-            }
-            if let Some(rest) = line.strip_prefix("set ") {
-                let mut it = rest.split_whitespace();
-                if let (Some(c), Some(v)) = (it.next(), it.next()) {
-                    report(engine.set_control(game, c, v), args.json);
-                }
+            let line = next_line(lines);
+            if command(engine, game, &line, args.json) {
                 continue;
             }
             if let Ok(n) = line.parse::<usize>()
@@ -287,6 +306,21 @@ fn resolve_firings(
             } else {
                 println!("  -> {line}");
             }
+        }
+    }
+    loop {
+        if !args.json {
+            print!("[end] ");
+            std::io::stdout().flush().ok();
+        }
+        let line = next_line(lines);
+        if line.is_empty() || line == "end" {
+            break;
+        }
+        if !command(engine, game, &line, args.json) && !args.json {
+            println!(
+                "  commands: view | assign <die> <project|hand> | set <control> <value> | end"
+            );
         }
     }
 }
@@ -346,12 +380,6 @@ fn play(engine: &Engine, args: &Args) {
                 );
             }
             break;
-        }
-        if firings.is_empty() && !args.json {
-            let Some(Ok(line)) = lines.next() else { return };
-            if line.trim() == "q" {
-                return;
-            }
         }
     }
 }

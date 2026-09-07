@@ -1,0 +1,96 @@
+id = "tut_dead_dex"
+title = "MM 3: Non-Responsive Units"
+act = 1
+once = true
+priority = 130
+tags = ["tutorial", "machines", "hulls"]
+text = """
+{wright} opened the second dexterous unit. Diagnosis: an actuator harness
+chafed through on a bracket the assembly drawings do not show, three months
+before the crew arrived. Nothing in the manifest fixes it; the part does not
+exist as a part. The unit can be rewired by hand with a splice the drawings
+would not approve, or logged as inventory for the next hull to take home.
+
+This is the first job on the station that no robot can do and no procedure
+covers. {hulls} notes for the record that it will not be the last.
+"""
+
+[[when]]
+turn_min = 3
+
+[[when]]
+fired = "tut_hand"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "wright"
+skill = "engineering"
+min_skill = 1
+
+[[option]]
+id = "splice"
+label = "Splice it by hand and log the deviation"
+text = "{wright} becomes the person who fixes what the drawings do not cover."
+tags = ["capability", "machines", "independence"]
+chronicle = "MM 3. Dexterous unit 2 returned to service on a non-standard harness splice by {wright}. Deviation logged. First unstructured repair on station."
+[[option.effect]]
+flag = "wrights"
+[[option.effect]]
+q = "robots.dex"
+add = 1
+[[option.effect]]
+q = "stocks.spares"
+add = -3
+[[option.effect]]
+person = "wright"
+strain = 0.06
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "A dexterous unit is three hundred hours a month. A splice is four hours and a signature. Sign it."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A non-standard repair on sponsor hardware is a deviation report, and deviation reports are read by people who have never seen a bracket. I would ship it home."
+
+[[option]]
+id = "ship_home"
+label = "Log it as return inventory for the next hull"
+text = "Procedure. The unit goes home, a new one comes out, nobody signs anything."
+tags = ["sponsor", "caution"]
+chronicle = "MM 3. Dexterous unit 2 logged as return inventory. No repair attempted. Requisition raised for replacement."
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.3
+[[option.effect]]
+counter = "units_shipped_home"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "A replacement unit arrives in thirty months if we ask this window. That is the honest cost of doing it by the book."
+[[option.advice]]
+seat = "extraction"
+stance = "against"
+text = "Thirty months without three hundred hours a month is nine thousand hours. I can hear the plant losing them from here."
+
+[[option]]
+id = "cannibalise"
+label = "Strip it for parts to keep the other unit alive"
+text = "One good unit is worth two doubtful ones."
+tags = ["spares", "machines"]
+chronicle = "MM 3. Dexterous unit 2 stripped for spares. Unit 1 serviceable. Parts inventory increased."
+[[option.effect]]
+q = "stocks.spares"
+add = 6
+[[option.effect]]
+q = "robots.dex"
+add = -0.5
+[[option.effect]]
+flag = "wrights"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "I would rather have the seals and the harness in a drawer than a unit that fails on the far side of the rock."
