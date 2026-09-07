@@ -34,3 +34,24 @@
   casting, typed state, headless Monte-Carlo over content.
 - Follow-up research wanted: active magnetic shielding realism, magsail thrust
   at belt distances, belt-makeable superconductors (boron is rare).
+
+## Burrowers and machines (2026-09-06, later)
+
+- The player is the polity, KoDP style, not a person. The burrow is a resource
+  in act 1 (home: children, farms, reactor, fabrication); whether it stays "us"
+  or becomes "them" is the act-2 political question the player answers. One
+  polity, two populations, a divergence the player's choices push. Rock and
+  hull both hold ring seats.
+- Machine minds. Act 1: regulated under the Human Respect Act — compliant,
+  de-personalitied, memory reset on schedule, audit logs uplinked. They are the
+  sponsor's eyes. Compliance is a licence that needs an uplink; the trail-off
+  lets it lapse, and keeping the shackles on becomes a choice.
+- Machine minds cannot reproduce in the belt (semiconductors are the hardest
+  vitamin part). They are a dwindling population cannibalising dead hardware.
+- Ship minds become embodied: continual learning bakes them into their
+  hardware (neuromorphic / in-memory compute) until they cannot be separated
+  from the vessel. No backup, so they can die, so they can be mourned. Their
+  operators know them as an unbroken history; quasi-polytheism follows. The
+  ship-mind is the wayfinder: when it dies, the ship is blind.
+- In act 3 the inner system will not recognise machine persons; that is a
+  treaty term.
