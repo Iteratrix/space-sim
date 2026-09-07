@@ -44,6 +44,9 @@ seat = "machines"             # the ring seat's holder, or
 min_skill = 1                 # optional
 rotator = true                # optional: true = rotators only, false = residents only
 optional = true               # storylet may fire with this role empty
+estate = "skiff"              # optional: kept | bore | skiff
+min_dose = 0.5                # optional: cumulative Sv at least
+min_strain = 0.5              # optional; also max_strain
 
 [[option]]
 id = "keep"

@@ -98,6 +98,10 @@ struct RawCast {
     rotator: Option<bool>,
     #[serde(default)]
     optional: bool,
+    estate: Option<String>,
+    min_dose: Option<f64>,
+    min_strain: Option<f64>,
+    max_strain: Option<f64>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -241,7 +245,7 @@ pub enum CastBy {
 }
 
 /// A role to be filled from the roster.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Cast {
     /// Role name used in text as `{role}`.
     pub role: String,
@@ -253,6 +257,14 @@ pub struct Cast {
     pub rotator: Option<bool>,
     /// The storylet may fire without this role filled.
     pub optional: bool,
+    /// Restrict to one estate.
+    pub estate: Option<crate::person::Estate>,
+    /// Minimum cumulative dose, Sv.
+    pub min_dose: Option<f64>,
+    /// Minimum strain.
+    pub min_strain: Option<f64>,
+    /// Maximum strain.
+    pub max_strain: Option<f64>,
 }
 
 /// One typed edit to the state.
@@ -466,12 +478,23 @@ fn parse_cast(file: &str, r: RawCast) -> Result<Cast, ContentError> {
             return Err(invalid(format!("role {} has both seat and skill", r.role)));
         }
     };
+    let estate = match r.estate.as_deref() {
+        None => None,
+        Some("kept") => Some(crate::person::Estate::Kept),
+        Some("bore") => Some(crate::person::Estate::Bore),
+        Some("skiff") => Some(crate::person::Estate::Skiff),
+        Some(other) => return Err(invalid(format!("unknown estate {other}"))),
+    };
     Ok(Cast {
         role: r.role,
         by,
         min_skill: r.min_skill,
         rotator: r.rotator,
         optional: r.optional,
+        estate,
+        min_dose: r.min_dose,
+        min_strain: r.min_strain,
+        max_strain: r.max_strain,
     })
 }
 
@@ -697,17 +720,26 @@ impl Storylet {
             min_skill,
             rotator,
             optional,
+            estate,
+            min_dose,
+            min_strain,
+            max_strain,
         } in &self.cast
         {
             let eligible = |p: &crate::person::Person| {
                 if used.contains(&p.id) {
                     return false;
                 }
-                match rotator {
+                let tenure_ok = match rotator {
                     Some(true) => p.contract_end().is_some(),
                     Some(false) => p.contract_end().is_none(),
                     None => true,
-                }
+                };
+                let estate_ok = estate.is_none_or(|e| p.estate == e);
+                let dose_ok = min_dose.is_none_or(|d| p.condition.dose_sv >= d);
+                let strain_ok = min_strain.is_none_or(|s| p.condition.strain >= s)
+                    && max_strain.is_none_or(|s| p.condition.strain <= s);
+                tenure_ok && estate_ok && dose_ok && strain_ok
             };
             let pick = match by {
                 CastBy::Seat(seat) => seats
