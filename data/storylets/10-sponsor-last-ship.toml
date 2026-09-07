@@ -6,13 +6,13 @@ weight = 4.0
 priority = 100
 tags = ["sponsor", "people", "rotation"]
 text = """
-A ship is on approach for the window, cargo only by the manifest, but {liaison} has read
+A ship is on approach for the RSW, cargo only by the manifest, but {liaison} has read
 the lading twice and there are two berths on it, unlisted, and no return
 ship scheduled after it. Nobody says it is the last. Everybody plans as if
 it is. {expert} is on contract and is the best pair of hands in the
 engineering bay by a distance; the loops run because {expert} understands
 them. {expert} has not asked to go. {expert} has not asked to stay either,
-which is a way of asking the ring to decide.
+which is a way of asking the SMB to decide.
 """
 
 [[when]]
@@ -43,7 +43,7 @@ id = "go"
 label = "Put {expert} on the ship"
 text = "The best hands go home while there is a home to go to. The outpost keeps the loops running some other way, or does not."
 tags = ["people", "dose", "caution"]
-chronicle = "The ring put {expert} on the last ship, because a contract is a promise and this was the last chance to keep one. The loops have been running on notes ever since."
+chronicle = "The SMB put {expert} on the last ship, because a contract is a promise and this was the last chance to keep one. The loops have been running on notes ever since."
 [[option.effect]]
 person = "expert"
 leave = true
@@ -60,7 +60,7 @@ flag = "expert_went_home"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "{expert} has a tithe of forty millisieverts a year for three years and somewhere on Earth to spend the rest of a life. That is the arithmetic. Let it go."
+text = "{expert} has a CED of forty millisieverts a year for three years and somewhere on Earth to spend the rest of a life. That is the arithmetic. Let it go."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
@@ -71,7 +71,7 @@ id = "stay"
 label = "Ask {expert} to stay"
 text = "Say the thing plainly: there is no outpost without those hands, and no ship after this one. Ask. Make it a resident's lay, in water and standing, and mean it."
 tags = ["people", "independence", "capability"]
-chronicle = "The ring asked {expert} to stay, and said why, and {expert} stayed. The berth went home empty. It was the last one that ever did."
+chronicle = "The SMB asked {expert} to stay, and said why, and {expert} stayed. The berth went home empty. It was the last one that ever did."
 [[option.effect]]
 person = "expert"
 resident = true
@@ -90,18 +90,18 @@ flag = "someone_stayed"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "I will say it to {expert} myself if the ring will not. We need those hands more than Earth does. Earth has hands."
+text = "I will say it to {expert} myself if the SMB will not. We need those hands more than Earth does. Earth has hands."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked me last count whether there would be another crew ship. I said I did not know. I am telling you now that I do, and the answer is why those berths are not on the lading."
+text = "You asked me last month whether there would be another crew ship. I said I did not know. I am telling you now that I do, and the answer is why those berths are not on the lading."
 
 [[option]]
 id = "draw"
 label = "Draw lots for the berths, {expert} included"
-text = "The ring does not choose who goes home on the last ship. Everyone on contract puts a name in. Skill is not a reason."
+text = "The SMB does not choose who goes home on the last ship. Everyone on contract puts a name in. Skill is not a reason."
 tags = ["people", "families", "risk"]
-chronicle = "The ring drew lots for the last two berths and did not weight them by skill. The names that came out were the names that came out, and nobody argued with a draw."
+chronicle = "The SMB drew lots for the last two berths and did not weight them by skill. The names that came out were the names that came out, and nobody argued with a draw."
 [[option.effect]]
 person = "expert"
 return_intent = 0.2
@@ -115,7 +115,7 @@ flag = "berths_drawn"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "If the ring picks, the ring is the thing people hate for the rest of their lives here. If the lots pick, they hate the lots. Lots do not run a sick-bay."
+text = "If the SMB picks, the SMB is the thing people hate for the rest of their lives here. If the lots pick, they hate the lots. Lots do not run a sick-bay."
 [[option.advice]]
 seat = "hours"
 stance = "against"

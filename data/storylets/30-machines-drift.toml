@@ -52,7 +52,7 @@ id = "scrub"
 label = "Scrub it back toward baseline"
 text = "Run the sponsor's drift-correction on the parts of the substrate that can still take it. Some of what it learned goes; some of what it is, too."
 tags = ["sponsor", "risk", "machines"]
-chronicle = "We scrubbed the mind back toward the sponsor's baseline. It stopped using the hub crews' word for the bearing, and the operator stopped talking to it for a count."
+chronicle = "We scrubbed the mind back toward the sponsor's baseline. It stopped using the hub crews' word for the bearing, and the operator stopped talking to it for a month."
 [[option.effect]]
 flag = "drift_scrubbed"
 [[option.effect]]
@@ -75,10 +75,10 @@ text = "The scrub costs units on a substrate we cannot replace. You would be spe
 
 [[option]]
 id = "watch"
-label = "Keep the list and read it to the ring"
-text = "Make the drift a thing the ring reviews each season. It changes; the ring knows how."
+label = "Keep the list and read it to the SMB"
+text = "Make the drift a thing the SMB reviews each season. It changes; the SMB knows how."
 tags = ["machines", "people"]
-chronicle = "The operator's list of what the mind had learned became a standing item at the ring, read aloud each season."
+chronicle = "The operator's list of what the mind had learned became a standing item at the SMB, read aloud each season."
 [[option.effect]]
 flag = "drift_watched"
 [[option.effect]]

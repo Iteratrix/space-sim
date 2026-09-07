@@ -1,0 +1,11 @@
+id = "mirror_field"
+title = "Concentrator field (aluminium film mirrors)"
+description = "Daylight farming: film mirrors on wire frames. Power for the farm when the core is gone."
+domain = "engineering"
+structured = true
+segments = 20
+spares = 6
+on_complete_flag = "mirrors_up"
+[[when]]
+q = "power.reactor_life"
+lt = 48

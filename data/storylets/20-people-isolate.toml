@@ -55,7 +55,7 @@ id = "reassign"
 label = "Move {isolate} to a shared watch with a different task"
 text = "A role change. Meaningful work in company, not the same task alone."
 tags = ["people", "hours"]
-chronicle = "The ring moved {isolate} onto the shared farm watch, where nobody works alone. It was a smaller thing than it looked and it worked better than it should have."
+chronicle = "The SMB moved {isolate} onto the shared farm watch, where nobody works alone. It was a smaller thing than it looked and it worked better than it should have."
 [[option.effect]]
 person = "isolate"
 strain = -0.1
@@ -71,7 +71,7 @@ text = "Give me {isolate} on the beds. The farm is the one watch where you canno
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "I lose a pair of hands that knows the drum to a watch that does not need them. Do it if you must, and tell me who replaces them."
+text = "I lose a pair of hands that knows the KEEP to a watch that does not need them. Do it if you must, and tell me who replaces them."
 
 [[option]]
 id = "rotate_out"
@@ -103,7 +103,7 @@ id = "leave_be"
 label = "Leave {isolate} be"
 text = "Some people want the edge. The record says otherwise, but the record has not met everyone."
 tags = ["caution", "hours"]
-chronicle = "The ring left {isolate} to the late meal and the lone watches. The error, when it came, was small, and the name for it was not."
+chronicle = "The SMB left {isolate} to the late meal and the lone watches. The error, when it came, was small, and the name for it was not."
 [[option.effect]]
 person = "isolate"
 strain = 0.15

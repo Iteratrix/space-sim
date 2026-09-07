@@ -5,9 +5,9 @@ weight = 0.5
 cooldown = 30
 tags = ["people", "hours"]
 text = """
-{leaver} came to the ring with the contract and a finger on the end date and
+{leaver} came to the SMB with the contract and a finger on the end date and
 asked to be on the next ship instead. Not sick, not in trouble, just done: the
-can, the count, the same thirty-five faces. Half the outpost would say the same
+can, the month, the same thirty-five faces. Half the outpost would say the same
 if asked, and {hours} knows exactly what one seat on the ship costs in tonnes
 and what one pair of hands costs in the ledger.
 """
@@ -35,7 +35,7 @@ id = "let_go"
 label = "Put {leaver} on the next ship"
 text = "A seat, a forfeited lay, and a message to everyone else that the door opens."
 tags = ["people", "cost"]
-chronicle = "{leaver} asked to go before the contract was out and the ring said yes. There was a seat on the next ship and everyone watched it fill."
+chronicle = "{leaver} asked to go before the contract was out and the SMB said yes. There was a seat on the next ship and everyone watched it fill."
 [[option.effect]]
 person = "leaver"
 leave = true
@@ -78,14 +78,14 @@ text = "Nine times in ten it is a roster. Ask before you spend a seat on it."
 [[option.advice]]
 seat = "extraction"
 stance = "against"
-text = "You can talk someone into another convoy. You cannot talk them into liking it, and I have to stand watches with them."
+text = "You can talk someone into another RSW. You cannot talk them into liking it, and I have to stand watches with them."
 
 [[option]]
 id = "hold"
 label = "Hold {leaver} to the paper"
 text = "The contract has an end date and this is not it."
 tags = ["sponsor", "hours"]
-chronicle = "The ring held {leaver} to the contract. {leaver} stood the watches until the end date and did not speak to {hours} again."
+chronicle = "The SMB held {leaver} to the contract. {leaver} stood the watches until the end date and did not speak to {hours} again."
 [[option.effect]]
 person = "leaver"
 strain = 0.2

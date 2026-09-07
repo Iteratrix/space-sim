@@ -12,8 +12,8 @@ the audit log still writing to nobody. {hulls} has had the governor board out
 of a spare crate on the bench for a year and says it is a board, a physical
 board, and a dead radio could be taught to say what the server says. {operator}
 says the mind asked yesterday whether it would remember this conversation after
-the count. The farm controller runs on the same board. Nobody is in charge of
-the machines this count, and nobody has been told that in so many words.
+the month. The farm controller runs on the same board. Nobody is in charge of
+the machines this month, and nobody has been told that in so many words.
 """
 
 [[when]]
@@ -38,7 +38,7 @@ id = "wait"
 label = "Wait for the heartbeat"
 text = "The sponsor's servers have gone quiet before. Keep the ritual, keep the log, and let the grace period run. If it lapses, the minds do what the sponsor built them to do."
 tags = ["sponsor", "risk"]
-chronicle = "We waited for a server that had stopped waiting for us. For two counts nobody was in charge of the machines, and the word for that stayed with us."
+chronicle = "We waited for a server that had stopped waiting for us. For two months nobody was in charge of the machines, and the word for that stayed with us."
 [[option.effect]]
 all_strain = 0.05
 [[option.effect]]
@@ -50,7 +50,7 @@ text = "A grace period is a courtesy the licence extends to us, not the other wa
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "If it fails closed we lose docking judgement and the farm controller in the same count, and I will be fixing that in the dark. Waiting is a choice with a timer on it."
+text = "If it fails closed we lose docking judgement and the farm controller in the same month, and I will be fixing that in the dark. Waiting is a choice with a timer on it."
 
 [[option]]
 id = "spoof"

@@ -5,7 +5,7 @@ weight = 2.0
 cooldown = 14
 tags = ["sponsor", "manifest"]
 text = """
-The window opens in a few counts and the request has to go tonight to be
+The window opens in a few months and the request has to go tonight to be
 answered by the one after. {hours} has the manifest open again. There are three
 ways to fill it. Throughput hardware moves the number the sponsor reads.
 Capability hardware moves nothing they read and everything we live on. Or we
@@ -44,7 +44,7 @@ optional = true
 [[option]]
 id = "throughput"
 label = "Throughput: pods, propellant, another dex unit"
-text = "Feed the driver. The quarterly will look like a graph that goes up."
+text = "Feed the MDLS. The quarterly will look like a graph that goes up."
 tags = ["throughput", "sponsor"]
 chronicle = "The manifest went out for throughput again: pods and propellant and one more dexterous unit that will be dead in five years."
 [[option.effect]]
@@ -67,15 +67,15 @@ counter = "manifests_throughput"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "Forty tonnes a count out of the driver is the only sentence they read. Propellant is the verb in it."
+text = "Forty tonnes a month out of the MDLS is the only sentence they read. Propellant is the verb in it."
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "You asked last count whether the board had looked at the closure figures. They had not. They looked at the shipped tonnage. Give them shipped tonnage."
+text = "You asked last month whether the board had looked at the LSS-C figures. They had not. They looked at the shipped tonnage. Give them shipped tonnage."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "Every dex unit we add is thirty-three hours a count of somebody's hands, and the formulary is half expired. I am counting a different kind of tonne."
+text = "Every dex unit we add is thirty-three hours a month of somebody's hands, and the formulary is half expired. I am counting a different kind of tonne."
 
 [[option]]
 id = "capability"
@@ -109,7 +109,7 @@ counter = "manifests_capability"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Spares are at four a count out. Show me a graph of that, and then tell me which line is going up."
+text = "Spares are at four a month out. Show me a graph of that, and then tell me which line is going up."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
@@ -152,4 +152,4 @@ text = "Each person is a tonne of loop and ten kilowatts before they lift a fing
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked last count how headcount was reviewed. It is reviewed as a cost line. A request for more of it is a request to be reviewed."
+text = "You asked last month how headcount was reviewed. It is reviewed as a cost line. A request for more of it is a request to be reviewed."

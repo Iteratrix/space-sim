@@ -1,0 +1,9 @@
+id = "align_driver"
+title = "MDLS alignment and catch calibration"
+description = "The driver was assembled by robots and has never thrown a pod that was caught."
+domain = "engineering"
+structured = false
+segments = 8
+manual = true
+once = true
+on_complete_flag = "driver_aligned"

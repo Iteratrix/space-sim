@@ -4,9 +4,9 @@ act = 1
 once = true
 tags = ["people", "families", "dose"]
 text = """
-{asker} has asked the ring for a child. Not permission, exactly; the sponsor's
+{asker} has asked the SMB for a child. Not permission, exactly; the sponsor's
 medical policy says no children on station and does not say who would stop
-one. {bodies} has the numbers: the Keep runs at twelve millisieverts a year,
+one. {bodies} has the numbers: the KEEP runs at twelve millisieverts a year,
 which is less than some cities; gestation here roughly doubles a childhood
 cancer risk that starts small; the policy was written for a coil ship and
 copied to the rock without anyone reading it. {asker} is a resident. There is
@@ -34,9 +34,9 @@ seat = "bodies"
 [[option]]
 id = "defy"
 label = "The policy was written for a hull. The Keep is not a hull. Yes"
-text = "No permission asked. The dose book says it is survivable and the ring says so."
+text = "No permission asked. The CED book says it is survivable and the SMB says so."
 tags = ["families", "independence", "risk"]
-chronicle = "The ring told {asker} yes, and wrote the dose numbers next to the decision so that anyone reading later would know it was not made blind. The sponsor was not asked."
+chronicle = "The SMB told {asker} yes, and wrote the CED numbers next to the decision so that anyone reading later would know it was not made blind. The sponsor was not asked."
 [[option.effect]]
 flag = "families_defied"
 [[option.effect]]
@@ -66,10 +66,10 @@ text = "A child on the headcount is a line the sponsor cannot explain to its ins
 
 [[option]]
 id = "ask"
-label = "Put it to the sponsor as a formal request, with the dose numbers"
-text = "Wait for the answer. The answer is a window away and probably no."
+label = "Put it to the sponsor as a formal request, with the CED numbers"
+text = "Wait for the answer. The answer is an RSW away and probably no."
 tags = ["sponsor", "families", "caution"]
-chronicle = "The ring sent the request to Earth with the dose numbers attached and told {asker} to wait for the window. The sponsor answered with a longer policy."
+chronicle = "The SMB sent the request to Earth with the CED numbers attached and told {asker} to wait for the RSW. The sponsor answered with a longer policy."
 [[option.effect]]
 flag = "families_asked"
 [[option.effect]]
@@ -96,9 +96,9 @@ text = "You are asking a board that has never seen this place to rule on what a 
 [[option]]
 id = "refuse"
 label = "The policy is the policy. Not here, not yet"
-text = "The Bodies seat does not disagree with the numbers. The ring does not want the fight."
+text = "The Bodies seat does not disagree with the numbers. The SMB does not want the fight."
 tags = ["sponsor", "caution"]
-chronicle = "The ring told {asker} no, and read the policy aloud so that it would be the policy saying it. {asker} asked about the next ship."
+chronicle = "The SMB told {asker} no, and read the policy aloud so that it would be the policy saying it. {asker} asked about the next ship."
 [[option.effect]]
 person = "asker"
 strain = 0.2
@@ -118,4 +118,4 @@ text = "A pregnancy is a person off the roster for a year and a person on the ra
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You want me to tell a patient the risk is unacceptable when I have just told the ring it is not. Find someone else to say it."
+text = "You want me to tell a patient the risk is unacceptable when I have just told the SMB it is not. Find someone else to say it."

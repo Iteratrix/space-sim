@@ -9,7 +9,7 @@ text = """
 The review came back and for the first time the tone was not warm. Somebody
 on the board has drawn a line through the throughput target and written a
 new number above it. {liaison} has read the message three times and says the
-word they keep coming back to is "trajectory". {hours} has run the driver's
+word they keep coming back to is "trajectory". {hours} has run the MDLS's
 numbers against the new line and it does not meet it. The reply goes tonight.
 """
 
@@ -43,7 +43,7 @@ flag = "promised_phi"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "The question you asked me last count was what the board wanted to hear. This is it. A promise buys a review; that is what promises are for."
+text = "The question you asked me last month was what the board wanted to hear. This is it. A promise buys a review; that is what promises are for."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
@@ -52,7 +52,7 @@ text = "The driver crews are already on fours. You are promising Earth a number 
 [[option]]
 id = "explain"
 label = "Explain the physics"
-text = "Send them the transfer calendar and the driver's duty cycle. The number they want is not a matter of effort."
+text = "Send them the transfer calendar and the MDLS's duty cycle. The number they want is not a matter of effort."
 tags = ["capability", "independence", "risk"]
 chronicle = "The reply sent the sponsor a transfer calendar and a duty cycle in place of a promise. It was correct and it was read as an excuse."
 [[option.effect]]
@@ -66,7 +66,7 @@ flag = "explained_phi"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "Forty tonnes a count is the driver's ceiling with the propellant we have. I can write that in a way that a board can read, and it will still be forty."
+text = "Forty tonnes a month is the MDLS's ceiling with the propellant we have. I can write that in a way that a board can read, and it will still be forty."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
@@ -75,9 +75,9 @@ text = "A calendar is not an answer to a board. A board asks who is responsible,
 [[option]]
 id = "ask"
 label = "Ask what changed on their side"
-text = "Do not answer the number. Ask why the number moved. The answer, if it comes, will arrive a count late and tell us more than the review did."
+text = "Do not answer the number. Ask why the number moved. The answer, if it comes, will arrive a month late and tell us more than the review did."
 tags = ["sponsor", "risk"]
-chronicle = "The reply asked the sponsor, politely, what had changed on Earth. The answer took a count, and it was not about throughput."
+chronicle = "The reply asked the sponsor, politely, what had changed on Earth. The answer took a month, and it was not about throughput."
 [[option.effect]]
 q = "sponsor.attention"
 add = 0.04

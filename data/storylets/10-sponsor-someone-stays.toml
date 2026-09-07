@@ -5,12 +5,12 @@ weight = 1.5
 cooldown = 14
 tags = ["sponsor", "people", "rotation"]
 text = """
-The window is open and the ship is loading. {rotator} has come to the ring
+The window is open and the ship is loading. {rotator} has come to the SMB
 with the contract in hand and asked not to be on it. No reason given that
-would fit on a form; something about the light in the Keep at dim, and
-having stopped reading the messages from home. The sponsor counts residents
-as a cost line that never closes. {bodies} has {rotator}'s dose and strain
-in front of them. The ship leaves in two counts.
+would fit on a form; something about the light in the KEEP at dim, and
+having stopped reading the messages from home. The sponsor months residents
+as a cost line that never closes. {bodies} has {rotator}'s CED and strain
+in front of them. The ship leaves in two months.
 """
 
 [[when]]
@@ -43,9 +43,9 @@ optional = true
 [[option]]
 id = "stay"
 label = "Let {rotator} stay"
-text = "Tear up the return berth. {rotator} is a resident from this count, with a resident's lay and no ship to plan around."
+text = "Tear up the return berth. {rotator} is a resident from this month, with a resident's lay and no ship to plan around."
 tags = ["people", "independence", "families"]
-chronicle = "{rotator} asked to stay and the ring said yes. The berth went home empty and the sponsor's roster gained a line it did not have a column for."
+chronicle = "{rotator} asked to stay and the SMB said yes. The berth went home empty and the sponsor's roster gained a line it did not have a column for."
 [[option.effect]]
 person = "rotator"
 resident = true
@@ -63,18 +63,18 @@ text = "The strain curve on someone who has stopped wanting to leave goes down, 
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked last count how the board sees residents. As a permanent cost with no exit clause. Every one we add is a line that never closes, and they count the lines."
+text = "You asked last month how the board sees residents. As a permanent cost with no exit clause. Every one we add is a line that never closes, and they count the lines."
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "A resident is a pair of hands I can plan beyond thirty counts. I will take that over a berth any day the driver is running."
+text = "A resident is a pair of hands I can plan beyond thirty months. I will take that over a berth any day the MDLS is running."
 
 [[option]]
 id = "send_home"
 label = "Hold {rotator} to the contract"
 text = "The contract says home. The sponsor pays for a rotation, not a settlement, and a berth refused is a berth the sponsor paid for and did not get."
 tags = ["sponsor", "caution", "cost"]
-chronicle = "{rotator} asked to stay and the ring held the contract. The ship left with {rotator} on it, looking at the rock the whole burn out."
+chronicle = "{rotator} asked to stay and the SMB held the contract. The ship left with {rotator} on it, looking at the rock the whole burn out."
 [[option.effect]]
 person = "rotator"
 leave = true
@@ -98,9 +98,9 @@ text = "The flight home is nine months in a can with a person who did not want t
 [[option]]
 id = "one_more"
 label = "One more contract, and then we will see"
-text = "Neither yes nor no. Renew {rotator} for another term on the sponsor's paper, and let the question come back in thirty counts."
+text = "Neither yes nor no. Renew {rotator} for another term on the sponsor's paper, and let the question come back in thirty months."
 tags = ["people", "sponsor", "caution"]
-chronicle = "{rotator} asked to stay and the ring gave one more contract instead of an answer. Thirty more counts, and the same question with a different sky."
+chronicle = "{rotator} asked to stay and the SMB gave one more contract instead of an answer. Thirty more months, and the same question with a different sky."
 [[option.effect]]
 person = "rotator"
 return_intent = -0.3
@@ -116,4 +116,4 @@ text = "A renewal is a form the sponsor already has. Residency is a form it does
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Someone who has stopped reading the messages from home is not going to start again in thirty counts. Say yes now, or say no; do not say later."
+text = "Someone who has stopped reading the messages from home is not going to start again in thirty months. Say yes now, or say no; do not say later."

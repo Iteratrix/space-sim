@@ -5,8 +5,8 @@ weight = 0.3
 cooldown = 48
 tags = ["people", "air"]
 text = """
-{brewer} has a still. Everyone knows where it is except the ring, formally,
-and the ring knows now because {air} found the sugar draw in the loop budget.
+{brewer} has a still. Everyone knows where it is except the SMB, formally,
+and the SMB knows now because {air} found the sugar draw in the loop budget.
 Every station in the record brewed, and every station's disciplinary log is
 mostly what happened after. It is also the only licensed ritual most of them
 had. The sponsor's policy is dry. The can is not.
@@ -31,9 +31,9 @@ seat = "air"
 [[option]]
 id = "license"
 label = "License it: a bar, a ration, a night"
-text = "The loop pays a known sugar draw. The ring owns the ration."
+text = "The loop pays a known sugar draw. The SMB owns the ration."
 tags = ["people", "air"]
-chronicle = "The ring gave {brewer} a licence and a ration and a corner of the mess to pour it in, one night in the round. The loop budget got a line called sugar and nobody argued with it."
+chronicle = "The SMB gave {brewer} a licence and a ration and a corner of the mess to pour it in, one night in the round. The loop budget got a line called sugar and nobody argued with it."
 [[option.effect]]
 all_strain = -0.06
 [[option.effect]]
@@ -60,7 +60,7 @@ id = "forbid"
 label = "Break it up. The policy is dry"
 text = "The still goes. The next one is better hidden."
 tags = ["sponsor", "caution"]
-chronicle = "The ring broke up the still and cited the policy. There was another one within two counts and the ring was not told where."
+chronicle = "The SMB broke up the still and cited the policy. There was another one within two months and the SMB was not told where."
 [[option.effect]]
 all_strain = 0.04
 [[option.effect]]
@@ -86,7 +86,7 @@ id = "look_away"
 label = "Look the other way"
 text = "No licence, no ration, no line in the budget. The sugar draw stays a mystery."
 tags = ["hours", "risk"]
-chronicle = "The ring decided it had not found a still. {air} adjusted the loop budget for a sugar draw with no name and the nights went on as they had."
+chronicle = "The SMB decided it had not found a still. {air} adjusted the loop budget for a sugar draw with no name and the nights went on as they had."
 [[option.effect]]
 all_strain = -0.03
 [[option.effect]]

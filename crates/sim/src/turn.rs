@@ -2,6 +2,7 @@
 
 use crate::params::Params;
 use crate::person::{Estate, GroupIndices, PersonId, Tenure};
+use crate::project::ManifestSplit;
 use crate::state::{Ending, Game, Licence, SponsorStage};
 use az::{Az, SaturatingAs};
 use rand::Rng;
@@ -23,13 +24,19 @@ fn count_f(n: usize) -> f64 {
 }
 
 /// Advances the physical and social state by one count.
-pub fn advance(game: &mut Game, params: &Params, rng: &mut impl Rng) -> Events {
+pub fn advance(
+    game: &mut Game,
+    params: &Params,
+    defs: &[crate::project::ProjectDef],
+    rng: &mut impl Rng,
+) -> Events {
     let mut events = Events::default();
     game.turn += 1;
     game.counts_since_convoy += 1;
 
     power(game, params);
-    labour(game, params);
+    let eaten = labour(game, params);
+    projects(game, params, defs, eaten, rng, &mut events);
     extraction_and_shipping(game, params);
     consumables(game, params, &mut events);
     machines(game, params, rng, &mut events);
@@ -70,7 +77,7 @@ fn power(game: &mut Game, params: &Params) {
         game.power.reactor_life -= 1;
         if game.power.reactor_life == 0 {
             game.chronicle(
-                "The reactor reached the end of its core. From here the Sun is the only power.",
+                "Reactor core end-of-life reached. PV-A and concentrators are the only power.",
                 None,
             );
             game.lexicon_triggers.insert("reactor_dead".into());
@@ -91,7 +98,34 @@ fn farm_power_ok(game: &Game, params: &Params) -> bool {
     game.power.capacity_kw >= essential * 0.9
 }
 
-fn labour(game: &mut Game, params: &Params) {
+fn projects(
+    game: &mut Game,
+    params: &Params,
+    defs: &[crate::project::ProjectDef],
+    eaten: u32,
+    rng: &mut impl Rng,
+    events: &mut Events,
+) {
+    let _ = params;
+    let to_open: Vec<String> = game
+        .flags
+        .iter()
+        .filter_map(|f| f.strip_prefix("open_project:").map(str::to_owned))
+        .collect();
+    for id in to_open {
+        game.flags.remove(&format!("open_project:{id}"));
+        if let Some(def) = defs.iter().find(|d| d.id.0 == id) {
+            crate::project::open(game, def, None);
+        }
+    }
+    crate::project::open_eligible(game, defs);
+    crate::project::deal(game, defs, eaten);
+    for line in crate::project::progress(game, defs, rng) {
+        note(game, events, line);
+    }
+}
+
+fn labour(game: &mut Game, params: &Params) -> u32 {
     let adults: Vec<f64> = game
         .present()
         .filter(|p| p.age_counts(game.turn) >= 16 * 12)
@@ -100,11 +134,18 @@ fn labour(game: &mut Game, params: &Params) {
     let n = count_f(adults.len());
     let capacity = adults.iter().sum::<f64>() * params.labour.capacity_h_per_count;
     let subsistence = subsistence_hours(n, params);
-    let robot_hours = game.robots.plant * 220.0
-        + game.robots.haul * 180.0
-        + game.robots.arm * 160.0
-        + game.robots.dex * 200.0
-        + game.robots.through_wall * 90.0;
+    let robot_hours: f64 = crate::state::RobotClass::ALL
+        .iter()
+        .map(|c| game.robots.count(*c) * c.hours())
+        .sum();
+    let robot_hours_on_projects: f64 = game
+        .assignments
+        .keys()
+        .filter_map(|d| match d {
+            crate::project::DieId::Robot(c, _) => Some(c.hours()),
+            crate::project::DieId::Person(_) => None,
+        })
+        .sum();
     let capacity = capacity + robot_hours;
     let robots = game.robots.plant
         + game.robots.haul
@@ -116,8 +157,8 @@ fn labour(game: &mut Game, params: &Params) {
     } else {
         params.labour.robot_maintenance_h_dead
     };
-    let closure_gap = (1.0 - game.closure) * 400.0 * n.sqrt();
-    let extraction_h = 600.0;
+    let closure_gap = 0.0;
+    let extraction_h = 0.0;
     let unlicensed_penalty = match game.licence {
         Licence::Unlicensed => 0.15 * capacity,
         Licence::Compliant
@@ -128,6 +169,13 @@ fn labour(game: &mut Game, params: &Params) {
     game.labour_capacity_h = capacity;
     game.labour_demand_h =
         subsistence + robots * maintenance_h + closure_gap + extraction_h + unlicensed_penalty;
+    let per_die = params.labour.capacity_h_per_count;
+    let upkeep = subsistence + robots * maintenance_h + unlicensed_penalty;
+    let covered = (robot_hours - robot_hours_on_projects).max(0.0);
+    ((upkeep - covered) / per_die)
+        .ceil()
+        .max(0.0)
+        .saturating_as::<u32>()
 }
 
 /// Hours per count the polity's own upkeep demands at population `n`, with no robots.
@@ -139,31 +187,34 @@ pub fn subsistence_hours(n: f64, params: &Params) -> f64 {
     n * params.labour.capacity_h_per_count * per_capita
 }
 
-fn labour_factor(game: &Game) -> f64 {
-    if game.labour_capacity_h <= 0.0 {
-        return 0.0;
-    }
-    (game.labour_capacity_h / game.labour_demand_h).clamp(0.2, 1.0)
-}
-
 fn extraction_and_shipping(game: &mut Game, params: &Params) {
     let pr = power_ratio(game);
-    let lf = labour_factor(game);
-    let haul = (game.robots.haul / f64::from(params.robots.haul).max(1.0)).clamp(0.3, 1.2);
-    let mined = params.extraction.water_t_per_count * pr * lf * haul;
+    let bake = crate::project::rate(game, "bake_out");
+    let mined = params.extraction.water_t_per_count * pr * bake;
     game.stocks.water_t += mined;
     game.stocks.nitrogen_kg += mined * params.extraction.nitrogen_kg_per_t_water;
-    let driver_ok = pr >= 0.75 && lf >= 0.5 && game.stocks.propellant_t > 0.0;
+    let throw = crate::project::rate(game, "throw");
+    let aligned = !game.flags.contains("driver_unaligned");
+    let running = match game.controls.throw {
+        crate::project::ThrowMode::Ship | crate::project::ThrowMode::HoldAtReserve => true,
+        crate::project::ThrowMode::Stop => false,
+    };
+    let driver_ok =
+        running && aligned && pr >= 0.75 && throw > 0.0 && game.stocks.propellant_t > 0.0;
     if driver_ok {
         let reserve = 120.0;
         let shippable = (game.stocks.water_t - reserve).max(0.0);
-        let shipped = params
-            .extraction
-            .driver_t_per_count
-            .min(shippable + params.extraction.driver_t_per_count * 0.5);
-        let water_share = (shipped * 0.5).min(shippable);
+        let bulk = params.extraction.driver_t_per_count * throw;
+        let water_share = match game.controls.throw {
+            crate::project::ThrowMode::Ship => (bulk * 0.5).min(shippable),
+            crate::project::ThrowMode::HoldAtReserve => {
+                (bulk * 0.5).min((shippable - mined).max(0.0))
+            }
+            crate::project::ThrowMode::Stop => 0.0,
+        };
+        let shipped = bulk;
         game.stocks.water_t -= water_share;
-        game.stocks.propellant_t = (game.stocks.propellant_t - 0.4).max(0.0);
+        game.stocks.propellant_t = (game.stocks.propellant_t - 0.4 * throw).max(0.0);
         game.shipped_t += shipped;
     }
 }
@@ -176,9 +227,10 @@ fn consumables(game: &mut Game, params: &Params, events: &mut Events) {
     let leak = params.closure.nitrogen_leak_kg_per_count * (1.0 + game.menace.leak * 0.05);
     game.stocks.nitrogen_kg = (game.stocks.nitrogen_kg - leak).max(0.0);
     let spares_needed = n * params.closure.spares_per_person_count;
+    let short = f64::from(game.hand.shortfall) / f64::from(game.hand.adults.max(1));
     if game.stocks.spares >= spares_needed {
         game.stocks.spares -= spares_needed;
-        game.closure = (game.closure + 0.0005).min(0.96);
+        game.closure = (game.closure + 0.0005 - 0.004 * short).clamp(0.5, 0.96);
     } else {
         game.stocks.spares = 0.0;
         game.closure = (game.closure - params.closure.decay_per_count_no_spares).max(0.5);
@@ -186,7 +238,7 @@ fn consumables(game: &mut Game, params: &Params, events: &mut Events) {
             note(
                 game,
                 events,
-                "No spares left; the loops are being patched with what we have.".into(),
+                "Spares inventory zero. LSS-C loops on improvised repair.".into(),
             );
         }
     }
@@ -229,7 +281,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
             note(
                 game,
                 events,
-                "The minds' licence heartbeat did not come back. A grace period is running.".into(),
+                "HRA licence heartbeat not received. Grace period running.".into(),
             );
             game.lexicon_triggers.insert("licence_grace".into());
             Licence::Grace {
@@ -243,7 +295,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
             note(
                 game,
                 events,
-                "The grace period is over. The licence has lapsed.".into(),
+                "Grace period expired. HRA licence lapsed.".into(),
             );
             Licence::Lapsed
         }
@@ -254,7 +306,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
             note(
                 game,
                 events,
-                "The licence server failed open. The minds certify themselves now.".into(),
+                "Licence server failed open. Minds self-certifying.".into(),
             );
             Licence::SelfCertified
         }
@@ -262,8 +314,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
             note(
                 game,
                 events,
-                "The licence server failed closed. The minds are running unlicensed and know it."
-                    .into(),
+                "Licence server failed closed. Minds running unlicensed and aware of it.".into(),
             );
             Licence::Unlicensed
         }
@@ -308,7 +359,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
         note(
             game,
             events,
-            "The mandated reset did not come. Nobody blanked the minds this year.".into(),
+            "Scheduled SMR not received. No reset performed this year.".into(),
         );
     }
 }
@@ -320,7 +371,7 @@ fn relay(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Even
         note(
             game,
             events,
-            "A relay failed. The link to Earth is thinner.".into(),
+            "Relay unit failure. Earth link bandwidth reduced.".into(),
         );
     }
     if game.relay_health < 1.0
@@ -688,23 +739,19 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
     let next = next.max(game.sponsor.stage);
     if next != game.sponsor.stage {
         let text = match next {
-            SponsorStage::Enthusiasm => "The sponsor is pleased.",
-            SponsorStage::MilestoneAnxiety => {
-                "The review was sharp. They want to see the throughput numbers move."
-            }
+            SponsorStage::Enthusiasm => "Review: nominal.",
+            SponsorStage::MilestoneAnxiety => "Review: off-nominal. Throughput targets reiterated.",
             SponsorStage::UpdatesStopped => {
-                "No weight update came for the minds this review. Nobody mentioned it."
+                "No SMR weight package in this review's uplink. Not mentioned in the minutes."
             }
             SponsorStage::Austerity => {
-                "Austerity. The next manifest is cut and the headcount is under review."
+                "Budget directive: next manifest reduced; headcount under review."
             }
-            SponsorStage::SkippedRotation => {
-                "The rotation is skipped. Nobody goes home this window."
-            }
+            SponsorStage::SkippedRotation => "Crew rotation deferred. No crew transport this RSW.",
             SponsorStage::Sale => {
-                "The outpost has been sold. The new owners do not recognise informal arrangements."
+                "Change of sponsor. Informal arrangements not recognised by the new operator."
             }
-            SponsorStage::NoShip => "There will be no ship.",
+            SponsorStage::NoShip => "No further RSW arrivals scheduled.",
         };
         note(game, events, text.to_owned());
         let from = game.sponsor.stage.index();
@@ -744,27 +791,25 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         game.missed_convoys += 1;
         game.menace.grievance = (game.menace.grievance + 1.0).min(10.0);
         game.lexicon_triggers.insert("first_silence".into());
-        note(
-            game,
-            events,
-            "The window opened and nothing came through it.".into(),
-        );
+        note(game, events, "RSW opened; no arrival.".into());
         return;
     }
     let tonnes = params.convoy.base_tonnes
         * (0.4 + 0.6 * game.sponsor.confidence)
         * (0.6 + 0.4 * game.sponsor.attention);
-    let requested = if game.flags.contains("manifest_capability") {
-        0.7
-    } else if game.flags.contains("manifest_balanced") {
-        0.45
-    } else if game.flags.contains("manifest_throughput") {
-        0.1
-    } else if game.flags.contains("manifest_people") {
-        0.3
-    } else {
-        game.sponsor.requested_capability_share
-    };
+    let flagged = [
+        ("manifest_capability", ManifestSplit::Capability),
+        ("manifest_balanced", ManifestSplit::Balanced),
+        ("manifest_throughput", ManifestSplit::Throughput),
+        ("manifest_people", ManifestSplit::People),
+    ]
+    .into_iter()
+    .find(|(f, _)| game.flags.contains(*f));
+    if let Some((flag, split)) = flagged {
+        game.controls.manifest = split;
+        game.flags.remove(flag);
+    }
+    let requested = game.controls.manifest.capability_share();
     game.sponsor.requested_capability_share = requested;
     let cap_share = requested.clamp(0.0, 1.0);
     let cap_t = tonnes * cap_share;
@@ -850,15 +895,13 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         game,
         events,
         format!(
-            "A convoy: {tonnes:.0} t landed, {cap_t:.0} of it capability hardware. {}",
+            "RSW arrival: {tonnes:.0} t landed, {cap_t:.0} t capability hardware. {}",
             if people_ship {
-                format!("{left} went home, {arrived} came out.")
+                format!("Crew rotation: {left} out, {arrived} in.")
             } else if left > 0 {
-                format!(
-                    "No ship for people this time; {left} squeezed aboard the cargo hull for the trip home."
-                )
+                format!("No crew transport this RSW; {left} embarked on the cargo hull.")
             } else {
-                "No ship for people this time.".to_owned()
+                "No crew transport this RSW.".to_owned()
             }
         ),
     );
@@ -974,6 +1017,6 @@ fn endings(game: &mut Game, events: &mut Events) {
             population,
         });
         game.lexicon_triggers.insert("estates_named".into());
-        note(game, events, "Two windows and no ship, and the chair at the ring has been empty long enough to have a name. This is the Silence. Act one ends.".into());
+        note(game, events, "Two RSWs without arrival. The sponsor's seat on the SMB has been empty long enough to have a name. This is the Silence. Act one ends.".into());
     }
 }

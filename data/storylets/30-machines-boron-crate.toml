@@ -65,7 +65,7 @@ text = "The shims are the one boron part I can cut on the bench today. The coil 
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "The reactor gets six more counts and the farm gets nothing. The farm is what eats when the reactor is gone."
+text = "The reactor gets six more months and the farm gets nothing. The farm is what eats when the reactor is gone."
 
 [[option]]
 id = "farm"

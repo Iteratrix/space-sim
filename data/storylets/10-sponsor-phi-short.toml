@@ -5,11 +5,11 @@ weight = 1.0
 cooldown = 30
 tags = ["sponsor", "review", "throughput"]
 text = """
-The review is in two counts and the number is short. Not by much; by the
+The review is in two months and the number is short. Not by much; by the
 fifteen per cent the sponsor added to the target last time and the fifteen
 before that. {hours} has three ways to make it right, laid out on the same
-sheet. One is a tonnage figure that counts the batch on the pad as shipped.
-One is the reserve water, which is in the tanks and could be on the driver
+sheet. One is a tonnage figure that months the batch on the pad as shipped.
+One is the reserve water, which is in the tanks and could be on the MDLS
 by the review. One is the number as it is. {extraction} has been asked to
 say how much the reserve is really worth and has not answered yet.
 """
@@ -44,7 +44,7 @@ optional = true
 [[option]]
 id = "cook"
 label = "Count the batch on the pad"
-text = "It will be shipped next count. Say it was shipped this one. The sponsor's figure and the driver's figure will disagree by one batch forever."
+text = "It will be shipped next month. Say it was shipped this one. The sponsor's figure and the MDLS's figure will disagree by one batch forever."
 tags = ["throughput", "sponsor", "risk"]
 chronicle = "The review number counted a batch that was still on the pad. It was a small lie in a column of true ones, and the two ledgers never agreed again."
 [[option.effect]]
@@ -67,14 +67,14 @@ text = "It is accrual. Every ledger on Earth does it. The batch is real, the pad
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked me last count how closely the audit checks the driver log against the manifest. Line by line. Every line."
+text = "You asked me last month how closely the audit checks the MDLS log against the manifest. Line by line. Every line."
 
 [[option]]
 id = "ship_reserve"
 label = "Ship the reserve water"
-text = "Forty tonnes of shield and drinking margin, on the driver by the review. The number is honest. The tanks are not."
+text = "Forty tonnes of shield and drinking margin, on the MDLS by the review. The number is honest. The tanks are not."
 tags = ["throughput", "water", "risk"]
-chronicle = "The reserve water went onto the driver to make the review number. The number was honest and the tanks were forty tonnes down when the next thing went wrong."
+chronicle = "The reserve water went onto the MDLS to make the review number. The number was honest and the tanks were forty tonnes down when the next thing went wrong."
 [[option.effect]]
 q = "stocks.water"
 add = -40
@@ -95,7 +95,7 @@ ge = 100
 [[option.advice]]
 seat = "extraction"
 stance = "against"
-text = "The reserve is the reserve. I mine fourteen tonnes a count on a good count. Forty is three good counts, and I have not had three good counts in a row since the Bright."
+text = "The reserve is the reserve. I mine fourteen tonnes a month on a good month. Forty is three good months, and I have not had three good months in a row since the Bright."
 [[option.advice]]
 seat = "hours"
 stance = "for"
@@ -108,7 +108,7 @@ text = "That water is shielding before it is anything else. You are proposing to
 [[option]]
 id = "honest"
 label = "Send the number as it is"
-text = "Short is short. Let the review say so, and let the sponsor decide what it thinks of a target that goes up fifteen per cent whether the driver does or not."
+text = "Short is short. Let the review say so, and let the sponsor decide what it thinks of a target that goes up fifteen per cent whether the MDLS does or not."
 tags = ["caution", "sponsor", "capability"]
 chronicle = "The review number went in short and true. The sponsor's target had gone up again, and the outpost had decided, without saying so, to stop chasing it."
 [[option.effect]]

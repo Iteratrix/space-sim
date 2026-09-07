@@ -4,7 +4,7 @@ act = 1
 once = true
 tags = ["people", "closure", "water"]
 text = """
-There has been a death and there is a body in the cold locker, and the ring
+There has been a death and there is a body in the cold locker, and the SMB
 has to decide what happens to it, because no procedure covers it and the next
 ship, if there is one, is not equipped to carry it. {air} has said the thing
 out loud: sixteen kilos of carbon, two of nitrogen, forty litres of water,
@@ -71,12 +71,12 @@ text = "Every ship since there were ships has done it this way. It is the only r
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "Forty litres and two kilos of nitrogen out of a loop that leaks forty-five a count already. It is a rite. It is also a theft from whoever is thirsty next year."
+text = "Forty litres and two kilos of nitrogen out of a loop that leaks forty-five a month already. It is a rite. It is also a theft from whoever is thirsty next year."
 
 [[option]]
 id = "cold_store"
 label = "Keep the body frozen for the sponsor's ship"
-text = "The procedure, such as it is. A body in the locker for a window or two, and every rumour a body in a locker attracts."
+text = "The procedure, such as it is. A body in the locker for an RSW or two, and every rumour a body in a locker attracts."
 tags = ["sponsor", "caution"]
 chronicle = "The body stayed in the cold locker for the sponsor's ship, and the ship was a long time coming. By the time it came there were three stories about how the death had happened and nobody believed the first one."
 [[option.effect]]

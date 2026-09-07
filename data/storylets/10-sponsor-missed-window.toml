@@ -6,11 +6,11 @@ weight = 3.0
 priority = 60
 tags = ["sponsor", "silence"]
 text = """
-The window opened, stayed open for its two counts, and closed. Nothing came
+The window opened, stayed open for its two months, and closed. Nothing came
 through it. There was no message saying nothing would come. {hours} has
 already recounted the spares and the propellant on the assumption of one
 more window. {liaison} has the last message from Earth open and it is about
-throughput, from before the window, and says nothing about a ship. The
+throughput, from before the RSW, and says nothing about a ship. The
 outpost needs a sentence to say about this to itself.
 """
 
@@ -29,7 +29,7 @@ optional = true
 
 [[option]]
 id = "schedule"
-label = "A scheduling slip; the next window will carry double"
+label = "A scheduling slip; the next RSW will carry double"
 text = "Say what the sponsor would say if the sponsor were saying anything. Convoys slip. Budgets are annual. The next one will be heavier."
 tags = ["sponsor", "caution"]
 chronicle = "The outpost told itself the empty window was a scheduling slip and that the next one would carry double. It was the kind of sentence people said in the corridors."
@@ -43,7 +43,7 @@ flag = "silence_explained"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "You asked me last count whether the convoy was manifested. It was. A manifested convoy that does not sail is a slip, not a decision. I have seen slips."
+text = "You asked me last month whether the RSW was manifested. It was. A manifested RSW that does not sail is a slip, not a decision. I have seen slips."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
@@ -54,7 +54,7 @@ id = "test"
 label = "They are watching to see what we do"
 text = "The sponsor has dish time. It could have said nothing was coming. It chose not to. Read that as a question."
 tags = ["sponsor", "throughput", "risk"]
-chronicle = "The outpost decided the empty window was a test and threw itself at the driver to pass it. It was a way of not having to think about the other explanation."
+chronicle = "The outpost decided the empty window was a test and threw itself at the MDLS to pass it. It was a way of not having to think about the other explanation."
 [[option.effect]]
 q = "throughput.shipped"
 add = 10
@@ -93,7 +93,7 @@ flag = "counting_silences"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Water does not care why the ship did not come. Count the window, adjust the reserve, and stop asking the sky for reasons."
+text = "Water does not care why the ship did not come. Count the RSW, adjust the reserve, and stop asking the sky for reasons."
 [[option.advice]]
 seat = "liaison"
 stance = "against"

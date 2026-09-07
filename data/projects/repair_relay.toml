@@ -1,0 +1,12 @@
+id = "repair_relay"
+title = "Relay repair"
+description = "The Earth link's transponder chain. Spares and hands."
+domain = "operations"
+structured = false
+segments = 4
+spares = 4
+on_complete_flag = "relay_repaired"
+repeat_segments = 4
+[[when]]
+q = "relay.health"
+lt = 0.7

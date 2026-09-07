@@ -1,0 +1,8 @@
+id = "throw"
+title = "MDLS operations (mass driver)"
+description = "Pod packing, alignment checks, launch cadence. Rate follows the dice on it; the throw position sets what is shipped."
+domain = "operations"
+structured = true
+standing = true
+pips_needed = 8.0
+pips_per_person = 0.0

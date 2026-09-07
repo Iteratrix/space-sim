@@ -1,0 +1,11 @@
+id = "teach_reckoning"
+title = "Navigation cross-training"
+description = "Transfer of trajectory reckoning from the holder to a second crew member before a contract ends."
+domain = "navigation"
+structured = false
+segments = 10
+min_skill = 1
+once = true
+on_complete_flag = "navigator_taught"
+[[when]]
+stage_min = 3

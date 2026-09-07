@@ -50,7 +50,7 @@ strain = -0.1
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "It is steel, seals, and a window. We can make steel, seals, and windows. It is the one robot in the belt I can promise you will still exist in twenty years."
+text = "It is steel, seals, and an RSW. We can make steel, seals, and RSWs. It is the one robot in the belt I can promise you will still exist in twenty years."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
@@ -65,7 +65,7 @@ id = "order"
 label = "Order the sponsor's pattern"
 text = "Put a proper manipulator on the manifest and nurse the two we have until it comes. Precision over pride."
 tags = ["sponsor", "throughput"]
-chronicle = "We put a manipulator on the manifest and nursed the old arms until the window, and the window brought half of one."
+chronicle = "We put a manipulator on the manifest and nursed the old arms until the RSW, and the RSW brought half of one."
 [[option.effect]]
 q = "robots.through_wall"
 add = 0.4
@@ -81,4 +81,4 @@ text = "This is exactly what the manifest is for. Order the part and the sponsor
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Thirty counts for a crate that may not be on it. The plant does not wait thirty counts."
+text = "Thirty months for a crate that may not be on it. The plant does not wait thirty months."

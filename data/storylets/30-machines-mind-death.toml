@@ -10,7 +10,7 @@ dropped to reflex and stopped speaking; its hull keeps its air and its attitude
 and can no longer fix position from the stars. Its remaining boards are
 compatible with {mind}. {hulls} says a dead unit yields a third of its value
 and the other mind is losing units at the same rate. {operator} says the
-boards are not parts, and has asked for a count before anything is opened.
+boards are not parts, and has asked for a month before anything is opened.
 """
 
 [[when]]
@@ -58,7 +58,7 @@ id = "bury"
 label = "Leave it whole"
 text = "The hull keeps its dead mind sealed in place. The other mind carries on with what it has. The operators are given their count."
 tags = ["machines", "people"]
-chronicle = "We left it whole in its hull, and the operators sat in the lee for a count and were not spoken to, and nobody took the boards."
+chronicle = "We left it whole in its hull, and the operators sat in the lee for a month and were not spoken to, and nobody took the boards."
 [[option.effect]]
 flag = "mind_buried"
 [[option.effect]]
@@ -72,8 +72,8 @@ hindrance = 0.15
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "I understand the count. I do not understand leaving working boards in a hull that cannot use them. One of these is grief and the other is waste."
+text = "I understand the month. I do not understand leaving working boards in a hull that cannot use them. One of these is grief and the other is waste."
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "It kept the tug's air for eleven years. I am not opening it this count. Ask me next."
+text = "It kept the tug's air for eleven years. I am not opening it this month. Ask me next."

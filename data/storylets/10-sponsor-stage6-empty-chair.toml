@@ -6,9 +6,9 @@ priority = 100
 tags = ["sponsor", "silence"]
 text = """
 There will be no ship. The message does not say so; it says nothing, and
-the count before it said nothing, and {liaison} has stopped pretending the
-dish time is coming back. {hours} has stopped keeping the review date. There is a chair at the ring that has always been
-the sponsor's, with {liaison} in it answering for Earth. The ring has to
+the month before it said nothing, and {liaison} has stopped pretending the
+dish time is coming back. {hours} has stopped keeping the review date. There is a chair at the SMB that has always been
+the sponsor's, with {liaison} in it answering for Earth. The SMB has to
 decide what that chair is now.
 """
 
@@ -31,9 +31,9 @@ optional = true
 [[option]]
 id = "keep_empty"
 label = "Leave it empty"
-text = "The chair stays. Nobody sits in it. When the ring speaks to the sponsor it speaks to the chair, and the chair says nothing back."
+text = "The chair stays. Nobody sits in it. When the SMB speaks to the sponsor it speaks to the chair, and the chair says nothing back."
 tags = ["independence", "sponsor"]
-chronicle = "The ring kept the sponsor's chair and left it empty. Everyone who spoke to it knew who was not there."
+chronicle = "The SMB kept the sponsor's seat and left it empty. Everyone who spoke to it knew who was not there."
 [[option.effect]]
 flag = "chair_empty"
 [[option.effect]]
@@ -48,14 +48,14 @@ text = "An empty chair is honest. It says what happened. I would rather argue wi
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "People do worse with a hole than with a person. Every count that chair sits empty, someone will look at it, and I will see it in their sleep."
+text = "People do worse with a hole than with a person. Every month that chair sits empty, someone will look at it, and I will see it in their sleep."
 
 [[option]]
 id = "holdout"
 label = "Seat {liaison} in it, to answer for Earth"
 text = "Keep the office and the person. {liaison} goes on answering last month's questions, from memory, for a sponsor who is not asking."
 tags = ["sponsor", "caution", "people"]
-chronicle = "The ring kept {liaison} in the sponsor's chair, to answer for an Earth that had stopped answering. It was a kindness to someone, and nobody was sure to whom."
+chronicle = "The SMB kept {liaison} in the sponsor's seat, to answer for an Earth that had stopped answering. It was a kindness to someone, and nobody was sure to whom."
 [[option.effect]]
 flag = "chair_holdout"
 [[option.effect]]
@@ -78,7 +78,7 @@ id = "give_it"
 label = "Give the chair to the outpost"
 text = "Strike the office. The question that chair asked, who answers to the sponsor, has no answer now; let it be the seat for whoever answers for the whole."
 tags = ["independence", "risk"]
-chronicle = "The ring struck the sponsor's office and gave its chair to the outpost as a whole. The outpost had made a seat for itself, and there was nobody left on Earth to object."
+chronicle = "The SMB struck the sponsor's office and gave its chair to the outpost as a whole. The outpost had made a seat for itself, and there was nobody left on Earth to object."
 [[option.effect]]
 flag = "chair_outpost"
 [[option.effect]]

@@ -67,7 +67,7 @@ const fn one_f() -> f64 {
 
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
-struct RawCondition {
+pub(crate) struct RawCondition {
     q: Option<String>,
     lt: Option<f64>,
     le: Option<f64>,
@@ -149,6 +149,8 @@ struct RawEffect {
     all_strain: Option<f64>,
     all_return_intent: Option<f64>,
     name_mind: Option<bool>,
+    project: Option<String>,
+    close_project: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -317,6 +319,10 @@ pub enum Effect {
     AllReturnIntent(f64),
     /// The senior operator names the oldest unnamed mind.
     NameMind,
+    /// Opens a project by id.
+    OpenProject(String),
+    /// Closes an open project by id, abandoning its progress.
+    CloseProject(String),
 }
 
 /// Advice one seat gives about one option, written by the author.
@@ -410,7 +416,7 @@ fn parse_cmp(file: &str, r: &RawCondition) -> Result<Option<Cmp>, ContentError> 
     Ok(found)
 }
 
-fn parse_condition(file: &str, r: RawCondition) -> Result<Condition, ContentError> {
+pub(crate) fn parse_condition(file: &str, r: RawCondition) -> Result<Condition, ContentError> {
     let invalid = |m: &str| ContentError::Invalid {
         file: file.to_owned(),
         message: m.to_owned(),
@@ -589,6 +595,12 @@ fn parse_effect(file: &str, roles: &[String], r: RawEffect) -> Result<Effect, Co
     }
     if r.name_mind == Some(true) {
         return Ok(Effect::NameMind);
+    }
+    if let Some(p) = r.project {
+        return Ok(Effect::OpenProject(p));
+    }
+    if let Some(p) = r.close_project {
+        return Ok(Effect::CloseProject(p));
     }
     Err(invalid("empty effect".into()))
 }
@@ -954,6 +966,13 @@ pub fn apply(game: &mut Game, storylet: &Storylet, option: &Option_, casting: &C
             }
             Effect::NameMind => {
                 crate::names::name_oldest_mind(game);
+            }
+            Effect::OpenProject(id) => {
+                game.flags.insert(format!("open_project:{id}"));
+            }
+            Effect::CloseProject(id) => {
+                game.projects.retain(|s| s.id.0 != *id);
+                game.assignments.retain(|_, t| t.0 != *id);
             }
         }
     }

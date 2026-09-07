@@ -5,11 +5,11 @@ once = true
 tags = ["people", "dose", "risk"]
 text = """
 {walker} has taken a suit and a surface pod and gone out onto the rock, alone,
-and has sent one message: not coming in until the window. Not a fault, not a
+and has sent one message: not coming in until the RSW. Not a fault, not a
 breakdown that anyone could see from the outside; {walker} had been quiet for
 counts and is now somewhere under the sky with two grams of aluminium between
-skin and everything. {bodies} has done the sum: a window outside the shielding
-is most of a sievert, and a flare is death. Nobody has a word for what this is.
+skin and everything. {bodies} has done the sum: an RSW outside the shielding
+is most of a sievert, and an STE is death. Nobody has a word for what this is.
 """
 
 [[when]]
@@ -28,7 +28,7 @@ seat = "bodies"
 
 [[option]]
 id = "let_go_logged"
-label = "Let {walker} stay out, and log the dose honestly"
+label = "Let {walker} stay out, and log the CED honestly"
 text = "A window outside. The ledger takes the number and the sponsor reads it."
 tags = ["dose", "people", "independence"]
 chronicle = "{walker} stayed on the surface a whole window and came in thin and quiet with most of a sievert in the ledger. It was written down. Nobody could say what had been done, only that it had been done first."
@@ -55,18 +55,18 @@ counter = "voidings"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "I cannot make {walker} come in without three people and a fight on the surface, and that is more dose than talking. Let it be a choice, and let the ledger say so."
+text = "I cannot make {walker} come in without three people and a fight on the surface, and that is more CED than talking. Let it be a choice, and let the ledger say so."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A crew member voluntarily taking a year's coil dose in a count is a psychiatric event in the sponsor's book and it will be read as one."
+text = "A crew member voluntarily taking a year's coil CED in a month is a psychiatric event in the sponsor's book and it will be read as one."
 
 [[option]]
 id = "let_go_quiet"
 label = "Let {walker} stay out, and keep it off the uplink"
 text = "The ledger takes the number. The sponsor does not."
 tags = ["dose", "independence", "risk"]
-chronicle = "{walker} stayed on the surface a whole window. The dose went in the ledger and not in the quarterly. It was the first thing {outpost} kept from Earth on purpose."
+chronicle = "{walker} stayed on the surface a whole window. The CED went in the ledger and not in the quarterly. It was the first thing {outpost} kept from Earth on purpose."
 [[option.effect]]
 person = "walker"
 dose = 0.7
@@ -94,14 +94,14 @@ text = "The number is ours. The sponsor gets the tonnage. Nobody on Earth needs 
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "The dose ledger is on the audit log. If it is in one place and not the other, somebody will eventually have the two side by side."
+text = "The CED ledger is on the audit log. If it is in one place and not the other, somebody will eventually have the two side by side."
 
 [[option]]
 id = "bring_in"
 label = "Go out and bring {walker} in"
 text = "Three people, a suit each, an argument on the surface. Dose for all of them."
 tags = ["dose", "caution", "medicine"]
-chronicle = "Three went out after {walker} and brought {walker} in by the second watch. Everyone involved took dose and {walker} did not speak to any of them for a count."
+chronicle = "Three went out after {walker} and brought {walker} in by the second watch. Everyone involved took CED and {walker} did not speak to any of them for a month."
 [[option.effect]]
 person = "walker"
 dose = 0.08
@@ -119,7 +119,7 @@ all_strain = 0.02
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The sum is three people at surface dose for a watch against one person at surface dose for a window. The sum says go. I am not sure the sum is the whole question."
+text = "The sum is three people at surface CED for a watch against one person at surface CED for an RSW. The sum says go. I am not sure the sum is the whole question."
 [[option.advice]]
 seat = "air"
 stance = "for"

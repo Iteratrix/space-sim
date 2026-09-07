@@ -9,7 +9,7 @@ text = """
 The active region that flared last sun-turn has come round again and the
 particle counters on the hull are climbing. {outside} is on the rock with a
 skiff crew, a sweep from the nearest storm shadow, in the middle of a driver
-load. {bodies} has the dose curve and it goes vertical in about a watch. Bring
+load. {bodies} has the CED curve and it goes vertical in about a watch. Bring
 the crew in and the load is lost. Finish the load and the ledger gets a line
 that does not come off.
 """
@@ -29,7 +29,7 @@ optional = true
 [[option]]
 id = "finish"
 label = "Finish the load"
-text = "A watch more on the rock under a rising counter. The throughput is kept; the crew takes the dose."
+text = "A watch more on the rock under a rising counter. The throughput is kept; the crew takes the CED."
 tags = ["throughput", "dose", "risk"]
 chronicle = "The crew finished the load under the counter and came in with a line on the ledger that does not come off."
 [[option.effect]]
@@ -43,7 +43,7 @@ lexicon = "first_burning"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "A lost load is a lost load. A dose is a number on a ledger nobody on Earth reads."
+text = "A lost load is a lost load. A CED is a number on a ledger nobody on Earth reads."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
@@ -52,9 +52,9 @@ text = "Eighty millisieverts in a watch, on someone already at the skiff-crew ra
 [[option]]
 id = "shelter"
 label = "Bring them in"
-text = "Drop the load and get the crew under water. The driver throws nothing this count."
+text = "Drop the load and get the crew under water. The driver throws nothing this month."
 tags = ["dose", "people"]
-chronicle = "We brought the crew in under the storm shadow and lost the load, and the driver stood empty through the Burning."
+chronicle = "We brought the crew in under the STE shadow and lost the load, and the MDLS stood empty through the Burning."
 [[option.effect]]
 q = "throughput.shipped"
 add = -15
@@ -66,7 +66,7 @@ lexicon = "first_burning"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "The dose ledger is the only ledger that does not reset. Bring them in."
+text = "The CED ledger is the only ledger that does not reset. Bring them in."
 [[option.advice]]
 seat = "liaison"
 stance = "against"

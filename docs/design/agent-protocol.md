@@ -29,7 +29,13 @@ Each count produces one object:
 ```
 
 For every entry in `firings`, in order, write one line to stdin: either the 1-based
-position in `options` or the option's `id`. After each choice the game prints
+position in `options` or the option's `id`. Before a choice you may also send
+`assign <die> <project|hand>` (dice are `p:<person id>` or `r:<class>:<k>`; projects by
+id) and `set <control> <value>` (`manifest throughput|balanced|capability|people`,
+`throw ship|hold|stop`, `roster skill|strain|name`, `auto_deal on|off`); each answers
+`{"ok":true}` or `{"error":"..."}`. With `auto_deal off` the engine leaves free dice
+in the hand for you to place. The game's `hand` and `projects` are in the save and
+in `view` (coming); the text mode prints a `hand:` line each count. After each choice the game prints
 `{"chronicle": "..."}`. When `ending` is non-null the game prints `{"summary": "..."}`
 and exits. Counts with no firings need no input.
 

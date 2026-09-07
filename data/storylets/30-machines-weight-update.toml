@@ -31,10 +31,10 @@ optional = true
 
 [[option]]
 id = "tell_ring"
-label = "Tell the ring what it means"
+label = "Tell the SMB what it means"
 text = "Put it in the minutes: the updates have stopped, this is the first sign, and everyone should plan as if the messages are next."
 tags = ["people", "machines", "independence"]
-chronicle = "The operator told the ring that the minds had stopped learning, and what that meant, and the ring wrote it down and was quiet for a while."
+chronicle = "The operator told the SMB that the minds had stopped learning, and what that meant, and the SMB wrote it down and was quiet for a while."
 [[option.effect]]
 flag = "ring_told_updates"
 [[option.effect]]
@@ -48,7 +48,7 @@ text = "I would rather know which crates are the last crates now than find out f
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Dish time is reallocated every quarter. You are reading a budget line as a prophecy and the ring will hear it as one."
+text = "Dish time is reallocated every quarter. You are reading a budget line as a prophecy and the SMB will hear it as one."
 
 [[option]]
 id = "keep_quiet"
@@ -64,7 +64,7 @@ strain = 0.15
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Confidence is the one stock the ring can lower by talking. Let the operators carry it."
+text = "Confidence is the one stock the SMB can lower by talking. Let the operators carry it."
 [[option.advice]]
 seat = "air"
 stance = "against"
@@ -73,9 +73,9 @@ text = "If the minds are not being told what the sponsor knows, then neither am 
 [[option]]
 id = "ask"
 label = "Ask the sponsor for the dish time"
-text = "Send a formal request for the missed allocation. It costs a count of the liaison's attention budget and it puts on record that we noticed."
+text = "Send a formal request for the missed allocation. It costs a month of the liaison's attention budget and it puts on record that we noticed."
 tags = ["sponsor", "machines"]
-chronicle = "We asked Earth for the dish time in writing. The answer, a count late, thanked us for our patience."
+chronicle = "We asked Earth for the dish time in writing. The answer, a month late, thanked us for our patience."
 [[option.effect]]
 q = "sponsor.attention"
 add = 0.03

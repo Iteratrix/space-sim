@@ -6,10 +6,10 @@ tags = ["people", "sponsor"]
 text = """
 For years the can had somewhere to put it: the tasking list, the quarterly,
 the voice on the link that never understood. The link is mostly quiet now.
-{voice} said something at the meal this count that a year ago would have been
+{voice} said something at the meal this month that a year ago would have been
 about Earth, and it was about {target}. The hindrance graph, if anyone drew it,
 would show what the record predicts: with no outside party to blame, the blame
-turns inward within a few counts. The ring can choose where it lands.
+turns inward within a few months. The SMB can choose where it lands.
 """
 
 [[when]]
@@ -32,7 +32,7 @@ id = "inner_system"
 label = "Name the inner system: they left us, and we say so"
 text = "A distant target, still. Nobody here has to wear it."
 tags = ["people", "independence"]
-chronicle = "The ring gave the can a new name for what it hated: the inner system, which had left. It worked, and it made going home a stranger idea."
+chronicle = "The SMB gave the can a new name for what it hated: the inner system, which had left. It worked, and it made going home a stranger idea."
 [[option.effect]]
 all_strain = -0.06
 [[option.effect]]
@@ -81,7 +81,7 @@ id = "hold_it"
 label = "Say it plainly: there is no one to blame now but us"
 text = "No target. The can holds its own anger, and pays for it in strain."
 tags = ["people", "independence", "caution"]
-chronicle = "The ring stood up and said there was nobody left to blame but ourselves. It was true, and it was a hard count."
+chronicle = "The SMB stood up and said there was nobody left to blame but ourselves. It was true, and it was a hard month."
 [[option.effect]]
 all_strain = 0.04
 [[option.effect]]

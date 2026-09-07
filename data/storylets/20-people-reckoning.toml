@@ -5,7 +5,7 @@ once = true
 tags = ["people", "capability", "independence"]
 text = """
 The sponsor is cutting, the next ship may carry nobody, and every skill in
-the can is one person deep. The one that frightens {hours} is the reckoning: windows, phasing, what a hull
+the can is one person deep. The one that frightens {hours} is the reckoning: RSWs, phasing, what a hull
 costs to bring home. The mind can run the tables, but the mind is reset on
 schedule and the sponsor holds the tables. {apprentice} has asked to learn it.
 {reckoner}, if there still is one, has never taught anyone.
@@ -34,9 +34,9 @@ seat = "hours"
 [[option]]
 id = "teach"
 label = "Take {apprentice} off the roster and teach the reckoning"
-text = "A resident learns the windows by hand. Hours out of the ledger for a convoy."
+text = "A resident learns the RSWs by hand. Hours out of the ledger for an RSW."
 tags = ["capability", "independence", "hours"]
-chronicle = "{apprentice} was taken off the roster to learn the reckoning by hand, tables and all. It cost a convoy of hours and it meant {outpost} could find its own way home if it ever had to."
+chronicle = "{apprentice} was taken off the roster to learn the reckoning by hand, tables and all. It cost an RSW of hours and it meant {outpost} could find its own way home if it ever had to."
 [[option.effect]]
 flag = "navigator_taught"
 [[option.effect]]
@@ -66,7 +66,7 @@ id = "trust_the_mind"
 label = "Leave the reckoning to the mind's tables"
 text = "It has never been wrong. It has never been unlicensed either."
 tags = ["machines", "hours"]
-chronicle = "The ring left the reckoning to the mind. The tables were always right, and everyone understood that the tables were the sponsor's."
+chronicle = "The SMB left the reckoning to the mind. The tables were always right, and everyone understood that the tables were the sponsor's."
 [[option.effect]]
 flag = "reckoning_by_mind"
 [[option.effect]]
@@ -88,7 +88,7 @@ id = "ask_sponsor"
 label = "Ask the sponsor for a navigator on the next ship"
 text = "Admit the gap in the headcount and wait for Earth to fill it."
 tags = ["sponsor", "caution"]
-chronicle = "The ring asked Earth for a navigator on the next ship and put the request at the top of the headcount. Earth said it would see what could be done."
+chronicle = "The SMB asked Earth for a navigator on the next ship and put the request at the top of the headcount. Earth said it would see what could be done."
 [[option.requires]]
 stage_max = 3
 [[option.effect]]

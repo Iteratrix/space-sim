@@ -55,7 +55,7 @@ id = "thin"
 label = "Let the link thin"
 text = "Keep the parts for the loops. Messages take longer and some do not arrive. The sponsor's attention was never a thing the relay controlled."
 tags = ["spares", "independence", "risk"]
-chronicle = "We let the link stay thin and kept the parts, and after that the sponsor's messages came a count late, which was how the liaison's advice had always come."
+chronicle = "We let the link stay thin and kept the parts, and after that the sponsor's messages came a month late, which was how the liaison's advice had always come."
 [[option.effect]]
 flag = "relay_thinned"
 [[option.effect]]
@@ -77,7 +77,7 @@ text = "I have valves waiting on that family of board. The dish can wait; the sc
 [[option]]
 id = "ask"
 label = "Ask the sponsor for the part"
-text = "Put a relay string on the manifest, formally, and hold the shelf. If it comes, it comes in thirty counts."
+text = "Put a relay string on the manifest, formally, and hold the shelf. If it comes, it comes in thirty months."
 tags = ["sponsor", "cost"]
 chronicle = "We asked the sponsor for a relay string and nursed the thin link until the answer, which was a question about why we needed one."
 [[option.effect]]
@@ -95,4 +95,4 @@ text = "Relay hardware is sponsor-owned infrastructure. A request is the proper 
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Thirty counts on a link that is already losing packets. The request may not arrive to be refused."
+text = "Thirty months on a link that is already losing packets. The request may not arrive to be refused."

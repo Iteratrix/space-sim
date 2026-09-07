@@ -6,7 +6,7 @@ weight = 0.5
 priority = 0
 tags = ["air", "nitrogen", "hulls"]
 text = """
-{air} has the nitrogen ledger open at the ring again. The rotating hub seal is
+{air} has the nitrogen ledger open at the SMB again. The rotating hub seal is
 weeping: not a failure, a trend, a few kilograms a day more than last season
 and the season before. The seal profile is sponsor polymer. {hulls} can patch
 it with shelf parts, can try to cut a replacement from what the polymer line
@@ -31,9 +31,9 @@ seat = "hulls"
 [[option]]
 id = "patch"
 label = "Patch it from the shelf"
-text = "Twelve units of parts and a watch in the collar. It stops weeping for a season or two."
+text = "Twelve units of parts and a watch in the RJSA. It stops weeping for a season or two."
 tags = ["spares", "nitrogen", "air"]
-chronicle = "We patched the collar seal from the shelf and the ledger was quiet for a season."
+chronicle = "We patched the RJSA seal from the shelf and the ledger was quiet for a season."
 [[option.requires]]
 q = "stocks.spares"
 ge = 12
@@ -57,7 +57,7 @@ id = "defer"
 label = "Leave it another season"
 text = "The parts are needed for the loops. The collar has wept before and the reserve has covered it."
 tags = ["throughput", "spares", "risk"]
-chronicle = "We left the collar to weep another season and put the parts into the loops, and the air seat wrote the number down and said nothing."
+chronicle = "We left the RJSA to weep another season and put the parts into the loops, and the ECLSS Lead wrote the number down and said nothing."
 [[option.effect]]
 q = "menace.leak"
 add = 3.0
@@ -67,7 +67,7 @@ add = -150
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Loop closure is on the quarterly. The collar is not. Spend the parts where the sponsor can see them."
+text = "Loop LSS-C is on the quarterly. The collar is not. Spend the parts where the sponsor can see them."
 [[option.advice]]
 seat = "air"
 stance = "against"

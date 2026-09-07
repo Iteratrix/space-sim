@@ -5,7 +5,7 @@ once = true
 priority = 50
 tags = ["sponsor", "manifest"]
 text = """
-The request for the next convoy has to be sent this count to make the window.
+The request for the next RSW has to be sent this month to make the RSW.
 {hours} has the manifest open: every tonne is either throughput hardware, which
 the sponsor can see on the quarterly, or capability hardware, which nobody on
 Earth will notice until the day it saves us.
@@ -41,7 +41,7 @@ text = "The board reads one number. Give them the number."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Another dex unit is another thing I cannot repair. Spares are two hundred units and going at four a count; do the sum before the pods."
+text = "Another dex unit is another thing I cannot repair. Spares are two hundred units and going at four a month; do the sum before the pods."
 
 [[option]]
 id = "balanced"
@@ -68,7 +68,7 @@ id = "capability"
 label = "Capability: spares, medicine, a boron crate, fabrication tooling"
 text = "Invisible to the sponsor. Visible to anyone who has watched a loop fail."
 tags = ["capability", "spares", "independence"]
-chronicle = "The first manifest went out heavy on capability. Someone on Earth asked why, a count later, and the question went in the file."
+chronicle = "The first manifest went out heavy on capability. Someone on Earth asked why, a month later, and the question went in the file."
 [[option.effect]]
 q = "stocks.spares"
 add = 40

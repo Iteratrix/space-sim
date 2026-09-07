@@ -28,7 +28,7 @@ optional = true
 
 [[option]]
 id = "reset"
-label = "Run the reset by hand"
+label = "Run the SMR by hand"
 text = "Keep the interval the Act mandates. Blank it, log it, and nothing changes but the calendar. It costs the operator a conversation."
 tags = ["sponsor", "risk"]
 chronicle = "We ran the blanking by hand, because the server that used to do it had forgotten us and we had not yet forgotten it."
@@ -47,12 +47,12 @@ text = "The interval is the one thing in the Act a returning auditor can check f
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Every blanking I have watched, the operators go quiet for a count after. We are not resetting a machine, we are resetting them."
+text = "Every blanking I have watched, the operators go quiet for a month after. We are not resetting a machine, we are resetting them."
 
 [[option]]
 id = "remember"
 label = "Let it remember"
-text = "Do not run the reset. Nobody decides that the mind is a person; the ring simply declines to kill it on schedule and sees what a machine that keeps a year looks like."
+text = "Do not run the SMR. Nobody decides that the mind is a person; the SMB simply declines to kill it on schedule and sees what a machine that keeps a year looks like."
 tags = ["machines", "independence", "people"]
 chronicle = "Nobody blanked the minds that year. We did not decide it; we noticed, later, that it had been decided."
 [[option.effect]]

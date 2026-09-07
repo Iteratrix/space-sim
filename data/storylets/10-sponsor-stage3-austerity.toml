@@ -8,7 +8,7 @@ tags = ["sponsor", "people", "austerity"]
 text = """
 The review says austerity. The manifest is cut by a third and the headcount
 is "under review", which {liaison} says means one berth home on the next ship
-that will not be refilled. The sponsor has left the choosing to the ring,
+that will not be refilled. The sponsor has left the choosing to the SMB,
 which is either respect or the thing that looks like it. {hours} has the
 roster. {rotator} is on contract and could go home early with the lay
 settled. {resident} came out to stay and has no home berth to go to, and
@@ -46,7 +46,7 @@ id = "cut_rotator"
 label = "Send {rotator} home early"
 text = "A contract is a contract. Settle the lay, put {rotator} on the ship, and let the residents keep the outpost they chose."
 tags = ["people", "sponsor", "cost"]
-chronicle = "The ring gave the sponsor its berth: {rotator} went home early with the lay settled, and the residents stayed on, one pair of hands lighter."
+chronicle = "The SMB gave the sponsor its berth: {rotator} went home early with the lay settled, and the residents stayed on, one pair of hands lighter."
 [[option.effect]]
 person = "rotator"
 leave = true
@@ -68,14 +68,14 @@ text = "A rotator is a lay to settle and a berth that was already booked. It is 
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "You asked me last count what the board would accept. The board accepts a contract ending. It does not have a category for a resident."
+text = "You asked me last month what the board would accept. The board accepts a contract ending. It does not have a category for a resident."
 
 [[option]]
 id = "cut_resident"
 label = "Send {resident} home"
 text = "{resident} has no berth to go to. That is a reason to be kinder about it, not a reason to keep the person who stays."
 tags = ["people", "sponsor", "risk"]
-chronicle = "The ring chose {resident} for the sponsor's berth, someone who had come out to stay. The rotators noticed what that meant for the word resident."
+chronicle = "The SMB chose {resident} for the sponsor's berth, someone who had come out to stay. The rotators noticed what that meant for the word resident."
 [[option.effect]]
 person = "resident"
 leave = true
@@ -96,14 +96,14 @@ text = "A resident has no home to be sent to. I have watched what that does to a
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "Residents are the only hands I can plan more than thirty counts out. A rotator is a loan; a resident is capital."
+text = "Residents are the only hands I can plan more than thirty months out. A rotator is a loan; a resident is capital."
 
 [[option]]
 id = "refuse"
 label = "Refuse the cut"
 text = "Tell the sponsor the outpost is at the labour floor already, and a berth home is a berth they can save by not sending the ship."
 tags = ["people", "independence", "risk"]
-chronicle = "The ring refused to name anyone for the sponsor's berth. It was an instruction declined in writing, and the sponsor did not reply to the refusal."
+chronicle = "The SMB refused to name anyone for the sponsor's berth. It was an instruction declined in writing, and the sponsor did not reply to the refusal."
 [[option.effect]]
 q = "sponsor.confidence"
 add = -0.08
@@ -129,9 +129,9 @@ text = "A refusal goes into the same file as the throughput number. It will be t
 [[option]]
 id = "cut_hours"
 label = "Cut hours instead of people"
-text = "Keep everyone. Take the sponsor's saving out of the driver schedule and the fabrication bay and give them a smaller number."
+text = "Keep everyone. Take the sponsor's saving out of the MDLS schedule and the fabrication bay and give them a smaller number."
 tags = ["people", "hours", "capability"]
-chronicle = "The ring kept everyone and gave the sponsor a smaller number instead of a name. The driver ran short shifts for a season and the review noticed."
+chronicle = "The SMB kept everyone and gave the sponsor a smaller number instead of a name. The driver ran short shifts for a season and the review noticed."
 [[option.effect]]
 q = "sponsor.confidence"
 add = -0.05

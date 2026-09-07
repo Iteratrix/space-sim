@@ -2,8 +2,10 @@
 use std::fmt::Write as _;
 use std::path::Path;
 
-fn main() {
-    let dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../data/storylets");
+fn bundle(sub: &str, out_name: &str) {
+    let dir = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../data")
+        .join(sub);
     println!("cargo:rerun-if-changed={}", dir.display());
     let mut files: Vec<_> = std::fs::read_dir(&dir)
         .map(|rd| rd.filter_map(Result::ok).map(|e| e.path()).collect())
@@ -18,6 +20,11 @@ fn main() {
         writeln!(out, "    ({name:?}, include_str!({:?})),", abs.display()).unwrap();
     }
     out.push(']');
-    let dest = Path::new(&std::env::var("OUT_DIR").unwrap()).join("bundled_storylets.rs");
+    let dest = Path::new(&std::env::var("OUT_DIR").unwrap()).join(out_name);
     std::fs::write(dest, out).unwrap();
+}
+
+fn main() {
+    bundle("storylets", "bundled_storylets.rs");
+    bundle("projects", "bundled_projects.rs");
 }

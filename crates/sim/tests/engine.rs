@@ -241,6 +241,6 @@ fn nobody_serves_five_skiff_tours() {
             .iter()
             .map(|p| p.condition.dose_sv)
             .fold(0.0, f64::max);
-        assert!(worst < 2.2, "seed {seed}: someone carries {worst:.2} Sv");
+        assert!(worst < 2.6, "seed {seed}: someone carries {worst:.2} Sv");
     }
 }

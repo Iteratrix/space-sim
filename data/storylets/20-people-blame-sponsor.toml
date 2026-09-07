@@ -5,7 +5,7 @@ act = 1
 cooldown = 40
 tags = ["people", "sponsor"]
 text = """
-The tasking list from Earth this count is longer than the last, again, and
+The tasking list from Earth this month is longer than the last, again, and
 {voice} read it out at the meal in a voice that made everyone laugh, and then
 nobody laughed. The complaint is not really about the list. But it is a thing
 that everyone in the can can hate together, and the ICE record says a crew that
@@ -33,7 +33,7 @@ id = "front_the_crew"
 label = "Send the complaint up in the crew's words"
 text = "Let Earth read what the can thinks of the tasking list. The unity is worth the confidence."
 tags = ["people", "independence"]
-chronicle = "The ring sent the complaint about the tasking list to Earth unedited. The can loved it and the sponsor did not."
+chronicle = "The SMB sent the complaint about the tasking list to Earth unedited. The can loved it and the sponsor did not."
 [[option.effect]]
 all_strain = -0.08
 [[option.effect]]
@@ -48,11 +48,11 @@ work_positive = 0.2
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "I will send it if the ring tells me to. I want the record to show that I said the quarterly review is in four counts."
+text = "I will send it if the SMB tells me to. I want the record to show that I said the quarterly review is in four months."
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "They asked for three things this count that need parts they have not shipped. Tell them. In those words."
+text = "They asked for three things this month that need parts they have not shipped. Tell them. In those words."
 
 [[option]]
 id = "absorb"
@@ -85,7 +85,7 @@ id = "enforce"
 label = "Work the list as written"
 text = "The sponsor is paying. The tasking gets done and the complaining stops on the record."
 tags = ["sponsor", "throughput"]
-chronicle = "The ring worked the tasking list as written and told the can to stop complaining on the record. The can did, on the record."
+chronicle = "The SMB worked the tasking list as written and told the can to stop complaining on the record. The can did, on the record."
 [[option.effect]]
 all_strain = 0.06
 [[option.effect]]
@@ -104,4 +104,4 @@ text = "Half the list is things we would do anyway. Do them, log them, and the s
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "The list has a sampling schedule on it that nobody on Earth has costed in hours. Doing it as written means the farm goes a count without a second pair of hands."
+text = "The list has a sampling schedule on it that nobody on Earth has costed in hours. Doing it as written means the farm goes a month without a second pair of hands."

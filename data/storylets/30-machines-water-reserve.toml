@@ -7,8 +7,8 @@ priority = 0
 tags = ["water", "throughput", "sponsor"]
 text = """
 The mass driver throws water because water is what the sponsor's metric is
-made of. The reserve line on the tank is the same line every count: whatever
-the bake-out makes above it goes down the driver. {extraction} has the tank
+made of. The reserve line on the tank is the same line every month: whatever
+the bake-out makes above it goes down the MDLS. {extraction} has the tank
 gauge and it is on the line. {hours} has the quarterly and it is on the
 line too. The window is shut; nothing thrown this season arrives any sooner
 for being thrown now. The question is whether the reserve is a floor or a
@@ -40,10 +40,10 @@ seat = "hours"
 
 [[option]]
 id = "pause"
-label = "Stop the throw until the window"
+label = "Stop the MDLS until the RSW"
 text = "Let the tank climb. The quarterly shows a flat season and the shielding on the hulls gets a little thicker."
 tags = ["water", "capability", "dose"]
-chronicle = "We stopped the throw for a season and let the tank climb, and the quarterly showed it, and the hulls were a hand's width safer."
+chronicle = "We stopped the MDLS for a season and let the tank climb, and the quarterly showed it, and the hulls were a hand's width safer."
 [[option.effect]]
 flag = "throw_paused"
 [[option.effect]]
@@ -59,7 +59,7 @@ text = "The window is shut. Water thrown now sits in a pod on a trajectory for a
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A flat quarter is a quarter the board asks about. I will be asked whether the driver is broken, and the honest answer is worse."
+text = "A flat quarter is a quarter the board asks about. I will be asked whether the MDLS is broken, and the honest answer is worse."
 [[option.advice]]
 seat = "bodies"
 stance = "for"
@@ -70,7 +70,7 @@ id = "throw"
 label = "Keep throwing"
 text = "The metric is the metric. The reserve holds the outpost; it does not need to hold more."
 tags = ["throughput", "sponsor"]
-chronicle = "We kept the throw going through the shut window, and the reserve held at the line, and the quarterly was good."
+chronicle = "We kept the MDLS going through the shut window, and the reserve held at the line, and the quarterly was good."
 [[option.effect]]
 q = "stocks.water"
 add = -10

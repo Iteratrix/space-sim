@@ -1,0 +1,10 @@
+id = "dig_keep"
+title = "KEEP excavation"
+description = "Kilotonne-class Excavated Environmental Protection: the buried habitat. Dose drops when it is done."
+domain = "engineering"
+structured = true
+segments = 24
+pips_per_segment = 6
+manual = true
+once = true
+on_complete_flag = "keep_dug"

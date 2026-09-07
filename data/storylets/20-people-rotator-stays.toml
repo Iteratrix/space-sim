@@ -5,7 +5,7 @@ weight = 0.4
 cooldown = 28
 tags = ["people", "independence"]
 text = """
-{stayer} came to the ring with the opposite request. The contract ends at the
+{stayer} came to the SMB with the opposite request. The contract ends at the
 window; {stayer} does not want the seat. Not for the lay, not for anything the
 sponsor can offer. The reasons given are practical: the work is unfinished,
 the replacement will not know the loop. The reasons not given are the ones
@@ -35,7 +35,7 @@ id = "accept"
 label = "Accept. {stayer} is a resident now"
 text = "Off the rotation list. Whatever the sponsor's paper says."
 tags = ["people", "independence"]
-chronicle = "{stayer} came off the rotation list before the window and the ring wrote it down as residence. The sponsor's headcount was one long for a year before anyone on Earth noticed."
+chronicle = "{stayer} came off the rotation list before the RSW and the SMB wrote it down as residence. The sponsor's headcount was one long for a year before anyone on Earth noticed."
 [[option.effect]]
 person = "stayer"
 resident = true
@@ -54,7 +54,7 @@ counter = "stayed_by_choice"
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "A person who knows the loop and wants to stay is worth three who know it and are counting the counts. Yes."
+text = "A person who knows the loop and wants to stay is worth three who know it and are counting the months. Yes."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
@@ -63,7 +63,7 @@ text = "There is no category on the headcount for someone who declined a ship. I
 [[option]]
 id = "new_paper"
 label = "Stay, on a new contract with a new end date"
-text = "Another two windows. The sponsor understands renewals."
+text = "Another two RSWs. The sponsor understands renewals."
 tags = ["sponsor", "hours"]
 chronicle = "{stayer} signed another contract with another end date. Everyone understood it was a formality, including the sponsor, who preferred formalities."
 [[option.effect]]
@@ -86,10 +86,10 @@ text = "A person with an end date has a third quarter. You are buying one. If th
 
 [[option]]
 id = "send_home"
-label = "The contract ends at the window. {stayer} boards"
+label = "The contract ends at the RSW. {stayer} boards"
 text = "The rotation is the sponsor's, and a crew that chooses its own headcount is not a crew."
 tags = ["sponsor", "caution"]
-chronicle = "The ring held {stayer} to the contract and left the name on the rotation list. {stayer} did not argue, and the ones who heard it remembered it."
+chronicle = "The SMB held {stayer} to the contract and left the name on the rotation list. {stayer} did not argue, and the ones who heard it remembered it."
 [[option.effect]]
 person = "stayer"
 leave = true
@@ -108,4 +108,4 @@ text = "The rotation schedule is the one promise the sponsor keeps. If we break 
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You are sending home the one person here who is not counting the counts. Think about what that does to the ones who are."
+text = "You are sending home the one person here who is not counting the months. Think about what that does to the ones who are."

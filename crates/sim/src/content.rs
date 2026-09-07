@@ -6,6 +6,10 @@ use std::path::Path;
 /// Every storylet bundled into the binary, as (file name, text).
 pub const BUNDLED: &[(&str, &str)] = &include!(concat!(env!("OUT_DIR"), "/bundled_storylets.rs"));
 
+/// Every project definition bundled into the binary, as (file name, text).
+pub const BUNDLED_PROJECTS: &[(&str, &str)] =
+    &include!(concat!(env!("OUT_DIR"), "/bundled_projects.rs"));
+
 /// Parses the bundled storylets.
 pub fn bundled() -> Result<Vec<Storylet>, ContentError> {
     let mut out = Vec::with_capacity(BUNDLED.len());

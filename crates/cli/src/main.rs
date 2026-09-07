@@ -155,6 +155,24 @@ fn status_line(game: &Game) -> String {
     )
 }
 
+fn hand_line(game: &Game) -> String {
+    use std::fmt::Write as _;
+    let h = &game.hand;
+    let mut out = format!(
+        "hand: {} of {} free, {} on upkeep, {} robots |",
+        h.free, h.adults, h.eaten, h.robots
+    );
+    for p in &game.projects {
+        let n = h.dice.iter().filter(|d| d.place == p.id.0).count();
+        if p.segments > 0 {
+            let _ = write!(out, " {} {}/{} [{n}]", p.id.0, p.filled, p.segments);
+        } else {
+            let _ = write!(out, " {} rate {:.2} [{n}]", p.id.0, p.rate);
+        }
+    }
+    out
+}
+
 fn print_firing(engine: &Engine, game: &Game, f: &Firing) {
     println!("\n=== {} ===", f.title);
     for line in f.text.trim().lines() {
@@ -196,6 +214,15 @@ fn save_game(game: &Game, path: &str) {
     }
 }
 
+fn report(r: Result<(), String>, json: bool) {
+    match (r, json) {
+        (Ok(()), true) => println!("{}", serde_json::json!({ "ok": true })),
+        (Ok(()), false) => println!("  ok"),
+        (Err(e), true) => println!("{}", serde_json::json!({ "error": e })),
+        (Err(e), false) => println!("  {e}"),
+    }
+}
+
 fn resolve_firings(
     engine: &Engine,
     game: &mut Game,
@@ -218,6 +245,20 @@ fn resolve_firings(
             let line = line.trim();
             if line == "q" || line == "quit" {
                 std::process::exit(0);
+            }
+            if let Some(rest) = line.strip_prefix("assign ") {
+                let mut it = rest.split_whitespace();
+                if let (Some(die), Some(target)) = (it.next(), it.next()) {
+                    report(engine.assign(game, die, target), args.json);
+                }
+                continue;
+            }
+            if let Some(rest) = line.strip_prefix("set ") {
+                let mut it = rest.split_whitespace();
+                if let (Some(c), Some(v)) = (it.next(), it.next()) {
+                    report(engine.set_control(game, c, v), args.json);
+                }
+                continue;
             }
             if let Ok(n) = line.parse::<usize>()
                 && n >= 1
@@ -270,6 +311,7 @@ fn play(engine: &Engine, args: &Args) {
             println!("{}", serde_json::to_string(&view).expect("json"));
         } else {
             println!("\n{}", status_line(&game));
+            println!("{}", hand_line(&game));
             for e in &events.lines {
                 println!("  * {}", sim::lexicon::render(&game, e));
             }

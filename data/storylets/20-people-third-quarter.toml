@@ -7,7 +7,7 @@ tags = ["people", "hours"]
 text = """
 {rotator} is past the half of the contract and not yet near the end of it, which
 is the place where the ICE studies say everything goes flat. Nothing is wrong.
-{rotator} stopped joining the meal a count ago, does the watch, does it slower,
+{rotator} stopped joining the meal a month ago, does the watch, does it slower,
 and made two small errors on the bake-out log that were caught. {bodies} has
 seen it before and says so: the third quarter. It passes. The question is what
 {outpost} does while it passes.
@@ -27,10 +27,10 @@ seat = "bodies"
 
 [[option]]
 id = "lighten"
-label = "Take the worst watches off {rotator} for a count"
+label = "Take the worst watches off {rotator} for a month"
 text = "The others carry it. The hours ledger will show the hole."
 tags = ["people", "hours"]
-chronicle = "{rotator} hit the long middle and the ring took the night watches off the roster for a count. The rest of us carried them."
+chronicle = "{rotator} hit the long middle and the SMB took the night watches off the roster for a month. The rest of us carried them."
 [[option.effect]]
 person = "rotator"
 strain = -0.15
@@ -42,7 +42,7 @@ reliance = 0.15
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "It is a known curve and it has a known bottom. A count of lighter watches is cheaper than the error we have not caught yet."
+text = "It is a known curve and it has a known bottom. A month of lighter watches is cheaper than the error we have not caught yet."
 [[option.advice]]
 seat = "hours"
 stance = "against"
@@ -69,14 +69,14 @@ text = "The literature says naming it helps and I have nothing else in the formu
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Better a lecture than a roster with a hole in it. Tell them, and put them back on the drum."
+text = "Better a lecture than a roster with a hole in it. Tell them, and put them back on the KEEP."
 
 [[option]]
 id = "early_ship"
 label = "Put {rotator} on the list for the next ship"
 text = "End the contract early. The slump ends when the end is in sight."
 tags = ["people", "sponsor", "cost"]
-chronicle = "{rotator} went on the list for the next ship home a convoy early. The slump lifted the day the list was posted."
+chronicle = "{rotator} went on the list for the next ship home an RSW early. The slump lifted the day the list was posted."
 [[option.requires]]
 stage_max = 3
 [[option.effect]]

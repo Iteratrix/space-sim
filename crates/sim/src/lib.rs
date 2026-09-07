@@ -10,6 +10,7 @@ pub mod lexicon;
 pub mod names;
 pub mod params;
 pub mod person;
+pub mod project;
 pub mod quality;
 pub mod report;
 pub mod ring;
@@ -31,6 +32,8 @@ pub struct Engine {
     pub params: Params,
     /// Storylets.
     pub content: Vec<Storylet>,
+    /// Project definitions.
+    pub projects: Vec<project::ProjectDef>,
     /// Bodies.
     pub catalogue: orbit::Catalogue,
     /// The Earth edge, precomputed once for every game.
@@ -63,6 +66,7 @@ impl Engine {
         Ok(Self {
             params,
             content: content::bundled()?,
+            projects: project::bundled()?,
             catalogue,
             calendar,
         })
@@ -79,7 +83,7 @@ impl Engine {
             return (turn::Events::default(), Vec::new());
         }
         let mut rng = setup::rng_for(game, 0);
-        let events = turn::advance(game, &self.params, &mut rng);
+        let events = turn::advance(game, &self.params, &self.projects, &mut rng);
         let mut rng = setup::rng_for(game, 1);
         let firings = director::select(game, &self.content, &self.params, &mut rng);
         (events, firings)
@@ -99,6 +103,32 @@ impl Engine {
         game.chronicle
             .last()
             .map(|e| lexicon::render(game, &e.text))
+    }
+
+    /// Moves a die onto a project, or back to the hand (`target == "hand"`).
+    pub fn assign(&self, game: &mut Game, die: &str, target: &str) -> Result<(), String> {
+        project::assign(game, &self.projects, die, target)
+    }
+
+    /// Sets a standing control: `manifest`, `throw`, `roster`, or `auto_deal`.
+    pub fn set_control(&self, game: &mut Game, control: &str, value: &str) -> Result<(), String> {
+        use project::{ManifestSplit, RosterOrder, ThrowMode};
+        match (control, value) {
+            ("manifest", "throughput") => game.controls.manifest = ManifestSplit::Throughput,
+            ("manifest", "balanced") => game.controls.manifest = ManifestSplit::Balanced,
+            ("manifest", "capability") => game.controls.manifest = ManifestSplit::Capability,
+            ("manifest", "people") => game.controls.manifest = ManifestSplit::People,
+            ("throw", "ship") => game.controls.throw = ThrowMode::Ship,
+            ("throw", "hold") => game.controls.throw = ThrowMode::HoldAtReserve,
+            ("throw", "stop") => game.controls.throw = ThrowMode::Stop,
+            ("roster", "skill") => game.controls.roster = RosterOrder::Skill,
+            ("roster", "strain") => game.controls.roster = RosterOrder::Strain,
+            ("roster", "name") => game.controls.roster = RosterOrder::Name,
+            ("auto_deal", "on") => game.controls.auto_deal = true,
+            ("auto_deal", "off") => game.controls.auto_deal = false,
+            _ => return Err(format!("unknown control or value: {control} = {value}")),
+        }
+        Ok(())
     }
 
     /// Resolves a firing by option id rather than index; the safer call for agents.

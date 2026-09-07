@@ -1,0 +1,8 @@
+id = "bake_out"
+title = "Volatile extraction (bake-out)"
+description = "Thermal extraction of water and ammonium from Ch regolith. Rate follows the dice on it."
+domain = "extraction"
+structured = true
+standing = true
+pips_needed = 10.0
+pips_per_person = 0.0

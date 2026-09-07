@@ -75,14 +75,14 @@ impl Seat {
     #[must_use]
     pub const fn title(self) -> &'static str {
         match self {
-            Self::Hulls => "head of engineering",
-            Self::Hours => "head of logistics",
-            Self::Extraction => "head of extraction",
-            Self::Bodies => "medical officer",
-            Self::Air => "life-support lead",
-            Self::Machines => "operator",
-            Self::Children => "keep-mother",
-            Self::Liaison => "sponsor liaison",
+            Self::Hulls => "Chief Engineer",
+            Self::Hours => "Logistics Lead",
+            Self::Extraction => "ISRU Lead",
+            Self::Bodies => "Medical Officer",
+            Self::Air => "ECLSS Lead",
+            Self::Machines => "Autonomy Operator",
+            Self::Children => "Keep-mother",
+            Self::Liaison => "Sponsor Liaison",
         }
     }
 

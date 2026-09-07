@@ -8,7 +8,7 @@ text = """
 {patient} went down on the watch with a pain in the belly that has not
 stopped, and {bodies} has the diagnosis narrowed to two things, one of which
 is an operation and the other of which is also an operation. On Earth this is
-an ambulance. Here the nearest hospital is a window away and the window is not
+an ambulance. Here the nearest hospital is an RSW away and the RSW is not
 open. The formulary is what it is; the surgical kit was packed for cuts and
 burns; the medical officer has a manual, an uplink with a lag, and two hands.
 """
@@ -28,7 +28,7 @@ id = "operate"
 label = "Operate here, with the manual and what is in the kit"
 text = "The medical officer cuts. It costs the formulary and it costs the medic."
 tags = ["medicine", "risk", "capability"]
-chronicle = "{bodies} operated on {patient} in the mess with the manual open and two engineers holding lights. It took the rest of the formulary and most of a count to know it had worked."
+chronicle = "{bodies} operated on {patient} in the mess with the manual open and two engineers holding lights. It took the rest of the formulary and most of a month to know it had worked."
 [[option.requires]]
 q = "stocks.medicine"
 ge = 2
@@ -102,7 +102,7 @@ id = "nurse"
 label = "No knife. Bed, fluids, and watching"
 text = "Treat what can be treated and hope the rest resolves. A long recovery if it does."
 tags = ["medicine", "caution"]
-chronicle = "{patient} was put to bed and watched around the clock, and it resolved, slowly. It was three counts before {patient} stood a watch again."
+chronicle = "{patient} was put to bed and watched around the clock, and it resolved, slowly. It was three months before {patient} stood a watch again."
 [[option.effect]]
 person = "patient"
 strain = 0.4
@@ -120,14 +120,14 @@ text = "Some of these resolve. Not most. But a wrong cut with no blood bank is n
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "Three counts of one person in bed and one person watching is six person-counts out of the farm. Say so before you choose it."
+text = "Three months of one person in bed and one person watching is six person-counts out of the farm. Say so before you choose it."
 
 [[option]]
 id = "wait_for_ship"
-label = "Keep {patient} comfortable and wait for the window"
+label = "Keep {patient} comfortable and wait for the RSW"
 text = "The evacuation protocol says a ship. There is no ship. There is comfort."
 tags = ["caution", "sponsor"]
-chronicle = "The ring followed the evacuation protocol, which said to wait for a ship. {patient} died on the fourth day. It was the first death and nobody had decided what to do with the body."
+chronicle = "The SMB followed the evacuation protocol, which said to wait for a ship. {patient} died on the fourth day. It was the first death and nobody had decided what to do with the body."
 [[option.effect]]
 person = "patient"
 die = true

@@ -104,6 +104,71 @@ pub struct PowerPlant {
     pub demand_kw: f64,
 }
 
+/// A robot class.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
+pub enum RobotClass {
+    /// Fixed process machinery.
+    Plant,
+    /// Mobile bulk movers.
+    Haul,
+    /// Structured manipulators.
+    Arm,
+    /// Dexterous manipulators.
+    Dex,
+    /// Through-wall manipulators.
+    ThroughWall,
+}
+
+impl RobotClass {
+    /// Every class.
+    pub const ALL: [Self; 5] = [
+        Self::Plant,
+        Self::Haul,
+        Self::Arm,
+        Self::Dex,
+        Self::ThroughWall,
+    ];
+
+    /// Data-file key.
+    #[must_use]
+    pub const fn key(self) -> &'static str {
+        match self {
+            Self::Plant => "plant",
+            Self::Haul => "haul",
+            Self::Arm => "arm",
+            Self::Dex => "dex",
+            Self::ThroughWall => "through_wall",
+        }
+    }
+
+    /// Parses a key.
+    #[must_use]
+    pub fn parse(s: &str) -> Option<Self> {
+        Self::ALL.into_iter().find(|c| c.key() == s)
+    }
+
+    /// Hours one unit works per count, round the clock at its effectiveness.
+    #[must_use]
+    pub const fn hours(self) -> f64 {
+        match self {
+            Self::Plant | Self::Dex => 320.0,
+            Self::Haul => 300.0,
+            Self::Arm => 260.0,
+            Self::ThroughWall => 140.0,
+        }
+    }
+
+    /// Pips one unit adds to a project it fits.
+    #[must_use]
+    pub const fn pips(self) -> u8 {
+        match self {
+            Self::Plant | Self::Haul | Self::Arm => 2,
+            Self::Dex => 3,
+            Self::ThroughWall => 1,
+        }
+    }
+}
+
 /// Robot fleet counts by class.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Default)]
 pub struct Robots {
@@ -117,6 +182,20 @@ pub struct Robots {
     pub dex: f64,
     /// Through-wall manipulators; the belt's first robot.
     pub through_wall: f64,
+}
+
+impl Robots {
+    /// Units of a class.
+    #[must_use]
+    pub const fn count(&self, class: RobotClass) -> f64 {
+        match class {
+            RobotClass::Plant => self.plant,
+            RobotClass::Haul => self.haul,
+            RobotClass::Arm => self.arm,
+            RobotClass::Dex => self.dex,
+            RobotClass::ThroughWall => self.through_wall,
+        }
+    }
 }
 
 /// Licence state of the minds.
@@ -280,6 +359,18 @@ pub struct Game {
     pub fired: BTreeMap<String, FiringRecord>,
     /// Last count each person was cast in a storylet.
     pub recent_cast: BTreeMap<PersonId, u32>,
+    /// Open projects.
+    #[serde(default)]
+    pub projects: Vec<crate::project::ProjectState>,
+    /// Which die sits on which project.
+    #[serde(default, with = "crate::project::assignment_map")]
+    pub assignments: BTreeMap<crate::project::DieId, crate::project::ProjectId>,
+    /// The hand after this count's deal.
+    #[serde(default)]
+    pub hand: crate::project::Hand,
+    /// The standing controls.
+    #[serde(default)]
+    pub controls: crate::project::Controls,
     /// The chronicle.
     pub chronicle: Vec<ChronicleEntry>,
     /// Vocabulary triggers that have occurred.

@@ -1,0 +1,13 @@
+id = "through_wall_arm"
+title = "Through-wall manipulator fabrication"
+description = "A crude arm operated from inside the pressure wall: the first robot the outpost can make."
+domain = "engineering"
+structured = false
+segments = 16
+spares = 8
+min_skill = 2
+once = true
+on_complete_flag = "arm_built"
+[[when]]
+q = "robots.dex"
+lt = 2

@@ -37,7 +37,7 @@ id = "honour"
 label = "Honour the lay from our own stocks"
 text = "Pay every contract's share in water, spares, and hours, at the old schedule. The outpost becomes the owner of its own obligations, and poorer."
 tags = ["people", "independence", "water", "spares", "cost"]
-chronicle = "The ring honoured the lay the new owners had voided, out of its own tanks and stores. It was a debt Earth did not hold, paid in water Earth had never seen."
+chronicle = "The SMB honoured the lay the new owners had voided, out of its own tanks and stores. It was a debt Earth did not hold, paid in water Earth had never seen."
 [[option.effect]]
 q = "stocks.water"
 add = -40
@@ -64,18 +64,18 @@ text = "I can find forty tonnes and twenty spares. I cannot find thirty people w
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Twenty spares is five counts of the loops. You are proposing to pay a wage in the parts that keep the wage-earners breathing."
+text = "Twenty spares is five months of the loops. You are proposing to pay a wage in the parts that keep the wage-earners breathing."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked last count who to write to at the new owners. I still do not have a name. If we pay out the lay before we do, we have set a precedent for someone we have never met."
+text = "You asked last month who to write to at the new owners. I still do not have a name. If we pay out the lay before we do, we have set a precedent for someone we have never met."
 
 [[option]]
 id = "partial"
 label = "Pay what the water allows, and no more"
 text = "Settle a part of every lay in water now, and write the rest as owed by the outpost. A debt the outpost carries is at least a debt the outpost can see."
 tags = ["people", "water", "cost", "caution"]
-chronicle = "The ring paid part of the voided lay in water and wrote the rest as owed. The book it was written in belonged to the outpost, not to any owner."
+chronicle = "The SMB paid part of the voided lay in water and wrote the rest as owed. The book it was written in belonged to the outpost, not to any owner."
 [[option.effect]]
 q = "stocks.water"
 add = -20
@@ -90,7 +90,7 @@ flag = "lay_partial"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Twenty tonnes I can replace in two counts if the driver holds. Forty I cannot, not this Fortune. Pay twenty and write the rest."
+text = "Twenty tonnes I can replace in two months if the MDLS holds. Forty I cannot, not this Fortune. Pay twenty and write the rest."
 [[option.advice]]
 seat = "bodies"
 stance = "for"
@@ -101,7 +101,7 @@ id = "refuse"
 label = "Let the new owners answer for it"
 text = "The lay was Earth's promise. Refuse to pay Earth's debts from Fortuna's tanks, and let the anger go where it belongs."
 tags = ["independence", "caution", "cost"]
-chronicle = "The ring did not pay the lay the new owners had voided. The anger went to Earth, and some of it, having nowhere else to land, stayed home."
+chronicle = "The SMB did not pay the lay the new owners had voided. The anger went to Earth, and some of it, having nowhere else to land, stayed home."
 [[option.effect]]
 q = "menace.grievance"
 add = 1.5

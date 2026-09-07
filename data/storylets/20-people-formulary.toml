@@ -8,7 +8,7 @@ text = """
 {bodies} has counted the formulary twice and got the same number both times.
 Half of what came out on the first ship has expired and the rest is a shelf
 that would not fill a kit bag. {patient} needs a course of what is on that
-shelf, and so, probably, will someone else before the next convoy. The medical
+shelf, and so, probably, will someone else before the next RSW. The medical
 officer can stretch it thin across everyone who might need it, or spend it on
 the one who needs it now.
 """
@@ -78,14 +78,14 @@ text = "I have one patient in front of me and a shelf that might treat a patient
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "It is not one shelf, it is thirty-six people and one shelf. Spend it on one and the other thirty-five are uninsured until the window."
+text = "It is not one shelf, it is thirty-six people and one shelf. Spend it on one and the other thirty-five are uninsured until the RSW."
 
 [[option]]
 id = "manifest"
 label = "Put a medicine crate at the top of the next manifest and hold {patient} until it comes"
 text = "Admit the shortage to Earth. Wait."
 tags = ["sponsor", "medicine", "caution"]
-chronicle = "The ring put a medicine crate at the head of the manifest and told {patient} to wait for the window. The sponsor asked why the first crate had not been enough."
+chronicle = "The SMB put a medicine crate at the head of the manifest and told {patient} to wait for the RSW. The sponsor asked why the first crate had not been enough."
 [[option.requires]]
 stage_max = 3
 [[option.effect]]
@@ -106,4 +106,4 @@ text = "A medical shortage is the one line item nobody on the board argues with.
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The window is a long way off, and a course that starts in six counts is not the same course."
+text = "The window is a long way off, and a course that starts in six months is not the same course."

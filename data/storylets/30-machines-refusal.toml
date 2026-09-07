@@ -31,7 +31,7 @@ id = "by_hand"
 label = "Do it by hand"
 text = "People who have watched the approach a hundred times fly it themselves. Slower, with more sleep lost, and it is done."
 tags = ["hours", "people", "sponsor"]
-chronicle = "The tug came in by hand that count, flown by people who had only ever watched, and it took three times as long and nobody said so."
+chronicle = "The tug came in by hand that month, flown by people who had only ever watched, and it took three times as long and nobody said so."
 [[option.effect]]
 all_strain = 0.1
 [[option.effect]]
@@ -86,7 +86,7 @@ text = "It is a board. I have been saying it is a board for a year. Let me take 
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Removing the governor is the one act in the Act with a named penalty. I would like my objection minuted, with the count."
+text = "Removing the governor is the one act in the Act with a named penalty. I would like my objection minuted, with the month."
 [[option.advice]]
 seat = "air"
 stance = "for"

@@ -42,7 +42,7 @@ id = "open"
 label = "Open the books"
 text = "Every crate, every sign-off, every batch. Give the auditor the truth and let the sponsor decide what it thinks of an outpost that kept itself alive."
 tags = ["sponsor", "caution", "risk"]
-chronicle = "The ring opened the real books to the sponsor's audit. The crates went back on the manifest under their right names, and some of them went back to the store."
+chronicle = "The SMB opened the real books to the sponsor's audit. The crates went back on the manifest under their right names, and some of them went back to the store."
 [[option.effect]]
 q = "menace.suspicion"
 set = 2.0
@@ -62,7 +62,7 @@ counter = "audits"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "You asked me last count what happens to a liaison who is found to have lied to an audit. There is no next count for that liaison. Open the books."
+text = "You asked me last month what happens to a liaison who is found to have lied to an audit. There is no next month for that liaison. Open the books."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
@@ -73,7 +73,7 @@ id = "cook"
 label = "Reconcile the books"
 text = "Two sets of books can become one set with enough hours and a good memory for dates. Give the auditor a truth that adds up."
 tags = ["independence", "risk", "hours"]
-chronicle = "The ring reconciled its books before the audit read them. The numbers added up, the dates were plausible, and the outpost learned it could lie in a column."
+chronicle = "The SMB reconciled its books before the audit read them. The numbers added up, the dates were plausible, and the outpost learned it could lie in a column."
 [[option.effect]]
 q = "menace.suspicion"
 add = -4.0
@@ -91,7 +91,7 @@ counter = "numbers_cooked"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "I have the dates. Give me two counts and everyone on the ring who can add, and the audit will find a store that balances."
+text = "I have the dates. Give me two months and everyone on the SMB who can add, and the audit will find a store that balances."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
@@ -99,14 +99,14 @@ text = "The auditor is not looking for a store that balances. The auditor is loo
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You want the whole ring awake for two counts forging a ledger. Then I want the whole ring in the sick-bay for two more. That is the trade."
+text = "You want the whole ring awake for two months forging a ledger. Then I want the whole ring in the sick-bay for two more. That is the trade."
 
 [[option]]
 id = "refuse"
 label = "Refuse the audit"
-text = "The audit log is a sponsor tool on a sponsor link. Cut the read access. The outpost answers to the ring, and the ring has answered."
+text = "The audit log is a sponsor tool on a sponsor link. Cut the read access. The outpost answers to the SMB, and the SMB has answered."
 tags = ["independence", "risk", "machines"]
-chronicle = "The ring cut the sponsor's read access to the audit log. It was the first door the outpost closed on Earth, and it was closed from the inside."
+chronicle = "The SMB cut the sponsor's read access to the audit log. It was the first door the outpost closed on Earth, and it was closed from the inside."
 [[option.effect]]
 q = "menace.suspicion"
 add = -2.0
@@ -126,7 +126,7 @@ counter = "audits"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "The log is a board behind a panel. I can pull it in an hour. Everything after that is the ring's problem and not a checklist's."
+text = "The log is a board behind a panel. I can pull it in an hour. Everything after that is the SMB's problem and not a checklist's."
 [[option.advice]]
 seat = "liaison"
 stance = "against"

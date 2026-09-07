@@ -88,6 +88,9 @@ all_strain = 0.1              # everyone; or all_return_intent = -0.1
 name_mind = true              # the senior operator names the oldest unnamed mind
 
 [[option.effect]]
+project = "dig_keep"          # open a project by id (see data/projects/); or close_project = "..."
+
+[[option.effect]]
 end = "closed"                # or "extinct"; with reason = "..."
 reason = "evacuated on the sponsor's last ship"
 
@@ -165,3 +168,32 @@ the engine then treats the licence as self-certified).
   for texture scenes.
 - Prefer `[[when]]` on qualities and stage over `turn_min`; the game's tempo is
   windows, not counts.
+
+## Projects
+
+One TOML per project under `data/projects/`, bundled like storylets. A project is a
+clock filled by dice (people and robots). Standing projects never complete; their
+pips are a rate (`bake_out`, `throw`).
+
+```toml
+id = "dig_keep"
+title = "KEEP excavation"          # act-1 register
+description = "..."
+domain = "engineering"            # the skill that sets a die's face here
+structured = true                 # any robot fits; otherwise only dex units
+standing = false                  # true: never completes, pips_needed sets full rate
+segments = 24                     # one-time projects
+pips_per_segment = 6              # default 6
+pips_needed = 10.0                # standing projects: pips for full rate
+pips_per_person = 0.0             # standing projects that scale with population
+manual = true                     # only opened by a storylet effect `project = "id"`
+once = true                       # never reopens after completion
+spares = 12                       # consumed on completion
+min_skill = 2                     # a die needs this face to sit here
+on_complete_flag = "keep_dug"     # storylets fire the completion scene off this flag
+on_complete_lexicon = "..."       # optional
+repeat_segments = 16              # reopen with this many segments after completion
+[[when]]                          # opens when these hold (unless manual); same shape as storylets
+q = "menace.leak"
+ge = 4
+```

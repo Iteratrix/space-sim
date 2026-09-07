@@ -49,7 +49,7 @@ text = "The dex units are dying anyway. Better their parts go into the loops tha
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "A dex unit is four hundred hours a year we do not have to find. Eight units of parts is two counts of loop consumption. The sum is not close."
+text = "A dex unit is four hundred hours a year we do not have to find. Eight units of parts is two months of loop consumption. The sum is not close."
 
 [[option]]
 id = "relay"

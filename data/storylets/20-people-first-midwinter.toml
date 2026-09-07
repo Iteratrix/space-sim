@@ -4,7 +4,7 @@ act = 1
 once = true
 tags = ["people", "air"]
 text = """
-A year of counts. There is no winter here and no midwinter; the drum's lights
+A year of months. There is no winter here and no midwinter; the KEEP's lights
 run the same twenty-four hours they ran on the first day. But every station in
 the record that lasted had a feast on a date it chose, and the ones that did
 not have one had a worse year. {air} has been keeping something back in the
@@ -43,15 +43,15 @@ counter = "rituals"
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "I have been saving the strawberries since the eighth count and I would like a reason. Give me a date."
+text = "I have been saving the strawberries since the eighth month and I would like a reason. Give me a date."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "A night of everyone off watch is a night of nobody on watch. Half a count of food margin for a party. I will do it if the ring says, but I will write the number down."
+text = "A night of everyone off watch is a night of nobody on watch. Half a month of food margin for a party. I will do it if the SMB says, but I will write the number down."
 
 [[option]]
 id = "read_the_ledger"
-label = "A count of the marks: the dose ledger read aloud, then the meal"
+label = "A month of the marks: the CED ledger read aloud, then the meal"
 text = "Not a party. A reckoning. Everyone hears what the year has cost everyone."
 tags = ["people", "dose"]
 chronicle = "At the year's end the medical officer read every name and every millisievert aloud before the meal. Nobody had known the totals. It became the thing the date was for."
@@ -72,14 +72,14 @@ text = "They should know the number. It is their number. Once a year, out loud, 
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Reading dose totals aloud at a party is exactly the sort of thing that turns up in a sponsor's risk review, and I will be the one asked about the party."
+text = "Reading CED totals aloud at a party is exactly the sort of thing that turns up in a sponsor's risk review, and I will be the one asked about the party."
 
 [[option]]
 id = "no_ritual"
 label = "The sponsor's calendar is enough"
 text = "There is an anniversary on the quarterly. That is a date."
 tags = ["sponsor", "caution"]
-chronicle = "The ring decided the outpost did not need a feast of its own. The anniversary was noted on the quarterly and the farm's cold store stayed shut."
+chronicle = "The SMB decided the outpost did not need a feast of its own. The anniversary was noted on the quarterly and the farm's cold store stayed shut."
 [[option.effect]]
 all_strain = 0.02
 [[option.effect]]

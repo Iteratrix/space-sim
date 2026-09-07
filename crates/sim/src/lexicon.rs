@@ -13,26 +13,73 @@ pub struct Word {
     pub trigger: &'static str,
 }
 
-/// The canonical table, in the order substitutions are applied.
+/// The canonical ladder, in the order substitutions are applied. Content writes the
+/// acronym register; each entry moves a term one rung when its trigger has fired:
+///
+/// | content writes | act-1 slang (`first_convoy`) | Voidborn (its §6 trigger) |
+/// |---|---|---|
+/// | mission month, MM | count | — |
+/// | the RSW | the window | the convoy (`first_silence`) |
+/// | a missed RSW | a missed window | a Silence (`first_silence`) |
+/// | the KEEP | the Keep | — |
+/// | the MDLS | the driver | the throw (`first_silence`) |
+/// | the RJSA | the collar | — |
+/// | N2 make-up | the leak | the Leak (`first_silence`) |
+/// | the SMB | the board | the ring (`first_silence`) |
+/// | CCI | morale | grievance (`first_silence`) |
+/// | SOS | the audit line | suspicion (`first_silence`) |
+/// | CED | dose | tithe (`dose_ledger`) |
+/// | LSS-C | closure | — |
+/// | EVA | going outside | — (the Voiding is the rite, `first_voiding`) |
+/// | SMR | the reset | the blanking (`unforgetting`) |
+/// | the STE | the flare | the Burning (`first_voiding`) |
+/// | the Sun | — | the Light (`reactor_dead`) |
+/// | radiation | — | the Dark (`first_voiding`) |
+/// | the sponsor's seat | the sponsor's chair | the Silence (`first_silence`) |
+/// | the drum crew / the surface crew | burrowers / hull crews | the Kept / the Thin (`estates_named`) |
+/// | the anniversary | the festival | the Still (`first_midwinter`) |
+/// | the deceased | the dead | the returning (`first_line_launch`) |
+/// | the walk outside | — | the Voiding (`first_voiding`) |
+/// | not knowing who is in charge | — | grace (`licence_grace`) |
 pub const WORDS: &[Word] = &[
     Word {
-        old: "month",
-        new: "count",
-        trigger: "first_count",
+        old: "mission months",
+        new: "counts",
+        trigger: "first_convoy",
     },
     Word {
-        old: "months",
-        new: "counts",
-        trigger: "first_count",
+        old: "mission month",
+        new: "count",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "MM",
+        new: "count",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the RSWs",
+        new: "the windows",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the RSW",
+        new: "the window",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "an RSW",
+        new: "a window",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "a missed RSW",
+        new: "a missed window",
+        trigger: "first_convoy",
     },
     Word {
         old: "the Earth window",
         new: "the convoy",
-        trigger: "first_convoy",
-    },
-    Word {
-        old: "missed window",
-        new: "Silence",
         trigger: "first_silence",
     },
     Word {
@@ -41,14 +88,159 @@ pub const WORDS: &[Word] = &[
         trigger: "first_silence",
     },
     Word {
-        old: "day",
-        new: "watch",
+        old: "missed window",
+        new: "Silence",
         trigger: "first_silence",
     },
     Word {
-        old: "days",
-        new: "watches",
+        old: "the KEEP",
+        new: "the Keep",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "KEEP",
+        new: "Keep",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the MDLS",
+        new: "the driver",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "MDLS",
+        new: "driver",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the driver",
+        new: "the throw",
         trigger: "first_silence",
+    },
+    Word {
+        old: "the mass driver",
+        new: "the throw",
+        trigger: "first_silence",
+    },
+    Word {
+        old: "the RJSA",
+        new: "the collar",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "RJSA",
+        new: "collar",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the N2 make-up",
+        new: "the leak",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "N2 make-up",
+        new: "the leak",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "months",
+        new: "counts",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "month",
+        new: "count",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the leak",
+        new: "the Leak",
+        trigger: "first_silence",
+    },
+    Word {
+        old: "the SMB",
+        new: "the board",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "SMB",
+        new: "board",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the board",
+        new: "the ring",
+        trigger: "first_silence",
+    },
+    Word {
+        old: "CCI",
+        new: "morale",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "morale",
+        new: "grievance",
+        trigger: "first_silence",
+    },
+    Word {
+        old: "SOS",
+        new: "the audit line",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the audit line",
+        new: "suspicion",
+        trigger: "first_silence",
+    },
+    Word {
+        old: "CED",
+        new: "dose",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "cumulative dose",
+        new: "tithe",
+        trigger: "dose_ledger",
+    },
+    Word {
+        old: "LSS-C",
+        new: "closure",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "EVA",
+        new: "going outside",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the SMR",
+        new: "the reset",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "SMR",
+        new: "reset",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the reset",
+        new: "the blanking",
+        trigger: "unforgetting",
+    },
+    Word {
+        old: "the STE",
+        new: "the flare",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "an STE",
+        new: "a flare",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the flare",
+        new: "the Burning",
+        trigger: "first_voiding",
     },
     Word {
         old: "the Sun",
@@ -61,19 +253,24 @@ pub const WORDS: &[Word] = &[
         trigger: "first_voiding",
     },
     Word {
-        old: "cumulative dose",
-        new: "tithe",
-        trigger: "dose_ledger",
+        old: "the sponsor's seat",
+        new: "the sponsor's chair",
+        trigger: "first_convoy",
     },
     Word {
-        old: "the reset",
-        new: "the blanking",
-        trigger: "unforgetting",
+        old: "the sponsor's chair",
+        new: "the Silence",
+        trigger: "first_silence",
     },
     Word {
-        old: "the burrow",
-        new: "the Keep",
-        trigger: "first_count",
+        old: "the drum crew",
+        new: "burrowers",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the surface crew",
+        new: "hull crews",
+        trigger: "first_convoy",
     },
     Word {
         old: "burrowers",
@@ -86,24 +283,9 @@ pub const WORDS: &[Word] = &[
         trigger: "estates_named",
     },
     Word {
-        old: "the sponsor's chair",
-        new: "the Silence",
-        trigger: "first_silence",
-    },
-    Word {
-        old: "not knowing who is in charge",
-        new: "grace",
-        trigger: "licence_grace",
-    },
-    Word {
-        old: "the mass driver",
-        new: "the throw",
-        trigger: "first_count",
-    },
-    Word {
-        old: "the dead",
-        new: "the returning",
-        trigger: "first_line_launch",
+        old: "the anniversary",
+        new: "the festival",
+        trigger: "first_convoy",
     },
     Word {
         old: "the festival",
@@ -111,9 +293,34 @@ pub const WORDS: &[Word] = &[
         trigger: "first_midwinter",
     },
     Word {
+        old: "the deceased",
+        new: "the dead",
+        trigger: "first_convoy",
+    },
+    Word {
+        old: "the dead",
+        new: "the returning",
+        trigger: "first_line_launch",
+    },
+    Word {
         old: "the walk outside",
         new: "the Voiding",
         trigger: "first_voiding",
+    },
+    Word {
+        old: "not knowing who is in charge",
+        new: "grace",
+        trigger: "licence_grace",
+    },
+    Word {
+        old: "day",
+        new: "watch",
+        trigger: "first_silence",
+    },
+    Word {
+        old: "days",
+        new: "watches",
+        trigger: "first_silence",
     },
 ];
 

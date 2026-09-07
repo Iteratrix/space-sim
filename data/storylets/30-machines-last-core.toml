@@ -10,7 +10,7 @@ parts per billion in the rock and nobody will refuel it. The wear indicators
 have been climbing for a year. {hulls} has two ways to run it. Derate it: two
 thirds of rated, the farm on short light in the Lean, the coils cycled, and the
 core lasts longer than the manual says it can. Or run it at rating, keep the
-farm and the driver and the minds fed, and let the core decide when it is
+farm and the MDLS and the minds fed, and let the core decide when it is
 finished. {air} has already asked what a third less power does to the freezers.
 """
 
@@ -64,7 +64,7 @@ id = "hot"
 label = "Run it at rating"
 text = "Everything fed, nothing rationed, and the core finishes when it finishes. Build the mirrors faster and hope they are ready first."
 tags = ["throughput", "sponsor", "risk"]
-chronicle = "We ran the last core at rating and put everything into the mirrors, and the ring stopped asking the hulls seat how long."
+chronicle = "We ran the last core at rating and put everything into the mirrors, and the SMB stopped asking the Chief Engineer how long."
 [[option.effect]]
 q = "menace.reactor_wear"
 add = 1.5

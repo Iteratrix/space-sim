@@ -5,12 +5,12 @@ weight = 1.2
 cooldown = 40
 tags = ["sponsor", "liaison"]
 text = """
-{liaison} asked for a word after the ring, alone, and then did not say much.
+{liaison} asked for a word after the SMB, alone, and then did not say much.
 The dish time has been cut twice this year and the second cut was not
 announced. The people {liaison} used to write to at the sponsor have been
 replaced by an address. There is something else, something from a private
 channel, that {liaison} started to say and then called "not confirmed".
-{liaison} answers for the sponsor at the ring. The ring has to decide what
+{liaison} answers for the sponsor at the SMB. The SMB has to decide what
 to do with a liaison who knows more than the sponsor is saying.
 """
 
@@ -33,9 +33,9 @@ optional = true
 [[option]]
 id = "press"
 label = "Press for the rest of it"
-text = "Ask {liaison} to say the unconfirmed thing to the ring, on the record. Whatever it is, the outpost plans better with it than without."
+text = "Ask {liaison} to say the unconfirmed thing to the SMB, on the record. Whatever it is, the outpost plans better with it than without."
 tags = ["independence", "risk", "sponsor"]
-chronicle = "The ring asked {liaison} to say the unconfirmed thing aloud, and {liaison} did. It was about the budget, and it was worse than the reviews had been letting on."
+chronicle = "The SMB asked {liaison} to say the unconfirmed thing aloud, and {liaison} did. It was about the budget, and it was worse than the reviews had been letting on."
 [[option.effect]]
 flag = "liaison_confided"
 [[option.effect]]
@@ -52,18 +52,18 @@ add = 0.4
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "I plan spares against the ship that is coming. If the ship is not coming I need to know a year before, not a count after. Make {liaison} say it."
+text = "I plan spares against the ship that is coming. If the ship is not coming I need to know a year before, not a month after. Make {liaison} say it."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked me last count what I was not telling you. If I answer that here it goes in the chronicle, and the chronicle goes in the audit, and then the thing I am not telling you becomes the thing I told you."
+text = "You asked me last month what I was not telling you. If I answer that here it goes in the chronicle, and the chronicle goes in the audit, and then the thing I am not telling you becomes the thing I told you."
 
 [[option]]
 id = "protect"
 label = "Let {liaison} keep it, and plan as if it were true"
-text = "Do not make {liaison} choose between the sponsor and the ring. Read the silence and act on the reading."
+text = "Do not make {liaison} choose between the sponsor and the SMB. Read the silence and act on the reading."
 tags = ["caution", "capability", "spares"]
-chronicle = "The ring let {liaison} keep what {liaison} knew, and quietly began planning as though it were already true. Spares went into the outpost's own store that count."
+chronicle = "The SMB let {liaison} keep what {liaison} knew, and quietly began planning as though it were already true. Spares went into the outpost's own store that month."
 [[option.effect]]
 flag = "planning_for_silence"
 [[option.effect]]
@@ -82,14 +82,14 @@ text = "{liaison} is the only person here whose job is to be loyal to someone wh
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "I do not need the sentence. I need the schedule to assume half the dish time and a lighter convoy, and I can do that without anyone saying why."
+text = "I do not need the sentence. I need the schedule to assume half the dish time and a lighter RSW, and I can do that without anyone saying why."
 
 [[option]]
 id = "report"
 label = "Have {liaison} send it up the line as a formal query"
 text = "Turn the rumour into a question the sponsor has to answer. If the address answers, we learn something. If it does not, we learn more."
 tags = ["sponsor", "risk"]
-chronicle = "The ring had {liaison} put the unconfirmed thing to the sponsor as a formal query. The answer came a count late, said nothing, and said it very carefully."
+chronicle = "The SMB had {liaison} put the unconfirmed thing to the sponsor as a formal query. The answer came a month late, said nothing, and said it very carefully."
 [[option.effect]]
 q = "sponsor.attention"
 add = 0.03

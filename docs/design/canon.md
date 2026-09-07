@@ -687,3 +687,93 @@ One line each where canon overrides a report or a note, with the reason.
   raids; piracy killed (§5.12): 05's own break note and both pitches.
 - **NOTES "T0 undetermined"** → 2095, never printed (§2): 13's five
   independent datings.
+
+---
+
+## 9. Register and the acronym layer
+
+Act 1 speaks in the sponsor's register, and the tutorial most of all: the
+precise, clipped, unemotive language of a space agency. Acronyms with the
+expansion on first use; mission months, never dates; *nominal* and
+*off-nominal*; consumables margin in days; cumulative effective dose in
+millisieverts; crew IDs beside names (`K. Okonkwo, F-07`). The shift to the
+evocative vocabulary of §6 — the Keep, the Leak, the Silence, the throw — is not
+decoration: it is the record of a crew of Earth-trained specialists becoming a
+voidfaring people, and the chronicle is where the reader watches it happen. The
+first drift is a capitalisation: the KEEP becomes the Keep.
+
+**Who speaks how.** The sponsor and the liaison keep the register to the end;
+the liaison's advice is a mission-control voice a count late. Seat holders are
+clipped and technical in act 1 and slip toward slang under strain — that slippage
+is the story, and content should let it happen in the crew's own lines first.
+Engine messages and the UI chrome use the register until the lexicon drifts them
+(`RSW-3 arrival: 45 t landed`, `N2 make-up off-nominal`). Chronicle lines are the
+station log: terse, past tense, dated by mission month, one or two sentences.
+
+**The acronym table.**
+
+| acronym | expansion | what it is |
+|---|---|---|
+| KEEP | Kilotonne-class Excavated Environmental Protection (habitat) | the buried drum; the crew's *Keep* |
+| MDLS | Mass Driver Launch System | the throw |
+| RJSA | Rotary Joint Seal Assembly | the drum's hub seal; the collar |
+| RSW | Resupply Window | the Earth window; the convoy |
+| MM | Mission Month | the count |
+| SMB | Station Management Board | the ring |
+| N2 make-up | nitrogen make-up rate | the leak |
+| CCI | Crew Cohesion Index | grievance |
+| SOS | Sponsor Oversight Status | suspicion |
+| CED | Cumulative Effective Dose (mSv) | dose; the tithe |
+| LSS-C | Life Support System Closure (fraction) | closure |
+| EVA | Extravehicular Activity | going outside; later the Voiding |
+| SMR | Scheduled Model Reset | the minds' reset; the blanking |
+| HRA | Human Respect Act | the licence regime |
+| SX-19F, SX-20K | the minds' designations | Uncle and Aunt; then names |
+| BOP | Bake-Out Plant | the water works |
+| CM-days | consumables margin, days | Margin |
+| STE | Solar Transient Event | a flare; the Burning |
+| PV-A | photovoltaic array | the Light's share |
+| SC | Superior Conjunction | the blackout |
+
+Seat titles in act 1 are job titles — Chief Engineer, Logistics Lead, Extraction
+Lead, Medical Officer, ECLSS Lead, Sponsor Liaison — and the chronicle names the
+seat by its question only once the SMB has become the ring.
+
+**The ladder.** Each row is acronym → act-1 slang → Voidborn word, with the
+trigger that moves it a rung. Slang enters at the first resupply (the crew has its
+own words by MM 12); the Voidborn words enter on the §6 triggers.
+
+| acronym (content writes this) | act-1 slang | enters | Voidborn | enters |
+|---|---|---|---|---|
+| MM / mission month | count | first_convoy | count | — |
+| the RSW | the window | first_convoy | the convoy | first_silence |
+| a missed RSW | a missed window | first_convoy | a Silence | first_silence |
+| the KEEP | the Keep | first_convoy | the Keep | — |
+| the MDLS | the driver | first_convoy | the throw | first_silence |
+| the RJSA | the collar | first_convoy | the collar | — |
+| N2 make-up | the leak | first_convoy | the Leak | first_silence |
+| the SMB | the board | first_convoy | the ring | first_silence |
+| CCI | morale | first_convoy | grievance | first_silence |
+| SOS | the audit line | first_convoy | suspicion | first_silence |
+| CED | dose | first_convoy | tithe | dose_ledger |
+| LSS-C | closure | first_convoy | closure | — |
+| EVA | going outside | first_convoy | the Voiding (the rite only) | first_voiding |
+| SMR | the reset | first_convoy | the blanking | unforgetting |
+| the STE | the flare | first_convoy | the Burning | first_voiding |
+| the Sun | the Sun | — | the Light | reactor_dead |
+| radiation | radiation | — | the Dark | first_voiding |
+| the sponsor's seat | the sponsor's chair | first_convoy | the Silence | first_silence |
+| the surface crew / the drum crew | hull crews / burrowers | first_convoy | the Thin / the Kept | estates_named |
+| the anniversary | the festival | first_convoy | the Still | first_midwinter |
+| the deceased | the dead | first_convoy | the returning | first_line_launch |
+| licence grace | grace | licence_grace | grace | — |
+
+The §6 table stands as the right-hand two columns of this ladder; where a §6 row
+has no acronym, the act-1 word is the plain English one and only the Voidborn
+rung applies.
+
+**Rules for content.** Write the acronym, not the slang, in act-1 text and
+chronicle lines; the lexicon drifts it. Expand an acronym the first time a
+storylet uses it in its own text. Numbers stay numbers in act 1 (mSv, days, t,
+kW); the Voidborn words replace units only where §6 says so. The tutorial never
+uses a §6 word except as the moment a crew member first says it.
