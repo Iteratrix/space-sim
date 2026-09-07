@@ -1,0 +1,78 @@
+id = "first_manifest"
+title = "The First Manifest"
+act = 1
+once = true
+priority = 50
+tags = ["sponsor", "manifest"]
+text = """
+The request for the next convoy has to be sent this count to make the window.
+{hours} has the manifest open: every tonne is either throughput hardware, which
+the sponsor can see on the quarterly, or capability hardware, which nobody on
+Earth will notice until the day it saves us.
+"""
+
+[[when]]
+turn_min = 1
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "throughput"
+label = "Throughput: more pods, more propellant, another dex unit"
+text = "Ship what makes the numbers move."
+tags = ["throughput", "sponsor"]
+chronicle = "The first manifest went out heavy on throughput. The sponsor will like the quarterly."
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.05
+[[option.effect]]
+flag = "manifest_throughput"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The board reads one number. Give them the number."
+
+[[option]]
+id = "balanced"
+label = "Balance: half throughput, half spares and a second freezer"
+text = "Enough to keep the review civil and enough to keep the loops closed."
+tags = ["capability", "throughput"]
+chronicle = "The first manifest went out split down the middle. Nobody was happy and nothing broke."
+[[option.effect]]
+q = "stocks.spares"
+add = 20
+[[option.effect]]
+flag = "manifest_balanced"
+
+[[option]]
+id = "capability"
+label = "Capability: spares, medicine, a boron crate, fabrication tooling"
+text = "Invisible to the sponsor. Visible to anyone who has watched a loop fail."
+tags = ["capability", "spares", "independence"]
+chronicle = "The first manifest went out heavy on capability. Someone on Earth will ask why."
+[[option.effect]]
+q = "stocks.spares"
+add = 40
+[[option.effect]]
+q = "stocks.boron"
+add = 400
+[[option.effect]]
+q = "menace.suspicion"
+add = 1.0
+[[option.effect]]
+flag = "manifest_capability"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "I can make anything here except the parts I cannot make. Ship me those."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A boron crate on a throughput outpost is a question I will have to answer, and I do not have an answer."

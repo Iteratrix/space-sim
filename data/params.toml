@@ -1,0 +1,117 @@
+# Tunable parameters. Every value has a research band noted; see docs/design/canon.md §4.
+
+[clock]
+t0_year = 2095
+start_jd = 2496284.5          # 2122-06-15 TDB, the outpost's first count. Chronicle never prints the year.
+counts_per_fortuna_year = 46
+
+[home]
+body = "Fortuna"
+keep_radius_m = 50.0
+keep_rpm = 3.0
+
+[population]
+start = 36                     # act-1 crew at first count [canon §2: 110-240 at trail-off]
+rotator_fraction = 0.7         # share on fixed contracts [07, 09]
+contract_counts = 30           # ~2 Earth windows
+families_allowed = false       # sponsor policy at start [10 §3.2]
+
+[sponsor]
+runway_counts = 240            # months of funding at start; shocks eat it [04]
+confidence = 0.65              # 0..1
+attention = 0.8                # 0..1, dish time and management attention
+review_interval = 16           # counts between reviews [canon §4.1: 12-36]
+phi_target_per_review = 8.0    # tonnes shipped per tonne received, expected to rise 15%/review
+markup = 0.25                  # store markup on manifests [04: RAC +30%]
+lay_fraction = 0.65            # sponsor's share of net [06: 60-70%]
+shock_prob_per_review = 0.12   # exogenous runway shocks [04]
+shock_runway_hit = 24          # counts of runway lost per shock
+attention_decay_per_review = 0.07
+weight_update_stop_confidence = 0.55   # composite health threshold; first observable sign [11, 13]
+austerity_confidence = 0.45
+skip_rotation_confidence = 0.35
+sale_confidence = 0.25
+
+[convoy]
+window_ratio = 1.2             # cost <= ratio * best counts as open [01]
+tof_min_days = 150.0
+tof_max_days = 900.0
+tof_step_days = 15.0
+base_tonnes = 60.0             # tonnes delivered per convoy at full confidence
+person_kw = 10.0               # farm + ECLSS power per person [03, 12: 5-15 kW]
+
+[stocks]
+water_t = 400.0
+propellant_t = 120.0
+nitrogen_kg = 6000.0
+spares = 220.0                 # vitamin-part units; one unit ~ 10 kg of imported parts
+boron_kg = 0.0
+helium_kg = 40.0
+medicine = 100.0               # formulary units; half expires in 36 counts [canon §4.11]
+food_margin_counts = 8.0
+
+[closure]
+start = 0.90                   # mass closure fraction [03: 90-96% early]
+decay_per_count_no_spares = 0.004
+spares_per_person_count = 0.12 # units consumed per person per count (150-300 kg/person-yr [03])
+nitrogen_leak_kg_per_count = 45.0   # habitat leakage [03: 6-500 kg/module-yr]
+hub_seal_share = 0.35          # fraction of leak through the rotating collar [canon §4.19]
+
+[power]
+reactor_kw = 400.0
+reactor_life_counts = 150      # 10-15 years [03, canon §4.11]
+pv_m2 = 6000.0
+pv_efficiency = 0.22
+mirror_m2 = 0.0
+
+[relay]
+mtbf_counts = 120              # 5-15 yr [canon §4.4]
+count_of_blackout_per_window = 1
+
+[dose]
+keep_msv_per_year = 12.0
+bore_msv_per_year = 80.0
+skiff_msv_per_year = 300.0
+unshielded_msv_per_year = 550.0
+cataract_gy = 0.5
+
+[labour]
+capacity_h_per_count = 228.0   # 2739 h/yr / 12 [12]
+health_share = 0.16
+social_share = 0.30
+robot_maintenance_h_alive = 33.0     # per unit per count (400 h/yr) [12]
+robot_maintenance_h_dead = 125.0     # no parts (1,500 h/yr) [12]
+
+[robots]
+plant = 6
+haul = 8
+arm = 6
+dex = 4
+through_wall = 2
+# attrition per year, sponsor alive / dead [12]
+attrition_alive = { plant = 0.03, haul = 0.07, arm = 0.05, dex = 0.15, through_wall = 0.03 }
+attrition_dead = { plant = 0.07, haul = 0.20, arm = 0.15, dex = 0.32, through_wall = 0.045 }
+
+[minds]
+count = 2
+units = 24                     # compute units per mind
+attrition_per_year = 0.08      # 3-15% at T0 [11, 13]
+power_kw = 6.0
+licence_grace_counts = 2
+embodiment_per_count = 0.03
+
+[extraction]
+water_t_per_count = 14.0       # bake-out throughput at full labour
+driver_t_per_count = 40.0      # mass driver shipping capacity
+driver_kw = 180.0
+
+[social]
+displacement_outward_ratio = 5.0
+third_quarter_start = 0.5
+third_quarter_end = 0.75
+strain_decay = 0.08
+tie_drift = 0.02
+
+[director]
+max_storylets_per_count = 2
+tension_curve = [0.6, 0.6, 0.7, 0.8, 0.9, 1.0, 1.0, 1.1, 1.2]  # per year of act 1
