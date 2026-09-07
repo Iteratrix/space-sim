@@ -154,7 +154,12 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
 
 /// Builds a new game from a seed in the given scenario.
 #[must_use]
-pub fn new_game_scenario(params: &Params, calendar: &Calendar, seed: u64, scenario: Scenario) -> Game {
+pub fn new_game_scenario(
+    params: &Params,
+    calendar: &Calendar,
+    seed: u64,
+    scenario: Scenario,
+) -> Game {
     let mut rng = ChaCha8Rng::seed_from_u64(seed);
     let tutorial = scenario == Scenario::Tutorial;
     let robot = |k: &str, default: u32| -> f64 {
@@ -194,7 +199,11 @@ pub fn new_game_scenario(params: &Params, calendar: &Calendar, seed: u64, scenar
         power: PowerPlant {
             reactor_kw: params.power.reactor_kw,
             reactor_life: params.power.reactor_life_counts,
-            pv_m2: if tutorial { params.tutorial.pv_m2 } else { params.power.pv_m2 },
+            pv_m2: if tutorial {
+                params.tutorial.pv_m2
+            } else {
+                params.power.pv_m2
+            },
             pv_efficiency: params.power.pv_efficiency,
             mirror_m2: params.power.mirror_m2,
             capacity_kw: 0.0,
@@ -250,8 +259,16 @@ pub fn new_game_scenario(params: &Params, calendar: &Calendar, seed: u64, scenar
     };
     game.lexicon_triggers.insert("first_count".into());
 
-    let n = if tutorial { params.tutorial.start } else { params.population.start };
-    let rotator_fraction = if tutorial { params.tutorial.rotator_fraction } else { params.population.rotator_fraction };
+    let n = if tutorial {
+        params.tutorial.start
+    } else {
+        params.population.start
+    };
+    let rotator_fraction = if tutorial {
+        params.tutorial.rotator_fraction
+    } else {
+        params.population.rotator_fraction
+    };
     let primaries = [
         Skill::Engineering,
         Skill::Logistics,
@@ -336,7 +353,14 @@ pub fn new_game_scenario(params: &Params, calendar: &Calendar, seed: u64, scenar
         }
     }
     if tutorial {
-        for f in ["tutorial", "driver_unaligned", "no_keep", "mind_log", "open_project:dig_keep", "open_project:align_driver"] {
+        for f in [
+            "tutorial",
+            "driver_unaligned",
+            "no_keep",
+            "mind_log",
+            "open_project:dig_keep",
+            "open_project:align_driver",
+        ] {
             game.flags.insert(f.to_owned());
         }
         if let Some(m) = game.minds.first_mut() {

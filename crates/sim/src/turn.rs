@@ -35,8 +35,8 @@ pub fn advance(
     game.counts_since_convoy += 1;
 
     power(game, params);
-    let eaten = labour(game, params);
-    projects(game, params, defs, eaten, rng, &mut events);
+    let upkeep_h = labour(game, params);
+    projects(game, params, defs, upkeep_h, rng, &mut events);
     extraction_and_shipping(game, params);
     consumables(game, params, &mut events);
     machines(game, params, rng, &mut events);
@@ -102,11 +102,10 @@ fn projects(
     game: &mut Game,
     params: &Params,
     defs: &[crate::project::ProjectDef],
-    eaten: u32,
+    upkeep_h: f64,
     rng: &mut impl Rng,
     events: &mut Events,
 ) {
-    let _ = params;
     let to_open: Vec<String> = game
         .flags
         .iter()
@@ -119,13 +118,13 @@ fn projects(
         }
     }
     crate::project::open_eligible(game, defs);
-    crate::project::deal(game, defs, eaten);
+    crate::project::deal(game, defs, upkeep_h, params.labour.capacity_h_per_count);
     for line in crate::project::progress(game, defs, rng) {
         note(game, events, line);
     }
 }
 
-fn labour(game: &mut Game, params: &Params) -> u32 {
+fn labour(game: &mut Game, params: &Params) -> f64 {
     let adults: Vec<f64> = game
         .present()
         .filter(|p| p.age_counts(game.turn) >= 16 * 12)
@@ -169,13 +168,8 @@ fn labour(game: &mut Game, params: &Params) -> u32 {
     game.labour_capacity_h = capacity;
     game.labour_demand_h =
         subsistence + robots * maintenance_h + closure_gap + extraction_h + unlicensed_penalty;
-    let per_die = params.labour.capacity_h_per_count;
-    let upkeep = subsistence + robots * maintenance_h + unlicensed_penalty;
-    let covered = (robot_hours - robot_hours_on_projects).max(0.0);
-    ((upkeep - covered) / per_die)
-        .ceil()
-        .max(0.0)
-        .saturating_as::<u32>()
+    let _ = robot_hours_on_projects;
+    subsistence + robots * maintenance_h + unlicensed_penalty
 }
 
 /// Hours per count the polity's own upkeep demands at population `n`, with no robots.

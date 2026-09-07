@@ -347,16 +347,37 @@ fn robot_fits(class: RobotClass, def: &ProjectDef) -> bool {
 
 /// Recomputes who is eaten by upkeep, evicts over-assignment, deals free dice if asked,
 /// and returns the hand. Called once per count before projects progress.
-pub fn deal(game: &mut Game, defs: &[ProjectDef], eaten_needed: u32) {
+pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) {
     let adults: Vec<PersonId> = game
         .present()
         .filter(|p| p.age_counts(game.turn) >= 18 * 12)
         .map(|p| p.id)
         .collect();
     let n = adults.len().saturating_as::<u32>();
-    let eaten = eaten_needed.min(n);
-    let shortfall = eaten_needed.saturating_sub(n);
-    let free = n - eaten;
+    let robot_units = robot_dice(game);
+    let assigned_robot_hours = |assignments: &std::collections::BTreeMap<DieId, ProjectId>| -> f64 {
+        assignments
+            .keys()
+            .filter_map(|d| match d {
+                DieId::Robot(c, _) => Some(c.hours()),
+                DieId::Person(_) => None,
+            })
+            .sum()
+    };
+    let all_robot_hours: f64 = robot_units
+        .iter()
+        .map(|(d, _)| match d {
+            DieId::Robot(c, _) => c.hours(),
+            DieId::Person(_) => 0.0,
+        })
+        .sum();
+    let eaten_for = |assignments: &std::collections::BTreeMap<DieId, ProjectId>| -> u32 {
+        let covered = (all_robot_hours - assigned_robot_hours(assignments)).max(0.0);
+        ((upkeep_h - covered) / per_die)
+            .ceil()
+            .max(0.0)
+            .saturating_as::<u32>()
+    };
     let order = game.controls.roster;
     let mut ranked = adults.clone();
     ranked.sort_by(|&a, &b| {
@@ -397,6 +418,10 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], eaten_needed: u32) {
             assignments.remove(&die);
         }
     }
+    let eaten_needed = eaten_for(&assignments);
+    let eaten = eaten_needed.min(n);
+    let shortfall = eaten_needed.saturating_sub(n);
+    let free = n - eaten;
     let mut kept: Vec<PersonId> = ranked.iter().copied().take(free.az::<usize>()).collect();
     let assigned_people: Vec<PersonId> = assignments
         .keys()
@@ -462,7 +487,7 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], eaten_needed: u32) {
                 assignments.insert(DieId::Person(p), d.id.clone());
             }
         }
-        if free > 3 {
+        {
             for (die, _) in robot_dice(game) {
                 if assignments.contains_key(&die) {
                     continue;
@@ -470,6 +495,11 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], eaten_needed: u32) {
                 let DieId::Robot(class, _) = die else {
                     continue;
                 };
+                let mut trial = assignments.clone();
+                trial.insert(die, ProjectId(String::new()));
+                if n.saturating_sub(eaten_for(&trial)) < 3 {
+                    continue;
+                }
                 let n_present = game.present().count().az::<f64>();
                 let target = standing.iter().filter(|d| robot_fits(class, d)).find(|d| {
                     let have: u32 = assignments

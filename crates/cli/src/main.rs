@@ -293,7 +293,11 @@ fn resolve_firings(
 
 fn play(engine: &Engine, args: &Args) {
     let mut game = args.load.as_ref().map_or_else(
-        || engine.new_game_scenario(args.seed, args.scenario).expect("new game"),
+        || {
+            engine
+                .new_game_scenario(args.seed, args.scenario)
+                .expect("new game")
+        },
         |path| {
             let text = std::fs::read_to_string(path).unwrap_or_else(|e| {
                 eprintln!("load failed: {e}");
