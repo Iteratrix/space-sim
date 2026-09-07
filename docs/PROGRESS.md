@@ -2,6 +2,44 @@
 
 Written for whoever picks this up next (human or agent). Newest at the top.
 
+## Day 2 (2026-09-07): projects and the hand, the register, the tutorial, the web front
+
+- **Projects and dice** (`crates/sim/src/project.rs`, `data/projects/`): content-defined
+  clocks; each adult is a die whose face is their skill in the project's domain
+  (dulled above 0.5 strain); robots are square dice that carry upkeep unless assigned
+  and fit only structured work (dex fit anything). Upkeep after Salotti is scaled by
+  how supplied the outpost is (0.65 while the sponsor is keen, 1.0 after the sale);
+  the deal computes what unassigned robots cover, eats people first, keeps a hand of
+  ~3 when auto-dealing, staffs one-time projects before standing ones. One skill-gated
+  roll per project per count. Standing projects (`bake_out`, `throw`) are rates that
+  replace the old flat extraction; closure now decays with the upkeep shortfall.
+- **Standing controls**: manifest split, throw position (ship / hold at reserve /
+  stop), roster order, auto-deal. `assign` and `set` verbs in the CLI and the wasm.
+- **Register**: canon §9, a three-column lexicon ladder (acronym → act-1 slang →
+  Voidborn word), all storylets and the engine's own lines in the NASA register, seat
+  titles as job titles; chronicle entries keep a snapshot of the vocabulary of their
+  count (`ChronicleEntry.words`).
+- **Tutorial** (`--scenario tutorial`, the default in the browser): 14 crew arrive at
+  a robot-built site with no KEEP, the driver unaligned, one mind that kept a log;
+  fifteen scripted scenes (`data/storylets/00-tutorial-*.toml`) across the first
+  three windows, one per count, handing off at MM 43. Only priority ≥ 100 scenes fire
+  while the `tutorial` flag is set and `tutorial_done` is not.
+- **View** (`crates/sim/src/view.rs`): countdowns, projects with dice, the hand, seven
+  ledger bars with a word and a why, three pressures with band names, the ring, the
+  sponsor's track, controls, the calendar slice, the chronicle. `Quality::Margin`.
+  Zero crossings and pressure band crossings write chronicle lines; quiet counts
+  (~87 lines a game instead of ~250).
+- **Web front** (`crates/web`, `web/`): wasm-bindgen bridge with eight functions and
+  the state in the wasm; a plain-JS page with the clock rail, the hand (drag or
+  tap-tap to assign), ledger, pressures, sponsor dots, the scene, the ring, and the
+  chronicle drawer; saves to localStorage every count. Smoke-tested headless with
+  Playwright (`web/test/smoke.py`). Deploys to GitHub Pages on a version tag.
+- Balance now: act 1 149-213 counts, 110-158 people at the Silence (random policy).
+
+**Next**: faces for the ring; the phone reflow; standing (trust) diamonds; the Map
+with the one slider; "zero is a scene" storylets against the `zero:*` counters and
+the reserve; act-1 balance under the dice model; act 2.
+
 ## State as of the overnight build (2026-09-07, early)
 
 **What exists and works**
