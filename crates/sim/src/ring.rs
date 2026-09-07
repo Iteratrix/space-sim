@@ -291,12 +291,7 @@ pub fn counsel(
         let (text, authored) = authored.map_or_else(
             || {
                 (
-                    format!(
-                        "{} ({}) leans toward \"{}\".",
-                        person.name,
-                        seat.title(),
-                        storylet.options[best].label
-                    ) + &warning,
+                    format!("Leans toward \"{}\".", storylet.options[best].label) + &warning,
                     !warning.is_empty(),
                 )
             },

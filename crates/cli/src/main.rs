@@ -212,7 +212,9 @@ fn resolve_firings(
                 print!("> ");
                 std::io::stdout().flush().ok();
             }
-            let Some(Ok(line)) = lines.next() else { return };
+            let Some(Ok(line)) = lines.next() else {
+                std::process::exit(0)
+            };
             let line = line.trim();
             if line == "q" || line == "quit" {
                 std::process::exit(0);
