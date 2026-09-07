@@ -2,7 +2,7 @@ import init, * as wasm from "./pkg/space_sim_web.js";
 
 const el = (id) => document.getElementById(id);
 const parse = (s) => JSON.parse(s);
-const FACES = ["·", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+const FACES = ["·", "1", "2", "3", "4", "5", "6"];
 const SAVE_KEY = "fortuna-save";
 
 let handle = null;
@@ -27,7 +27,7 @@ function ring(filled, segments, cls = "on", r = 18) {
 function die(d) {
   const dull = !d.robot && d.strain > 0.5 ? " dull" : "";
   const upkeep = d.place === "upkeep" ? " upkeep" : "";
-  const face = d.robot ? "▣" : FACES[Math.min(d.face, 6)];
+  const face = d.robot ? "R" : FACES[Math.min(d.face, 6)];
   const title = d.robot ? `${d.label} unit — ${d.face} pips` : `${d.label} — face ${d.face}${dull ? " (strained)" : ""}${upkeep ? " — eating and breathing" : ""}`;
   return `<span class="die${d.robot ? " robot" : ""}${dull}${upkeep}" draggable="${upkeep ? "false" : "true"}" data-die="${d.id}" title="${title}">${face}</span>`;
 }
