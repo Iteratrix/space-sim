@@ -33,7 +33,7 @@ id = "keep"
 label = "Hold it again, and hold it bigger"
 text = "The second time is the one that makes it a custom."
 tags = ["people", "independence"]
-chronicle = "The second Midwinter was held with the new hands watching, and by the end of the night they were not watching. It is a custom now."
+chronicle = "The second Midwinter was held with the new hands watching, and by the end of the night they were not watching. It was a custom after that."
 [[option.effect]]
 all_strain = -0.08
 [[option.effect]]

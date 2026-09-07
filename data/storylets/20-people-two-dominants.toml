@@ -1,7 +1,7 @@
 id = "two_dominants"
 title = "Two Answers to One Question"
 act = 1
-cooldown = 8
+once = true
 tags = ["people", "hulls"]
 text = """
 {first} and {second} have stopped speaking to each other except through the
@@ -14,7 +14,7 @@ Two of thirty-six produce most of the friction, and these are the two.
 
 [[when]]
 q = "people.conflict_concentration"
-gt = 0.3
+gt = 0.12
 
 [[cast]]
 role = "first"

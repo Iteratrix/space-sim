@@ -87,3 +87,7 @@ counter = "drift_readings"
 seat = "air"
 stance = "for"
 text = "If it is going to ask for my power schedule I would like to know what else it is going to ask for. Read the list."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A list of divergences read into the minutes each season is a list of divergences in the minutes. I would rather it stayed in the operator's pocket."

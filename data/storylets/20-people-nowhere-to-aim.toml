@@ -1,7 +1,7 @@
 id = "nowhere_to_aim"
 title = "The Chair Is Empty and the Anger Is Not"
 act = 1
-cooldown = 12
+cooldown = 30
 tags = ["people", "sponsor"]
 text = """
 For years the can had somewhere to put it: the tasking list, the quarterly,
@@ -21,8 +21,6 @@ role = "voice"
 
 [[cast]]
 role = "target"
-skill = "logistics"
-min_skill = 1
 
 [[cast]]
 role = "liaison"

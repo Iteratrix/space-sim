@@ -19,7 +19,7 @@ flag = "remembering"
 
 [[when]]
 q = "minds.embodiment"
-ge = 0.6
+ge = 0.5
 
 [[when]]
 turn_min = 100
@@ -73,6 +73,10 @@ add = 0.3
 seat = "air"
 stance = "for"
 text = "Call it what you like in the hub. Do not make me vote on it."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A name that is not in the minutes is still a name the hull crews will use on the link. The auditors read the link too."
 
 [[option]]
 id = "designation"

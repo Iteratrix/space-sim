@@ -37,7 +37,7 @@ id = "honour"
 label = "Honour the lay from our own stocks"
 text = "Pay every contract's share in water, spares, and hours, at the old schedule. The outpost becomes the owner of its own obligations, and poorer."
 tags = ["people", "independence", "water", "spares", "cost"]
-chronicle = "The ring honoured the lay the new owners had voided, out of its own tanks and stores. It was the first debt the outpost paid that Earth did not hold."
+chronicle = "The ring honoured the lay the new owners had voided, out of its own tanks and stores. It was a debt Earth did not hold, paid in water Earth had never seen."
 [[option.effect]]
 q = "stocks.water"
 add = -40

@@ -2,14 +2,14 @@ id = "sponsor_conjunction_decision"
 title = "Behind the Sun"
 act = 1
 weight = 1.5
-cooldown = 20
+cooldown = 30
 tags = ["sponsor", "conjunction"]
 text = """
 Earth is behind the Sun. Nothing gets through for three counts, and the
 sponsor's standing orders assume the link. The driver has a launch window on
 a batch that {extraction} says is short of the shipping spec by a whisker
-and would pass if anybody were there to say so. {hours} points out that for
-the first time since the first count, nobody is there to say so. {liaison}
+and would pass if anybody were there to say so. {hours} points out that
+nobody is there to say so. {liaison}
 is at the ring with nothing to relay, and looks like someone who has
 noticed what that feels like.
 """
@@ -38,7 +38,7 @@ id = "ship"
 label = "Ship the batch on the ring's own say-so"
 text = "Sign it off here. The sponsor's rule was written for a link that exists; when the link does not, the ring is the rule."
 tags = ["throughput", "independence", "risk"]
-chronicle = "With Earth behind the Sun the ring signed off a batch the sponsor would have held, and shipped it. It was the first decision the outpost made with nobody listening."
+chronicle = "With Earth behind the Sun the ring signed off a batch the sponsor would have held, and shipped it. Nobody on Earth was listening, and the sign-off field carried a name from the rock."
 [[option.effect]]
 q = "throughput.shipped"
 add = 20

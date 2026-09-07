@@ -2,7 +2,7 @@ id = "sponsor_store_markup"
 title = "The Store"
 act = 1
 weight = 1.2
-cooldown = 16
+cooldown = 24
 tags = ["sponsor", "spares", "cost"]
 text = """
 The spares count is low enough that {hulls} has stopped rounding. The

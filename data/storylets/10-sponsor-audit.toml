@@ -21,6 +21,9 @@ ge = 7.0
 [[when]]
 stage_max = 5
 
+[[when]]
+not_flag = "audit_refused"
+
 [[cast]]
 role = "liaison"
 seat = "liaison"

@@ -1,8 +1,8 @@
 id = "solar_storm"
 title = "The Storm Shadow"
 act = 1
-cooldown = 12
-weight = 0.8
+cooldown = 20
+weight = 0.6
 priority = 30
 tags = ["dose", "throughput", "risk"]
 text = """
@@ -20,7 +20,6 @@ gt = 0.8
 
 [[cast]]
 role = "outside"
-skill = "extraction"
 
 [[cast]]
 role = "bodies"

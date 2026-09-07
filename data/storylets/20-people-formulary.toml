@@ -1,7 +1,8 @@
 id = "doctors_dilemma"
 title = "The Formulary"
 act = 1
-cooldown = 16
+weight = 0.6
+cooldown = 30
 tags = ["people", "medicine"]
 text = """
 {bodies} has counted the formulary twice and got the same number both times.
@@ -15,6 +16,10 @@ the one who needs it now.
 [[when]]
 q = "stocks.medicine"
 lt = 30
+
+[[when]]
+q = "stocks.medicine"
+gt = 3
 
 [[cast]]
 role = "bodies"

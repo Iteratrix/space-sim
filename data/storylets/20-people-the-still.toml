@@ -2,7 +2,7 @@ id = "the_still"
 title = "The Still"
 act = 1
 weight = 0.3
-cooldown = 24
+cooldown = 48
 tags = ["people", "air"]
 text = """
 {brewer} has a still. Everyone knows where it is except the ring, formally,
@@ -14,6 +14,12 @@ had. The sponsor's policy is dry. The can is not.
 
 [[when]]
 turn_min = 6
+
+[[when]]
+not_flag = "bar_licensed"
+
+[[when]]
+not_flag = "still_ignored"
 
 [[cast]]
 role = "brewer"
@@ -91,6 +97,8 @@ q = "stocks.food_margin"
 add = -0.3
 [[option.effect]]
 counter = "looked_away"
+[[option.effect]]
+flag = "still_ignored"
 [[option.advice]]
 seat = "hours"
 stance = "for"

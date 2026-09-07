@@ -1,8 +1,8 @@
 id = "rotator_stays"
 title = "One Does Not Board"
 act = 1
-weight = 0.6
-cooldown = 14
+weight = 0.4
+cooldown = 28
 tags = ["people", "independence"]
 text = """
 {stayer} came to the ring with the opposite request. The contract ends at the
@@ -14,6 +14,13 @@ everyone hears. The sponsor's headcount does not have a line for this.
 
 [[when]]
 turn_min = 10
+
+[[when]]
+q = "counts_to_window"
+le = 3
+
+[[when]]
+stage_max = 3
 
 [[cast]]
 role = "stayer"
@@ -28,7 +35,7 @@ id = "accept"
 label = "Accept. {stayer} is a resident now"
 text = "Off the rotation list. Whatever the sponsor's paper says."
 tags = ["people", "independence"]
-chronicle = "{stayer} did not board and the ring wrote it down as residence. The sponsor's headcount was one long for a year before anyone on Earth noticed."
+chronicle = "{stayer} came off the rotation list before the window and the ring wrote it down as residence. The sponsor's headcount was one long for a year before anyone on Earth noticed."
 [[option.effect]]
 person = "stayer"
 resident = true
@@ -82,10 +89,10 @@ id = "send_home"
 label = "The contract ends at the window. {stayer} boards"
 text = "The rotation is the sponsor's, and a crew that chooses its own headcount is not a crew."
 tags = ["sponsor", "caution"]
-chronicle = "The ring put {stayer} on the ship as the contract required. {stayer} boarded without a word and the ones who watched remembered it."
+chronicle = "The ring held {stayer} to the contract and left the name on the rotation list. {stayer} did not argue, and the ones who heard it remembered it."
 [[option.effect]]
 person = "stayer"
-return_intent = 0.4
+leave = true
 [[option.effect]]
 person = "stayer"
 strain = 0.2

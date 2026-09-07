@@ -1,7 +1,7 @@
 id = "no_evacuation"
 title = "Nobody Is Coming for This"
 act = 1
-cooldown = 18
+cooldown = 30
 weight = 0.35
 tags = ["people", "medicine", "risk"]
 text = """

@@ -14,6 +14,9 @@ no ship in the plan that takes {asker} home to do this.
 """
 
 [[when]]
+turn_min = 24
+
+[[when]]
 q = "people.residents"
 ge = 6
 

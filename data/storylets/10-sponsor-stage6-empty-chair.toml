@@ -78,7 +78,7 @@ id = "give_it"
 label = "Give the chair to the outpost"
 text = "Strike the office. The question that chair asked, who answers to the sponsor, has no answer now; let it be the seat for whoever answers for the whole."
 tags = ["independence", "risk"]
-chronicle = "The ring struck the sponsor's office and gave its chair to the outpost as a whole. It was the first seat the outpost made for itself."
+chronicle = "The ring struck the sponsor's office and gave its chair to the outpost as a whole. The outpost had made a seat for itself, and there was nobody left on Earth to object."
 [[option.effect]]
 flag = "chair_outpost"
 [[option.effect]]

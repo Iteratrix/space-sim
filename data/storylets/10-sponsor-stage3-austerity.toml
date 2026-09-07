@@ -103,7 +103,7 @@ id = "refuse"
 label = "Refuse the cut"
 text = "Tell the sponsor the outpost is at the labour floor already, and a berth home is a berth they can save by not sending the ship."
 tags = ["people", "independence", "risk"]
-chronicle = "The ring refused to name anyone for the sponsor's berth. It was the first instruction the outpost declined, and the sponsor did not reply to the refusal."
+chronicle = "The ring refused to name anyone for the sponsor's berth. It was an instruction declined in writing, and the sponsor did not reply to the refusal."
 [[option.effect]]
 q = "sponsor.confidence"
 add = -0.08

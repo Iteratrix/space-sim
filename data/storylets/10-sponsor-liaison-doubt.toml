@@ -2,7 +2,7 @@ id = "sponsor_liaison_doubt"
 title = "What the Liaison Knows"
 act = 1
 weight = 1.2
-cooldown = 30
+cooldown = 40
 tags = ["sponsor", "liaison"]
 text = """
 {liaison} asked for a word after the ring, alone, and then did not say much.

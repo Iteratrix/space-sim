@@ -17,7 +17,11 @@ in front of them. The ship leaves in two counts.
 window = "open"
 
 [[when]]
-stage_max = 4
+q = "counts_since_convoy"
+le = 1
+
+[[when]]
+stage_max = 3
 
 [[when]]
 turn_min = 10

@@ -2,28 +2,26 @@ id = "the_isolate"
 title = "The One at the Edge"
 act = 1
 weight = 0.3
-cooldown = 24
+cooldown = 36
 tags = ["people"]
 text = """
 {isolate} eats after everyone else has finished and stands the watches alone
 when the roster allows it. Nobody dislikes {isolate}. Nobody would go on a
 three-year mission with {isolate} either, if asked, and the record is clear
 about where that ends: an error at work, then a name for it, then a group that
-has agreed without meeting that {isolate} is the problem. {warm} is the one
-person in the can that people talk to, and has noticed.
+has agreed without meeting that {isolate} is the problem. {warm} is someone
+people talk to, and has noticed.
 """
 
 [[when]]
 q = "people.mean_strain"
-gt = 0.25
+gt = 0.35
 
 [[cast]]
 role = "isolate"
 
 [[cast]]
 role = "warm"
-skill = "social"
-min_skill = 1
 
 [[option]]
 id = "draw_in"

@@ -1,7 +1,8 @@
 id = "wants_to_leave"
 title = "A Contract Is a Number"
 act = 1
-cooldown = 10
+weight = 0.5
+cooldown = 30
 tags = ["people", "hours"]
 text = """
 {leaver} came to the ring with the contract and a finger on the end date and
@@ -12,8 +13,14 @@ and what one pair of hands costs in the ledger.
 """
 
 [[when]]
+turn_min = 12
+
+[[when]]
 q = "people.return_share"
 gt = 0.55
+
+[[when]]
+stage_max = 4
 
 [[cast]]
 role = "leaver"

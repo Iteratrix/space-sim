@@ -1,7 +1,7 @@
 id = "water_reserve"
 title = "The Reserve and the Throw"
 act = 1
-cooldown = 20
+cooldown = 40
 weight = 0.4
 priority = 0
 tags = ["water", "throughput", "sponsor"]
@@ -26,6 +26,9 @@ gt = 60
 [[when]]
 q = "earth_window_open"
 eq = 0
+
+[[when]]
+stage_max = 5
 
 [[cast]]
 role = "extraction"

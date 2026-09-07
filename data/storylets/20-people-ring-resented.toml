@@ -1,7 +1,7 @@
 id = "ring_resented"
 title = "Six Chairs and Thirty Backs"
 act = 1
-cooldown = 10
+cooldown = 30
 tags = ["people", "independence"]
 text = """
 There are six people who answer questions and thirty who do the work, and the
@@ -17,6 +17,9 @@ lt = 0.9
 
 [[when]]
 turn_min = 3
+
+[[when]]
+not_flag = "ring_opened"
 
 [[cast]]
 role = "voice"

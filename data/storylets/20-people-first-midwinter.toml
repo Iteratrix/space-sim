@@ -28,7 +28,7 @@ id = "feast"
 label = "A feast from what the farm has been hoarding"
 text = "One night, everything on the table, the lights up. Fixed on the calendar."
 tags = ["people", "air"]
-chronicle = "On the twelfth count {air} opened the cold store and the outpost ate everything in it under full light. The date went on the calendar as Midwinter, though there is no winter."
+chronicle = "At the year's end {air} opened the cold store and the outpost ate everything in it under full light. The date went on the calendar as Midwinter, though there is no winter."
 [[option.effect]]
 all_strain = -0.1
 [[option.effect]]
@@ -54,7 +54,7 @@ id = "read_the_ledger"
 label = "A count of the marks: the dose ledger read aloud, then the meal"
 text = "Not a party. A reckoning. Everyone hears what the year has cost everyone."
 tags = ["people", "dose"]
-chronicle = "On the twelfth count the medical officer read every name and every millisievert aloud before the meal. Nobody had known the totals. It became the thing the date was for."
+chronicle = "At the year's end the medical officer read every name and every millisievert aloud before the meal. Nobody had known the totals. It became the thing the date was for."
 [[option.effect]]
 all_strain = -0.05
 [[option.effect]]

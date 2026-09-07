@@ -1,8 +1,8 @@
 id = "collar_weeps"
 title = "The Collar Weeps"
 act = 1
-cooldown = 24
-weight = 0.6
+cooldown = 30
+weight = 0.5
 priority = 0
 tags = ["air", "nitrogen", "hulls"]
 text = """

@@ -28,7 +28,7 @@ id = "throughput"
 label = "Throughput: more pods, more propellant, another dex unit"
 text = "Ship what makes the numbers move."
 tags = ["throughput", "sponsor"]
-chronicle = "The first manifest went out heavy on throughput. The sponsor will like the quarterly."
+chronicle = "The first manifest went out heavy on throughput, and the first quarterly came back warm."
 [[option.effect]]
 q = "sponsor.confidence"
 add = 0.05
@@ -38,6 +38,10 @@ flag = "manifest_throughput"
 seat = "liaison"
 stance = "for"
 text = "The board reads one number. Give them the number."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Another dex unit is another thing I cannot repair. Spares are two hundred units and going at four a count; do the sum before the pods."
 
 [[option]]
 id = "balanced"
@@ -45,6 +49,14 @@ label = "Balance: half throughput, half spares and a second freezer"
 text = "Enough to keep the review civil and enough to keep the loops closed."
 tags = ["capability", "throughput"]
 chronicle = "The first manifest went out split down the middle. Nobody was happy and nothing broke."
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Half the tonnage on the quarterly and half on the shelf. It is the only manifest I can defend to both ends of the link."
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "A second freezer is the farm's insurance. Put it on the half the sponsor does not read."
 [[option.effect]]
 q = "stocks.spares"
 add = 20
@@ -56,7 +68,7 @@ id = "capability"
 label = "Capability: spares, medicine, a boron crate, fabrication tooling"
 text = "Invisible to the sponsor. Visible to anyone who has watched a loop fail."
 tags = ["capability", "spares", "independence"]
-chronicle = "The first manifest went out heavy on capability. Someone on Earth will ask why."
+chronicle = "The first manifest went out heavy on capability. Someone on Earth asked why, a count later, and the question went in the file."
 [[option.effect]]
 q = "stocks.spares"
 add = 40
