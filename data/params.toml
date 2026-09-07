@@ -35,7 +35,6 @@ skip_rotation_confidence = 0.35
 sale_confidence = 0.25
 
 [convoy]
-window_ratio = 1.2             # cost <= ratio * best counts as open [01]
 tof_min_days = 150.0
 tof_max_days = 900.0
 tof_step_days = 15.0

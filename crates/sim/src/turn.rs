@@ -46,7 +46,7 @@ fn power(game: &mut Game, params: &Params) {
     let r_au = game
         .calendar
         .home_r_au
-        .get(game.turn as usize)
+        .get(game.turn.az::<usize>())
         .copied()
         .unwrap_or(2.44);
     let flux = orbit::solar_flux(r_au);
@@ -99,8 +99,7 @@ fn labour(game: &mut Game, params: &Params) {
         .collect();
     let n = count_f(adults.len());
     let capacity = adults.iter().sum::<f64>() * params.labour.capacity_h_per_count;
-    let per_capita = (n.max(4.0) / 150.0).powf(-0.35);
-    let subsistence = n * params.labour.capacity_h_per_count * per_capita;
+    let subsistence = subsistence_hours(n, params);
     let robot_hours = game.robots.plant * 220.0
         + game.robots.haul * 180.0
         + game.robots.arm * 160.0
@@ -129,6 +128,15 @@ fn labour(game: &mut Game, params: &Params) {
     game.labour_capacity_h = capacity;
     game.labour_demand_h =
         subsistence + robots * maintenance_h + closure_gap + extraction_h + unlicensed_penalty;
+}
+
+/// Hours per count the polity's own upkeep demands at population `n`, with no robots.
+///
+/// Salotti's no-robot floor: upkeep equals capacity at ~150 people and exceeds it below.
+#[must_use]
+pub fn subsistence_hours(n: f64, params: &Params) -> f64 {
+    let per_capita = (n.max(4.0) / 150.0).powf(-0.35);
+    n * params.labour.capacity_h_per_count * per_capita
 }
 
 fn labour_factor(game: &Game) -> f64 {
@@ -578,7 +586,7 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
     let conjunction = game
         .calendar
         .earth_distance_au
-        .get(game.turn as usize)
+        .get(game.turn.az::<usize>())
         .is_some_and(|&d| d > 3.3);
     if conjunction {
         game.flags.insert("conjunction".into());

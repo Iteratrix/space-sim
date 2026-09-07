@@ -2,7 +2,7 @@
 
 use crate::person::{GroupIndices, Person, PersonId, Ties};
 use crate::quality::Quality;
-use az::SaturatingAs;
+use az::{Az, SaturatingAs};
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -340,18 +340,18 @@ impl Game {
     /// Look a person up.
     #[must_use]
     pub fn person(&self, id: PersonId) -> &Person {
-        &self.people[id.0 as usize]
+        &self.people[id.0.az::<usize>()]
     }
 
     /// Mutable person.
     pub fn person_mut(&mut self, id: PersonId) -> &mut Person {
-        &mut self.people[id.0 as usize]
+        &mut self.people[id.0.az::<usize>()]
     }
 
     /// Reads a quality.
     #[must_use]
     pub fn quality(&self, q: Quality) -> f64 {
-        let idx = self.turn as usize;
+        let idx = self.turn.az::<usize>();
         let cal = |v: &Vec<f64>| v.get(idx).copied().unwrap_or(f64::NAN);
         match q {
             Quality::Turn => f64::from(self.turn),
@@ -545,7 +545,7 @@ impl Game {
     /// Whether the outbound Earth window is open at a given count.
     #[must_use]
     pub fn earth_window_open_at(&self, turn: u32) -> bool {
-        let Some(&cost) = self.calendar.outbound_cost.get(turn as usize) else {
+        let Some(&cost) = self.calendar.outbound_cost.get(turn.az::<usize>()) else {
             return false;
         };
         cost <= self.calendar.outbound_best * WINDOW_RATIO

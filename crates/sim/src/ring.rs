@@ -288,18 +288,20 @@ pub fn counsel(
                     .map(|a| format!(" Against \"{}\": {}", o.label, a.text))
             })
             .unwrap_or_default();
-        let (text, authored) = match authored {
-            Some(t) => (format!("{t}{warning}"), true),
-            None => (
-                format!(
-                    "{} ({}) leans toward \"{}\".",
-                    person.name,
-                    seat.title(),
-                    storylet.options[best].label
-                ) + &warning,
-                !warning.is_empty(),
-            ),
-        };
+        let (text, authored) = authored.map_or_else(
+            || {
+                (
+                    format!(
+                        "{} ({}) leans toward \"{}\".",
+                        person.name,
+                        seat.title(),
+                        storylet.options[best].label
+                    ) + &warning,
+                    !warning.is_empty(),
+                )
+            },
+            |t| (format!("{t}{warning}"), true),
+        );
         out.push(Counsel {
             seat,
             holder: person.name.clone(),

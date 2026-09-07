@@ -28,15 +28,29 @@ Written for whoever picks this up next (human or agent). Newest at the top.
 - Design: `docs/design/canon.md` is the reference; `NOTES.md` the decision log;
   `docs/research/01-13` the research; two Voidborn pitches in `docs/design/`.
 
-**Tuned state (random policy, 100 games):** every game reaches the Silence; act 1
-lasts ~145-210 counts (mean ~173); population at the trail-off 64-113 (mean ~88),
-~75 of them residents; final sponsor stage spread over 3-6.
+**Tuned state (100 games):** every game reaches the Silence. Random policy: act 1
+lasts 134-213 counts (mean ~172); ring policy 125-182 (mean ~152). Population at
+the trail-off 45-76 (mean ~60), nearly all residents by then; final sponsor stage
+spread over 4-6. Fifty-one storylets, all of which fire; a content-quality pass
+ran after the first critique.
 
 **Known gaps and next steps, in order**
 
-1. Read `docs/design/review-engine-1.md` (the critique agent's review) and apply what
-   it finds; it was written against the engine before the last tuning pass.
-2. Act 1 is still a little long; canon wants ~10-13 years. Levers: `sponsor.attention_decay_per_review`,
+1. `docs/design/review-engine-1.md` is the first critique. Applied from it: robot
+   hours in the labour model (no-robot floor now ~150, tested), ties for arrivals,
+   skiff rotation and a probabilistic cataract onset, cast rotation away from
+   recently cast people, authored advice rendered and stance-aware, must-scene
+   ordering, baseline spares on every convoy, manifest flags shaping the convoy,
+   `leave` honoured after the people-ship stops, stage flags filled on jumps,
+   storylets on the ending count, coherence as "who has an enemy", mind attrition
+   matching its parameter. Not yet applied: content-id-keyed `resolve`, a
+   params/content hash in saves, per-person predicates and flags in storylets,
+   addressing a specific mind, moving the ~40 magic numbers in `turn.rs` into
+   `params.toml`, Sale resetting the sponsor's metrics, an "option chosen"
+   condition.
+2. Act 1 length is about right under the ring policy and a little long under random;
+   population at the trail-off (mean ~60) is below canon's 110-240 band, which wants
+   a stronger expansion mechanic gated by PV headroom. Levers: `sponsor.attention_decay_per_review`,
    the composite-health weights in `turn.rs::sponsor`, the Silence rule in `turn.rs::endings`.
 3. Content coverage: run `montecarlo --games 200` and look at `never fired` and
    `options never chosen`; loosen or cut.

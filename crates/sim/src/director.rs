@@ -5,6 +5,7 @@ use crate::person::PersonId;
 use crate::ring::{self, Counsel, Seat};
 use crate::state::Game;
 use crate::storylet::{Casting, Storylet};
+use az::Az;
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
@@ -42,7 +43,7 @@ pub struct FiringOption {
 }
 
 fn tension(game: &Game, params: &Params) -> f64 {
-    let year = (game.turn / 12) as usize;
+    let year = (game.turn / 12).az::<usize>();
     let curve = &params.director.tension_curve;
     curve
         .get(year)
@@ -72,17 +73,17 @@ pub fn select(
     });
     let mut chosen: Vec<(&Storylet, Casting)> = Vec::new();
     let max = params.director.max_storylets_per_count;
-    let musts: Vec<usize> = eligible
+    let take: Vec<usize> = eligible
         .iter()
         .enumerate()
         .filter(|(_, (s, _))| s.priority >= 100)
         .map(|(i, _)| i)
+        .take(max)
         .collect();
-    let take: Vec<usize> = musts.into_iter().take(max).collect();
     for i in take.into_iter().rev() {
         chosen.push(eligible.remove(i));
     }
-    chosen.sort_by(|a, b| b.0.priority.cmp(&a.0.priority));
+    chosen.sort_by_key(|(s, _)| std::cmp::Reverse(s.priority));
     let t = tension(game, params);
     let budget = if rng.random::<f64>() < 0.35 * t {
         max

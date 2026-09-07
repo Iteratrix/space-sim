@@ -11,7 +11,8 @@ fn play(engine: &Engine, seed: u64, max_turns: u32) -> (Vec<String>, u32) {
     while game.ending.is_none() && game.turn < max_turns {
         let (_, firings) = engine.advance(&mut game);
         for f in &firings {
-            let choice = (game.turn as usize + f.options.len()) % f.options.len();
+            let choice =
+                (usize::try_from(game.turn).unwrap_or(0) + f.options.len()) % f.options.len();
             engine.resolve(&mut game, f, choice);
         }
     }
@@ -172,5 +173,34 @@ fn quality_reads_do_not_panic_at_any_count() {
         if game.ending.is_some() {
             break;
         }
+    }
+}
+
+#[test]
+fn no_robot_labour_floor_is_about_150() {
+    let e = engine();
+    let cap = |n: f64| n * e.params.labour.capacity_h_per_count;
+    let sub = |n: f64| sim::turn::subsistence_hours(n, &e.params);
+    assert!((sub(150.0) - cap(150.0)).abs() < 1.0);
+    assert!(sub(100.0) > cap(100.0));
+    assert!(sub(48.0) > cap(48.0) * 1.3);
+    assert!(sub(200.0) < cap(200.0));
+}
+
+#[test]
+fn population_at_the_silence_is_a_people_not_a_station() {
+    let e = engine();
+    for seed in 300..306 {
+        let mut game = e.new_game(seed).expect("game");
+        while game.ending.is_none() && game.turn < 400 {
+            let (_, firings) = e.advance(&mut game);
+            for f in &firings {
+                let choice =
+                    (usize::try_from(game.turn).unwrap_or(0) + f.options.len()) % f.options.len();
+                e.resolve(&mut game, f, choice);
+            }
+        }
+        let pop = game.present().count();
+        assert!(pop >= 30, "seed {seed}: only {pop} people at the Silence");
     }
 }

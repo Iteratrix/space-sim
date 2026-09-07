@@ -89,7 +89,6 @@ pub struct Sponsor {
 #[allow(missing_docs)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Convoy {
-    pub window_ratio: f64,
     pub tof_min_days: f64,
     pub tof_max_days: f64,
     pub tof_step_days: f64,
