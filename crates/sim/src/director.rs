@@ -63,6 +63,7 @@ pub fn select(
     let mut eligible: Vec<(&Storylet, Casting)> = content
         .iter()
         .filter(|s| s.conditions_hold(game) && s.history_permits(game))
+        .filter(|s| !scripted_only(game) || s.priority >= 100)
         .filter_map(|s| s.cast(game, &seats, rng).map(|c| (s, c)))
         .filter(|(s, _)| s.available_options(game).next().is_some())
         .collect();
@@ -137,6 +138,11 @@ pub fn select(
             }
         })
         .collect()
+}
+
+/// During the tutorial only scripted (priority >= 100) scenes fire.
+fn scripted_only(game: &Game) -> bool {
+    game.flags.contains("tutorial") && !game.flags.contains("tutorial_done")
 }
 
 /// Who holds each seat, by name, for display.

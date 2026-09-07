@@ -333,7 +333,7 @@ pub fn face(game: &Game, id: PersonId, domain: Skill) -> u8 {
 fn robot_dice(game: &Game) -> Vec<(DieId, u8)> {
     let mut out = Vec::new();
     for class in RobotClass::ALL {
-        let n = game.robots.count(class).floor().saturating_as::<u32>();
+        let n = game.robots.count(class).round().saturating_as::<u32>();
         for k in 0..n {
             out.push((DieId::Robot(class, k), class.pips()));
         }
@@ -380,7 +380,7 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], eaten_needed: u32) {
     assignments.retain(|die, pid| match die {
         DieId::Person(p) => adults.contains(p) && game.projects.iter().any(|s| &s.id == pid),
         DieId::Robot(class, k) => {
-            let n = game.robots.count(*class).floor().saturating_as::<u32>();
+            let n = game.robots.count(*class).round().saturating_as::<u32>();
             *k < n && game.projects.iter().any(|s| &s.id == pid)
         }
     });
@@ -732,7 +732,7 @@ pub fn assign(game: &mut Game, defs: &[ProjectDef], die: &str, target: &str) -> 
             }
         }
         DieId::Robot(class, k) => {
-            if k >= game.robots.count(class).floor().saturating_as::<u32>() {
+            if k >= game.robots.count(class).round().saturating_as::<u32>() {
                 return Err("no such robot".into());
             }
             if !robot_fits(class, def) {

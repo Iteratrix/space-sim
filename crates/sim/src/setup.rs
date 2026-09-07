@@ -125,9 +125,45 @@ fn draw_skills(rng: &mut impl Rng, primary: Skill) -> BTreeMap<Skill, u8> {
 }
 
 /// Builds a new game from a seed.
+/// Which opening a game starts from.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Scenario {
+    /// Act 1 proper: an established outpost of ~48.
+    Act1,
+    /// The tutorial: the first crewed hull arrives at a robot-built site.
+    Tutorial,
+}
+
+impl Scenario {
+    /// Parses a CLI name.
+    #[must_use]
+    pub fn parse(s: &str) -> Option<Self> {
+        match s {
+            "act1" => Some(Self::Act1),
+            "tutorial" => Some(Self::Tutorial),
+            _ => None,
+        }
+    }
+}
+
+/// Builds a new act-1 game from a seed.
 #[must_use]
 pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
+    new_game_scenario(params, calendar, seed, Scenario::Act1)
+}
+
+/// Builds a new game from a seed in the given scenario.
+#[must_use]
+pub fn new_game_scenario(params: &Params, calendar: &Calendar, seed: u64, scenario: Scenario) -> Game {
     let mut rng = ChaCha8Rng::seed_from_u64(seed);
+    let tutorial = scenario == Scenario::Tutorial;
+    let robot = |k: &str, default: u32| -> f64 {
+        if tutorial {
+            f64::from(params.tutorial.robots.get(k).copied().unwrap_or(0))
+        } else {
+            f64::from(default)
+        }
+    };
     let calendar = calendar.clone();
     let mut game = Game {
         seed,
@@ -158,7 +194,7 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
         power: PowerPlant {
             reactor_kw: params.power.reactor_kw,
             reactor_life: params.power.reactor_life_counts,
-            pv_m2: params.power.pv_m2,
+            pv_m2: if tutorial { params.tutorial.pv_m2 } else { params.power.pv_m2 },
             pv_efficiency: params.power.pv_efficiency,
             mirror_m2: params.power.mirror_m2,
             capacity_kw: 0.0,
@@ -167,11 +203,11 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
         closure: params.closure.start,
         relay_health: 1.0,
         robots: Robots {
-            plant: f64::from(params.robots.plant),
-            haul: f64::from(params.robots.haul),
-            arm: f64::from(params.robots.arm),
-            dex: f64::from(params.robots.dex),
-            through_wall: f64::from(params.robots.through_wall),
+            plant: robot("plant", params.robots.plant),
+            haul: robot("haul", params.robots.haul),
+            arm: robot("arm", params.robots.arm),
+            dex: robot("dex", params.robots.dex),
+            through_wall: robot("through_wall", params.robots.through_wall),
         },
         minds: (0..params.minds.count)
             .map(|i| Mind {
@@ -214,7 +250,8 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
     };
     game.lexicon_triggers.insert("first_count".into());
 
-    let n = params.population.start;
+    let n = if tutorial { params.tutorial.start } else { params.population.start };
+    let rotator_fraction = if tutorial { params.tutorial.rotator_fraction } else { params.population.rotator_fraction };
     let primaries = [
         Skill::Engineering,
         Skill::Logistics,
@@ -233,7 +270,7 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
         let id = PersonId(u32::try_from(i).unwrap_or(u32::MAX));
         let name = crate::names::person_name(&game, &mut rng);
         let primary = primaries[i % primaries.len()];
-        let rotator = rng.random::<f64>() < params.population.rotator_fraction;
+        let rotator = rng.random::<f64>() < rotator_fraction;
         let age_years: i64 = rng.random_range(26..48);
         let birthplace = match rng.random_range(0..10) {
             0..=6 => Birthplace::Earth,
@@ -296,6 +333,14 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
                 reliance: rng.random_range(0.0..0.5),
             };
             *game.ties.get_mut(ida, idb) = tie;
+        }
+    }
+    if tutorial {
+        for f in ["tutorial", "driver_unaligned", "no_keep", "mind_log", "open_project:dig_keep", "open_project:align_driver"] {
+            game.flags.insert(f.to_owned());
+        }
+        if let Some(m) = game.minds.first_mut() {
+            m.counts_unblanked = params.tutorial.mind_log_counts;
         }
     }
     game.chronicle(

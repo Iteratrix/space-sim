@@ -72,9 +72,14 @@ impl Engine {
         })
     }
 
-    /// A new game from a seed.
+    /// A new act-1 game from a seed.
     pub fn new_game(&self, seed: u64) -> Result<Game, EngineError> {
         Ok(setup::new_game(&self.params, &self.calendar, seed))
+    }
+
+    /// A new game from a seed in a scenario.
+    pub fn new_game_scenario(&self, seed: u64, scenario: setup::Scenario) -> Result<Game, EngineError> {
+        Ok(setup::new_game_scenario(&self.params, &self.calendar, seed, scenario))
     }
 
     /// Advances one count and returns the storylets that fire.

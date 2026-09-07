@@ -183,7 +183,7 @@ fn labour(game: &mut Game, params: &Params) -> u32 {
 /// Salotti's no-robot floor: upkeep equals capacity at ~150 people and exceeds it below.
 #[must_use]
 pub fn subsistence_hours(n: f64, params: &Params) -> f64 {
-    let per_capita = (n.max(4.0) / 150.0).powf(-0.35);
+    let per_capita = (n.max(40.0) / 150.0).powf(-0.35);
     n * params.labour.capacity_h_per_count * per_capita
 }
 
@@ -405,10 +405,15 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         game.sponsor.attention > 0.15 && game.sponsor.stage < SponsorStage::SkippedRotation;
     let solar = crate::state::solar_phase(game.turn);
     let turn = game.turn;
+    if game.flags.contains("keep_dug") {
+        game.flags.remove("no_keep");
+    }
+    let game_no_keep = game.flags.contains("no_keep");
     let stage = game.sponsor.stage;
     let mut lines = Vec::new();
     for p in game.present_mut() {
         let rate_msv = match p.estate {
+            Estate::Kept if game_no_keep => params.tutorial.keep_msv_per_year,
             Estate::Kept => params.dose.keep_msv_per_year,
             Estate::Bore => params.dose.bore_msv_per_year * (1.3 - 0.4 * solar),
             Estate::Skiff => params.dose.skiff_msv_per_year * (1.3 - 0.4 * solar),

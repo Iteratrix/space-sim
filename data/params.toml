@@ -18,6 +18,14 @@ families_allowed = false       # sponsor policy at start [10 §3.2]
 expansion_per_convoy = 12      # extra people per convoy while the sponsor is keen
 expansion_cap = 140            # the sponsor stops growing the outpost here
 
+[tutorial]
+start = 14                     # the first crewed hull
+rotator_fraction = 0.85
+pv_m2 = 3200.0                 # what the robots unrolled
+keep_msv_per_year = 120.0      # surface habitat under regolith bags, until the KEEP is dug
+robots = { plant = 3, haul = 4, arm = 2, dex = 2, through_wall = 0 }
+mind_log_counts = 20           # SX-19F has been unblanked this long: it kept a log
+
 [sponsor]
 runway_counts = 240            # months of funding at start; shocks eat it [04]
 confidence = 0.65              # 0..1

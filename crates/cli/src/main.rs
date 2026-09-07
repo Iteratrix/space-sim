@@ -79,6 +79,7 @@ struct Args {
     json: bool,
     save: Option<String>,
     load: Option<String>,
+    scenario: sim::setup::Scenario,
     quiet: bool,
     trace: bool,
     max_turns: u32,
@@ -96,6 +97,7 @@ fn parse_args() -> Args {
         json: false,
         save: None,
         load: None,
+        scenario: sim::setup::Scenario::Act1,
         quiet: false,
         trace: false,
         max_turns: 400,
@@ -115,6 +117,12 @@ fn parse_args() -> Args {
                     .unwrap_or(Policy::Random);
             }
             "--json" => out.json = true,
+            "--scenario" => {
+                out.scenario = args
+                    .next()
+                    .and_then(|v| sim::setup::Scenario::parse(&v))
+                    .unwrap_or(sim::setup::Scenario::Act1);
+            }
             "--save" => out.save = args.next(),
             "--load" => out.load = args.next(),
             "--quiet" => out.quiet = true,
@@ -285,7 +293,7 @@ fn resolve_firings(
 
 fn play(engine: &Engine, args: &Args) {
     let mut game = args.load.as_ref().map_or_else(
-        || engine.new_game(args.seed).expect("new game"),
+        || engine.new_game_scenario(args.seed, args.scenario).expect("new game"),
         |path| {
             let text = std::fs::read_to_string(path).unwrap_or_else(|e| {
                 eprintln!("load failed: {e}");

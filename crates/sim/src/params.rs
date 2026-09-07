@@ -12,6 +12,8 @@ pub struct Params {
     pub home: Home,
     /// Starting population and contracts.
     pub population: Population,
+    /// The tutorial's arrival state.
+    pub tutorial: Tutorial,
     /// The sponsor as an actor.
     pub sponsor: Sponsor,
     /// Convoy pricing and sizing.
@@ -65,6 +67,17 @@ pub struct Population {
     pub families_allowed: bool,
     pub expansion_per_convoy: f64,
     pub expansion_cap: usize,
+}
+
+#[allow(missing_docs)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Tutorial {
+    pub start: usize,
+    pub rotator_fraction: f64,
+    pub pv_m2: f64,
+    pub keep_msv_per_year: f64,
+    pub robots: BTreeMap<String, u32>,
+    pub mind_log_counts: u32,
 }
 
 #[allow(missing_docs)]
