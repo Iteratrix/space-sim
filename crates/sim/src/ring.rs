@@ -109,6 +109,10 @@ impl Seat {
     /// Whether the seat exists in the given act and state.
     #[must_use]
     pub fn exists(self, game: &Game) -> bool {
+        let tutorial = game.flags.contains("tutorial") && !game.flags.contains("tutorial_done");
+        if tutorial && !game.flags.contains(&format!("seat:{}", self.key())) {
+            return false;
+        }
         match self {
             Self::Hulls | Self::Hours | Self::Extraction | Self::Bodies | Self::Air => true,
             Self::Machines => game.act >= 2 || game.flags.contains("machines_seat"),
