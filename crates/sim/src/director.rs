@@ -86,7 +86,15 @@ pub fn select(
     }
     chosen.sort_by_key(|(s, _)| std::cmp::Reverse(s.priority));
     let t = tension(game, params);
-    let budget = if rng.random::<f64>() < 0.35 * t {
+    let calm = game.menace.suspicion < 2.0
+        && game.menace.grievance < 2.0
+        && game.menace.leak < 2.0
+        && game.counts_to_window() > 3
+        && game.sponsor.next_review.saturating_sub(game.turn) > 3;
+    let quiet_chance = if calm { 0.55 } else { 0.25 } / t.max(0.2);
+    let budget = if chosen.is_empty() && rng.random::<f64>() < quiet_chance {
+        0
+    } else if rng.random::<f64>() < 0.35 * t {
         max
     } else {
         1

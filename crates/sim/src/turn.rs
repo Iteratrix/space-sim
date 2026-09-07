@@ -44,7 +44,8 @@ pub fn advance(
     people(game, params, rng, &mut events);
     sponsor(game, params, rng, &mut events);
     convoy(game, params, rng, &mut events);
-    menaces(game, params);
+    menaces(game, params, &mut events);
+    zero_crossings(game, &mut events);
     endings(game, &mut events);
     events
 }
@@ -966,7 +967,53 @@ fn arrive_one(game: &mut Game, params: &Params, rng: &mut impl Rng) {
     }
 }
 
-fn menaces(game: &mut Game, params: &Params) {
+fn band(v: f64) -> usize {
+    if v >= 7.0 {
+        3
+    } else if v >= 4.5 {
+        2
+    } else {
+        usize::from(v >= 2.0)
+    }
+}
+
+fn zero_crossings(game: &mut Game, events: &mut Events) {
+    let checks: [(&str, f64, &str); 4] = [
+        (
+            "water",
+            game.stocks.water_t,
+            "Water stock zero. Farm and loops on the reserve line.",
+        ),
+        ("spares", game.stocks.spares, "Spares inventory zero."),
+        (
+            "nitrogen",
+            game.stocks.nitrogen_kg,
+            "N2 stock zero. Make-up from bake-out only.",
+        ),
+        ("medicine", game.stocks.medicine, "Formulary exhausted."),
+    ];
+    for (id, value, line) in checks {
+        let flag = format!("at_zero:{id}");
+        if value <= 0.0 {
+            if game.flags.insert(flag) {
+                let c = game.counters.entry(format!("zero:{id}")).or_insert(0.0);
+                *c += 1.0;
+                if *c <= 1.0 {
+                    note(game, events, line.to_owned());
+                }
+            }
+        } else {
+            game.flags.remove(&flag);
+        }
+    }
+}
+
+fn menaces(game: &mut Game, params: &Params, events: &mut Events) {
+    let before = [
+        band(game.menace.suspicion),
+        band(game.menace.grievance),
+        band(game.menace.leak),
+    ];
     let n2 = game.stocks.nitrogen_kg;
     let hub = params.closure.hub_seal_share;
     game.menace.leak = (game.menace.leak + hub * 0.06 - 0.02 + if n2 < 1500.0 { 0.2 } else { 0.0 })
@@ -977,6 +1024,29 @@ fn menaces(game: &mut Game, params: &Params) {
     let grievance_drift = game.indices.mean_strain * 0.12 + game.indices.return_share * 0.04 - 0.12;
     game.menace.grievance = (game.menace.grievance + grievance_drift).clamp(0.0, 10.0);
     game.menace.suspicion = (game.menace.suspicion - 0.03).max(0.0);
+    let after = [
+        band(game.menace.suspicion),
+        band(game.menace.grievance),
+        band(game.menace.leak),
+    ];
+    let names: [[&str; 4]; 3] = [
+        ["quiet", "noticed", "audited", "the audit"],
+        ["quiet", "muttering", "the moot", "the split"],
+        ["tight", "weeping", "rationed", "the collar"],
+    ];
+    let labels = ["SOS", "CCI", "N2 make-up"];
+    for i in 0..3 {
+        if after[i] > before[i] {
+            note(
+                game,
+                events,
+                format!(
+                    "{}: {} to {}.",
+                    labels[i], names[i][before[i]], names[i][after[i]]
+                ),
+            );
+        }
+    }
 }
 
 fn endings(game: &mut Game, events: &mut Events) {

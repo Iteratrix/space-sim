@@ -1,6 +1,8 @@
-//! The structured view a front end renders: clocks, projects, the hand, the ledger,
-//! the pressures, the ring, the sponsor's track, the chronicle. Numbers come with the
-//! one-sentence "why" only the engine can write.
+//! The structured view a front end renders.
+//!
+//! Clocks, projects, the hand, the ledger, the pressures, the ring, the sponsor's
+//! track, the chronicle. Numbers come with the one-sentence "why" only the engine can
+//! write.
 
 use crate::lexicon;
 use crate::project::{DieView, Hand};
@@ -11,7 +13,7 @@ use az::Az;
 use serde::{Deserialize, Serialize};
 
 /// A countdown clock.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Countdown {
     /// Identifier.
     pub id: String,
@@ -180,7 +182,7 @@ pub struct View {
 }
 
 /// The standing controls as strings.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ControlsView {
     /// manifest split.
     pub manifest: String,
@@ -269,7 +271,7 @@ pub fn view(
     });
     if let Some(next) = game
         .present()
-        .filter_map(|p| p.contract_end())
+        .filter_map(crate::person::Person::contract_end)
         .filter(|e| *e >= game.turn)
         .min()
     {
@@ -523,10 +525,8 @@ pub fn view(
             3
         } else if v >= 4.5 {
             2
-        } else if v >= 2.0 {
-            1
         } else {
-            0
+            usize::from(v >= 2.0)
         };
         (i, names[i].to_owned())
     };
