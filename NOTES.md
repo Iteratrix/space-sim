@@ -136,3 +136,12 @@
 - Robots do not repair robots; they swap imported units at best. Fleet decays
   Dex -> Arm -> Haul -> Plant. The Wrights (repairers) are a caste beside the
   Hands (operators).
+
+## Process notes (2026-09-07)
+
+- Writer model: content agents (storylets, tutorial scenes, register passes) run on
+  the Opus line; the Agent tool cannot pin a point version, so "Opus 4.6 as writer"
+  is a model setting on the user's side. Research and critique agents: Opus too.
+- Playtesting: agents play the real page through `web/test/play.py` (Playwright,
+  DOM-driven, screenshots they read) with one browser profile each; reports go to
+  docs/design/playtest-gui-N.md. The headless CLI policies remain the batch tool.
