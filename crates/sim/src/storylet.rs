@@ -8,7 +8,6 @@ use crate::person::{PersonId, Skill};
 use crate::quality::Quality;
 use crate::ring::Seat;
 use crate::state::{Ending, Game};
-use az::SaturatingAs;
 use serde::Deserialize;
 use std::collections::BTreeMap;
 
@@ -684,7 +683,12 @@ impl Storylet {
 
     /// Attempts to fill every role. Returns `None` if a required role cannot be cast.
     #[must_use]
-    pub fn cast(&self, game: &Game, seats: &BTreeMap<Seat, PersonId>) -> Option<Casting> {
+    pub fn cast(
+        &self,
+        game: &Game,
+        seats: &BTreeMap<Seat, PersonId>,
+        rng: &mut impl rand::Rng,
+    ) -> Option<Casting> {
         let mut used: Vec<PersonId> = Vec::new();
         let mut roles = BTreeMap::new();
         for Cast {
@@ -716,16 +720,21 @@ impl Storylet {
                     .filter(|p| eligible(p) && p.skill(*skill) >= *min_skill)
                     .max_by_key(|p| (p.skill(*skill), std::cmp::Reverse(p.id)))
                     .map(|p| p.id),
-                CastBy::Anyone => game
-                    .present()
-                    .filter(|p| eligible(p))
-                    .max_by_key(|p| {
-                        (
-                            (p.condition.strain * 1000.0).saturating_as::<u32>(),
-                            std::cmp::Reverse(p.id),
-                        )
-                    })
-                    .map(|p| p.id),
+                CastBy::Anyone => {
+                    let pool: Vec<(PersonId, f64)> = game
+                        .present()
+                        .filter(|p| eligible(p))
+                        .map(|p| {
+                            let recent = game
+                                .recent_cast
+                                .get(&p.id)
+                                .is_some_and(|&t| game.turn < t + 8);
+                            let w = 0.2 + p.condition.strain;
+                            (p.id, if recent { w * 0.1 } else { w })
+                        })
+                        .collect();
+                    weighted_pick(&pool, rng)
+                }
             };
             match pick {
                 Some(id) => {
@@ -749,6 +758,21 @@ impl Storylet {
             .enumerate()
             .filter(move |(_, o)| o.requires.iter().all(|c| c.holds(game)))
     }
+}
+
+fn weighted_pick(pool: &[(PersonId, f64)], rng: &mut impl rand::Rng) -> Option<PersonId> {
+    let total: f64 = pool.iter().map(|(_, w)| w).sum();
+    if total <= 0.0 {
+        return None;
+    }
+    let mut x = rng.random::<f64>() * total;
+    for (id, w) in pool {
+        x -= w;
+        if x <= 0.0 {
+            return Some(*id);
+        }
+    }
+    pool.last().map(|(id, _)| *id)
 }
 
 /// Roles filled for one firing.
@@ -883,6 +907,9 @@ pub fn apply(game: &mut Game, storylet: &Storylet, option: &Option_, casting: &C
                 crate::names::name_oldest_mind(game);
             }
         }
+    }
+    for id in casting.roles.values() {
+        game.recent_cast.insert(*id, game.turn);
     }
     let line = casting.render(game, &option.chronicle);
     game.chronicle(line, Some(&storylet.id));

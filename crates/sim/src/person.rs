@@ -149,6 +149,9 @@ pub struct Person {
     pub born: i64,
     /// Estate.
     pub estate: Estate,
+    /// Count at which the person entered their current estate.
+    #[serde(default)]
+    pub estate_since: u32,
     /// Contract.
     pub tenure: Tenure,
     /// Skills, 0-5.

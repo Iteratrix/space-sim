@@ -2,7 +2,7 @@ id = "no_evacuation"
 title = "Nobody Is Coming for This"
 act = 1
 cooldown = 18
-weight = 0.7
+weight = 0.35
 tags = ["people", "medicine", "risk"]
 text = """
 {patient} went down on the watch with a pain in the belly that has not
@@ -12,6 +12,9 @@ an ambulance. Here the nearest hospital is a window away and the window is not
 open. The formulary is what it is; the surgical kit was packed for cuts and
 burns; the medical officer has a manual, an uplink with a lag, and two hands.
 """
+
+[[when]]
+not_flag = "first_death"
 
 [[cast]]
 role = "bodies"

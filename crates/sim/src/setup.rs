@@ -190,7 +190,7 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
         ties: Ties::default(),
         indices: GroupIndices::default(),
         shipped_t: 0.0,
-        received_t: 0.0,
+        received_t: 320.0,
         labour_capacity_h: 0.0,
         labour_demand_h: 0.0,
         menace: Menace::default(),
@@ -203,6 +203,7 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
         flags: BTreeSet::default(),
         counters: BTreeMap::default(),
         fired: BTreeMap::default(),
+        recent_cast: BTreeMap::default(),
         chronicle: Vec::new(),
         lexicon_triggers: BTreeSet::default(),
         ending: None,
@@ -247,7 +248,19 @@ pub fn new_game(params: &Params, calendar: &Calendar, seed: u64) -> Game {
             name,
             birthplace,
             born: -age_years * 12,
-            estate: Estate::Kept,
+            estate: match primary {
+                Skill::Extraction | Skill::Navigation if rng.random::<f64>() < 0.6 => Estate::Skiff,
+                Skill::Extraction
+                | Skill::Navigation
+                | Skill::Engineering
+                | Skill::Logistics
+                | Skill::Medical
+                | Skill::LifeSupport
+                | Skill::Agronomy
+                | Skill::Social
+                | Skill::Operations => Estate::Kept,
+            },
+            estate_since: 0,
             tenure,
             skills: draw_skills(&mut rng, primary),
             traits: draw_traits(&mut rng),

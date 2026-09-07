@@ -62,7 +62,7 @@ pub fn select(
     let mut eligible: Vec<(&Storylet, Casting)> = content
         .iter()
         .filter(|s| s.conditions_hold(game) && s.history_permits(game))
-        .filter_map(|s| s.cast(game, &seats).map(|c| (s, c)))
+        .filter_map(|s| s.cast(game, &seats, rng).map(|c| (s, c)))
         .filter(|(s, _)| s.available_options(game).next().is_some())
         .collect();
     eligible.sort_by(|a, b| {
@@ -78,11 +78,11 @@ pub fn select(
         .filter(|(_, (s, _))| s.priority >= 100)
         .map(|(i, _)| i)
         .collect();
-    for i in musts.into_iter().rev() {
-        if chosen.len() < max {
-            chosen.push(eligible.remove(i));
-        }
+    let take: Vec<usize> = musts.into_iter().take(max).collect();
+    for i in take.into_iter().rev() {
+        chosen.push(eligible.remove(i));
     }
+    chosen.sort_by(|a, b| b.0.priority.cmp(&a.0.priority));
     let t = tension(game, params);
     let budget = if rng.random::<f64>() < 0.35 * t {
         max
@@ -110,7 +110,13 @@ pub fn select(
         .map(|(s, casting)| {
             let available: Vec<(usize, &crate::storylet::Option_)> =
                 s.available_options(game).collect();
-            let counsel = ring::counsel(game, s, &available, &seats, rng);
+            let counsel = ring::counsel(game, s, &available, &seats, rng)
+                .into_iter()
+                .map(|mut c| {
+                    c.text = casting.render(game, &c.text);
+                    c
+                })
+                .collect();
             Firing {
                 id: s.id.clone(),
                 title: s.title.clone(),

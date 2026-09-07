@@ -1,7 +1,8 @@
 id = "blame_the_sponsor"
+weight = 0.5
 title = "The Quarterly Is to Blame"
 act = 1
-cooldown = 12
+cooldown = 30
 tags = ["people", "sponsor"]
 text = """
 The tasking list from Earth this count is longer than the last, again, and

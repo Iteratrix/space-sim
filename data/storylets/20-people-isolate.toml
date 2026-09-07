@@ -1,8 +1,8 @@
 id = "the_isolate"
 title = "The One at the Edge"
 act = 1
-weight = 0.6
-cooldown = 9
+weight = 0.3
+cooldown = 24
 tags = ["people"]
 text = """
 {isolate} eats after everyone else has finished and stands the watches alone

@@ -1,8 +1,8 @@
 id = "the_still"
 title = "The Still"
 act = 1
-weight = 0.5
-cooldown = 18
+weight = 0.3
+cooldown = 24
 tags = ["people", "air"]
 text = """
 {brewer} has a still. Everyone knows where it is except the ring, formally,

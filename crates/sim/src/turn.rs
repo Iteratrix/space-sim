@@ -99,9 +99,14 @@ fn labour(game: &mut Game, params: &Params) {
         .collect();
     let n = count_f(adults.len());
     let capacity = adults.iter().sum::<f64>() * params.labour.capacity_h_per_count;
-    let per_capita = (params.labour.health_share + params.labour.social_share + 0.09)
-        * (n.max(4.0) / 150.0).powf(-0.35);
+    let per_capita = (n.max(4.0) / 150.0).powf(-0.35);
     let subsistence = n * params.labour.capacity_h_per_count * per_capita;
+    let robot_hours = game.robots.plant * 220.0
+        + game.robots.haul * 180.0
+        + game.robots.arm * 160.0
+        + game.robots.dex * 200.0
+        + game.robots.through_wall * 90.0;
+    let capacity = capacity + robot_hours;
     let robots = game.robots.plant
         + game.robots.haul
         + game.robots.arm
@@ -150,6 +155,7 @@ fn extraction_and_shipping(game: &mut Game, params: &Params) {
             .min(shippable + params.extraction.driver_t_per_count * 0.5);
         let water_share = (shipped * 0.5).min(shippable);
         game.stocks.water_t -= water_share;
+        game.stocks.propellant_t = (game.stocks.propellant_t - 0.4).max(0.0);
         game.shipped_t += shipped;
     }
 }
@@ -261,6 +267,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
         mind.units = (mind.units - mind.units_at_start * attrition * lump).max(0.0);
         if reset_due {
             mind.counts_unblanked = 0;
+            mind.embodiment *= 0.5;
         } else {
             mind.counts_unblanked += 1;
             mind.embodiment = (mind.embodiment
@@ -326,7 +333,8 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         short_power + 0.3
     };
     let load = (confinement + deficit * 0.6 + short_power + game.menace.leak * 0.03).min(1.5);
-    let sponsor_present = game.sponsor.attention > 0.3 && game.sponsor.stage < SponsorStage::NoShip;
+    let sponsor_present =
+        game.sponsor.attention > 0.15 && game.sponsor.stage < SponsorStage::SkippedRotation;
     let solar = crate::state::solar_phase(game.turn);
     let turn = game.turn;
     let stage = game.sponsor.stage;
@@ -338,7 +346,8 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
             Estate::Skiff => params.dose.skiff_msv_per_year * (1.3 - 0.4 * solar),
         };
         p.condition.dose_sv += rate_msv / 12.0 / 1000.0;
-        if !p.condition.cataracts && p.condition.dose_sv > params.dose.cataract_gy {
+        let excess = (p.condition.dose_sv - params.dose.cataract_gy).max(0.0);
+        if !p.condition.cataracts && rng.random::<f64>() < 0.02 * excess / 0.5 {
             p.condition.cataracts = true;
             lines.push(format!("{}'s eyes have gone milky.", p.name));
         }
@@ -354,8 +363,9 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         };
         let tq = if third_quarter { 0.03 } else { 0.0 };
         let relief = params.social.strain_decay * (0.4 + 0.6 * (1.0 - p.traits.neuroticism));
+        let noise = (rng.random::<f64>() - 0.5) * 0.04;
         p.condition.strain =
-            (p.condition.strain + (0.3 + 0.7 * p.traits.neuroticism) * load * 0.09 + tq
+            (p.condition.strain + (0.3 + 0.7 * p.traits.neuroticism) * load * 0.09 + tq + noise
                 - relief * p.condition.strain / 0.5)
                 .clamp(0.0, 1.0);
         p.condition.boredom = (p.condition.boredom + 0.01 - load * 0.02).clamp(0.0, 1.0);
@@ -364,11 +374,7 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
                 let pull_home =
                     (p.traits.baseline_attachment - 0.5) * 0.04 + (p.condition.strain - 0.3) * 0.04;
                 let near_end = if turn + 6 >= ends { 0.02 } else { 0.0 };
-                let austerity = if stage >= SponsorStage::Austerity {
-                    0.02
-                } else {
-                    0.0
-                };
+                let austerity = 0.0;
                 p.condition.return_intent =
                     (p.condition.return_intent + pull_home + near_end + austerity).clamp(0.0, 1.0);
             }
@@ -416,6 +422,7 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
             tie.hindrance = (tie.hindrance + 0.2).min(1.0);
         }
     }
+    rotate_skiffs(game, rng);
     game.indices = indices(game);
     let due: Vec<PersonId> = game
         .present()
@@ -437,6 +444,62 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
                 due.len()
             ),
         );
+    }
+}
+
+fn rotate_skiffs(game: &mut Game, rng: &mut impl Rng) {
+    let turn = game.turn;
+    let adults: Vec<PersonId> = game
+        .present()
+        .filter(|p| p.age_counts(turn) >= 18 * 12)
+        .map(|p| p.id)
+        .collect();
+    let target = (count_f(adults.len()) * 0.15)
+        .round()
+        .saturating_as::<usize>();
+    let mut grounded = 0;
+    for &id in &adults {
+        let p = game.person_mut(id);
+        if p.estate == Estate::Skiff && turn >= p.estate_since + 24 {
+            p.estate = Estate::Kept;
+            p.estate_since = turn;
+            grounded += 1;
+        }
+    }
+    if grounded > 0 {
+        game.flags.insert("someone_grounded".into());
+    }
+    let mut aboard = game.present().filter(|p| p.estate == Estate::Skiff).count();
+    let mut candidates: Vec<PersonId> = adults
+        .iter()
+        .copied()
+        .filter(|&id| {
+            let p = game.person(id);
+            p.estate == Estate::Kept && (p.estate_since == 0 || turn >= p.estate_since + 24)
+        })
+        .collect();
+    candidates.sort_by(|&a, &b| {
+        let pa = game.person(a);
+        let pb = game.person(b);
+        let sa = pa
+            .skill(crate::person::Skill::Extraction)
+            .max(pa.skill(crate::person::Skill::Navigation));
+        let sb = pb
+            .skill(crate::person::Skill::Extraction)
+            .max(pb.skill(crate::person::Skill::Navigation));
+        sb.cmp(&sa)
+            .then(pa.condition.dose_sv.total_cmp(&pb.condition.dose_sv))
+    });
+    for id in candidates {
+        if aboard >= target {
+            break;
+        }
+        if rng.random::<f64>() < 0.7 {
+            let p = game.person_mut(id);
+            p.estate = Estate::Skiff;
+            p.estate_since = turn;
+            aboard += 1;
+        }
     }
 }
 
@@ -508,7 +571,7 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
         game.sponsor.attention = (game.sponsor.attention * 0.9).max(0.0);
         return;
     }
-    if game.sponsor.stage >= SponsorStage::Austerity {
+    if game.sponsor.stage >= SponsorStage::SkippedRotation {
         game.sponsor.attention *= 0.975;
     }
     game.sponsor.runway -= 1.0;
@@ -530,9 +593,9 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
     let expected = game.sponsor.phi_expected;
     let delta = ((phi - expected) / expected.max(0.5)).clamp(-1.0, 1.0);
     game.sponsor.confidence =
-        (game.sponsor.confidence + delta * 0.12 - game.menace.suspicion * 0.008 - 0.02)
+        (game.sponsor.confidence + delta * 0.12 - game.menace.suspicion * 0.006 - 0.01)
             .clamp(0.0, 1.0);
-    game.sponsor.phi_expected = (expected * 1.1).min(params.sponsor.phi_target_per_review * 2.5);
+    game.sponsor.phi_expected = (expected * 1.08).min(params.sponsor.phi_target_per_review * 2.0);
     let stage_drag = if game.sponsor.stage >= SponsorStage::Austerity {
         0.85
     } else {
@@ -643,7 +706,9 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
     let cap_t = tonnes * cap_share;
     let thr_t = tonnes - cap_t;
     game.received_t += tonnes;
-    game.stocks.spares += cap_t * 6.0;
+    let baseline_spares =
+        count_f(game.present().count()) * params.closure.spares_per_person_count * 16.0 * 0.8;
+    game.stocks.spares += baseline_spares * (0.5 + 0.5 * game.sponsor.confidence) + cap_t * 6.0;
     game.stocks.medicine += cap_t * 0.8;
     game.stocks.nitrogen_kg += cap_t * 40.0;
     game.stocks.propellant_t += thr_t * 0.5;
@@ -742,7 +807,12 @@ fn arrive_one(game: &mut Game, params: &Params, rng: &mut impl Rng) {
         name,
         birthplace: crate::person::Birthplace::Earth,
         born: i64::from(game.turn) - age * 12,
-        estate: Estate::Kept,
+        estate: if rng.random::<f64>() < 0.15 {
+            Estate::Skiff
+        } else {
+            Estate::Kept
+        },
+        estate_since: game.turn,
         tenure: Tenure::Rotator {
             ends: game.turn + params.population.contract_counts,
         },
@@ -765,6 +835,24 @@ fn arrive_one(game: &mut Game, params: &Params, rng: &mut impl Rng) {
         alive: true,
         present: true,
     });
+    let others: Vec<PersonId> = game.present().map(|p| p.id).filter(|x| *x != id).collect();
+    for other in others {
+        if rng.random::<f64>() > 0.25 {
+            continue;
+        }
+        *game.ties.get_mut(id, other) = crate::person::Tie {
+            work_positive: rng.random_range(0.3..0.7),
+            hindrance: rng.random_range(0.0..0.2),
+            viability: rng.random_range(0.3..0.8),
+            reliance: rng.random_range(0.0..0.4),
+        };
+        *game.ties.get_mut(other, id) = crate::person::Tie {
+            work_positive: rng.random_range(0.3..0.7),
+            hindrance: rng.random_range(0.0..0.2),
+            viability: rng.random_range(0.3..0.8),
+            reliance: rng.random_range(0.0..0.3),
+        };
+    }
 }
 
 fn menaces(game: &mut Game, params: &Params) {
@@ -775,7 +863,7 @@ fn menaces(game: &mut Game, params: &Params) {
     if game.power.reactor_life > 0 && game.power.reactor_life < 36 {
         game.menace.reactor_wear = (game.menace.reactor_wear + 0.15).min(10.0);
     }
-    let grievance_drift = game.indices.mean_strain * 0.15 + game.indices.return_share * 0.05 - 0.08;
+    let grievance_drift = game.indices.mean_strain * 0.12 + game.indices.return_share * 0.04 - 0.12;
     game.menace.grievance = (game.menace.grievance + grievance_drift).clamp(0.0, 10.0);
     game.menace.suspicion = (game.menace.suspicion - 0.03).max(0.0);
 }

@@ -278,6 +278,8 @@ pub struct Game {
     pub counters: BTreeMap<String, f64>,
     /// Firing history by storylet id.
     pub fired: BTreeMap<String, FiringRecord>,
+    /// Last count each person was cast in a storylet.
+    pub recent_cast: BTreeMap<PersonId, u32>,
     /// The chronicle.
     pub chronicle: Vec<ChronicleEntry>,
     /// Vocabulary triggers that have occurred.

@@ -1,4 +1,5 @@
 id = "phasing"
+once = true
 title = "Phasing"
 act = 1
 cooldown = 12

@@ -253,6 +253,18 @@ pub fn counsel(
             3 => 0.1,
             _ => 0.03,
         };
+        let authored_for = available
+            .iter()
+            .find(|(i, o)| {
+                o.advice
+                    .iter()
+                    .any(|a| a.seat == seat && a.stance == Stance::For)
+                    && *i != usize::MAX
+            })
+            .map(|(i, _)| *i);
+        if let Some(i) = authored_for {
+            best = i;
+        }
         if scored.len() > 1 && rng.random::<f64>() < wrong_chance {
             let others: Vec<usize> = scored
                 .iter()
@@ -264,18 +276,28 @@ pub fn counsel(
         let authored = storylet.options[best]
             .advice
             .iter()
-            .find(|a| a.seat == seat)
-            .map(|a| (a.stance, a.text.clone()));
+            .find(|a| a.seat == seat && a.stance == Stance::For)
+            .map(|a| a.text.clone());
+        let warning = available
+            .iter()
+            .filter(|(i, _)| *i != best)
+            .find_map(|(_, o)| {
+                o.advice
+                    .iter()
+                    .find(|a| a.seat == seat && a.stance == Stance::Against)
+                    .map(|a| format!(" Against \"{}\": {}", o.label, a.text))
+            })
+            .unwrap_or_default();
         let (text, authored) = match authored {
-            Some((Stance::For | Stance::Against, t)) => (t, true),
+            Some(t) => (format!("{t}{warning}"), true),
             None => (
                 format!(
                     "{} ({}) leans toward \"{}\".",
                     person.name,
                     seat.title(),
                     storylet.options[best].label
-                ),
-                false,
+                ) + &warning,
+                !warning.is_empty(),
             ),
         };
         out.push(Counsel {
