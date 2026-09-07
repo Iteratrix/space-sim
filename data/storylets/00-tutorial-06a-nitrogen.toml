@@ -1,0 +1,103 @@
+id = "tut_nitrogen"
+title = "MM 9: N2 Make-Up Log"
+act = 1
+once = true
+priority = 120
+tags = ["tutorial", "air", "nitrogen"]
+text = """
+Nitrogen is the consumable nobody launched with an opinion about. The station
+holds about six thousand kilograms of it as buffer gas, and it leaves at forty
+to fifty kilograms a month: seals, airlock cycles, and the farm's soil beds,
+which take it up and do not give it back. The Bake-Out Plant makes some. The
+rest came out on the hull and does not come again until RSW-1.
+
+{air} has put four months of the N2 make-up log on the table with one sentence
+under it: at this rate the buffer is a five-year consumable and the mission is
+fifteen. The Life Support, Closed-loop (LSS-C) fraction is nine tenths; the last
+tenth is membranes and seal profiles the fab cannot make. That is the question
+nobody at this table has been answering — who answers for the air, the loops,
+the farm, and the fraction of what the crew breathes and drinks that this
+station makes for itself. The make-up rate is on the rail as a pressure line.
+It has never been above the first band. {air} would like the SMB to look at it
+before it is.
+"""
+
+[[when]]
+turn_min = 9
+
+[[when]]
+turn_max = 14
+
+[[when]]
+fired = "tut_keep_race"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "air"
+skill = "life_support"
+
+[[option]]
+id = "survey"
+label = "A seal survey: a month of the free allocation to find the weeps"
+text = "A seal that weeps can be re-lined once somebody knows which one it is."
+tags = ["air", "nitrogen", "closure", "hours"]
+chronicle = "MM {turn}. The N2 make-up log was tabled and the SMB directed a seal survey of the surface habitat and the airlocks, one month, on the free allocation."
+[[option.effect]]
+flag = "seat:air"
+[[option.effect]]
+q = "menace.leak"
+add = -0.5
+[[option.effect]]
+q = "stocks.spares"
+add = -4
+[[option.effect]]
+all_strain = 0.03
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "I can re-line a seal. I cannot re-line a number. Give me the survey and I will give you the four seals that are most of it."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "There is no line for buffer gas on the quarterly. A survey that finds nothing is a month of hours I will be asked to account for, and I will have nothing to say."
+
+[[option]]
+id = "standing_item"
+label = "Put the make-up log on the SMB agenda every month with the number"
+text = "Not a task. A habit: the rate is read aloud before anything else is decided."
+tags = ["air", "nitrogen", "caution"]
+chronicle = "MM {turn}. The N2 make-up log was tabled and entered as a standing SMB item, read at the head of every agenda."
+[[option.effect]]
+flag = "seat:air"
+[[option.effect]]
+flag = "n2_watched"
+[[option.effect]]
+q = "menace.leak"
+add = -0.2
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Put a number on the agenda every month and it stops being a surprise. That is the whole of what an agenda is for."
+
+[[option]]
+id = "carry"
+label = "Log it and carry it; the farm beds come first"
+text = "Six thousand kilograms is five years. RSW-1 is three months."
+tags = ["throughput", "cost", "risk"]
+chronicle = "MM {turn}. The N2 make-up log was tabled and carried without action; make-up to be met from the bake-out and the RSW-1 manifest."
+[[option.effect]]
+flag = "seat:air"
+[[option.effect]]
+q = "menace.leak"
+add = 0.4
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "The buffer gas is what keeps the oxygen fraction from being a fire. I would rather know where it is going before somebody asks me why it went."
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "The plant makes nitrogen with the water. Put the hands on the plant and the make-up comes with the tonnes; do it twice and stop paying for it."

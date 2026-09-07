@@ -1,0 +1,96 @@
+id = "tut_roster"
+title = "The Order of the Roster"
+act = 1
+priority = 105
+weight = 0.6
+cooldown = 9
+tags = ["tutorial", "hours", "people"]
+text = """
+{hours} has the hand open and the same handful of names at the bottom of it.
+Upkeep is not shared out. It is taken off the bottom of the roster order, one
+line at a time, until the loops and the farm and the meals are covered, and
+whatever the order leaves at the top is the free allocation. The order is a
+standing setting above the hand and it has three positions. By skill: the best
+face for the work stays free and upkeep eats the least skilled. By strain: the
+least strained stay free and upkeep eats whoever is worst off. By name: it eats
+alphabetically and no seat has to defend the choice.
+
+The SMB has never had to say which of the three it wants, because nothing forced
+it to. {roster_bottom} is what forces it: the same lines, count after count,
+carrying the loops for the people whose faces are wanted on the clocks.
+"""
+[[when]]
+turn_min = 22
+
+[[when]]
+turn_max = 34
+
+[[when]]
+flag = "tutorial"
+
+[[when]]
+not_flag = "tutorial_done"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "roster_bottom"
+
+[[option]]
+id = "keep_skill"
+label = "Leave the order where it is and say out loud that it is a choice"
+text = "Whatever the setting is, it stays. The cost lands where it has been landing and the SMB owns it in the minutes."
+tags = ["throughput", "hours", "caution"]
+chronicle = "MM {turn}. The roster order was confirmed unchanged at the SMB. Minuted that upkeep falls on the same names by design and not by accident."
+[[option.effect]]
+flag = "roster_named"
+[[option.effect]]
+q = "menace.grievance"
+add = 0.4
+[[option.effect]]
+person = "roster_bottom"
+strain = 0.08
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Every clock on this board fills at the rate of the faces on it. Move the good faces onto the loops and every clock slows at once. I would rather owe four people an apology."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "I have four names whose strain has not been under a half since the drum. It is the same four every count and it is not a coincidence, it is a setting."
+
+[[option]]
+id = "by_strain"
+label = "Set the roster order to strain: the worst off come off the clocks first"
+text = "Move the setting above the hand to strain. The clocks fill slower and nobody is carried under."
+tags = ["people", "hours"]
+chronicle = "MM {turn}. The SMB directed that the roster order be set to strain, so that upkeep is taken from whoever is worst off rather than from whoever is least skilled."
+[[option.effect]]
+flag = "roster_strain"
+[[option.effect]]
+q = "menace.grievance"
+add = -0.6
+[[option.effect]]
+all_strain = -0.04
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Strain is not a mood. It is sleep, and sleep is the thing that decides which mistake gets made in an airlock. Set it to strain and I will stop bringing you names."
+
+[[option]]
+id = "by_name"
+label = "Set the roster order to name and let it be nobody's decision"
+text = "Alphabetical. Slower than skill, fairer than either, and no seat has to defend it."
+tags = ["people", "independence", "cost"]
+chronicle = "MM {turn}. The SMB directed that the roster order be set to name, so that upkeep falls alphabetically and no seat chooses who carries it."
+[[option.effect]]
+flag = "roster_name"
+[[option.effect]]
+q = "menace.grievance"
+add = -0.3
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Alphabetical means somebody with a two on the face is on the alignment rails in a suit. I will not sign the deviation for that and I should not have to."

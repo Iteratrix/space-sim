@@ -43,7 +43,7 @@ pub fn advance(
     relay(game, params, rng, &mut events);
     people(game, params, rng, &mut events);
     sponsor(game, params, rng, &mut events);
-    convoy(game, params, rng, &mut events);
+    convoy(game, params, defs, rng, &mut events);
     menaces(game, params, &mut events);
     zero_crossings(game, &mut events);
     endings(game, &mut events);
@@ -781,7 +781,13 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
     }
 }
 
-fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Events) {
+fn convoy(
+    game: &mut Game,
+    params: &Params,
+    defs: &[crate::project::ProjectDef],
+    rng: &mut impl Rng,
+    events: &mut Events,
+) {
     let open = game.earth_window_open();
     if !open {
         game.window_started = None;
@@ -837,7 +843,9 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
     game.counts_since_convoy = 0;
     game.sponsor.attention = (game.sponsor.attention + 0.02).min(1.0);
     game.last_convoy = Some(game.turn);
-    game.lexicon_triggers.insert("first_convoy".into());
+    if !game.flags.contains("tutorial") || game.flags.contains("tutorial_done") {
+        game.lexicon_triggers.insert("first_convoy".into());
+    }
     game.menace.suspicion = (game.menace.suspicion + cap_share * 1.5 - 0.5).clamp(0.0, 10.0);
 
     let people_ship = game.sponsor.stage < SponsorStage::SkippedRotation;
@@ -865,7 +873,13 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
     if !stripped.is_empty() {
         let parts: Vec<String> = stripped
             .iter()
-            .map(|(p, n)| format!("{n} off {p}"))
+            .map(|(p, n)| {
+                let title = defs
+                    .iter()
+                    .find(|d| d.id.0 == *p)
+                    .map_or(p.as_str(), |d| d.title.as_str());
+                format!("{n} off {title}")
+            })
             .collect();
         note(
             game,

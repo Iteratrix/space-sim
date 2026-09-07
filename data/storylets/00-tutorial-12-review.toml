@@ -1,25 +1,31 @@
 id = "tut_review"
-title = "MM 16: First Quarterly Review"
+title = "MM 14: The First Quarterly Packet"
 act = 1
 once = true
 priority = 130
 tags = ["tutorial", "sponsor"]
 text = """
-The board's first review of the station since crew arrival is at Mission Month
-16, and {liaison} is preparing the packet. It has one figure on its first page:
-tonnes shipped per tonne received. Everything else — the CED ledger, the
-LSS-C fraction, the allocation board — is in an annex the board's model does not
-read. {hours} is asked what the number is. {hours} says what it is.
+The sponsor's first review of the station since crew arrival is two counts out —
+the countdown is on the rail, and when it reaches zero the review happens
+whether or not anything has been sent. {liaison} is building the packet now. It
+has one figure on its first page: tonnes shipped per tonne received. Everything
+else — the CED ledger, the LSS-C fraction, the allocation board, the N2 make-up
+log — is in an annex the sponsor's model does not read.
 
-Sponsor confidence is a stock that the number fills. The packet can be true,
-or it can be shaped.
+{hours} is asked what the number is. {hours} says what it is. Sponsor confidence
+is a stock and this figure is what fills it; the packet can be true, or it can
+be shaped, and both are sent by the same uplink.
 """
 
 [[when]]
-turn_min = 16
+turn_min = 14
 
 [[when]]
-turn_max = 19
+turn_max = 20
+
+[[when]]
+q = "sponsor.counts_to_review"
+le = 2
 
 [[cast]]
 role = "hours"
@@ -28,14 +34,13 @@ seat = "hours"
 [[cast]]
 role = "liaison"
 seat = "liaison"
-optional = true
 
 [[option]]
 id = "true"
 label = "Send the number as it is, with the annex"
 text = "The ratio is small because the driver is young. Say so, once, in the annex."
 tags = ["sponsor", "caution"]
-chronicle = "MM 16. First quarterly review packet transmitted: throughput ratio as recorded; CED and LSS-C in annex. No shaping."
+chronicle = "MM {turn}. First quarterly packet transmitted ahead of the review: throughput ratio as recorded, the CED ledger and the LSS-C fraction in the annex. Nothing shaped."
 [[option.effect]]
 flag = "phi_honest"
 [[option.effect]]
@@ -44,18 +49,18 @@ add = -0.3
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "A number that is true in MM 16 is a number nobody has to remember in MM 80. Send it."
+text = "A number that is true in MM 14 is a number nobody has to remember in MM 80. Send it."
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "The board's review model discounts the first two quarters. A true small number now costs nothing. A shaped one costs everything later."
+text = "The sponsor's review model discounts the first two quarters. A true small number now costs nothing. A shaped one costs everything later."
 
 [[option]]
 id = "shape"
 label = "Report shipped tonnage including pods loaded but not yet thrown"
-text = "Loaded is shipped, if you read the definition generously."
+text = "Loaded is shipped, if the definition is read generously and the annex says which reading was used."
 tags = ["sponsor", "throughput", "risk"]
-chronicle = "MM 16. First quarterly review packet transmitted: shipped tonnage reported inclusive of loaded pods. Definition noted in annex."
+chronicle = "MM {turn}. First quarterly packet transmitted ahead of the review: shipped tonnage reported inclusive of loaded pods, definition noted in the annex."
 [[option.effect]]
 flag = "numbers_cooked"
 [[option.effect]]
@@ -67,8 +72,33 @@ add = 1.0
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "A pod on the pad is not a tonne at Earth. Two ledgers is one too many and I keep the ledger."
+text = "A pod on the pad is not a tonne at Earth. Two ledgers is one too many and I am the one who keeps the ledger."
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "The tonnes exist. They are in the pods. The catch is sixteen months away either way."
+text = "The tonnes exist. They are in the pods. The catch is sixteen months away on either reading."
+
+[[option]]
+id = "annex_first"
+label = "Lead with the annex: the ledger, the closure fraction, the make-up log"
+text = "Put the things that decide whether this station lives on page one and the ratio on page two. They will read page one at least once."
+tags = ["independence", "capability", "sponsor"]
+chronicle = "MM {turn}. First quarterly packet transmitted ahead of the review with the CED ledger, the LSS-C fraction and the N2 make-up log on the first page and the throughput ratio behind them."
+[[option.effect]]
+flag = "phi_honest"
+[[option.effect]]
+flag = "annex_first"
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.5
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Nine tenths closed and the last tenth is membranes nobody has costed. If they are going to read one page of ours in three years, let it be that one."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "The model reads the first figure it recognises and stops. Reordering the packet does not teach the model to read. It teaches the reviewer that this station reorders packets."

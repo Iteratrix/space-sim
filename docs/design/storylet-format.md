@@ -47,6 +47,7 @@ optional = true               # storylet may fire with this role empty
 estate = "skiff"              # optional: kept | bore | skiff
 min_dose = 0.5                # optional: cumulative Sv at least
 min_strain = 0.5              # optional; also max_strain
+top = true                    # skill casting takes the single best holder (whom the ring seats)
 
 [[option]]
 id = "keep"
@@ -89,6 +90,10 @@ name_mind = true              # the senior operator names the oldest unnamed min
 
 [[option.effect]]
 project = "dig_keep"          # open a project by id (see data/projects/); or close_project = "..."
+
+[[option.effect]]
+person = "engineer"           # a cast role
+assign = "dig_keep"           # put their die on a project, or "hand"
 
 [[option.effect]]
 end = "closed"                # or "extinct"; with reason = "..."
@@ -148,7 +153,11 @@ generated line for that seat and option.
 `conjunction` (Earth link blocked this count), `unforgetting` (first missed
 reset), `someone_stayed` (a rotator chose residence at a convoy),
 `stage:N` (sponsor reached stage N), `licence_jailbroken` (content may set this;
-the engine then treats the licence as self-certified).
+the engine then treats the licence as self-certified). Setting any of `manifest_*`,
+`throw_ship|hold|stop`, `roster_skill|strain|name` moves the matching standing
+control at once; `open_project:<id>` opens a project next count; `seat:<key>`
+makes a seat exist during the tutorial; `tutorial_open` lets unscripted scenes
+fire before `tutorial_done`.
 
 ## Lexicon triggers the engine fires
 

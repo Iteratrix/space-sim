@@ -5,14 +5,18 @@ once = true
 priority = 140
 tags = ["tutorial", "sponsor", "people", "hours"]
 text = """
-RSW-2 has landed with the SMB's MM 4 request and the board's own addition:
-crew. The sponsor is expanding the station faster than it is sending machines,
-because crew is cheaper than machines on the board's model and the allocation
-board is not in the model. {hours} does the arithmetic aloud: each new line
-eats a line and a half of upkeep until the drum's routine work is automated.
-More people, a smaller free allocation. The hand shrinks as the roster grows.
+The second window delivered, and with the tonnage the SMB marked came something
+the SMB did not mark: crew. The sponsor is expanding this station faster than it
+is sending machines, because on the sponsor's model a person is cheaper than a
+dexterous unit and the allocation board is not in the model. {hours} does the
+arithmetic aloud: every new line eats about a line and a half of upkeep until
+the drum's routine work is automated, so the free allocation is smaller tonight
+than it was last night with fewer people on station.
 
-{liaison} confirms that the board considers the augmentation nominal.
+{liaison} confirms that the sponsor considers the augmentation nominal. The mark
+on the RSW clock is now reading for RSW-3, which opens in about fifteen months,
+and it is the last request this SMB will send before the station has been here
+four years.
 """
 
 [[when]]
@@ -32,14 +36,13 @@ seat = "hours"
 [[cast]]
 role = "liaison"
 seat = "liaison"
-optional = true
 
 [[option]]
 id = "accept"
-label = "Accept the augmentation; request units, not crew, for RSW-3"
-text = "Take the hands. Ask for the machines that make hands free."
+label = "Mark RSW-3 for units, not crew"
+text = "Take the hands that came. Ask for the machines that give hands back."
 tags = ["throughput", "hours", "machines"]
-chronicle = "MM 28. RSW-2 landed. Crew augmentation accepted. RSW-3 request: dexterous and haul units, no crew."
+chronicle = "MM {turn}. RSW-2 landed with unrequested crew augmentation; accepted. Manifest mark set to throughput for RSW-3: dexterous and haul units, no crew."
 [[option.effect]]
 flag = "manifest_throughput"
 [[option.effect]]
@@ -58,14 +61,14 @@ text = "A dexterous unit is three hundred hours a month and eats nothing. Ask fo
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "The board's staffing model runs to a hundred and forty. Units are a line they will approve; declining crew is not."
+text = "The sponsor's staffing model runs to a hundred and forty. Units are a line they will approve. Declining crew is not."
 
 [[option]]
 id = "spares"
-label = "Accept the augmentation; request spares and tooling for RSW-3"
+label = "Mark RSW-3 for spares and tooling"
 text = "More people is more loops. Ask for what keeps loops closed."
 tags = ["capability", "spares", "air"]
-chronicle = "MM 28. RSW-2 landed. Crew augmentation accepted. RSW-3 request: LSS-C spares and fabrication tooling."
+chronicle = "MM {turn}. RSW-2 landed with unrequested crew augmentation; accepted. Manifest mark set to capability for RSW-3: LSS-C spares and fabrication tooling."
 [[option.effect]]
 flag = "manifest_capability"
 [[option.effect]]
@@ -80,14 +83,14 @@ add = 0.5
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "Every person is 0.9 tonnes of water through the loops a month and a tenth of a spares crate. The loops are the roster."
+text = "Every person is nine hundred kilograms of water through the loops a month and a tenth of a spares crate. The loops are the roster. Ask for the loops."
 
 [[option]]
 id = "push_back"
 label = "Log an objection to unplanned augmentation"
-text = "Fourteen became more than twenty without a request. Say so."
+text = "The drum was dug for a number and the roster passed it without a request. Say so, in the minutes, where it can be read later."
 tags = ["independence", "sponsor", "risk"]
-chronicle = "MM 28. RSW-2 landed. Crew augmentation received; SMB objection to unplanned headcount logged with board."
+chronicle = "MM {turn}. RSW-2 landed with unrequested crew augmentation; received under SMB objection, logged with the sponsor. Manifest mark unchanged for RSW-3."
 [[option.effect]]
 q = "menace.suspicion"
 add = 0.9
@@ -99,8 +102,8 @@ flag = "objected_augmentation"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "Berthing is rated. The drum was dug for a number. An objection is a medical note as much as a political one."
+text = "Berthing is rated. The drum was dug for a number. An objection is a medical note as much as a political one, and I will sign the medical half."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "An objection to the board's staffing decision, from the station the board staffs, is a sentence I will be asked to explain. I cannot."
+text = "An objection to the sponsor's staffing decision, from the station the sponsor staffs, is a sentence I will be asked to explain. I cannot."

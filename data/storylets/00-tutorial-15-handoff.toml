@@ -7,9 +7,9 @@ tags = ["tutorial"]
 text = """
 Third window. The allocation board has been running on its own routine for a
 year; nobody looks at the tasking list from Earth before the meal any more,
-because {hours} reads it aloud after. The drum has a sound at night that
-{air} says is the RJSA and everyone else says is the KEEP settling. The CED
-ledger is read on the twelfth of the month. The MDLS throws.
+because {hours} reads it aloud after. {air} keeps a page for every seal on the
+station and knows without checking which one is making the noise this month. The
+CED ledger is read on the twelfth by whoever is nearest to it.
 
 {hulls} proposes that the SMB minutes stop recording the mission month and
 start recording the count since landing. It is the same number. It is not the
@@ -37,9 +37,9 @@ seat = "air"
 [[option]]
 id = "count"
 label = "Minute it as the count from now on"
-text = "Mission Month is the board's clock. The count is ours."
+text = "Mission Month is the sponsor's clock. The count is ours."
 tags = ["independence", "people"]
-chronicle = "Forty-three since we came down. The board's calendar reads the same number in its own unit and we have stopped correcting it. This is the log now, and it is ours."
+chronicle = "Forty-three since we came down. The sponsor's calendar reads the same number in its own unit and we have stopped correcting it. This is the log now, and it is ours."
 [[option.effect]]
 flag = "tutorial_done"
 [[option.effect]]
@@ -53,14 +53,14 @@ text = "It is the same number. Write it our way."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "The board's minutes are in Mission Months. Two calendars is a reconciliation item at every review. I would keep one."
+text = "The sponsor's minutes are in Mission Months. Two calendars is a reconciliation item at every review. I would keep one."
 
 [[option]]
 id = "mm"
 label = "Keep Mission Month in the minutes; the count is for the meal"
-text = "The board's paper stays the board's. What we say to each other is ours."
+text = "The sponsor's paper stays the sponsor's. What we say to each other is ours."
 tags = ["sponsor", "caution"]
-chronicle = "Forty-three since we came down. The minutes keep the board's unit, for the board. At the meal nobody uses it. This is the log now."
+chronicle = "Forty-three since we came down. The minutes keep the sponsor's unit, for the sponsor. At the meal nobody uses it. This is the log now."
 [[option.effect]]
 flag = "tutorial_done"
 [[option.effect]]
@@ -68,4 +68,4 @@ lexicon = "first_convoy"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "I keep two ledgers already. A third calendar costs me nothing and costs the board a question."
+text = "I keep two ledgers already. A third calendar costs me nothing and costs the sponsor a question."

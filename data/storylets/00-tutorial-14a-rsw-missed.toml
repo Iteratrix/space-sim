@@ -1,0 +1,110 @@
+id = "tut_rsw_missed"
+title = "The Window That Did Not Land"
+act = 1
+once = true
+priority = 140
+tags = ["tutorial", "sponsor", "people"]
+text = """
+The window opened on schedule and closed with nothing in it. {liaison} has the
+sponsor's acknowledgement, which runs to four lines, contains the word "rephased"
+twice, and gives no date. The mark on the RSW clock is still where the SMB put
+it. The request is still on file. The file is not the problem.
+
+{hours} has the arithmetic the crew will do for itself before the meal is over:
+what was on that hull is what is not on the shelf, the next window is more than
+a year out, and nothing between now and then arrives from anywhere but this
+rock. The SMB cannot change any of that tonight. What it can decide is what the
+station is told, and that is the sentence people will still be repeating to
+each other a year from now.
+"""
+
+[[when]]
+turn_min = 28
+
+[[when]]
+turn_max = 44
+
+[[when]]
+q = "missed_convoys"
+ge = 1
+
+[[when]]
+q = "counts_since_convoy"
+ge = 6
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[option]]
+id = "plain"
+label = "Say it plainly at the meal: no hull, and the shelf count as it stands"
+text = "Read the spares count, the formulary count and the date of the next window, in that order, to everyone at once."
+tags = ["people", "independence", "caution"]
+chronicle = "MM {turn}. The window closed with no arrival. The SMB read the shelf counts and the date of the next window to the full crew at the meal rather than posting them."
+[[option.effect]]
+flag = "miss_named"
+[[option.effect]]
+q = "menace.grievance"
+add = -0.8
+[[option.effect]]
+all_strain = 0.05
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "They will work it out in a fortnight either way. People who were told take it as a fact. People who worked it out take it as something that was kept from them."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "A shelf count read to a full crew is a shelf count that will be quoted back to the sponsor by somebody's family. I would post the number and not perform it."
+
+[[option]]
+id = "remark"
+label = "Re-mark the manifest and re-send the request against the next window"
+text = "One hull will now carry two windows of tonnage whenever it comes. Spend that on the shelf."
+tags = ["capability", "spares", "sponsor"]
+chronicle = "MM {turn}. The window closed with no arrival. Manifest mark moved to capability and the request re-transmitted against the next window."
+[[option.effect]]
+flag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.effect]]
+unflag = "manifest_balanced"
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.4
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "If they are only coming once, they can bring the things I cannot make. Seals, membranes, tooling. I will take that over pods and I will say so in the minutes."
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "The request that is on file when the hull is loaded is the request that flies. Ours was written for a station that had just landed. Write one for the station we are now."
+
+[[option]]
+id = "carry"
+label = "Log a schedule slip and keep the tasking list as it stands"
+text = "A window is a window. The sponsor slipped one; the plan did not change."
+tags = ["sponsor", "throughput", "caution"]
+chronicle = "MM {turn}. The window closed with no arrival. Logged as a schedule slip; tasking list, allocation and manifest mark unchanged."
+[[option.effect]]
+q = "menace.grievance"
+add = 0.6
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.3
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "The sponsor's schedule shows a rephasing, not a cancellation. A station that reorganises itself around a rephasing is a station the sponsor reorganises next."
+[[option.advice]]
+seat = "extraction"
+stance = "against"
+text = "The plant does not care what it is called. Fifteen months is fifteen months of running on what is already on this rock, and somebody should task for that."

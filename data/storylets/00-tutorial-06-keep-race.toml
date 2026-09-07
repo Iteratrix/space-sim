@@ -5,15 +5,18 @@ once = true
 priority = 120
 tags = ["tutorial", "dose", "bodies"]
 text = """
-{bodies} (Medical Officer) has the Cumulative Effective Dose (CED) ledger open
-for the first time on station. Surface habitat under regolith bags: 120
-millisieverts a year, ten a month, every person. The drum, when it exists:
-twelve a year. The sponsor's career limit is 600. The Solar Transient Event
-(STE) forecast from Earth puts the next significant event inside the next four
-months; the surface habitat has a storm shelter rated for it, barely.
+Nobody at this table has been answering for the bodies. {bodies} opened the
+Cumulative Effective Dose (CED) ledger on station for the first time this
+morning and brought it to the SMB unasked, which is how the question arrives:
+surface habitat under regolith bags, 120 millisieverts a year, ten a month,
+every person, counted by name. The drum, when it exists: twelve a year. The
+sponsor's career limit is 600 and there is no line for any of it on the tasking
+list.
 
-{keep_status} has the excavation schedule and will not give a completion month.
-The board does not carry a line for dose. The ledger does.
+The Solar Transient Event (STE) forecast from Earth puts the next significant
+event inside four months. The surface habitat has a storm shelter rated for one,
+barely, and rated for eight people. {keep_status} has the excavation schedule
+and will not give a completion month.
 """
 
 [[when]]
@@ -23,19 +26,21 @@ turn_min = 7
 not_flag = "keep_dug"
 
 [[cast]]
-role = "bodies"
-seat = "bodies"
-
-[[cast]]
 role = "keep_status"
 seat = "hulls"
 
+[[cast]]
+role = "bodies"
+skill = "medical"
+
 [[option]]
 id = "priority_keep"
-label = "SMB directive: free allocation to KEEP excavation until it is dug"
-text = "Pull hands off the plant and the driver. The number will dip. The ledger will not."
+label = "SMB directive: KEEP excavation ahead of the plant and the driver"
+text = "Ten millisieverts a month against one. Nothing else on this station trades at ten to one."
 tags = ["dose", "people", "capability"]
-chronicle = "MM 7. CED ledger opened. SMB directive: KEEP excavation priority until complete. BOP and MDLS allocations reduced."
+chronicle = "MM {turn}. The CED ledger was opened on station. The SMB directed KEEP excavation ahead of the BOP and the MDLS until the drum is pressurised."
+[[option.effect]]
+flag = "seat:bodies"
 [[option.effect]]
 flag = "keep_priority"
 [[option.effect]]
@@ -44,20 +49,22 @@ add = -0.03
 [[option.effect]]
 all_strain = -0.03
 [[option.advice]]
-seat = "bodies"
+seat = "hulls"
 stance = "for"
-text = "Ten millisieverts a month against one. Nothing else on this station trades at ten to one."
+text = "Twenty-four segments. On the free allocation it is a quarter; on what is left over it is two years, and the bags are the difference."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "The board's model has KEEP completion at MM 14 and does not couple it to MDLS output. Reducing MDLS allocation will be visible; the CED ledger will not."
+text = "The board's model has KEEP completion at MM 14 and does not couple it to MDLS output. A reduced MDLS allocation is visible from Earth. The CED ledger is not."
 
 [[option]]
 id = "hold_plan"
 label = "Hold the allocation; the KEEP finishes when it finishes"
 text = "The plan is the plan. The shelter is rated."
 tags = ["throughput", "sponsor", "risk"]
-chronicle = "MM 7. CED ledger opened. Allocation unchanged; KEEP excavation on existing schedule. STE shelter procedure reviewed."
+chronicle = "MM {turn}. The CED ledger was opened on station. Allocation unchanged; KEEP excavation on the existing schedule. The STE shelter procedure was reviewed."
+[[option.effect]]
+flag = "seat:bodies"
 [[option.effect]]
 all_strain = 0.04
 [[option.effect]]
@@ -66,18 +73,20 @@ add = 0.5
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "Every reallocation costs a month of learning the new task. The schedule is slow because it is the schedule, not because it is wrong."
+text = "Every reallocation costs a month of learning the new clock. The schedule is slow because it is the schedule, not because it is wrong."
 [[option.advice]]
-seat = "air"
+seat = "extraction"
 stance = "against"
-text = "The shelter is rated for an event. It is not rated for four months of people wondering when."
+text = "The plant is the one clock on this board that pays for itself every month it runs. Leave it alone and I will say nothing else about the drum."
 
 [[option]]
 id = "storm_shelter"
 label = "Sleep in the storm shelter until the drum is dug"
-text = "Fourteen people in a room rated for eight. The ledger stops; the roster does not."
+text = "Sleep is a third of the exposure and the shelter cuts that third to nothing. Fourteen people in a room rated for eight; the ledger stops, the roster does not."
 tags = ["dose", "people", "risk"]
-chronicle = "MM 7. CED ledger opened. Crew relocated to STE shelter for sleep periods pending KEEP completion. Berthing at 175 per cent of rating."
+chronicle = "MM {turn}. The CED ledger was opened on station. Crew relocated to the STE shelter for sleep periods pending KEEP completion. Berthing at 175 per cent of rating."
+[[option.effect]]
+flag = "seat:bodies"
 [[option.effect]]
 flag = "shelter_sleeping"
 [[option.effect]]
@@ -85,10 +94,6 @@ all_strain = 0.08
 [[option.effect]]
 q = "menace.grievance"
 add = 0.8
-[[option.advice]]
-seat = "bodies"
-stance = "for"
-text = "Sleep is a third of the exposure. The shelter cuts that third to nothing. The roster will hate me; the ledger will not."
 [[option.advice]]
 seat = "hulls"
 stance = "against"

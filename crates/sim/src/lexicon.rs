@@ -366,7 +366,26 @@ fn replace_word(text: &str, old: &str, new: &str) -> String {
             .is_none_or(|c| !is_word_char(c));
         out.push_str(&rest[..pos]);
         if before_ok && after_ok {
-            out.push_str(new);
+            let sentence_start = rest[..pos]
+                .trim_end()
+                .chars()
+                .next_back()
+                .is_none_or(|c| c == '.' || c == '!' || c == '?')
+                && out
+                    .trim_end()
+                    .chars()
+                    .next_back()
+                    .is_none_or(|c| c == '.' || c == '!' || c == '?');
+            let new_starts_lower = new.chars().next().is_some_and(char::is_lowercase);
+            if sentence_start && new_starts_lower {
+                let mut chars = new.chars();
+                if let Some(first) = chars.next() {
+                    out.extend(first.to_uppercase());
+                    out.push_str(chars.as_str());
+                }
+            } else {
+                out.push_str(new);
+            }
         } else {
             out.push_str(old);
         }

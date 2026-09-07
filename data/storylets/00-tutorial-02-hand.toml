@@ -5,18 +5,25 @@ once = true
 priority = 140
 tags = ["tutorial", "hours"]
 text = """
-{hours} has the allocation board up. Every crew member is one line; every line
-has a rating in the work it is good at. Fourteen lines, and the station eats
-most of them before anything is built: air, water, food, the loops, each other.
-What is left is the free allocation, and it goes where the SMB puts it. The
-robots carry the routine upkeep on their own; put one on a task and the upkeep
-it was carrying comes back to a human.
+{hours} has the allocation board up. Every adult on station is one line on it —
+a die with a face, and the face is the rating in the work that clock wants.
+Fourteen lines, and the station eats most of them before anything is built: air,
+water, food, the loops, each other. Upkeep takes its lines from the bottom of
+the roster order. What is left is the free allocation, and it is the only labour
+this board actually commands.
 
-Two open tasks: KEEP excavation (twenty-four segments of drum and regolith) and
-MDLS alignment (eight). Two standing tasks that never finish: the BOP, which
-makes water at the rate of the hands on it, and the MDLS itself once it is
-aligned. Drag a line onto a task and it stays there until the SMB moves it.
-{hulls} wants the free allocation on the MDLS. {extraction} wants it on the BOP.
+Four clocks will take a line. KEEP excavation, twenty-four segments of drum and
+regolith; MDLS alignment, eight; the BOP, which never finishes and makes water
+at the rate of the faces sitting on it. The MDLS itself, once it is aligned.
+Drag a free line onto the KEEP excavation clock and it stays there until the SMB
+moves it. The switch above the hand says who deals the free lines: the SMB, by
+hand, or the tasking routine, which puts every free line on the first clock that
+will take its face. Either way the lines are on clocks by morning. The SMB's
+business is which clocks.
+
+And there is a question at this table nobody has been asked yet. The BOP is at a
+third of rated on one haul loop, and no seat answers for what comes out of it.
+{extraction} has the plant's log and an opinion about the number in it.
 """
 
 [[when]]
@@ -35,53 +42,51 @@ seat = "hulls"
 
 [[cast]]
 role = "extraction"
-seat = "extraction"
+skill = "extraction"
 
 [[option]]
 id = "all_bop"
-label = "Free allocation to the BOP; the robots stay on upkeep"
-text = "Water first. The KEEP and the MDLS wait for the next hull's hands."
+label = "SMB directive: the free allocation answers to the BOP"
+text = "Water first. The plant makes fourteen tonnes a month at rated and is making five; everything else on this rock is downstream of that number."
 tags = ["water", "throughput"]
-chronicle = "MM 2. Free allocation to BOP. KEEP and MDLS tasks open, unstaffed. Allocation board in use."
+chronicle = "MM {turn}. The allocation board was opened. The SMB directed the free allocation to the BOP until rated output; KEEP excavation and MDLS alignment take what is left."
+[[option.effect]]
+flag = "seat:extraction"
 [[option.effect]]
 flag = "tutorial_dice_explained"
 [[option.effect]]
 q = "stocks.water"
 add = 4
 [[option.advice]]
-seat = "extraction"
-stance = "for"
-text = "The plant makes fourteen tonnes a month at rated. It is making five. Everything on this station is downstream of that number."
-[[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "The MDLS is eight segments. Put two ratings on it and it throws in a month. Nobody is reading water; they are reading tonnes shipped."
+text = "The MDLS is eight segments. Put two ratings on it and it throws in a month. Nobody on Earth is reading water; they are reading tonnes shipped."
 
 [[option]]
 id = "split_keep"
-label = "Split: two lines to the BOP, one to the KEEP"
-text = "Start the drum now. Twenty-four segments is a long clock and the dose does not wait."
+label = "SMB directive: the KEEP takes the free allocation"
+text = "Twenty-four segments is a long clock and the ledger runs the whole time it is open."
 tags = ["capability", "dose", "people"]
-chronicle = "MM 2. Free allocation split: BOP and KEEP excavation. MDLS alignment unstaffed. Allocation board in use."
+chronicle = "MM {turn}. The allocation board was opened. The SMB directed the free allocation to KEEP excavation; the BOP and MDLS alignment take what is left."
+[[option.effect]]
+flag = "seat:extraction"
 [[option.effect]]
 flag = "tutorial_dice_explained"
 [[option.effect]]
 flag = "tut_keep_started"
 [[option.advice]]
-seat = "bodies"
-stance = "for"
-text = "One hundred and twenty millisieverts a year under regolith bags. Twelve under the drum. Every month of excavation you delay is nine millisieverts per person you do not get back."
-[[option.advice]]
 seat = "hours"
 stance = "for"
-text = "Split allocations are slower on both. But the drum is the only task on this board whose clock is the crew's own bodies."
+text = "Split boards are slower on both. But the drum is the only clock on this table whose segments are the crew's own bodies, and it is twenty-four long."
 
 [[option]]
 id = "mdls"
-label = "Free allocation to MDLS alignment; robots off upkeep to the BOP"
-text = "Align the driver and throw. Pull two haul units onto the plant and take the upkeep hit."
+label = "SMB directive: MDLS alignment first, haul units off upkeep to the plant"
+text = "Align the driver and throw. The upkeep the haul units were carrying comes back onto the roster."
 tags = ["throughput", "sponsor", "risk"]
-chronicle = "MM 2. Free allocation to MDLS alignment; two haul units reassigned to BOP. Upkeep load on crew increased. Allocation board in use."
+chronicle = "MM {turn}. The allocation board was opened. The SMB directed the free allocation to MDLS alignment and the haul units off upkeep onto the BOP, with the upkeep they carried returning to the roster."
+[[option.effect]]
+flag = "seat:extraction"
 [[option.effect]]
 flag = "tutorial_dice_explained"
 [[option.effect]]
@@ -89,8 +94,8 @@ all_strain = 0.04
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Eight segments. The driver is the only thing on this rock the sponsor can see from Earth."
+text = "Eight segments. The driver is the only thing on this rock the sponsor can see from Earth, and it has never thrown a pod that was caught."
 [[option.advice]]
-seat = "air"
+seat = "hours"
 stance = "against"
-text = "Two haul units off upkeep is eighty hours a month back on people. I will find those hours in the loop maintenance log, later, as a leak."
+text = "Alignment is eight segments of two ratings I do not have spare. Ask me again when the plant is not at a third."

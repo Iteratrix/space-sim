@@ -12,7 +12,7 @@ question is not what the paper says. {bodies} has the ICE literature: the last
 quarter of a fixed term is where people decide things, and they are usually
 right about themselves.
 
-The board has a column for headcount. It does not have one for this.
+The sponsor has a column for headcount. It does not have one for this.
 """
 
 [[when]]
@@ -22,19 +22,19 @@ turn_min = 27
 turn_max = 32
 
 [[cast]]
-role = "rotator"
-rotator = true
-
-[[cast]]
 role = "bodies"
 seat = "bodies"
+
+[[cast]]
+role = "rotator"
+rotator = true
 
 [[option]]
 id = "stay"
 label = "Write {rotator} down as staying"
 text = "The berth goes home empty. The sponsor's roster gains a line it has no column for."
 tags = ["people", "independence"]
-chronicle = "MM 27. {rotator} declined return berth at contract expiry; recorded as station resident. Sponsor roster deviation logged."
+chronicle = "MM {turn}. {rotator} declined the return berth at contract expiry and was recorded as a station resident. Sponsor roster deviation logged."
 [[option.effect]]
 person = "rotator"
 resident = true
@@ -50,14 +50,14 @@ text = "Someone who has decided to stay and is sent home is a case study. Someon
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A resident is a headcount line without an end date. The board will ask who authorised it. I would like the SMB to have an answer before they do."
+text = "A resident is a headcount line without an end date. The sponsor will ask who authorised it. I would like the SMB to have an answer before they do."
 
 [[option]]
 id = "go"
-label = "Hold {rotator} to the paper: home on RSW-2"
-text = "Thirty months is thirty months. The next hull brings the replacement."
+label = "Hold {rotator} to the paper: home on the next hull"
+text = "Thirty months is thirty months. The berth is booked and a replacement is requested against the next window."
 tags = ["sponsor", "caution"]
-chronicle = "MM 27. {rotator} rostered for return on RSW-2 at contract expiry. Replacement requested."
+chronicle = "MM {turn}. {rotator} rostered for return at the next window at contract expiry. Replacement requested against the manifest."
 [[option.effect]]
 person = "rotator"
 leave = true
@@ -74,7 +74,7 @@ id = "new_paper"
 label = "Offer a second contract instead of an answer"
 text = "Thirty more months. The same question with a different sky."
 tags = ["people", "hours"]
-chronicle = "MM 27. {rotator} offered contract extension at expiry; accepted pending board approval."
+chronicle = "MM {turn}. {rotator} offered a contract extension at expiry; accepted pending the sponsor's approval."
 [[option.effect]]
 person = "rotator"
 return_intent = -0.3
@@ -83,4 +83,4 @@ counter = "extensions"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "An extension is a headcount line with an end date. The board has a column for that."
+text = "An extension is a headcount line with an end date. The sponsor has a column for that."

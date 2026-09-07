@@ -1,22 +1,26 @@
 id = "tut_manifest"
-title = "MM 4: Resupply Request, RSW-2"
+title = "MM 4: Resupply Request, RSW-1"
 act = 1
 once = true
 priority = 140
 tags = ["tutorial", "sponsor", "manifest"]
 text = """
-The Resupply Window (RSW) for the first sponsor hull opens at Mission Month 12.
-What it carries was fixed before this crew launched. The request {hours} sends
-this month is for the hull after that: RSW-2, arriving around MM 28. That is the
-lag: every request is answered one window late, and every window is sixteen
-months. {liaison} (Sponsor Liaison) confirms the board will read the request in
-nine minutes and reply in forty, and that the reply will address the request
-before this one.
+The first Resupply Window (RSW-1) opens at Mission Month 12. What flies on it is
+whatever request is on file when the hull is loaded, and to be on file the
+request has to leave this month. The mark on the RSW clock is the request:
+whatever it reads on the day the window opens is what the hull carries. Every
+tonne is one of two things. Throughput hardware — pods, propellant, another
+dexterous unit — moves the one figure the board reads. Capability hardware —
+spares, formulary, fabrication tooling — moves nothing the board reads until the
+month a loop fails.
 
-Three ways to fill the tonnage. Throughput hardware: pods, propellant, another
-dexterous unit — the board's number goes up. Capability hardware: spares,
-formulary, tooling — nothing the board reads moves. Or crew: more hands, more
-upkeep.
+There is a second question at this table, and it is not what to ask for. It is
+who answers to the sponsor: who writes the request in the words the board uses,
+who takes the query that comes back, who stands up at the review and explains a
+line item. {liaison} has done it before, for a different agency, and states the
+arithmetic without decorating it. The board will read this request in nine
+minutes and reply in forty, and the reply will address the pre-launch request,
+not this one. The file is always one request behind. It does not catch up.
 """
 
 [[when]]
@@ -34,15 +38,16 @@ seat = "hours"
 
 [[cast]]
 role = "liaison"
-seat = "liaison"
-optional = true
+skill = "logistics"
 
 [[option]]
 id = "throughput"
 label = "Throughput: pods, propellant, a dexterous unit"
 text = "The board reads shipped tonnage. Ask for what makes it."
 tags = ["throughput", "sponsor"]
-chronicle = "MM 4. RSW-2 request transmitted: throughput hardware. Board acknowledgement expected MM 5."
+chronicle = "MM {turn}. RSW-1 request transmitted: throughput hardware. Manifest mark set to throughput. Sponsor acknowledgement expected MM 5."
+[[option.effect]]
+flag = "seat:liaison"
 [[option.effect]]
 flag = "manifest_throughput"
 [[option.effect]]
@@ -55,20 +60,22 @@ unflag = "manifest_balanced"
 q = "sponsor.confidence"
 add = 0.03
 [[option.advice]]
-seat = "liaison"
+seat = "hours"
 stance = "for"
-text = "The board's MM 3 query concerned MDLS readiness. A throughput request is the answer they are waiting for, one window late."
+text = "The board reads one number and the number is tonnes. Ask for the thing that makes tonnes and nobody has to explain the request."
 [[option.advice]]
-seat = "air"
+seat = "hulls"
 stance = "against"
-text = "LSS-C is at 0.90. The last ten per cent is membranes and seals that do not exist on this rock. Ask for them while the asking is free."
+text = "Another dexterous unit is another thing I cannot repair. Spares are two hundred units and going at four a month; do that sum before you order pods."
 
 [[option]]
 id = "balanced"
 label = "Balanced: half throughput, half spares and formulary"
 text = "A request nobody on the board will query and nobody on station will regret."
 tags = ["capability", "throughput"]
-chronicle = "MM 4. RSW-2 request transmitted: balanced manifest. Board acknowledgement expected MM 5."
+chronicle = "MM {turn}. RSW-1 request transmitted: balanced manifest. Manifest mark set to balanced. Sponsor acknowledgement expected MM 5."
+[[option.effect]]
+flag = "seat:liaison"
 [[option.effect]]
 flag = "manifest_balanced"
 [[option.effect]]
@@ -78,16 +85,18 @@ unflag = "manifest_throughput"
 [[option.effect]]
 unflag = "manifest_people"
 [[option.advice]]
-seat = "hours"
+seat = "extraction"
 stance = "for"
-text = "Half and half is what the tasking list assumes. The safest request is the one already in their model."
+text = "Half of it is pods I cannot fill until the plant is at rated. Split it and I get a haul unit either way, which is the only line on the request I care about."
 
 [[option]]
 id = "capability"
 label = "Capability: spares, formulary, fabrication tooling, a boron crate"
 text = "Invisible on the quarterly. Visible the first time a loop fails."
 tags = ["capability", "spares", "independence"]
-chronicle = "MM 4. RSW-2 request transmitted: capability hardware including fabrication tooling. Board query anticipated."
+chronicle = "MM {turn}. RSW-1 request transmitted: capability hardware including fabrication tooling. Manifest mark set to capability. Sponsor query anticipated."
+[[option.effect]]
+flag = "seat:liaison"
 [[option.effect]]
 flag = "manifest_capability"
 [[option.effect]]
@@ -103,17 +112,15 @@ add = 0.8
 seat = "hulls"
 stance = "for"
 text = "I can make anything here except the parts I cannot make. A tooling crate is the difference between a station and a camp."
-[[option.advice]]
-seat = "liaison"
-stance = "against"
-text = "A boron crate on a throughput outpost is a line item I will be asked to explain. I do not have an explanation the board will accept."
 
 [[option]]
 id = "people"
 label = "Crew: ask for hands"
-text = "More lines on the allocation board. More upkeep, too."
+text = "More lines on the allocation board — and each one is below every ICE study's floor for a rotation this long, or it is not. Fourteen is."
 tags = ["people", "hours"]
-chronicle = "MM 4. RSW-2 request transmitted: crew augmentation. Board acknowledgement expected MM 5."
+chronicle = "MM {turn}. RSW-1 request transmitted: crew augmentation. Manifest mark set to crew. Sponsor acknowledgement expected MM 5."
+[[option.effect]]
+flag = "seat:liaison"
 [[option.effect]]
 flag = "manifest_people"
 [[option.effect]]
@@ -122,10 +129,6 @@ unflag = "manifest_capability"
 unflag = "manifest_throughput"
 [[option.effect]]
 unflag = "manifest_balanced"
-[[option.advice]]
-seat = "bodies"
-stance = "for"
-text = "Fourteen is below every ICE study's floor for a rotation this long. Ask for people before the roster asks for them."
 [[option.advice]]
 seat = "hours"
 stance = "against"

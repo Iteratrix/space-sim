@@ -102,6 +102,8 @@ struct RawCast {
     min_dose: Option<f64>,
     min_strain: Option<f64>,
     max_strain: Option<f64>,
+    #[serde(default)]
+    top: bool,
 }
 
 #[derive(Debug, Deserialize)]
@@ -151,6 +153,7 @@ struct RawEffect {
     name_mind: Option<bool>,
     project: Option<String>,
     close_project: Option<String>,
+    assign: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -267,6 +270,8 @@ pub struct Cast {
     pub min_strain: Option<f64>,
     /// Maximum strain.
     pub max_strain: Option<f64>,
+    /// Skill casting takes the single best holder (the one the ring seats), not a near-best pool.
+    pub top: bool,
 }
 
 /// One typed edit to the state.
@@ -323,6 +328,8 @@ pub enum Effect {
     OpenProject(String),
     /// Closes an open project by id, abandoning its progress.
     CloseProject(String),
+    /// Puts a cast person's die on a project (or back in the hand with "hand").
+    Assign(String, String),
 }
 
 /// Advice one seat gives about one option, written by the author.
@@ -501,6 +508,7 @@ fn parse_cast(file: &str, r: RawCast) -> Result<Cast, ContentError> {
         min_dose: r.min_dose,
         min_strain: r.min_strain,
         max_strain: r.max_strain,
+        top: r.top,
     })
 }
 
@@ -543,6 +551,9 @@ fn parse_effect(file: &str, roles: &[String], r: RawEffect) -> Result<Effect, Co
     }
     if let Some(role) = r.person {
         check_role(&role)?;
+        if let Some(target) = r.assign {
+            return Ok(Effect::Assign(role, target));
+        }
         if let Some(v) = r.strain {
             return Ok(Effect::Strain(role, v));
         }
@@ -736,6 +747,7 @@ impl Storylet {
             min_dose,
             min_strain,
             max_strain,
+            top: exact,
         } in &self.cast
         {
             let eligible = |p: &crate::person::Person| {
@@ -766,7 +778,11 @@ impl Storylet {
                         .map(|p| p.skill(*skill))
                         .max()
                         .unwrap_or(0);
-                    let floor = top.saturating_sub(1).max(*min_skill);
+                    let floor = if *exact {
+                        top
+                    } else {
+                        top.saturating_sub(1).max(*min_skill)
+                    };
                     let pool: Vec<(PersonId, f64)> = game
                         .present()
                         .filter(|p| eligible(p) && p.skill(*skill) >= floor && top >= *min_skill)
@@ -906,6 +922,9 @@ pub fn apply(game: &mut Game, storylet: &Storylet, option: &Option_, casting: &C
                     "throw_ship" => game.controls.throw = crate::project::ThrowMode::Ship,
                     "throw_hold" => game.controls.throw = crate::project::ThrowMode::HoldAtReserve,
                     "throw_stop" => game.controls.throw = crate::project::ThrowMode::Stop,
+                    "roster_skill" => game.controls.roster = crate::project::RosterOrder::Skill,
+                    "roster_strain" => game.controls.roster = crate::project::RosterOrder::Strain,
+                    "roster_name" => game.controls.roster = crate::project::RosterOrder::Name,
                     _ => {}
                 }
             }
@@ -991,6 +1010,17 @@ pub fn apply(game: &mut Game, storylet: &Storylet, option: &Option_, casting: &C
             Effect::CloseProject(id) => {
                 game.projects.retain(|s| s.id.0 != *id);
                 game.assignments.retain(|_, t| t.0 != *id);
+            }
+            Effect::Assign(role, target) => {
+                if let Some(id) = person(game, role) {
+                    let die = crate::project::DieId::Person(id);
+                    if target == "hand" {
+                        game.assignments.remove(&die);
+                    } else if game.projects.iter().any(|s| s.id.0 == *target) {
+                        game.assignments
+                            .insert(die, crate::project::ProjectId(target.clone()));
+                    }
+                }
             }
         }
     }

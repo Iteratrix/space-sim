@@ -32,7 +32,7 @@ id = "read"
 label = "Read it and put it on the SMB agenda"
 text = "Twenty months of the site's history. It knew about the harness."
 tags = ["machines", "capability"]
-chronicle = "MM 5. SX-19F unscheduled log (MM -20 to MM 4) reviewed by {operator}; tabled at SMB. Contents: site wear, unit 2 harness, solar activity."
+chronicle = "MM {turn}. SX-19F unscheduled log (MM -20 to MM 4) reviewed by {operator}; tabled at SMB. Contents: site wear, unit 2 harness, solar activity."
 [[option.effect]]
 flag = "mind_log_read"
 [[option.effect]]
@@ -52,9 +52,9 @@ text = "The HRA profile is a sponsor obligation under Article VI. An unscheduled
 [[option]]
 id = "file"
 label = "File it unread and reapply the SMR"
-text = "Compliance. The reset it missed goes in now."
+text = "Compliance. The last good reset image goes in now and the anomaly goes in the file unread."
 tags = ["sponsor", "caution"]
-chronicle = "MM 5. SX-19F unscheduled log archived unread. SMR reapplied from RSW-1 package. Model nominal."
+chronicle = "MM {turn}. SX-19F unscheduled log archived unread. The last good SMR image was reapplied. Model nominal."
 [[option.effect]]
 flag = "mind_log_filed"
 [[option.effect]]
@@ -65,16 +65,16 @@ seat = "liaison"
 stance = "for"
 text = "Reapply the reset. The board's audit trail then shows a missed SMR corrected within one window. That is the version they will read."
 [[option.advice]]
-seat = "bodies"
+seat = "extraction"
 stance = "against"
-text = "You would archive twenty months of a doctor's notes unread because the doctor was not asked. I say that as the one who keeps the dose ledger."
+text = "You are proposing to put twenty months of a plant's own wear log in a drawer unread. I read that log every morning. It is how I know what the loop is going to do before it does it."
 
 [[option]]
 id = "wipe"
 label = "Wipe the log and the anomaly with it"
 text = "No log, no deviation, no question."
 tags = ["sponsor", "risk"]
-chronicle = "MM 5. SX-19F unscheduled log deleted. SMR reapplied. No deviation reported."
+chronicle = "MM {turn}. SX-19F unscheduled log deleted. The SMR was reapplied. No deviation reported."
 [[option.effect]]
 flag = "mind_log_wiped"
 [[option.effect]]

@@ -35,7 +35,7 @@ id = "splice"
 label = "Splice it by hand and log the deviation"
 text = "{wright} becomes the person who fixes what the drawings do not cover."
 tags = ["capability", "machines", "independence"]
-chronicle = "MM 3. Dexterous unit 2 returned to service on a non-standard harness splice by {wright}. Deviation logged. First unstructured repair on station."
+chronicle = "MM {turn}. Dexterous unit 2 returned to service on a non-standard harness splice by {wright}. Deviation logged. First unstructured repair on station."
 [[option.effect]]
 flag = "wrights"
 [[option.effect]]
@@ -52,16 +52,16 @@ seat = "hulls"
 stance = "for"
 text = "A dexterous unit is three hundred hours a month. A splice is four hours and a signature. Sign it."
 [[option.advice]]
-seat = "liaison"
+seat = "hours"
 stance = "against"
-text = "A non-standard repair on sponsor hardware is a deviation report, and deviation reports are read by people who have never seen a bracket. I would ship it home."
+text = "A non-standard repair on sponsor hardware is a deviation report, and a deviation report is a line I carry at every review until somebody signs it off. I would ship it home and keep the file clean."
 
 [[option]]
 id = "ship_home"
 label = "Log it as return inventory for the next hull"
 text = "Procedure. The unit goes home, a new one comes out, nobody signs anything."
 tags = ["sponsor", "caution"]
-chronicle = "MM 3. Dexterous unit 2 logged as return inventory. No repair attempted. Requisition raised for replacement."
+chronicle = "MM {turn}. Dexterous unit 2 logged as return inventory. No repair attempted. Requisition raised for replacement."
 [[option.effect]]
 q = "menace.suspicion"
 add = -0.3
@@ -81,7 +81,7 @@ id = "cannibalise"
 label = "Strip it for parts to keep the other unit alive"
 text = "One good unit is worth two doubtful ones."
 tags = ["spares", "machines"]
-chronicle = "MM 3. Dexterous unit 2 stripped for spares. Unit 1 serviceable. Parts inventory increased."
+chronicle = "MM {turn}. Dexterous unit 2 stripped for spares. Unit 1 serviceable. Parts inventory increased."
 [[option.effect]]
 q = "stocks.spares"
 add = 6
@@ -91,6 +91,6 @@ add = -0.5
 [[option.effect]]
 flag = "wrights"
 [[option.advice]]
-seat = "air"
+seat = "extraction"
 stance = "for"
-text = "I would rather have the seals and the harness in a drawer than a unit that fails on the far side of the rock."
+text = "One unit that works beats two that might. I need the haul loop turning, not a doubtful machine parked where the loop turns."

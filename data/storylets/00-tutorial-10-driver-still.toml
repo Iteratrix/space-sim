@@ -5,12 +5,15 @@ once = true
 priority = 110
 tags = ["tutorial", "throughput", "sponsor"]
 text = """
-The board's model had the MDLS throwing at MM 14. It is MM 24 and the alignment
-task is still open on the allocation board with no hands on it. {liaison} has
-the query, worded as a query. {hulls} has the honest answer: eight segments, no
-free allocation, and the excavation and the plant ahead of it every month.
+The sponsor's model had the MDLS throwing at MM 14. It is MM 24, the alignment
+clock is still short of its eight segments, and nothing has gone down the rail.
+{liaison} has the query, worded as a query, with the section of the Act it is
+raised under printed under the signature block. {hulls} has the honest answer:
+eight segments, and every month there has been something on this rock with a
+better claim on the free allocation than a driver that has never thrown.
 
-The next RSW opens at MM 28. The board will see the ratio at zero.
+The next RSW opens at MM 28. Whatever the SMB does about this, the sponsor will
+read a ratio of zero for the first two years of the station's life.
 """
 
 [[when]]
@@ -26,14 +29,13 @@ seat = "hulls"
 [[cast]]
 role = "liaison"
 seat = "liaison"
-optional = true
 
 [[option]]
 id = "staff_it"
-label = "SMB directive: two lines to MDLS alignment until it throws"
-text = "Whatever they come off. Eight segments is a month with two ratings on it."
+label = "SMB directive: the alignment clock takes the free allocation until it throws"
+text = "Whatever it comes off. Eight segments is a month with two ratings on it."
 tags = ["throughput", "sponsor", "hulls"]
-chronicle = "MM 24. MDLS alignment overdue against board model. SMB directive: alignment staffed at priority until first throw."
+chronicle = "MM {turn}. The MDLS alignment clock is overdue against the sponsor's model. The SMB directed MDLS alignment ahead of every other clock until the first throw."
 [[option.effect]]
 flag = "align_priority"
 [[option.effect]]
@@ -46,14 +48,14 @@ text = "Give me two ratings for a month and it throws before the window. I have 
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "If those two come off the excavation the surface dose runs another month. Say which two and I will tell you their ledger lines."
+text = "If those two come off the excavation the surface dose runs another month. Name the two and I will read you their ledger lines."
 
 [[option]]
 id = "explain"
-label = "Send the board the CED ledger as the explanation"
-text = "Tell them why. Ten millisieverts a month is a reason."
+label = "Send the sponsor the CED ledger as the explanation"
+text = "Tell them why. Ten millisieverts a month against a career limit of six hundred is a reason."
 tags = ["sponsor", "dose", "independence"]
-chronicle = "MM 24. MDLS alignment overdue. CED ledger transmitted to board as justification for excavation priority."
+chronicle = "MM {turn}. The MDLS alignment clock is overdue against the sponsor's model. The CED ledger was transmitted to the sponsor as the justification for excavation priority."
 [[option.effect]]
 q = "menace.suspicion"
 add = 0.6
@@ -69,4 +71,4 @@ text = "It is their limit we are protecting. Six hundred millisieverts is a spon
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "The board does not have a line for dose. A ledger they did not request explains a zero they did not expect. Both go in the file."
+text = "The sponsor does not have a line for dose. A ledger they did not request, explaining a zero they did not expect, puts two documents in the file instead of none."

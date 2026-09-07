@@ -10,8 +10,8 @@ Fifty metres of drum under a hundred and sixty thousand tonnes of Fortuna, spun
 to half a gravity at three revolutions per minute. {bodies} closes the surface
 line on the CED ledger at MM {turn}: from this month the rate is twelve
 millisieverts a year, not a hundred and twenty. The Rotary Joint Seal Assembly
-(RJSA) at the hub is the only moving seal on the station; {air} (ECLSS Lead) has
-already started a page for it.
+(RJSA) at the hub is the only moving seal on the station, and it is now the
+largest single line in {air}'s make-up log.
 
 First sleep period underground. Nobody is on the roster for anything.
 """
@@ -32,7 +32,7 @@ id = "move_all"
 label = "Everyone down. Surface habitat to storage and storm shelter."
 text = "The whole crew under rock tonight."
 tags = ["people", "dose"]
-chronicle = "KEEP pressurised MM {turn}. All crew relocated to drum. Surface habitat reclassified as storage and STE shelter. CED surface line closed."
+chronicle = "MM {turn}. KEEP pressurised. All crew relocated to the drum. Surface habitat reclassified as storage and STE shelter. The CED surface line was closed."
 [[option.effect]]
 all_strain = -0.1
 [[option.effect]]
@@ -54,7 +54,7 @@ id = "keep_surface_watch"
 label = "Crew down; a surface watch stays with the plant and the driver"
 text = "Two people up top on rotation. The dose ledger keeps two lines open."
 tags = ["throughput", "dose", "hours"]
-chronicle = "KEEP pressurised MM {turn}. Crew relocated to drum; surface watch of two maintained on rotation for BOP and MDLS. CED surface line open for watch."
+chronicle = "MM {turn}. KEEP pressurised. Crew relocated to the drum, with a surface watch of two on rotation for the BOP and the MDLS by SMB directive. The CED surface line stays open for the watch."
 [[option.effect]]
 all_strain = -0.06
 [[option.effect]]

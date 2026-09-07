@@ -75,7 +75,13 @@ pub fn select(
             .then_with(|| a.0.id.cmp(&b.0.id))
     });
     let mut chosen: Vec<(&Storylet, Casting)> = Vec::new();
-    let max = params.director.max_storylets_per_count;
+    let max = if scripted_only(game)
+        || game.flags.contains("tutorial") && !game.flags.contains("tutorial_done")
+    {
+        1
+    } else {
+        params.director.max_storylets_per_count
+    };
     let take: Vec<usize> = eligible
         .iter()
         .enumerate()

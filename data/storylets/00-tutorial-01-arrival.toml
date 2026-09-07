@@ -15,9 +15,16 @@ metres; two dexterous units are logged as non-responsive. There is no
 Kilotonne-class Excavated Environmental Protection habitat (KEEP). The crew will
 sleep under regolith bags at 120 millisieverts a year until there is.
 
-{hulls} (Chief Engineer) and {hours} (Logistics Lead) constitute the Station
-Management Board (SMB) as of this entry. The other seats fill as their questions
-come up. First item: who goes to the surface first, and to what.
+The Station Management Board (SMB) is constituted with this entry and it is
+empty. A seat on it is a question, not a chair: it exists from the month the
+question is first asked, and it is held by whoever the board accepts the answer
+from. Two questions are open tonight. Someone has to answer for the hulls — what
+the robots actually built, what the fab can and cannot make, what a bearing
+costs in hours — and {hulls} has the assembly drawings open at the checksum
+error. Someone has to answer for the hours — the roster, the tasking list, what
+the sponsor's quarterly actually reads — and {hours} has the manifest.
+
+First item: who goes to the surface first, and to what.
 """
 
 [[when]]
@@ -25,18 +32,22 @@ turn_min = 1
 
 [[cast]]
 role = "hulls"
-seat = "hulls"
+skill = "engineering"
 
 [[cast]]
 role = "hours"
-seat = "hours"
+skill = "logistics"
 
 [[option]]
 id = "engineer_first"
-label = "Chief Engineer to the MDLS with the survey kit"
-text = "Find out what the robots actually built before anyone plans around it."
+label = "The survey kit to the MDLS before anything is planned around it"
+text = "The alignment log ends at MM -4 with a checksum error. Find out what the robots actually built."
 tags = ["hulls", "capability"]
-chronicle = "MM 1. Site handover complete. {hulls} on surface first: MDLS survey. Two dexterous units confirmed non-responsive. KEEP not started."
+chronicle = "MM {turn}. Site handover complete. The SMB constituted itself on two questions, hulls and hours. First surface task: MDLS survey. Two dexterous units confirmed non-responsive. KEEP not started."
+[[option.effect]]
+flag = "seat:hulls"
+[[option.effect]]
+flag = "seat:hours"
 [[option.effect]]
 flag = "tut_survey_first"
 [[option.effect]]
@@ -53,10 +64,14 @@ text = "A survey is hours that do not appear on any tasking line. The BOP is at 
 
 [[option]]
 id = "plant_first"
-label = "Logistics Lead to the BOP with the haul crew"
-text = "Water is the schedule. Get the plant to rated output and everything else follows."
+label = "The haul crew to the BOP and the plant to rated output"
+text = "Water is the schedule. Every tonne the plant does not make is a tonne the manifest has to carry."
 tags = ["throughput", "hours", "water"]
-chronicle = "MM 1. Site handover complete. {hours} on surface first: BOP restart. Rated output not yet reached. KEEP not started."
+chronicle = "MM {turn}. Site handover complete. The SMB constituted itself on two questions, hulls and hours. First surface task: BOP restart. Rated output not yet reached. KEEP not started."
+[[option.effect]]
+flag = "seat:hulls"
+[[option.effect]]
+flag = "seat:hours"
 [[option.effect]]
 flag = "tut_plant_first"
 [[option.effect]]
@@ -67,24 +82,24 @@ seat = "hours"
 stance = "for"
 text = "Every tonne the plant does not make this month is a tonne the manifest has to carry. Plant first."
 [[option.advice]]
-seat = "liaison"
-stance = "for"
-text = "The board's tasking list for MM 1 has the BOP at line one and the MDLS at line two. I would follow the list."
+seat = "hulls"
+stance = "against"
+text = "You do not task a plant you have not walked around. Two hours of survey buys a year of not guessing."
 
 [[option]]
 id = "all_hands"
 label = "All hands to the surface habitat, settle in, then task"
-text = "Nine months in a hull. Let people see the sky before they see a tasking list."
+text = "Fourteen people, nine months, one hull. The sleep log says give them a day; the dose will still be there tomorrow."
 tags = ["people", "risk"]
-chronicle = "MM 1. Site handover complete. All hands to surface habitat; tasking deferred one month. KEEP not started."
+chronicle = "MM {turn}. Site handover complete. The SMB constituted itself on two questions, hulls and hours. All hands to surface habitat; tasking deferred one month. KEEP not started."
+[[option.effect]]
+flag = "seat:hulls"
+[[option.effect]]
+flag = "seat:hours"
 [[option.effect]]
 all_strain = -0.08
 [[option.effect]]
 flag = "tut_all_hands"
-[[option.advice]]
-seat = "bodies"
-stance = "for"
-text = "Fourteen people, nine months, one hull. I have a sleep log that says give them a day. The dose will still be there tomorrow."
 [[option.advice]]
 seat = "hours"
 stance = "against"
