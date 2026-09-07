@@ -22,6 +22,8 @@ confederation of the belt when the inner system comes back.
 | `crates/orbit` | Kepler propagation, Lambert transfers, the body catalogue; validated against JPL Horizons |
 | `crates/sim` | the headless deterministic simulation: persons and ties, sponsor, storylets, ring, chronicle |
 | `crates/cli` | `space-sim`: play interactively, drive over JSON, or run Monte-Carlo batches |
+| `crates/web` | wasm-bindgen bridge: the game in the browser, state in the wasm |
+| `web/` | the page: clock rail, the hand, scene, ring, chronicle; deploys to GitHub Pages on a version tag |
 | `data/` | bodies, parameters, storylets |
 
 ## Running
@@ -35,7 +37,14 @@ cargo build --release
 ./target/release/space-sim validate                 # parse every storylet
 ./target/release/space-sim calendar --counts 200    # the Earth window table
 cargo test --release                                # Horizons validation, determinism, content checks
+
+wasm-pack build crates/web --target web --out-dir ../../web/pkg
+python3 -m http.server -d web 8765                  # then open http://localhost:8765/
+node web/build.mjs                                  # deploy bundle in web/out (CI does this)
 ```
+
+Every game starts with the tutorial: the first crewed hull arriving at a robot-built
+site. `--scenario act1` on the CLI starts from an established outpost instead.
 
 Everything in the simulation is headless, deterministic per seed, and meant to be
 driven and tested by an AI agent; the UI is a thin layer on top.
