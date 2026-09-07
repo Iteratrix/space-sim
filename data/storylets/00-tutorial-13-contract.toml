@@ -16,7 +16,7 @@ The board has a column for headcount. It does not have one for this.
 """
 
 [[when]]
-turn_min = 26
+turn_min = 27
 
 [[when]]
 turn_max = 32

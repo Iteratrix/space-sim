@@ -327,13 +327,25 @@ pub const WORDS: &[Word] = &[
 /// Renders text through the words whose triggers have fired. Matches whole words only.
 #[must_use]
 pub fn render(game: &Game, text: &str) -> String {
+    render_with(&game.lexicon_triggers, text)
+}
+
+/// Renders text through a given set of fired triggers (a chronicle entry's snapshot).
+#[must_use]
+pub fn render_with(triggers: &std::collections::BTreeSet<String>, text: &str) -> String {
     let mut out = text.to_owned();
     for Word { old, new, trigger } in WORDS {
-        if game.lexicon_triggers.contains(*trigger) {
+        if triggers.contains(*trigger) {
             out = replace_word(&out, old, new);
         }
     }
     out
+}
+
+/// Renders a chronicle entry in the vocabulary of its own count.
+#[must_use]
+pub fn render_entry(entry: &crate::state::ChronicleEntry) -> String {
+    render_with(&entry.words, &entry.text)
 }
 
 fn is_word_char(c: char) -> bool {

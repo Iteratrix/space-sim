@@ -12,8 +12,8 @@ twelve a year. The sponsor's career limit is 600. The Solar Transient Event
 (STE) forecast from Earth puts the next significant event inside the next four
 months; the surface habitat has a storm shelter rated for it, barely.
 
-KEEP excavation is {keep_status}. The board does not carry a line for dose.
-The ledger does.
+{keep_status} has the excavation schedule and will not give a completion month.
+The board does not carry a line for dose. The ledger does.
 """
 
 [[when]]

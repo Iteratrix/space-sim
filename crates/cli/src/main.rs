@@ -420,9 +420,16 @@ struct RunResult {
     summary: String,
 }
 
-fn run_one(engine: &Engine, seed: u64, policy: Policy, max_turns: u32, trace: bool) -> RunResult {
+fn run_one(
+    engine: &Engine,
+    seed: u64,
+    policy: Policy,
+    max_turns: u32,
+    trace: bool,
+    scenario: sim::setup::Scenario,
+) -> RunResult {
     use rand::SeedableRng;
-    let mut game = engine.new_game(seed).expect("new game");
+    let mut game = engine.new_game_scenario(seed, scenario).expect("new game");
     let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(seed ^ 0x00C0_FFEE);
     let mut fired: BTreeMap<String, u32> = BTreeMap::new();
     let mut chosen: BTreeMap<String, u32> = BTreeMap::new();
@@ -430,6 +437,7 @@ fn run_one(engine: &Engine, seed: u64, policy: Policy, max_turns: u32, trace: bo
         let (_, firings) = engine.advance(&mut game);
         if trace && game.turn.is_multiple_of(6) {
             eprintln!("{}", status_line(&game));
+            eprintln!("{}", hand_line(&game));
         }
         for f in &firings {
             let choice = policy.choose(f, &mut rng);
@@ -473,6 +481,7 @@ fn montecarlo(engine: &Engine, args: &Args) {
             args.policy,
             args.max_turns,
             false,
+            args.scenario,
         );
         let key = match &r.ending {
             Some(Ending::Silence { .. }) => "silence",
@@ -603,7 +612,14 @@ fn main() {
     match args.command.as_str() {
         "play" => play(&engine, &args),
         "run" => {
-            let r = run_one(&engine, args.seed, args.policy, args.max_turns, args.trace);
+            let r = run_one(
+                &engine,
+                args.seed,
+                args.policy,
+                args.max_turns,
+                args.trace,
+                args.scenario,
+            );
             if !args.quiet {
                 for line in &r.chronicle {
                     println!("{line}");

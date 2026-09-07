@@ -115,9 +115,7 @@ impl Engine {
             roles: firing.roles.clone(),
         };
         storylet::apply(game, storylet, option, &casting);
-        game.chronicle
-            .last()
-            .map(|e| lexicon::render(game, &e.text))
+        game.chronicle.last().map(lexicon::render_entry)
     }
 
     /// The structured view a front end renders.
@@ -168,7 +166,7 @@ impl Engine {
     pub fn chronicle(&self, game: &Game) -> Vec<String> {
         game.chronicle
             .iter()
-            .map(|e| format!("[{}] {}", e.turn, lexicon::render(game, &e.text)))
+            .map(|e| format!("[{}] {}", e.turn, lexicon::render_entry(e)))
             .collect()
     }
 }

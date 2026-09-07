@@ -456,8 +456,27 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) {
             .filter(|d| d.standing && game.projects.iter().any(|s| s.id == d.id))
             .collect();
         standing.sort_by(|a, b| a.id.cmp(&b.id));
+        let mut one_time: Vec<&ProjectDef> = game
+            .projects
+            .iter()
+            .filter_map(|s| defs.iter().find(|d| d.id == s.id && !d.standing))
+            .collect();
+        one_time.sort_by_key(|d| {
+            game.projects
+                .iter()
+                .find(|s| s.id == d.id)
+                .map_or(0, |s| s.opened)
+        });
         for &p in &kept {
             if assignments.contains_key(&DieId::Person(p)) {
+                continue;
+            }
+            let staffed = |d: &ProjectDef| assignments.values().filter(|t| **t == d.id).count();
+            if let Some(d) = one_time
+                .iter()
+                .find(|d| staffed(d) < 3 && face(game, p, d.domain) >= d.min_skill.max(1))
+            {
+                assignments.insert(DieId::Person(p), d.id.clone());
                 continue;
             }
             let n_present = game.present().count().az::<f64>();

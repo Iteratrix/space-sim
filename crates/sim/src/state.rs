@@ -285,6 +285,9 @@ pub struct ChronicleEntry {
     pub text: String,
     /// Storylet that wrote it, if any.
     pub source: Option<String>,
+    /// The lexicon triggers in force when it was written; the entry renders in that vocabulary.
+    #[serde(default)]
+    pub words: BTreeSet<String>,
 }
 
 /// Per-storylet firing record.
@@ -665,6 +668,7 @@ impl Game {
             turn: self.turn,
             text: text.into(),
             source: source.map(str::to_owned),
+            words: self.lexicon_triggers.clone(),
         });
     }
 }

@@ -14,6 +14,9 @@ Earth will notice until the day it saves us.
 [[when]]
 turn_min = 1
 
+[[when]]
+not_flag = "tutorial"
+
 [[cast]]
 role = "hours"
 seat = "hours"

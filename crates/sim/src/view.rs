@@ -641,7 +641,7 @@ pub fn view(
         .iter()
         .rev()
         .take(40)
-        .map(|e| format!("[{}] {}", e.turn, lexicon::render(game, &e.text)))
+        .map(|e| format!("[{}] {}", e.turn, lexicon::render_entry(e)))
         .collect::<Vec<_>>()
         .into_iter()
         .rev()

@@ -16,7 +16,7 @@ or it can be shaped.
 """
 
 [[when]]
-turn_min = 15
+turn_min = 16
 
 [[when]]
 turn_max = 19

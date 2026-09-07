@@ -133,7 +133,14 @@ fn labour(game: &mut Game, params: &Params) -> f64 {
         .collect();
     let n = count_f(adults.len());
     let capacity = adults.iter().sum::<f64>() * params.labour.capacity_h_per_count;
-    let subsistence = subsistence_hours(n, params);
+    let supplied = match game.sponsor.stage {
+        SponsorStage::Enthusiasm
+        | SponsorStage::MilestoneAnxiety
+        | SponsorStage::UpdatesStopped => 0.65,
+        SponsorStage::Austerity | SponsorStage::SkippedRotation => 0.8,
+        SponsorStage::Sale | SponsorStage::NoShip => 1.0,
+    };
+    let subsistence = subsistence_hours(n, params) * supplied;
     let robot_hours: f64 = crate::state::RobotClass::ALL
         .iter()
         .map(|c| game.robots.count(*c) * c.hours())

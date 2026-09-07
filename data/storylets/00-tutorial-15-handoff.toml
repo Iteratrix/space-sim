@@ -17,7 +17,7 @@ same number.
 """
 
 [[when]]
-turn_min = 42
+turn_min = 43
 
 [[when]]
 turn_max = 50
@@ -39,7 +39,7 @@ id = "count"
 label = "Minute it as the count from now on"
 text = "Mission Month is the board's clock. The count is ours."
 tags = ["independence", "people"]
-chronicle = "Forty-three counts since we came down. The board says MM 43 and we have stopped correcting them. This is the log now, and it is ours."
+chronicle = "Forty-three since we came down. The board's calendar reads the same number in its own unit and we have stopped correcting it. This is the log now, and it is ours."
 [[option.effect]]
 flag = "tutorial_done"
 [[option.effect]]
@@ -60,7 +60,7 @@ id = "mm"
 label = "Keep Mission Month in the minutes; the count is for the meal"
 text = "The board's paper stays the board's. What we say to each other is ours."
 tags = ["sponsor", "caution"]
-chronicle = "Forty-three counts since we came down. The minutes still say MM 43, for the board. At the meal nobody says MM. This is the log now."
+chronicle = "Forty-three since we came down. The minutes keep the board's unit, for the board. At the meal nobody uses it. This is the log now."
 [[option.effect]]
 flag = "tutorial_done"
 [[option.effect]]
