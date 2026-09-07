@@ -1,0 +1,101 @@
+id = "nowhere_to_aim"
+title = "The Chair Is Empty and the Anger Is Not"
+act = 1
+cooldown = 12
+tags = ["people", "sponsor"]
+text = """
+For years the can had somewhere to put it: the tasking list, the quarterly,
+the voice on the link that never understood. The link is mostly quiet now.
+{voice} said something at the meal this count that a year ago would have been
+about Earth, and it was about {target}. The hindrance graph, if anyone drew it,
+would show what the record predicts: with no outside party to blame, the blame
+turns inward within a few counts. The ring can choose where it lands.
+"""
+
+[[when]]
+q = "sponsor.attention"
+lt = 0.2
+
+[[cast]]
+role = "voice"
+
+[[cast]]
+role = "target"
+skill = "logistics"
+min_skill = 1
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+optional = true
+
+[[option]]
+id = "inner_system"
+label = "Name the inner system: they left us, and we say so"
+text = "A distant target, still. Nobody here has to wear it."
+tags = ["people", "independence"]
+chronicle = "The ring gave the can a new name for what it hated: the inner system, which had left. It worked, and it made going home a stranger idea."
+[[option.effect]]
+all_strain = -0.06
+[[option.effect]]
+all_return_intent = -0.04
+[[option.effect]]
+flag = "blame_inner_system"
+[[option.effect]]
+q = "menace.grievance"
+add = -0.3
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "They did leave. Saying it at the meal costs nothing and it is true."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "The moment we decide the inner system is the enemy we stop writing manifests. I am not ready to stop writing manifests."
+
+[[option]]
+id = "old_guard"
+label = "Let it land on {target} and the old schedule"
+text = "Someone has to have been wrong. The people who kept the sponsor's rules the longest are the obvious candidates."
+tags = ["people", "risk"]
+chronicle = "The anger found {target}, who had kept the old schedule longest. The can was calmer for it. {target} was not."
+[[option.effect]]
+tie = ["voice", "target"]
+hindrance = 0.3
+[[option.effect]]
+person = "target"
+strain = 0.2
+[[option.effect]]
+all_strain = -0.04
+[[option.effect]]
+counter = "scapegoats"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "The schedule was wrong for two years and everyone knew it. If a name goes with that, so be it."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "You want to make one of us into the sponsor. The sponsor could not hear it. {target} can."
+
+[[option]]
+id = "hold_it"
+label = "Say it plainly: there is no one to blame now but us"
+text = "No target. The can holds its own anger, and pays for it in strain."
+tags = ["people", "independence", "caution"]
+chronicle = "The ring stood up and said there was nobody left to blame but ourselves. It was true, and it was a hard count."
+[[option.effect]]
+all_strain = 0.04
+[[option.effect]]
+q = "menace.grievance"
+add = -0.6
+[[option.effect]]
+flag = "held_the_anger"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Displacement is a habit, and the record says it turns inward whatever we do. Better to name that than to pick a victim for it."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Somebody on Earth still reads this log, occasionally. Announcing that we have no one to blame reads, from there, like an announcement."

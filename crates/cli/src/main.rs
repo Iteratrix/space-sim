@@ -15,7 +15,7 @@ use sim::director::Firing;
 use sim::state::Ending;
 use sim::{Engine, Game, Quality};
 use std::collections::BTreeMap;
-use std::io::{BufRead, Write};
+use std::io::Write;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Policy {

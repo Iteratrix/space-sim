@@ -8,9 +8,32 @@ are nomadic and maritime cultures. Three acts — a sponsored harvesting outpost
 the slow loss of the sponsor and the drift into something Voidborn, and the
 confederation of the belt when the inner system comes back.
 
-Design decisions so far live in [NOTES.md](NOTES.md). Research reports from the
-first phase (physics, economics, industry, and the historical analogies) live in
-[docs/research/](docs/research/).
+## Layout
 
-Everything in the simulation is meant to be headless, deterministic, and
-testable by an AI agent; the UI is a thin layer on top.
+| path | what |
+|---|---|
+| `NOTES.md` | running design decisions, in the order they were made |
+| `docs/design/canon.md` | the settled design reference the code and content point at |
+| `docs/design/storylet-format.md` | the content format |
+| `docs/design/voidborn-*.md` | the two creative pitches |
+| `docs/research/` | thirteen research reports (physics, economics, industry, history, games) |
+| `crates/orbit` | Kepler propagation, Lambert transfers, the body catalogue; validated against JPL Horizons |
+| `crates/sim` | the headless deterministic simulation: persons and ties, sponsor, storylets, ring, chronicle |
+| `crates/cli` | `space-sim`: play interactively, drive over JSON, or run Monte-Carlo batches |
+| `data/` | bodies, parameters, storylets |
+
+## Running
+
+```sh
+cargo build --release
+./target/release/space-sim play --seed 7            # interactive text
+./target/release/space-sim play --json --seed 7     # one JSON object per prompt; choices on stdin
+./target/release/space-sim run --seed 7 --trace     # headless, random policy, status every 6 counts
+./target/release/space-sim montecarlo --games 200 --policy ring
+./target/release/space-sim validate                 # parse every storylet
+./target/release/space-sim calendar --counts 200    # the Earth window table
+cargo test --release                                # Horizons validation, determinism, content checks
+```
+
+Everything in the simulation is headless, deterministic per seed, and meant to be
+driven and tested by an AI agent; the UI is a thin layer on top.

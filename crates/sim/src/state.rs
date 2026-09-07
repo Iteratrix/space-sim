@@ -473,7 +473,7 @@ impl Game {
             Quality::Shipped => self.shipped_t = value.max(0.0),
             Quality::Received => self.received_t = value.max(0.0),
             Quality::ReactorLife => {
-                self.power.reactor_life = value.max(0.0).round().saturating_as::<u32>()
+                self.power.reactor_life = value.max(0.0).round().saturating_as::<u32>();
             }
             Quality::RobotsPlant => self.robots.plant = value.max(0.0),
             Quality::RobotsHaul => self.robots.haul = value.max(0.0),

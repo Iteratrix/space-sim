@@ -1,0 +1,139 @@
+id = "two_dominants"
+title = "Two Answers to One Question"
+act = 1
+cooldown = 8
+tags = ["people", "hulls"]
+text = """
+{first} and {second} have stopped speaking to each other except through the
+shift log. Each is the best at what they do and each believes the other is in
+the way of it: the drum schedule against the bake-out schedule, the fab hours
+against the haul hours, and beneath that, two people who both expect to be
+obeyed in a place with one mess hall. The ICE literature is plain about this.
+Two of thirty-six produce most of the friction, and these are the two.
+"""
+
+[[when]]
+q = "people.conflict_concentration"
+gt = 0.5
+
+[[cast]]
+role = "first"
+skill = "engineering"
+min_skill = 2
+
+[[cast]]
+role = "second"
+skill = "extraction"
+min_skill = 2
+
+[[option]]
+id = "arbitrate"
+label = "Choose an arbiter both will accept and bind them to the finding"
+text = "Not the ring and not the sponsor. Someone with no stake, paid in hours."
+tags = ["people", "independence"]
+chronicle = "{first} and {second} were put before an arbiter of their own choosing. The finding held, mostly, and the arbiter was paid a tenth in hours."
+[[option.effect]]
+tie = ["first", "second"]
+hindrance = -0.25
+[[option.effect]]
+tie = ["second", "first"]
+hindrance = -0.25
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+counter = "arbitrations"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "An arbiter costs me ten hours. The two of them not speaking costs me forty a count in duplicated work."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "There is a grievance procedure. It goes through me and then to Earth. Inventing our own is the kind of thing the audit notices."
+
+[[option]]
+id = "separate"
+label = "Split the watches so they never share a shift"
+text = "Escape capacity is the one lever the habitat has. Give them somewhere not to be."
+tags = ["people", "hours"]
+chronicle = "The roster was cut so that {first} and {second} never stood a watch together. The work got worse and the mess hall got quieter."
+[[option.effect]]
+tie = ["first", "second"]
+hindrance = -0.1
+[[option.effect]]
+tie = ["first", "second"]
+work_positive = -0.15
+[[option.effect]]
+tie = ["second", "first"]
+work_positive = -0.15
+[[option.effect]]
+person = "first"
+strain = -0.1
+[[option.effect]]
+person = "second"
+strain = -0.1
+[[option.effect]]
+all_strain = 0.02
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "In a can this size the only cure I know is distance. Give them a schedule that is a wall."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "The drum and the bake-out share a power bus. If they cannot be in the same room they cannot be on the same bus, and I cannot build them a second one."
+
+[[option]]
+id = "back_one"
+label = "Back {first} and say so"
+text = "One of them has to be the one the ring listens to. Decide, and take the cost of deciding."
+tags = ["hulls", "risk"]
+chronicle = "The ring came down for {first}. {second} put in for the next ship and said nothing further on the record."
+[[option.effect]]
+tie = ["second", "first"]
+hindrance = 0.3
+[[option.effect]]
+tie = ["first", "second"]
+reliance = -0.2
+[[option.effect]]
+person = "second"
+return_intent = 0.25
+[[option.effect]]
+person = "second"
+strain = 0.15
+[[option.effect]]
+all_strain = -0.02
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Somebody has to hold the drum schedule and it is not going to be the person who thinks a bearing can wait a count."
+[[option.advice]]
+seat = "extraction"
+stance = "against"
+text = "You back the one with the louder voice and you lose the one who knows where the water is. That is not a trade, that is a loss."
+
+[[option]]
+id = "let_it_run"
+label = "Let it run"
+text = "They are adults on contract. The work gets done."
+tags = ["hours", "risk"]
+chronicle = "The ring let {first} and {second} fight it out. The work got done and everybody chose a side."
+[[option.effect]]
+tie = ["first", "second"]
+hindrance = 0.2
+[[option.effect]]
+tie = ["second", "first"]
+hindrance = 0.2
+[[option.effect]]
+all_strain = 0.08
+[[option.effect]]
+q = "menace.grievance"
+add = 0.5
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Every station I ever wintered on had two of these. You do not fix them, you wait for the ship."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "Everyone else is already taking sides. Another count of this and it is not two people, it is two halves."
