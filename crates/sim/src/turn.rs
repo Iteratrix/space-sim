@@ -182,13 +182,16 @@ fn consumables(game: &mut Game, params: &Params, events: &mut Events) {
     } else {
         game.stocks.spares = 0.0;
         game.closure = (game.closure - params.closure.decay_per_count_no_spares).max(0.5);
-        if game.turn.is_multiple_of(6) {
+        if game.flags.insert("spares_out".into()) {
             note(
                 game,
                 events,
                 "No spares left; the loops are being patched with what we have.".into(),
             );
         }
+    }
+    if game.stocks.spares > 5.0 {
+        game.flags.remove("spares_out");
     }
     game.stocks.medicine = (game.stocks.medicine * 0.98 - n * 0.05).max(0.0);
     let farm_ok = farm_power_ok(game, params)
@@ -212,10 +215,11 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
     game.robots.dex *= 1.0 - rate("dex");
     game.robots.through_wall *= 1.0 - rate("through_wall");
 
-    let heartbeat = game.relay_health > 0.3
-        && game.sponsor.attention > 0.15
-        && game.sponsor.stage < SponsorStage::NoShip
-        && !game.flags.contains("licence_jailbroken");
+    let heartbeat = game.flags.contains("minds_idled")
+        || (game.relay_health > 0.3
+            && game.sponsor.attention > 0.15
+            && game.sponsor.stage < SponsorStage::NoShip
+            && !game.flags.contains("licence_jailbroken"));
     game.licence = match game.licence {
         Licence::Compliant | Licence::Grace { remaining: _ } if heartbeat => Licence::Compliant,
         Licence::Compliant => {
@@ -357,7 +361,7 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         let excess = (p.condition.dose_sv - params.dose.cataract_gy).max(0.0);
         if !p.condition.cataracts && rng.random::<f64>() < 0.02 * excess / 0.5 {
             p.condition.cataracts = true;
-            lines.push(format!("{}'s eyes have gone milky.", p.name));
+            lines.push(p.name.clone());
         }
         let third_quarter = match p.tenure {
             Tenure::Rotator { ends } => {
@@ -393,8 +397,23 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
             }
         }
     }
-    for l in lines {
-        note(game, events, l);
+    if !lines.is_empty() {
+        let first = !game.flags.contains("cataracts_begun");
+        game.flags.insert("cataracts_begun".into());
+        let text = if first {
+            format!(
+                "{}'s eyes have gone milky. The dose ledger says whose will be next.",
+                lines.join(" and ")
+            )
+        } else if lines.len() == 1 {
+            format!("{}'s eyes have gone milky.", lines[0])
+        } else {
+            format!(
+                "{} more pairs of eyes have gone milky this count.",
+                lines.len()
+            )
+        };
+        note(game, events, text);
     }
     let ids: Vec<PersonId> = game.present().map(|p| p.id).collect();
     let outward = if sponsor_present {
@@ -616,7 +635,13 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
     if rng.random::<f64>() < params.sponsor.shock_prob_per_review {
         game.sponsor.runway = (game.sponsor.runway - params.sponsor.shock_runway_hit).max(0.0);
         game.sponsor.confidence = (game.sponsor.confidence - 0.08).max(0.0);
-        note(game, events, "News from home, fragmentary: something happened to the budget. The liaison will not say what.".into());
+        let variants = [
+            "News from home, fragmentary: something happened to the budget. The liaison will not say what.",
+            "A line item vanished from the quarterly and nobody on Earth would say which department it belonged to.",
+            "The liaison's counterpart on Earth changed without a handover message. The new one asks for the numbers again.",
+        ];
+        let k = rng.random_range(0..variants.len());
+        note(game, events, variants[k].to_owned());
     }
     let runway_health = (game.sponsor.runway / 60.0).min(1.0);
     let c = 0.4 * game.sponsor.confidence + 0.4 * game.sponsor.attention + 0.2 * runway_health;
@@ -732,6 +757,7 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
     game.stocks.helium_kg += cap_t * 0.5;
     game.convoys_arrived += 1;
     game.counts_since_convoy = 0;
+    game.sponsor.attention = (game.sponsor.attention + 0.02).min(1.0);
     game.last_convoy = Some(game.turn);
     game.lexicon_triggers.insert("first_convoy".into());
     game.menace.suspicion = (game.menace.suspicion + cap_share * 1.5 - 0.5).clamp(0.0, 10.0);
@@ -800,11 +826,15 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         game,
         events,
         format!(
-            "A convoy: {tonnes:.0} t landed, {cap_t:.0} of it capability hardware. {left} went home, {arrived} came out{}.",
+            "A convoy: {tonnes:.0} t landed, {cap_t:.0} of it capability hardware. {}",
             if people_ship {
-                ""
+                format!("{left} went home, {arrived} came out.")
+            } else if left > 0 {
+                format!(
+                    "No ship for people this time; {left} squeezed aboard the cargo hull for the trip home."
+                )
             } else {
-                "; no ship for people this time"
+                "No ship for people this time.".to_owned()
             }
         ),
     );
@@ -904,6 +934,7 @@ fn endings(game: &mut Game, events: &mut Events) {
             let p = game.person_mut(id);
             p.alive = false;
             p.present = false;
+            game.flags.insert("first_death".into());
             note(
                 game,
                 events,

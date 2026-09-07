@@ -747,11 +747,28 @@ impl Storylet {
                     .map(|&id| game.person(id))
                     .filter(|p| eligible(p) && p.skill(seat.skill()) >= *min_skill)
                     .map(|p| p.id),
-                CastBy::Skill(skill) => game
-                    .present()
-                    .filter(|p| eligible(p) && p.skill(*skill) >= *min_skill)
-                    .max_by_key(|p| (p.skill(*skill), std::cmp::Reverse(p.id)))
-                    .map(|p| p.id),
+                CastBy::Skill(skill) => {
+                    let top = game
+                        .present()
+                        .filter(|p| eligible(p))
+                        .map(|p| p.skill(*skill))
+                        .max()
+                        .unwrap_or(0);
+                    let floor = top.saturating_sub(1).max(*min_skill);
+                    let pool: Vec<(PersonId, f64)> = game
+                        .present()
+                        .filter(|p| eligible(p) && p.skill(*skill) >= floor && top >= *min_skill)
+                        .map(|p| {
+                            let recent = game
+                                .recent_cast
+                                .get(&p.id)
+                                .is_some_and(|&t| game.turn < t + 8);
+                            let w = if p.skill(*skill) == top { 1.0 } else { 0.4 };
+                            (p.id, if recent { w * 0.15 } else { w })
+                        })
+                        .collect();
+                    weighted_pick(&pool, rng)
+                }
                 CastBy::Anyone => {
                     let pool: Vec<(PersonId, f64)> = game
                         .present()

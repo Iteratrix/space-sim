@@ -113,7 +113,7 @@ impl Seat {
             Self::Hulls | Self::Hours | Self::Extraction | Self::Bodies | Self::Air => true,
             Self::Machines => game.act >= 2 || game.flags.contains("machines_seat"),
             Self::Children => game.quality(crate::quality::Quality::Children) > 0.0,
-            Self::Liaison => game.act == 1 && game.sponsor.attention > 0.05,
+            Self::Liaison => game.act == 1,
         }
     }
 
