@@ -30,7 +30,8 @@ function die(d) {
   const upkeep = d.place === "upkeep" ? " upkeep" : "";
   const face = d.robot ? "R" : FACES[Math.min(d.face, 6)];
   const title = d.robot ? `${d.label} unit — ${d.face} pips` : `${d.label} — face ${d.face}${dull ? " (strained)" : ""}${upkeep ? " — eating and breathing" : ""}`;
-  return `<span class="die${d.robot ? " robot" : ""}${dull}${upkeep}" draggable="${upkeep ? "false" : "true"}" data-die="${d.id}" title="${title}">${face}</span>`;
+  const name = d.robot ? "" : `<small>${d.label.split(" ")[0]}</small>`;
+  return `<span class="die${d.robot ? " robot" : ""}${dull}${upkeep}" draggable="${upkeep ? "false" : "true"}" data-die="${d.id}" title="${title}">${face}${name}</span>`;
 }
 
 function headline(v) {

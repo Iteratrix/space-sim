@@ -552,11 +552,22 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) {
             .assignments
             .get(&DieId::Person(*p))
             .and_then(|pid| defs.iter().find(|d| &d.id == pid))
-            .map_or(Skill::Engineering, |d| d.domain);
+            .map(|d| d.domain);
+        let shown = domain.map_or_else(
+            || {
+                let best = Skill::ALL
+                    .into_iter()
+                    .map(|s| face(game, *p, s))
+                    .max()
+                    .unwrap_or(0);
+                best
+            },
+            |d| face(game, *p, d),
+        );
         dice.push(DieView {
             id: DieId::Person(*p).key(),
             label: person.name.clone(),
-            face: face(game, *p, domain),
+            face: shown,
             strain: person.condition.strain,
             place,
             robot: false,

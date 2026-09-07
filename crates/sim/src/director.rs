@@ -153,7 +153,9 @@ pub fn select(
 
 /// During the tutorial only scripted (priority >= 100) scenes fire.
 fn scripted_only(game: &Game) -> bool {
-    game.flags.contains("tutorial") && !game.flags.contains("tutorial_done")
+    game.flags.contains("tutorial")
+        && !game.flags.contains("tutorial_done")
+        && !game.flags.contains("tutorial_open")
 }
 
 /// Who holds each seat, by name, for display.

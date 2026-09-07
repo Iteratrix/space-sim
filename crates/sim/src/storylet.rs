@@ -890,6 +890,24 @@ pub fn apply(game: &mut Game, storylet: &Storylet, option: &Option_, casting: &C
             }
             Effect::Flag(f) => {
                 game.flags.insert(f.clone());
+                match f.as_str() {
+                    "manifest_throughput" => {
+                        game.controls.manifest = crate::project::ManifestSplit::Throughput
+                    }
+                    "manifest_balanced" => {
+                        game.controls.manifest = crate::project::ManifestSplit::Balanced
+                    }
+                    "manifest_capability" => {
+                        game.controls.manifest = crate::project::ManifestSplit::Capability
+                    }
+                    "manifest_people" => {
+                        game.controls.manifest = crate::project::ManifestSplit::People
+                    }
+                    "throw_ship" => game.controls.throw = crate::project::ThrowMode::Ship,
+                    "throw_hold" => game.controls.throw = crate::project::ThrowMode::HoldAtReserve,
+                    "throw_stop" => game.controls.throw = crate::project::ThrowMode::Stop,
+                    _ => {}
+                }
             }
             Effect::Unflag(f) => {
                 game.flags.remove(f);
