@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 web/pkg/
 web/out/
+web/test/.profile*/

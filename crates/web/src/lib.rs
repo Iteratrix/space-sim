@@ -103,18 +103,17 @@ pub fn advance(handle: u32) -> String {
     result.unwrap_or_else(err)
 }
 
-/// Resolves a pending scene by option id. Returns `{"chronicle": "..."}`.
+/// Resolves a scene by option id. `firing` is the scene as `advance` returned it (or the
+/// page's saved copy of it), so a reloaded page can still resolve what was pending.
+/// Returns `{"chronicle": "..."}`.
 #[wasm_bindgen]
 #[must_use]
-pub fn resolve(handle: u32, firing_id: &str, option_id: &str) -> String {
-    let firing = PENDING.with(|p| {
-        p.borrow()
-            .get(&handle)
-            .and_then(|fs| fs.iter().find(|f| f.id == firing_id).cloned())
-    });
-    let Some(firing) = firing else {
-        return err(format!("no pending scene {firing_id}"));
+pub fn resolve(handle: u32, firing: &str, option_id: &str) -> String {
+    let firing: sim::Firing = match serde_json::from_str(firing) {
+        Ok(f) => f,
+        Err(e) => return err(format!("bad firing: {e}")),
     };
+    let firing_id = firing.id.clone();
     let result = with_game(handle, |engine, game| {
         engine.resolve_by_id(game, &firing, option_id).map_or_else(
             || err("no such option"),

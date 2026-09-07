@@ -52,3 +52,24 @@ prints one game's chronicle with a status line every six counts on stderr.
 Saves: `play --save FILE` writes the full state as JSON after every count;
 `play --load FILE` resumes it. Replay is exact: the same seed and the same choices
 produce the same chronicle.
+
+## Playing the page itself
+
+`web/test/play.py` drives the real browser page (Playwright + Chromium), one action per
+invocation, with the save kept in a browser profile so state persists between calls:
+
+```sh
+python3 -m http.server -d web 8765 &            # serve the page once
+P="uv run --with playwright python3 web/test/play.py --profile me"
+$P new 5 tutorial          # start; prints the state as JSON
+$P state                   # headline, scene (title, text, options with n/id), events, hand, projects, countdowns, ledger, pressures, sponsor, ring (counsel + favours), controls
+$P choose 2                # or an option id
+$P end                     # advance a count (refused while a scene is pending)
+$P assign p:7 dig_keep     # die ids and project ids come from `state`
+$P set auto_deal off       # manifest | throw | roster | auto_deal
+$P chronicle
+$P screenshot /tmp/shot.png
+```
+
+Each call takes ~2 s (a fresh Chromium with a persistent profile). Use a distinct
+`--profile` per agent; the default profile is `web/test/.profile`.

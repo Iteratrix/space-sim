@@ -4,6 +4,7 @@ const el = (id) => document.getElementById(id);
 const parse = (s) => JSON.parse(s);
 const FACES = ["·", "1", "2", "3", "4", "5", "6"];
 const SAVE_KEY = "fortuna-save";
+const PENDING_KEY = "fortuna-pending";
 
 let handle = null;
 let view = null;
@@ -138,12 +139,22 @@ function showScene() {
   renderRing();
 }
 
+function persist() {
+  try {
+    localStorage.setItem(SAVE_KEY, wasm.save(handle));
+    localStorage.setItem(PENDING_KEY, JSON.stringify(pending));
+  } catch (_) { /* private mode */ }
+}
+
 function choose(firingId, optionId) {
-  const r = parse(wasm.resolve(handle, firingId, optionId));
+  const firing = pending.find((f) => f.id === firingId);
+  if (!firing) return;
+  const r = parse(wasm.resolve(handle, JSON.stringify(firing), optionId));
   if (r.error) { el("hand-note").textContent = r.error; return; }
   el("events").insertAdjacentHTML("beforeend", `<div class="chron-line">${r.chronicle}</div>`);
   pending.shift();
   apply(wasm.view(handle));
+  persist();
   showScene();
 }
 
@@ -155,7 +166,7 @@ function advance() {
   el("events").innerHTML = r.events.map((e) => `<div>${e}</div>`).join("");
   render();
   showScene();
-  try { localStorage.setItem(SAVE_KEY, wasm.save(handle)); } catch (_) { /* private mode */ }
+  persist();
   if (r.ending) {
     el("events").insertAdjacentHTML("beforeend", `<div class="chron-line">${parse(wasm.summary(handle)).replaceAll("\n", "<br>")}</div>`);
     el("btn-end").disabled = true;
@@ -176,7 +187,7 @@ function resume() {
     const r = parse(wasm.load(saved));
     if (r.error) return false;
     handle = r.handle;
-    pending = [];
+    try { pending = JSON.parse(localStorage.getItem(PENDING_KEY) || "[]"); } catch (_) { pending = []; }
     apply(wasm.view(handle));
     el("events").innerHTML = "<div>Resumed from the last count.</div>";
     showScene();
