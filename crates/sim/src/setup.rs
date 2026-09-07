@@ -253,6 +253,7 @@ pub fn new_game_scenario(
         assignments: BTreeMap::default(),
         hand: crate::project::Hand::default(),
         controls: crate::project::Controls::default(),
+        ledger_prev: BTreeMap::default(),
         chronicle: Vec::new(),
         lexicon_triggers: BTreeSet::default(),
         ending: None,

@@ -31,6 +31,7 @@ h3{margin:14px 0 6px;font:11px var(--mono);letter-spacing:.14em;text-transform:u
 #hand-dice .die{width:auto;min-width:24px;padding:0 4px;gap:3px}
 #hand-dice .die small{display:inline;font:9px system-ui;color:var(--dim);font-weight:normal}
 .clock .die small{display:none}
+#hand-dice{max-height:132px;overflow-y:auto}
 #hand-note{color:var(--dim);font-size:11px;margin-top:4px;font-style:italic}
 .control{display:block;color:var(--dim);font-size:11px;margin-top:4px}
 .control select{background:#0c0e12;color:var(--ink);border:1px solid var(--line);font-size:11px}

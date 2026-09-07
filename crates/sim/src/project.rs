@@ -80,6 +80,15 @@ struct RawProject {
     repeat_segments: Option<u32>,
     #[serde(default)]
     description: String,
+    #[serde(default)]
+    on_complete_add: Option<QualityAdd>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct QualityAdd {
+    q: String,
+    value: f64,
 }
 
 const fn six() -> u32 {
@@ -125,6 +134,8 @@ pub struct ProjectDef {
     pub on_complete_lexicon: Option<String>,
     /// Segments when it reopens after completion.
     pub repeat_segments: Option<u32>,
+    /// A quality to add to on completion (e.g. a through-wall unit).
+    pub on_complete_add: Option<(crate::quality::Quality, f64)>,
 }
 
 impl ProjectDef {
@@ -170,6 +181,17 @@ impl ProjectDef {
             on_complete_flag: raw.on_complete_flag,
             on_complete_lexicon: raw.on_complete_lexicon,
             repeat_segments: raw.repeat_segments,
+            on_complete_add: match raw.on_complete_add {
+                None => None,
+                Some(QualityAdd { q, value }) => {
+                    let quality = crate::quality::Quality::parse(&q)
+                        .filter(|x| x.writable())
+                        .ok_or_else(|| {
+                            invalid(format!("on_complete_add: unknown or read-only quality {q}"))
+                        })?;
+                    Some((quality, value))
+                }
+            },
         })
     }
 }
@@ -293,6 +315,9 @@ pub struct DieView {
     pub label: String,
     /// Face for the given domain (persons), or pips a robot gives; 0-6.
     pub face: u8,
+    /// Every non-zero face by domain, so the player can see where a die is worth more.
+    #[serde(default)]
+    pub faces: std::collections::BTreeMap<String, u8>,
     /// Strain, for the dulling.
     pub strain: f64,
     /// Where it sits: a project id, or "hand", or "upkeep".
@@ -538,65 +563,93 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) {
         }
     }
     game.assignments = assignments;
+    game.hand = Hand {
+        adults: n,
+        eaten,
+        free,
+        shortfall,
+        robots: robot_units.len().saturating_as::<u32>(),
+        dice: Vec::new(),
+    };
+    refresh_hand(game, defs);
+}
+
+/// Rebuilds the dice list of the hand from the current assignments without re-dealing.
+pub fn refresh_hand(game: &mut Game, defs: &[ProjectDef]) {
+    let adults: Vec<PersonId> = game
+        .present()
+        .filter(|p| p.age_counts(game.turn) >= 18 * 12)
+        .map(|p| p.id)
+        .collect();
+    let eaten_ids: std::collections::BTreeSet<PersonId> = game
+        .hand
+        .dice
+        .iter()
+        .filter(|d| !d.robot && d.place == "upkeep")
+        .filter_map(|d| DieId::parse(&d.id))
+        .filter_map(|d| match d {
+            DieId::Person(p) => Some(p),
+            DieId::Robot(_, _) => None,
+        })
+        .collect();
+    let eaten_ids = if game.hand.dice.is_empty() {
+        let free = game.hand.free.az::<usize>();
+        adults.iter().copied().skip(free).collect()
+    } else {
+        eaten_ids
+    };
     let mut dice = Vec::new();
     for p in &adults {
-        let place = if kept.contains(p) {
-            game.assignments
-                .get(&DieId::Person(*p))
-                .map_or_else(|| "hand".to_owned(), |pid| pid.0.clone())
-        } else {
+        let assigned = game.assignments.get(&DieId::Person(*p)).cloned();
+        let place = if eaten_ids.contains(p) && assigned.is_none() {
             "upkeep".to_owned()
+        } else {
+            assigned
+                .as_ref()
+                .map_or_else(|| "hand".to_owned(), |pid| pid.0.clone())
         };
         let person = game.person(*p);
-        let domain = game
-            .assignments
-            .get(&DieId::Person(*p))
+        let domain = assigned
+            .as_ref()
             .and_then(|pid| defs.iter().find(|d| &d.id == pid))
             .map(|d| d.domain);
+        let faces: std::collections::BTreeMap<String, u8> = Skill::ALL
+            .into_iter()
+            .map(|sk| (sk.key().to_owned(), face(game, *p, sk)))
+            .filter(|(_, f)| *f > 0)
+            .collect();
         let shown = domain.map_or_else(
-            || {
-                Skill::ALL
-                    .into_iter()
-                    .map(|s| face(game, *p, s))
-                    .max()
-                    .unwrap_or(0)
-            },
+            || faces.values().copied().max().unwrap_or(0),
             |d| face(game, *p, d),
         );
         dice.push(DieView {
             id: DieId::Person(*p).key(),
             label: person.name.clone(),
             face: shown,
+            faces,
             strain: person.condition.strain,
             place,
             robot: false,
         });
     }
-    let robots = robot_dice(game);
-    for (die, pips) in &robots {
+    for (die, pips) in robot_dice(game) {
         let DieId::Robot(class, _) = die else {
             continue;
         };
         dice.push(DieView {
             id: die.key(),
             label: class.key().to_owned(),
-            face: *pips,
+            face: pips,
+            faces: std::collections::BTreeMap::new(),
             strain: 0.0,
             place: game
                 .assignments
-                .get(die)
+                .get(&die)
                 .map_or_else(|| "upkeep".to_owned(), |pid| pid.0.clone()),
             robot: true,
         });
     }
-    game.hand = Hand {
-        adults: n,
-        eaten,
-        free,
-        shortfall,
-        robots: robots.len().saturating_as::<u32>(),
-        dice,
-    };
+    game.hand.dice = dice;
 }
 
 /// Opens projects whose conditions hold and closes none; content opens manual ones.
@@ -729,6 +782,10 @@ pub fn progress(game: &mut Game, defs: &[ProjectDef], rng: &mut impl Rng) -> Vec
         if let Some(l) = &def.on_complete_lexicon {
             game.lexicon_triggers.insert(l.clone());
         }
+        if let Some((q, v)) = def.on_complete_add {
+            let cur = game.quality(q);
+            game.set_quality(q, cur + v);
+        }
         lines.push(format!("{} complete.", def.title));
         if let Some(seg) = def.repeat_segments {
             open(game, def, Some(seg));
@@ -754,6 +811,7 @@ pub fn assign(game: &mut Game, defs: &[ProjectDef], die: &str, target: &str) -> 
     let die = DieId::parse(die).ok_or_else(|| format!("unknown die {die}"))?;
     if target == "hand" {
         game.assignments.remove(&die);
+        refresh_hand(game, defs);
         return Ok(());
     }
     let pid = ProjectId(target.to_owned());
@@ -800,6 +858,7 @@ pub fn assign(game: &mut Game, defs: &[ProjectDef], die: &str, target: &str) -> 
         }
     }
     game.assignments.insert(die, pid);
+    refresh_hand(game, defs);
     Ok(())
 }
 

@@ -646,6 +646,16 @@ pub fn view(
         .into_iter()
         .rev()
         .collect();
+    let ledger = ledger
+        .into_iter()
+        .map(|mut b| {
+            b.delta = game
+                .ledger_prev
+                .get(&b.id)
+                .map_or(0.0, |prev| b.value - prev);
+            b
+        })
+        .collect();
     View {
         turn: game.turn,
         act: game.act,

@@ -374,6 +374,9 @@ pub struct Game {
     /// The standing controls.
     #[serde(default)]
     pub controls: crate::project::Controls,
+    /// Ledger values at the end of the previous count, for deltas.
+    #[serde(default)]
+    pub ledger_prev: BTreeMap<String, f64>,
     /// The chronicle.
     pub chronicle: Vec<ChronicleEntry>,
     /// Vocabulary triggers that have occurred.

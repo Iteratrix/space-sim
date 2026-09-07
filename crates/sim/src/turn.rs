@@ -47,6 +47,7 @@ pub fn advance(
     menaces(game, params, &mut events);
     zero_crossings(game, &mut events);
     endings(game, &mut events);
+    remember_ledger(game);
     events
 }
 
@@ -123,6 +124,7 @@ fn projects(
     for line in crate::project::progress(game, defs, rng) {
         note(game, events, line);
     }
+    crate::project::refresh_hand(game, defs);
 }
 
 fn labour(game: &mut Game, params: &Params) -> f64 {
@@ -851,10 +853,25 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         })
         .map(|p| p.id)
         .collect();
+    let mut stripped: std::collections::BTreeMap<String, u32> = std::collections::BTreeMap::new();
     for id in &leaving {
+        if let Some(pid) = game.assignments.remove(&crate::project::DieId::Person(*id)) {
+            *stripped.entry(pid.0).or_insert(0) += 1;
+        }
         game.person_mut(*id).present = false;
         game.flags.remove(&format!("leaving:{}", id.0));
         left += 1;
+    }
+    if !stripped.is_empty() {
+        let parts: Vec<String> = stripped
+            .iter()
+            .map(|(p, n)| format!("{n} off {p}"))
+            .collect();
+        note(
+            game,
+            events,
+            format!("Rotation took hands off the work: {}.", parts.join(", ")),
+        );
     }
     if people_ship {
         let replacement_ratio = match game.sponsor.stage {
@@ -971,6 +988,21 @@ fn arrive_one(game: &mut Game, params: &Params, rng: &mut impl Rng) {
             viability: rng.random_range(0.3..0.8),
             reliance: rng.random_range(0.0..0.3),
         };
+    }
+}
+
+fn remember_ledger(game: &mut Game) {
+    let values = [
+        ("water", game.stocks.water_t),
+        ("margin", game.quality(crate::quality::Quality::Margin)),
+        ("spares", game.stocks.spares),
+        ("power", game.power.capacity_kw - game.power.demand_kw),
+        ("hours", f64::from(game.hand.free)),
+        ("throw", game.quality(crate::quality::Quality::Phi)),
+        ("people", count_f(game.present().count())),
+    ];
+    for (k, v) in values {
+        game.ledger_prev.insert(k.to_owned(), v);
     }
 }
 

@@ -8,6 +8,7 @@ spares = 8
 min_skill = 2
 once = true
 on_complete_flag = "arm_built"
+on_complete_add = { q = "robots.through_wall", value = 1.0 }
 [[when]]
 q = "robots.dex"
 lt = 2

@@ -31,7 +31,9 @@ function die(d) {
   const face = d.robot ? "R" : FACES[Math.min(d.face, 6)];
   const title = d.robot ? `${d.label} unit — ${d.face} pips` : `${d.label} — face ${d.face}${dull ? " (strained)" : ""}${upkeep ? " — eating and breathing" : ""}`;
   const name = d.robot ? "" : `<small>${d.label.split(" ")[0]}</small>`;
-  return `<span class="die${d.robot ? " robot" : ""}${dull}${upkeep}" draggable="${upkeep ? "false" : "true"}" data-die="${d.id}" title="${title}">${face}${name}</span>`;
+  const facesNote = d.faces && Object.keys(d.faces).length ? " — " + Object.entries(d.faces).map(([k, v]) => `${k} ${v}`).join(", ") : "";
+  const draggable = d.robot || !upkeep;
+  return `<span class="die${d.robot ? " robot" : ""}${dull}${upkeep && !d.robot ? " upkeep" : ""}" draggable="${draggable}" data-die="${d.id}" title="${title}${facesNote}">${face}${name}</span>`;
 }
 
 function headline(v) {
@@ -67,7 +69,8 @@ function render() {
     .map((b) => {
       const pct = Math.max(0, Math.min(100, (b.value / (b.full || 1)) * 100));
       const warn = ["below reserve", "dry", "critical", "zero", "failing", "farm short", "short", "brittle"].includes(b.word);
-      return `<div class="bar" title="${b.label}: ${b.value.toFixed(1)} ${b.unit}. ${b.why}"><span>${b.id}</span><div><div class="track"><div class="fill${warn ? " warn" : ""}" style="width:${pct}%"></div></div><span class="word">${b.word}</span></div></div>`;
+      const delta = Math.abs(b.delta) >= 0.05 ? ` ${b.delta > 0 ? "▲" : "▼"}${Math.abs(b.delta).toFixed(b.unit === "t/t" ? 2 : 0)}` : "";
+      return `<div class="bar" title="${b.label}: ${b.value.toFixed(1)} ${b.unit} (${b.delta >= 0 ? "+" : ""}${b.delta.toFixed(1)} this count). ${b.why}"><span>${b.id}</span><div><div class="track"><div class="fill${warn ? " warn" : ""}" style="width:${pct}%"></div></div><span class="word">${b.word}${delta}</span></div></div>`;
     })
     .join("");
   el("pressures").querySelector(".rings").innerHTML = v.pressures
@@ -105,7 +108,7 @@ function bindDice() {
     t.addEventListener("dragover", (e) => { e.preventDefault(); t.classList.add("drop"); });
     t.addEventListener("dragleave", () => t.classList.remove("drop"));
     t.addEventListener("drop", (e) => { e.preventDefault(); t.classList.remove("drop"); assign(e.dataTransfer.getData("text/plain"), target); });
-    t.addEventListener("click", (e) => { if (lifted && !e.target.classList.contains("die")) { assign(lifted, target); lifted = null; } });
+    t.addEventListener("click", (e) => { if (lifted && !e.target.closest(".die")) { assign(lifted, target); lifted = null; } });
   });
   document.querySelectorAll("select[data-control]").forEach((s) => s.addEventListener("change", () => setControl(s.dataset.control, s.value)));
 }
@@ -115,6 +118,7 @@ function apply(result) {
   if (r.error) { el("hand-note").textContent = r.error; return false; }
   view = r;
   render();
+  persist();
   return true;
 }
 function assign(dieId, target) { apply(wasm.assign(handle, dieId, target)); }
