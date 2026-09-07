@@ -1,7 +1,8 @@
 id = "spares_exhausted"
 title = "What to Open"
 act = 1
-cooldown = 12
+cooldown = 16
+weight = 0.7
 priority = 40
 tags = ["spares", "machines", "capability"]
 text = """
@@ -16,11 +17,7 @@ weight in anything. Every one of them is something the outpost will want back.
 
 [[when]]
 q = "stocks.spares"
-lt = 150
-
-[[when]]
-q = "counts_since_convoy"
-ge = 20
+lt = 20
 
 [[cast]]
 role = "hulls"

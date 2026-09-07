@@ -17,6 +17,9 @@ to stop paying for, and that the messages will thin next.
 [[when]]
 flag = "stage:2"
 
+[[when]]
+fired = "sponsor_weight_update"
+
 [[cast]]
 role = "operator"
 skill = "operations"

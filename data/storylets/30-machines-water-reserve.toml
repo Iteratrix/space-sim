@@ -1,8 +1,8 @@
 id = "water_reserve"
 title = "The Reserve and the Throw"
 act = 1
-cooldown = 16
-weight = 0.6
+cooldown = 20
+weight = 0.4
 priority = 0
 tags = ["water", "throughput", "sponsor"]
 text = """
@@ -18,6 +18,10 @@ target.
 [[when]]
 q = "stocks.water"
 lt = 122
+
+[[when]]
+q = "stocks.water"
+gt = 60
 
 [[when]]
 q = "earth_window_open"

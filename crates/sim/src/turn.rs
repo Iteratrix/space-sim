@@ -257,9 +257,8 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
     let mut died = Vec::new();
     for mind in game.minds.iter_mut().filter(|m| m.alive) {
         let draw: f64 = rng.random();
-        if draw < attrition * 3.0 {
-            mind.units -= mind.units_at_start * 0.08;
-        }
+        let lump = if draw < 0.08 { 6.0 } else { 0.6 };
+        mind.units = (mind.units - mind.units_at_start * attrition * lump).max(0.0);
         if reset_due {
             mind.counts_unblanked = 0;
         } else {
@@ -488,17 +487,13 @@ fn indices(game: &Game) -> GroupIndices {
     } else {
         0.0
     };
-    let mut pos = 0.0;
-    let mut neg = 0.0;
-    for (_, _, t) in game.ties.iter() {
-        pos += t.work_positive;
-        neg += t.hindrance;
+    let mut with_enemy = std::collections::BTreeSet::new();
+    for (a, b, t) in game.ties.iter() {
+        if t.hindrance > t.work_positive && game.person(b).present {
+            with_enemy.insert(a);
+        }
     }
-    let coherence = if pos + neg > 0.0 {
-        pos / (pos + neg)
-    } else {
-        1.0
-    };
+    let coherence = 1.0 - count_f(with_enemy.len()) / nf;
     GroupIndices {
         mean_strain,
         conflict_concentration,
@@ -572,7 +567,6 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
     };
     let next = next.max(game.sponsor.stage);
     if next != game.sponsor.stage {
-        game.sponsor.stage = next;
         let text = match next {
             SponsorStage::Enthusiasm => "The sponsor is pleased.",
             SponsorStage::MilestoneAnxiety => {
@@ -593,7 +587,11 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
             SponsorStage::NoShip => "There will be no ship.",
         };
         note(game, events, text.to_owned());
-        game.flags.insert(format!("stage:{}", next.index()));
+        let from = game.sponsor.stage.index();
+        game.sponsor.stage = next;
+        for k in (from + 1)..=next.index() {
+            game.flags.insert(format!("stage:{k}"));
+        }
         if next >= SponsorStage::Sale {
             game.menace.grievance = (game.menace.grievance + 2.0).min(10.0);
         }
@@ -629,7 +627,19 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
     let tonnes = params.convoy.base_tonnes
         * (0.4 + 0.6 * game.sponsor.confidence)
         * (0.6 + 0.4 * game.sponsor.attention);
-    let cap_share = game.sponsor.requested_capability_share.clamp(0.0, 1.0);
+    let requested = if game.flags.contains("manifest_capability") {
+        0.7
+    } else if game.flags.contains("manifest_balanced") {
+        0.45
+    } else if game.flags.contains("manifest_throughput") {
+        0.1
+    } else if game.flags.contains("manifest_people") {
+        0.3
+    } else {
+        game.sponsor.requested_capability_share
+    };
+    game.sponsor.requested_capability_share = requested;
+    let cap_share = requested.clamp(0.0, 1.0);
     let cap_t = tonnes * cap_share;
     let thr_t = tonnes - cap_t;
     game.received_t += tonnes;
@@ -649,21 +659,22 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
     let people_ship = game.sponsor.stage < SponsorStage::SkippedRotation;
     let mut left = 0;
     let mut arrived = 0;
+    let leaving: Vec<PersonId> = game
+        .present()
+        .filter(|p| {
+            let due = p.contract_end().is_some_and(|e| e <= game.turn + 3);
+            let wants = p.condition.return_intent > 0.75;
+            let squeezed = game.flags.contains(&format!("leaving:{}", p.id.0));
+            (people_ship && due && wants) || squeezed
+        })
+        .map(|p| p.id)
+        .collect();
+    for id in &leaving {
+        game.person_mut(*id).present = false;
+        game.flags.remove(&format!("leaving:{}", id.0));
+        left += 1;
+    }
     if people_ship {
-        let leaving: Vec<PersonId> = game
-            .present()
-            .filter(|p| {
-                let due = p.contract_end().is_some_and(|e| e <= game.turn + 3);
-                let wants = p.condition.return_intent > 0.75;
-                due && wants || game.flags.contains(&format!("leaving:{}", p.id.0))
-            })
-            .map(|p| p.id)
-            .collect();
-        for id in &leaving {
-            game.person_mut(*id).present = false;
-            game.flags.remove(&format!("leaving:{}", id.0));
-            left += 1;
-        }
         let replacement_ratio = match game.sponsor.stage {
             SponsorStage::Enthusiasm
             | SponsorStage::MilestoneAnxiety
@@ -679,7 +690,12 @@ fn convoy(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         } else {
             0.0
         };
-        let n_new = (count_f(left) * replacement_ratio + expansion)
+        let asked = if game.flags.contains("manifest_people") {
+            4.0
+        } else {
+            0.0
+        };
+        let n_new = (count_f(left) * replacement_ratio + expansion + asked)
             .round()
             .saturating_as::<usize>();
         for _ in 0..n_new {

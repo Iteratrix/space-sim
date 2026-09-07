@@ -1,8 +1,8 @@
 id = "collar_weeps"
 title = "The Collar Weeps"
 act = 1
-cooldown = 14
-weight = 0.7
+cooldown = 24
+weight = 0.6
 priority = 0
 tags = ["air", "nitrogen", "hulls"]
 text = """
@@ -14,8 +14,7 @@ makes, or can leave it another season and let the ledger say what it says.
 """
 
 [[when]]
-q = "stocks.nitrogen"
-lt = 5200
+turn_min = 36
 
 [[when]]
 q = "menace.leak"

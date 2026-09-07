@@ -369,6 +369,7 @@ impl Game {
             Quality::SponsorConfidence => self.sponsor.confidence,
             Quality::SponsorAttention => self.sponsor.attention,
             Quality::SponsorStage => f64::from(self.sponsor.stage.index()),
+            Quality::CapabilityShare => self.sponsor.requested_capability_share,
             Quality::CountsToReview => {
                 f64::from(self.sponsor.next_review.saturating_sub(self.turn))
             }
@@ -462,6 +463,9 @@ impl Game {
             Quality::SponsorRunway => self.sponsor.runway = value.max(0.0),
             Quality::SponsorConfidence => self.sponsor.confidence = value.clamp(0.0, 1.0),
             Quality::SponsorAttention => self.sponsor.attention = value.clamp(0.0, 1.0),
+            Quality::CapabilityShare => {
+                self.sponsor.requested_capability_share = value.clamp(0.0, 1.0);
+            }
             Quality::Water => self.stocks.water_t = value.max(0.0),
             Quality::Propellant => self.stocks.propellant_t = value.max(0.0),
             Quality::Nitrogen => self.stocks.nitrogen_kg = value.max(0.0),

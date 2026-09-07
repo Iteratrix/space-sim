@@ -100,6 +100,21 @@ pub const WORDS: &[Word] = &[
         new: "the throw",
         trigger: "first_count",
     },
+    Word {
+        old: "the dead",
+        new: "the returning",
+        trigger: "first_line_launch",
+    },
+    Word {
+        old: "the festival",
+        new: "the Still",
+        trigger: "first_midwinter",
+    },
+    Word {
+        old: "the walk outside",
+        new: "the Voiding",
+        trigger: "first_voiding",
+    },
 ];
 
 /// Renders text through the words whose triggers have fired. Matches whole words only.

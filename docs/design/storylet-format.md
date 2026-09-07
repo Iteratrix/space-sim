@@ -107,6 +107,7 @@ Readable everywhere; writable ones are marked `w`.
 | `sponsor.runway` w, `sponsor.confidence` w (0-1), `sponsor.attention` w (0-1) | the sponsor's stocks |
 | `sponsor.stage` | 0 enthusiasm, 1 anxiety, 2 updates stopped, 3 austerity, 4 skipped rotation, 5 sale, 6 no ship |
 | `sponsor.counts_to_review` | |
+| `sponsor.capability_share` w | share of the next convoy requested as capability hardware; the engine also reads the flags `manifest_throughput` (0.1), `manifest_balanced` (0.45), `manifest_capability` (0.7), `manifest_people` (0.3, plus four extra arrivals) |
 | `stocks.water` w (t), `stocks.propellant` w (t), `stocks.nitrogen` w (kg), `stocks.spares` w, `stocks.boron` w (kg), `stocks.helium` w (kg), `stocks.medicine` w, `stocks.food_margin` w (counts) | |
 | `closure` w (0-1) | mass closure |
 | `power.capacity`, `power.demand` (kW), `power.reactor_life` w (counts), `power.pv_m2` w, `power.mirror_m2` w (m²) | |

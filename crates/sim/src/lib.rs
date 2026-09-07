@@ -80,9 +80,6 @@ impl Engine {
         }
         let mut rng = setup::rng_for(game, 0);
         let events = turn::advance(game, &self.params, &mut rng);
-        if game.ending.is_some() {
-            return (events, Vec::new());
-        }
         let mut rng = setup::rng_for(game, 1);
         let firings = director::select(game, &self.content, &self.params, &mut rng);
         (events, firings)

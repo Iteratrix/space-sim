@@ -196,6 +196,47 @@ fn save_game(game: &Game, path: &str) {
     }
 }
 
+fn resolve_firings(
+    engine: &Engine,
+    game: &mut Game,
+    firings: &[Firing],
+    args: &Args,
+    lines: &mut std::io::Lines<std::io::StdinLock<'static>>,
+) {
+    for f in firings {
+        if !args.json {
+            print_firing(engine, game, f);
+        }
+        let choice = loop {
+            if !args.json {
+                print!("> ");
+                std::io::stdout().flush().ok();
+            }
+            let Some(Ok(line)) = lines.next() else { return };
+            let line = line.trim();
+            if line == "q" || line == "quit" {
+                std::process::exit(0);
+            }
+            if let Ok(n) = line.parse::<usize>()
+                && n >= 1
+                && n <= f.options.len()
+            {
+                break n - 1;
+            }
+            if !args.json {
+                println!("  choose 1-{}", f.options.len());
+            }
+        };
+        if let Some(line) = engine.resolve(game, f, choice) {
+            if args.json {
+                println!("{}", serde_json::json!({ "chronicle": line }));
+            } else {
+                println!("  -> {line}");
+            }
+        }
+    }
+}
+
 fn play(engine: &Engine, args: &Args) {
     let mut game = args.load.as_ref().map_or_else(
         || engine.new_game(args.seed).expect("new game"),
@@ -231,6 +272,7 @@ fn play(engine: &Engine, args: &Args) {
         if let Some(path) = &args.save {
             save_game(&game, path);
         }
+        resolve_firings(engine, &mut game, &firings, args, &mut lines);
         if let Some(ending) = &game.ending {
             if args.json {
                 println!(
@@ -245,38 +287,6 @@ fn play(engine: &Engine, args: &Args) {
                 );
             }
             break;
-        }
-        for f in &firings {
-            if !args.json {
-                print_firing(engine, &game, f);
-            }
-            let choice = loop {
-                if !args.json {
-                    print!("> ");
-                    std::io::stdout().flush().ok();
-                }
-                let Some(Ok(line)) = lines.next() else { return };
-                let line = line.trim();
-                if line == "q" || line == "quit" {
-                    return;
-                }
-                if let Ok(n) = line.parse::<usize>()
-                    && n >= 1
-                    && n <= f.options.len()
-                {
-                    break n - 1;
-                }
-                if !args.json {
-                    println!("  choose 1-{}", f.options.len());
-                }
-            };
-            if let Some(line) = engine.resolve(&mut game, f, choice) {
-                if args.json {
-                    println!("{}", serde_json::json!({ "chronicle": line }));
-                } else {
-                    println!("  -> {line}");
-                }
-            }
         }
         if firings.is_empty() && !args.json {
             let Some(Ok(line)) = lines.next() else { return };

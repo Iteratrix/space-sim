@@ -32,6 +32,8 @@ pub enum Quality {
     SponsorStage,
     /// Counts until the next review.
     CountsToReview,
+    /// Share of the next convoy requested as capability hardware, 0-1.
+    CapabilityShare,
     /// Water stock, tonnes.
     Water,
     /// Propellant stock, tonnes.
@@ -126,7 +128,7 @@ pub enum Quality {
 
 impl Quality {
     /// All qualities.
-    pub const ALL: [Self; 57] = [
+    pub const ALL: [Self; 58] = [
         Self::Turn,
         Self::Act,
         Self::CountsSinceConvoy,
@@ -139,6 +141,7 @@ impl Quality {
         Self::SponsorAttention,
         Self::SponsorStage,
         Self::CountsToReview,
+        Self::CapabilityShare,
         Self::Water,
         Self::Propellant,
         Self::Nitrogen,
@@ -202,6 +205,7 @@ impl Quality {
             Self::SponsorAttention => "sponsor.attention",
             Self::SponsorStage => "sponsor.stage",
             Self::CountsToReview => "sponsor.counts_to_review",
+            Self::CapabilityShare => "sponsor.capability_share",
             Self::Water => "stocks.water",
             Self::Propellant => "stocks.propellant",
             Self::Nitrogen => "stocks.nitrogen",
@@ -266,6 +270,7 @@ impl Quality {
             Self::SponsorRunway
             | Self::SponsorConfidence
             | Self::SponsorAttention
+            | Self::CapabilityShare
             | Self::Water
             | Self::Propellant
             | Self::Nitrogen

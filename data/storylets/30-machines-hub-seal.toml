@@ -1,7 +1,7 @@
 id = "hub_seal"
 title = "The Collar"
 act = 1
-cooldown = 8
+cooldown = 12
 priority = 100
 tags = ["air", "nitrogen", "hulls", "machines"]
 text = """
@@ -84,12 +84,15 @@ text = "The bearing is scored for three rpm. Run it slow and it scores different
 [[option]]
 id = "accept"
 label = "Let it leak"
-text = "Neither parts nor spin. The reserve pays for the collar until something better arrives or the reserve is gone."
+text = "Neither parts nor spin. Pack the collar with what is to hand, and let the reserve pay for what still gets through until the next time it weeps."
 tags = ["throughput", "sponsor", "risk"]
 chronicle = "We let the collar leak and paid for it from the reserve, and the number the air seat read at each ring got smaller and nobody argued with it."
 [[option.effect]]
 q = "stocks.nitrogen"
 add = -800
+[[option.effect]]
+q = "menace.leak"
+add = -1.5
 [[option.effect]]
 flag = "collar_leak_accepted"
 [[option.advice]]
