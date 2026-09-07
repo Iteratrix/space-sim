@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fortuna Station</title>
+<meta name="description" content="An asteroid-belt settlement sim. Runs entirely in your browser; saves stay on your machine.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header id="top">
+  <div id="title">FORTUNA STATION</div>
+  <div id="headline">loading the engine…</div>
+  <div id="menu">
+    <button id="btn-new" title="New game">New</button>
+    <button id="btn-chronicle">Chronicle</button>
+  </div>
+</header>
+<main id="screen">
+  <aside id="rail">
+    <section id="countdowns"><h3>Countdowns</h3><div class="clocks"></div></section>
+    <section id="projects"><h3>Projects</h3><div class="clocks"></div></section>
+    <section id="hand"><h3>The hand <span id="hand-count"></span></h3><div id="hand-dice" class="dice"></div><div id="hand-note"></div>
+      <label class="control">order <select id="roster"><option value="skill">skill</option><option value="strain">strain</option><option value="name">name</option></select></label>
+      <label class="control"><input type="checkbox" id="auto-deal"> auto-deal</label>
+    </section>
+    <section id="ledger"><h3>Ledger</h3><div class="bars"></div></section>
+    <section id="pressures"><h3>Pressures</h3><div class="rings"></div><div id="sponsor-track"></div></section>
+  </aside>
+  <section id="centre">
+    <div id="scene"></div>
+    <div id="events"></div>
+    <div id="actions"><button id="btn-end" disabled>End count</button></div>
+  </section>
+  <aside id="ring"><h3>The ring</h3><div id="seats"></div></aside>
+</main>
+<div id="drawer" hidden><div id="drawer-inner"><button id="btn-close">Close</button><pre id="chronicle"></pre></div></div>
+<div id="dialog" hidden><div id="dialog-inner">
+  <h2>New game</h2>
+  <label>seed <input id="seed" type="number" value="3"></label>
+  <label>scenario <select id="scenario"><option value="tutorial">tutorial (the arrival)</option><option value="act1">act 1 (established outpost)</option></select></label>
+  <div><button id="btn-start">Start</button> <button id="btn-cancel">Cancel</button></div>
+</div></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

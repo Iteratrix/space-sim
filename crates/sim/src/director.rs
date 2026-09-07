@@ -17,6 +17,8 @@ pub struct Firing {
     pub id: String,
     /// Title.
     pub title: String,
+    /// Priority; 100 and above is a must scene.
+    pub priority: i32,
     /// Rendered situation text.
     pub text: String,
     /// Role to person.
@@ -130,6 +132,7 @@ pub fn select(
             Firing {
                 id: s.id.clone(),
                 title: s.title.clone(),
+                priority: s.priority,
                 text: casting.render(game, &s.text),
                 roles: casting.roles.clone(),
                 options: available
