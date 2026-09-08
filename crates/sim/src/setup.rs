@@ -360,10 +360,10 @@ pub fn new_game_scenario(
             "no_keep",
             "mind_log",
             "open_project:dig_keep",
-            "open_project:align_driver",
         ] {
             game.flags.insert(f.to_owned());
         }
+        game.controls.auto_deal = false;
         if let Some(m) = game.minds.first_mut() {
             m.counts_unblanked = params.tutorial.mind_log_counts;
         }

@@ -74,3 +74,4 @@ h3{margin:14px 0 6px;font:11px var(--mono);letter-spacing:.14em;text-transform:u
 
 .revealed{animation:reveal 1.2s ease-out}
 @keyframes reveal{from{background:#2a2410}to{background:transparent}}
+.reveal{font:11px var(--serif);font-style:italic;color:var(--accent);margin:2px 0 6px}

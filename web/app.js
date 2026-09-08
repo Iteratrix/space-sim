@@ -50,10 +50,45 @@ function revealed(name) {
   return !inTutorial || flags.has("ui:all") || flags.has(`ui:${name}`);
 }
 
-function gate(elm, name) {
+const CAPTIONS = {
+  countdowns: "Countdowns. Each ring fills toward an event. A full ring is the event.",
+  "clock:rsw": "RSW: the resupply window. Ships from Earth can only depart when it is open.",
+  hand: "The hand. One die per crew member. The face is skill in the task's domain.",
+  robots: "Square dice are robot units. They fit structured work only.",
+  projects: "Projects. Drag a die onto a clock. Pips fill segments; a full clock completes.",
+  ledger: "Ledger. Bars show stock. The word beside each bar is its status.",
+  "bar:water": "Water: extracted by the BOP, lost through the loops, shipped by the MDLS.",
+  "bar:spares": "Spares: imported parts. Consumed every month. Not producible on station.",
+  "bar:power": "Power margin: capacity minus demand. The MDLS goes dark first.",
+  "bar:margin": "CM-days: consumables margin. The smaller of food buffer and N2 make-up time.",
+  "bar:hours": "Hours: free dice after upkeep. Upkeep is eating and breathing.",
+  "bar:throw": "MDLS throughput ratio. The sponsor reads this number and no other.",
+  "bar:people": "Crew: count, residents, contract. CED (dose) accumulates per person.",
+  pressures: "Pressures. Bands, not numbers. A scene fires at the last band.",
+  ring: "The SMB. Each seat answers one question. Recommendations are relayed here.",
+  sponsor: "Sponsor status. Seven stages. Confidence and attention decay without cause.",
+  chronicle: "Log. Every decision is entered. Entries keep the language of their month.",
+  "control:manifest": "Manifest split: what the next RSW carries. Set before the window.",
+  "control:throw": "MDLS position: ship, hold at reserve, stop.",
+  "control:roster": "Roster order: which crew upkeep takes first when hours are short.",
+  "control:auto_deal": "Auto-deal: the station places free dice on standing work.",
+};
+const shown = new Set();
+
+function gate(elm, name, captionHost) {
   if (!elm) return;
   const show = revealed(name);
-  if (show && elm.hidden) elm.classList.add("revealed");
+  if (show && (elm.hidden || !shown.has(name))) {
+    elm.classList.add("revealed");
+    const inTutorial = new Set(view.flags).has("tutorial") && !new Set(view.flags).has("tutorial_done");
+    const host = captionHost || elm;
+    let cap = host.querySelector(":scope > .reveal");
+    if (inTutorial && CAPTIONS[name] && !shown.has(name)) {
+      if (!cap) { cap = document.createElement("div"); cap.className = "reveal"; const h = host.querySelector(":scope > h3"); if (h) h.after(cap); else host.prepend(cap); }
+      cap.textContent = CAPTIONS[name];
+    }
+    shown.add(name);
+  }
   elm.hidden = !show;
 }
 
@@ -70,10 +105,12 @@ function render() {
   gate(el("hand").querySelector("label.control:nth-of-type(2)"), "control:auto_deal");
   el("headline").textContent = `count ${v.turn} · ${headline(v)}`;
   el("countdowns").querySelector(".clocks").innerHTML = v.countdowns
-    .filter((c) => revealed(`clock:${c.id}`))
+    .filter((c) => c.id === "grace" || c.id === "conjunction" || revealed(`clock:${c.id}`))
     .map((c) => `<div class="clock${c.urgent ? " urgent" : ""}" title="${c.why}">${ring(c.filled, c.segments)}<div><div class="label">${c.label}</div><div class="sub">${c.remaining == null ? "" : c.remaining + " left"}${c.id === "rsw" && revealed("control:manifest") ? ` · manifest <select data-control="manifest"><option${v.controls.manifest === "throughput" ? " selected" : ""}>throughput</option><option${v.controls.manifest === "balanced" ? " selected" : ""}>balanced</option><option${v.controls.manifest === "capability" ? " selected" : ""}>capability</option><option${v.controls.manifest === "people" ? " selected" : ""}>people</option></select>` : ""}</div></div></div>`)
     .join("");
+  const lessonProjects = new Set(["dig_keep", "align_driver", "bake_out", "throw"]);
   el("projects").querySelector(".clocks").innerHTML = v.projects
+    .filter((p) => !lessonProjects.has(p.id) || revealed(`project:${p.id}`))
     .map((p) => {
       const clock = p.standing ? ring(Math.round(Math.min(p.rate, 1) * 12), 12, "rate") : ring(p.filled, p.segments);
       const sub = p.standing ? `rate ${p.rate.toFixed(2)} · ${p.pips}/${Math.round(p.pips_needed)} pips` : `${p.filled}/${p.segments}${p.roll === "setback" ? " · setback" : p.roll === "bonus" ? " · bonus" : ""}`;
@@ -83,7 +120,7 @@ function render() {
     .join("");
   const h = v.hand;
   el("hand-count").textContent = `${h.free} of ${h.adults} free`;
-  const handDice = h.dice.filter((d) => d.place === "hand" || d.place === "upkeep");
+  const handDice = h.dice.filter((d) => (d.place === "hand" || d.place === "upkeep") && (!d.robot || revealed("robots")));
   el("hand-dice").innerHTML = handDice.map(die).join("");
   el("hand-note").textContent = h.free === 0 ? "Nobody is free this count. Everyone is keeping everyone alive." : `${h.eaten} eating and breathing · ${h.robots} robot units${h.shortfall ? ` · short ${h.shortfall}` : ""}`;
   el("roster").value = v.controls.roster;
@@ -98,7 +135,7 @@ function render() {
     })
     .join("");
   el("pressures").querySelector(".rings").innerHTML = v.pressures
-    .filter((p) => revealed(`pressure:${p.id}`))
+    .filter((p) => p.band > 0 || revealed(`pressure:${p.id}`))
     .map((p) => `<div class="pressure" title="${p.label}: ${p.value.toFixed(1)} of 10">${ring(Math.round(p.value), 10, "p" + Math.max(p.band, 1))}${p.id}<br><em>${p.band_name}</em></div>`)
     .join("");
   const s = v.sponsor;
