@@ -2,6 +2,23 @@
 
 Written for whoever picks this up next (human or agent). Newest at the top.
 
+## Day 2, evening: the report register and progressive disclosure
+
+- **The report register.** Act 1's narrator is the station mind under the HRA giving
+  status reports to the Commander: every scene, option, chronicle line and relayed
+  recommendation, plus the engine's own lines, the view's sentences, the mood words and
+  the project descriptions (writers' guide §2b). The seats' questions and the Silence
+  line keep their own voices on purpose. Content agents run on the Opus line.
+- **Progressive disclosure** (`docs/design/tutorial-disclosure.md`): twenty lessons
+  across the forty-three counts; the page starts as the scene column and End count
+  and reveals sections, bars, clocks, controls, robot dice and pressure rings on
+  `ui:*` flags that scenes set, each with a one-line caption from the mind; "Start,
+  show everything" skips it. Tutorial v3 (27 scenes) sets the flags in the plan's
+  order; the tutorial starts with auto-deal off and only the KEEP open; a scene can
+  place a die (`assign`), open a project, set any standing control by flag.
+- `web/test/play.py` now reports only what is visible, so an agent playtests what a
+  person sees.
+
 ## Day 2, afternoon: the loop closes
 
 - **Agents play the page.** `web/test/play.py` drives the real browser (Playwright,

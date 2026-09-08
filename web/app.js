@@ -101,7 +101,7 @@ function gate(elm, name, captionHost) {
     const inTutorial = new Set(view.flags).has("tutorial") && !new Set(view.flags).has("tutorial_done");
     const host = captionHost || elm;
     let cap = host.querySelector(":scope > .reveal");
-    if (inTutorial && CAPTIONS[name] && !shown.has(name)) {
+    if (inTutorial && CAPTIONS[name] && !shown.has(name) && host.tagName !== "BUTTON") {
       if (!cap) { cap = document.createElement("div"); cap.className = "reveal"; const h = host.querySelector(":scope > h3"); if (h) h.after(cap); else host.prepend(cap); }
       cap.textContent = CAPTIONS[name];
     }
