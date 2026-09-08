@@ -15,6 +15,8 @@ unchanged.
 What was on that hull is what is not on the shelf. The next window is more than a
 year out. Nothing arrives from anywhere but this rock until then.
 
+The date of that window is on file only if the schedule was requested.
+
 None of that is within the board's decision this month. What the station is told
 is.
 """
@@ -35,6 +37,9 @@ ge = 6
 
 [[when]]
 not_flag = "tutorial_done"
+
+[[when]]
+not_fired = "tut_rsw_empty"
 
 [[cast]]
 role = "hours"
@@ -104,3 +109,28 @@ add = -0.3
 seat = "liaison"
 stance = "for"
 text = "Reports the sponsor's schedule shows a rephasing, not a cancellation. A station that reorganises around a rephasing is a station the sponsor reorganises next."
+
+[[option]]
+id = "schedule"
+label = "Post the window schedule with the date of the next one"
+text = "The mission schedule the board holds, with the next opening dated and the transit cost beside it."
+tags = ["people", "independence", "hours"]
+chronicle = "MM {turn}. The window closed with no arrival. The mission window schedule was posted with the next opening dated and its transit cost beside it."
+[[option.requires]]
+flag = "window_schedule"
+[[option.effect]]
+flag = "miss_named"
+[[option.effect]]
+q = "menace.grievance"
+add = -1.0
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.2
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends the schedule. A date is the only answer to this that is not an opinion. The board asked for it at MM 2 for a month exactly like this one."
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Notes a dated wait is served differently from an undated one. Requests the figure be posted where it is read without asking anyone for it."

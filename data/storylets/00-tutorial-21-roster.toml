@@ -5,11 +5,13 @@ once = true
 priority = 116
 tags = ["tutorial", "hours", "people"]
 text = """
-Two controls enabled above the board.
+On confirmation two controls appear above the allocation board.
 
-Roster order sets which crew upkeep consumes first. By skill: upkeep takes the
-lowest rating for the work, and the best faces stay free. By strain: it takes
-whoever is worst off. By name: alphabetical, and no seat chooses.
+Roster order sets which crew upkeep consumes first. By skill: each crew member is
+ranked by their best rating in any domain and upkeep takes the lowest first. A
+high operations rating protects its holder from upkeep in a month when the work
+in front of the board is engineering. By strain: upkeep takes whoever is worst
+off. By name: alphabetical, and no seat chooses.
 
 Auto-deal places free dice on standing clocks each month without instruction. It
 has been off since landing. It may be left on and overridden by hand at any time.

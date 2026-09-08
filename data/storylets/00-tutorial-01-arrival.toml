@@ -18,8 +18,10 @@ dose is 120 mSv/yr under regolith bags.
 This screen is the station log. One entry is one month. Decisions are logged when
 made. End count advances the month.
 
-Station Management Board (SMB) constituted. {hulls} answers for the hulls.
-{hours} answers for the hours.
+Station Management Board (SMB) constituted on two questions: who answers for the
+hulls, and who answers for the hours. {hulls} holds the highest engineering
+rating on station and {hours} the highest in logistics. The board seats the
+question, not the person; the holder changes when the rating does.
 
 First item: the first surface task.
 """
@@ -33,10 +35,12 @@ turn_max = 2
 [[cast]]
 role = "hulls"
 skill = "engineering"
+top = true
 
 [[cast]]
 role = "hours"
 skill = "logistics"
+top = true
 
 [[option]]
 id = "engineer_first"

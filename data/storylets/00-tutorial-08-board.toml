@@ -5,9 +5,9 @@ once = true
 priority = 136
 tags = ["tutorial", "dose", "people"]
 text = """
-Board column enabled. A seat is a question. The holder is whoever the board
-accepts the answer from. Four questions are open: hulls, hours, water and metal,
-bodies.
+On confirmation the board column opens beside the log. A seat is a question. The
+holder is whoever the board accepts the answer from. Four questions are open:
+hulls, hours, water and metal, bodies.
 
 Counsel is advice. It is relayed as given. A holder of low skill advises with the
 same confidence as a holder of high skill and is wrong more often. The Commander

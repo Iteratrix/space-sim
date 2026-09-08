@@ -5,8 +5,10 @@ once = true
 priority = 132
 tags = ["tutorial", "sponsor", "manifest"]
 text = """
-Manifest control enabled on the RSW clock. It sets the class of what the next
-hull carries. Whatever it reads on the day the window opens is what flies.
+On confirmation a manifest control appears on the RSW clock. It sets the class
+of what the next hull carries. Whatever it reads on the day the window opens is
+what flies. The option chosen here sets it; it can be moved on the clock at any
+count after.
 
 Constraint: the request must transmit this month to make RSW-1. Every tonne is
 one of two classes. Throughput hardware — pods, propellant, units — moves the one

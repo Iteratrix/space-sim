@@ -5,18 +5,21 @@ once = true
 priority = 144
 tags = ["tutorial", "capability", "dose"]
 text = """
-Project region enabled. A project clock is work in progress. Dice placed on a
-clock advance it.
+On confirmation the project rail opens with one clock on it. A project clock is
+work in progress. Dice placed on a clock advance it.
 
 Open: Kilotonne-class Excavated Environmental Protection habitat (KEEP)
 excavation. Twenty-four segments. A die adds its rating to the clock each month;
 six points fill one segment. Surface dose is 120 mSv/yr. KEEP dose is 12.
 
-{digger} holds the highest engineering rating present. That die is placed on the
-KEEP clock with this entry, so that the clock is not idle for a month.
+The clock reads engineering. Lift a die by clicking it and every clock shows what
+that die would read there: an arrow and a number beside the clock's name. A die
+worth 4 in the hand can read 0 here, and a face of zero adds nothing to the
+segment.
 
-Commander: place the next one by hand. Drag a die from the board onto the clock.
-It stays where it is put until it is moved.
+{digger} holds the highest engineering rating on the board. Commander: the rest
+is placed by hand. Drag a die from the board onto the clock. It stays where it is
+put until it is moved.
 """
 
 [[when]]
@@ -34,10 +37,10 @@ seat = "hulls"
 
 [[option]]
 id = "open"
-label = "Open the clock"
-text = "Twenty-four segments at six points each. Nothing else on the board is longer."
+label = "Open the clock and place the engineering die on it"
+text = "Twenty-four segments at six points each. The clock is not idle for a month."
 tags = ["capability", "dose", "hulls"]
-chronicle = "MM {turn}. KEEP excavation opened as a project clock: 24 segments, 0 filled. One engineering die placed by directive."
+chronicle = "MM {turn}. KEEP excavation opened as a project clock: 24 segments, 0 filled. {digger}'s die placed on it by directive."
 [[option.effect]]
 flag = "ui:projects"
 [[option.effect]]
@@ -47,3 +50,29 @@ flag = "open_project:dig_keep"
 [[option.effect]]
 person = "digger"
 assign = "dig_keep"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends placing it now. Twenty-four segments is the longest clock on the board and the only one that lowers the dose figure."
+
+[[option]]
+id = "open_empty"
+label = "Open the clock and place nothing this month"
+text = "The tasking list is agreed first. The clock is opened empty and every die stays free."
+tags = ["hours", "caution"]
+chronicle = "MM {turn}. KEEP excavation opened as a project clock: 24 segments, 0 filled. No die placed by directive; the allocation was held free pending the tasking list."
+[[option.effect]]
+flag = "ui:projects"
+[[option.effect]]
+flag = "ui:project:dig_keep"
+[[option.effect]]
+flag = "open_project:dig_keep"
+[[option.effect]]
+flag = "keep_opened_empty"
+[[option.effect]]
+q = "menace.grievance"
+add = -0.2
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends holding the allocation. A die placed before the list is agreed is a die argued about afterwards. One month of one clock is the price."

@@ -471,9 +471,9 @@ pub fn view(
                 let share = f64::from(game.hand.free) / f64::from(game.hand.adults.max(1));
                 if game.hand.shortfall > 0 {
                     "short".into()
-                } else if share < 0.15 {
+                } else if share < 0.2 {
                     "thin".into()
-                } else if share < 0.3 {
+                } else if share < 0.4 {
                     "tight".into()
                 } else {
                     "nominal".into()

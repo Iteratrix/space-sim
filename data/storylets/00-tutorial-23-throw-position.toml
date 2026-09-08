@@ -5,8 +5,9 @@ once = true
 priority = 108
 tags = ["tutorial", "throughput", "water"]
 text = """
-Status: the MDLS has thrown every month since alignment. The throw position has
-not been moved since it was set.
+Status: the MDLS operations clock has been open since alignment and the throw
+position has not been moved since it was set. What has gone down the rail is what
+the dice on that clock and that setting allowed.
 
 {extraction} raises it as one question read from two ends. The plant sets how
 much water exists. The throw position sets how much of it leaves.
@@ -17,7 +18,9 @@ draw; the tank grows and the ratio grows slower. Stop sends nothing and the pods
 stack on the pad.
 
 It is a standing setting. Whatever it reads tonight is what the station does
-every month until it is moved.
+every month until it is moved. The position governs only what leaves: a clock
+with no operations dice on it throws nothing at any setting, and the ratio reads
+what was thrown.
 """
 
 [[when]]

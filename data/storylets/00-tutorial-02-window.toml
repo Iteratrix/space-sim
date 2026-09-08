@@ -5,8 +5,8 @@ once = true
 priority = 148
 tags = ["tutorial", "sponsor"]
 text = """
-Countdown board enabled. Each ring fills toward a scheduled event. A full ring is
-the event.
+On confirmation the countdown board opens above the rail. Each ring fills toward
+a scheduled event. A full ring is the event.
 
 First countdown: Resupply Window 1 (RSW-1). It opens at MM 12. The ring reads the
 months remaining.
@@ -15,7 +15,9 @@ Constraint: a ship may depart Earth for this station only while a window is open
 Transit cost is set by orbital geometry, not by schedule. Nothing sent outside a
 window arrives. The window closes whether or not a hull is loaded.
 
-Status: no request is on file. Nothing further is required this month.
+Status: no request is on file. The station has ten months of its own labour
+before anything lands. The sponsor publishes the geometry for the whole mission;
+this station holds one line of it.
 """
 
 [[when]]
@@ -27,13 +29,45 @@ turn_max = 3
 [[when]]
 fired = "tut_arrival"
 
+[[cast]]
+role = "hours"
+seat = "hours"
+
 [[option]]
 id = "noted"
 label = "Enter the window on the board"
-text = "RSW-1 opens MM 12. The station has ten months of its own labour before anything arrives."
+text = "RSW-1 opens MM 12. One line, one countdown, nothing requested of the sponsor."
 tags = ["sponsor", "caution"]
 chronicle = "MM {turn}. RSW-1 entered on the countdown board. Window opens MM 12. No request on file."
 [[option.effect]]
 flag = "ui:countdowns"
 [[option.effect]]
 flag = "ui:clock:rsw"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends the single line. One window is what the board can act on. The rest of the geometry is the sponsor's problem until it is a hull."
+
+[[option]]
+id = "schedule"
+label = "Request the full window schedule from the sponsor"
+text = "Every window and its transit cost for the mission, held on station. The request is a query on the record."
+tags = ["sponsor", "independence", "hours"]
+chronicle = "MM {turn}. RSW-1 entered on the countdown board. The SMB requested the full mission window schedule with transit costs; the query was logged with the sponsor."
+[[option.effect]]
+flag = "ui:countdowns"
+[[option.effect]]
+flag = "ui:clock:rsw"
+[[option.effect]]
+flag = "window_schedule"
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.04
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends the request. A station that knows its own windows can date a shortage. One that does not can only report it."
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Notes the schedule is the only document that says when a part can arrive. Every repair estimate on this station is written against it."

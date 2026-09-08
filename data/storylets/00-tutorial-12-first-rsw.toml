@@ -5,17 +5,19 @@ once = true
 priority = 150
 tags = ["tutorial", "sponsor"]
 text = """
-Ledger: Spares added. Spares are imported parts the station cannot make: seals,
-bearings, membranes, boards. Consumption is about 0.12 crates per person per
-month, so it rises with every arrival. Each RSW brings a baseline. At zero, the
-loops run on improvised repair and the closure fraction falls.
+On confirmation the ledger gains a Spares bar. Spares are imported parts the
+station cannot make: seals, bearings, membranes, boards. Consumption is about
+0.12 crates per person per month, so it rises with every arrival. Each RSW brings
+a baseline. At zero, the loops run on improvised repair and the closure fraction
+falls.
 
 On the pad is the request this board transmitted before the window, and nothing
 else. The hull was loaded against the file and the file closed before launch. The
 sponsor's reply is an acknowledgement of receipt.
 
-Project opened: MDLS alignment and catch calibration. Eight segments. Pods have
-nowhere to go until the driver is true.
+The alignment and catch calibration of the MDLS opens as a project clock with
+this entry and takes dice the same month. Eight segments, and it reads
+engineering. Pods have nowhere to go until the driver is true.
 """
 
 [[when]]
@@ -83,7 +85,7 @@ add = 2
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Recommends immediate commissioning. The plant has run under rated since MM 1 and every day on the pad is a day off the loop."
+text = "Recommends immediate commissioning. The plant makes what the dice on it allow and nothing else, and every day a haul unit sits on the pad is a day off the loop."
 [[option.advice]]
 seat = "liaison"
 stance = "against"

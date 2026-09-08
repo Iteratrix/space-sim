@@ -1,5 +1,5 @@
 id = "tut_driver_still"
-title = "MM 24: MDLS Alignment Overdue"
+title = "MDLS Alignment Overdue"
 act = 1
 once = true
 priority = 110
@@ -26,6 +26,9 @@ turn_max = 34
 
 [[when]]
 not_flag = "driver_aligned"
+
+[[when]]
+flag = "ui:project:align_driver"
 
 [[cast]]
 role = "hulls"

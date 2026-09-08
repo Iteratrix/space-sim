@@ -73,7 +73,7 @@ const CAPTIONS = {
   "control:roster": "Roster order: which crew upkeep takes first when hours are short.",
   "control:auto_deal": "Auto-deal: the station places free dice on standing work.",
   "project:dig_keep": "KEEP excavation: a one-time clock. Twenty-four segments. Six pips fill one.",
-  "project:align_driver": "MDLS alignment: eight segments. Unstructured work; robot units do not fit.",
+  "project:align_driver": "MDLS alignment: eight segments. Unstructured work; only dex units fit.",
   "project:bake_out": "BOP: a standing clock. Its ring is a rate, not a progress. It never completes.",
   "project:throw": "MDLS operations: a standing clock. Its rate is tonnes thrown per month.",
   "clock:review": "Sponsor review: every sixteen months. Confidence moves on the throughput ratio.",
@@ -129,7 +129,11 @@ function render() {
     .join("");
   const lessonProjects = new Set(["dig_keep", "align_driver", "bake_out", "throw"]);
   v.countdowns.forEach((c) => noteReveal(`clock:${c.id}`, el("countdowns")));
-  v.projects.forEach((p) => { if (lessonProjects.has(p.id)) noteReveal(`project:${p.id}`, el("projects")); });
+  v.projects.forEach((p) => {
+    if (lessonProjects.has(p.id)) { noteReveal(`project:${p.id}`, el("projects")); return; }
+    if (!CAPTIONS[`project:${p.id}`]) CAPTIONS[`project:${p.id}`] = `Clock opened by station conditions: ${p.title}. ${p.description}`;
+    if (revealed("projects")) noteReveal(`project:${p.id}`, el("projects"));
+  });
   v.pressures.forEach((p) => noteReveal(`pressure:${p.id}`, el("pressures")));
   noteReveal("control:manifest", el("countdowns"));
   noteReveal("control:throw", el("projects"));
@@ -138,7 +142,7 @@ function render() {
     .filter((p) => !lessonProjects.has(p.id) || revealed(`project:${p.id}`))
     .map((p) => {
       const clock = p.standing ? ring(Math.round(Math.min(p.rate, 1) * 12), 12, "rate") : ring(p.filled, p.segments);
-      const sub = p.standing ? `rate ${p.rate.toFixed(2)} · ${p.pips}/${Math.round(p.pips_needed)} pips` : `${p.filled}/${p.segments}${p.roll === "setback" ? " · setback" : p.roll === "bonus" ? " · bonus" : ""}`;
+      const sub = p.standing ? `rate ${p.rate.toFixed(2)} · ${p.pips}/${Math.round(p.pips_needed)} pips` : `${p.filled}/${p.segments}${p.pips ? ` · ${p.pips} pips/month` : ""}${p.roll === "setback" ? " · setback" : p.roll === "bonus" ? " · bonus" : ""}`;
       const throwCtl = p.id === "throw" && revealed("control:throw") ? ` <select data-control="throw"><option value="ship"${v.controls.throw === "ship" ? " selected" : ""}>ship</option><option value="hold"${v.controls.throw === "hold" ? " selected" : ""}>hold at reserve</option><option value="stop"${v.controls.throw === "stop" ? " selected" : ""}>stop</option></select>` : "";
       return `<div class="clock" data-project="${p.id}" title="${p.description}">${clock}<div><div class="label">${p.title}</div><div class="sub">${sub}${throwCtl}</div><div class="dice">${p.dice.map(die).join("")}</div></div></div>`;
     })
@@ -245,6 +249,7 @@ function persist() {
   try {
     localStorage.setItem(SAVE_KEY, wasm.save(handle));
     localStorage.setItem(PENDING_KEY, JSON.stringify(pending));
+    localStorage.setItem("fortuna-events", el("events").innerHTML);
   } catch (_) { /* private mode */ }
 }
 
@@ -291,7 +296,7 @@ function resume() {
     handle = r.handle;
     try { pending = JSON.parse(localStorage.getItem(PENDING_KEY) || "[]"); } catch (_) { pending = []; }
     apply(wasm.view(handle));
-    el("events").innerHTML = "<div>Resumed from the last count.</div>";
+    try { el("events").innerHTML = localStorage.getItem("fortuna-events") || ""; } catch (_) { el("events").innerHTML = ""; }
     showScene();
     return true;
   } catch (_) { return false; }

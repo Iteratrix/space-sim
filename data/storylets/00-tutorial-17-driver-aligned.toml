@@ -5,18 +5,29 @@ once = true
 priority = 150
 tags = ["tutorial", "throughput", "sponsor"]
 text = """
-MDLS alignment and catch calibration complete. The first pod went down the rail
-this month. Catch confirmation from the Earth-side tug arrives in sixteen months.
+MDLS alignment and catch calibration complete. The rail is true. Nothing has gone
+down it.
 
-Project region: MDLS operations added. It is a standing clock. Its dice set
-tonnes thrown per month.
+On confirmation the MDLS operations clock opens on the rail with the throw
+position beside it, and the ledger gains the throughput ratio. The clock is
+standing: it never completes and its ring is a rate. It opens unstaffed, and an
+unstaffed clock throws nothing.
 
-Control: throw position, on the MDLS clock. Ship sends everything above the 120 t
-water reserve. Hold sends only what the plant makes above station draw. Stop
-sends nothing. It is a standing setting and holds until it is moved.
+The clock reads operations. A die's engineering or extraction rating counts for
+nothing here; only its operations face does, and a face of zero adds nothing.
+{op1} and {op2} carry the two highest operations ratings available to the board.
+The clock is rated at eight points and takes autonomous units as well as crew.
 
-Ledger: throughput ratio added. Tonnes shipped per tonne received. It is the one
-figure the sponsor reads.
+Throughput ratio is tonnes shipped per tonne received. It is the one figure the
+sponsor reads. It stands at zero and rises only in the months the MDLS is staffed
+and the throw position is not Stop.
+
+Throw position: Ship sends everything above the 120 t water reserve. Hold sends
+only what the plant makes above station draw. Stop sends nothing. It is a
+standing setting and holds until it is moved.
+
+Commander: the first two options place {op1} and {op2} on the clock, with up to
+two arm units for pod packing if they are not already tasked.
 """
 
 [[when]]
@@ -30,12 +41,21 @@ seat = "liaison"
 role = "hulls"
 seat = "hulls"
 
+[[cast]]
+role = "op1"
+skill = "operations"
+top = true
+
+[[cast]]
+role = "op2"
+skill = "operations"
+
 [[option]]
 id = "ship"
-label = "Set the throw position to Ship"
-text = "Everything above the reserve goes into the pods each month."
+label = "Staff the MDLS and set the throw position to Ship"
+text = "{op1}, {op2} and the untasked arm units onto the clock. Everything above the reserve goes into the pods each month."
 tags = ["throughput", "sponsor"]
-chronicle = "MM {turn}. MDLS alignment complete and the first pod thrown. Throw position set to Ship. Throughput reporting begins."
+chronicle = "MM {turn}. MDLS alignment complete. {op1} and {op2} placed on the MDLS operations clock with the arm units not already tasked. Throw position set to Ship. Throughput reporting begins."
 [[option.effect]]
 unflag = "driver_unaligned"
 [[option.effect]]
@@ -44,6 +64,14 @@ flag = "ui:project:throw"
 flag = "ui:control:throw"
 [[option.effect]]
 flag = "ui:bar:throw"
+[[option.effect]]
+person = "op1"
+assign = "throw"
+[[option.effect]]
+person = "op2"
+assign = "throw"
+[[option.effect]]
+assign_robots = { class = "arm", project = "throw", count = 2 }
 [[option.effect]]
 flag = "throw_ship"
 [[option.effect]]
@@ -58,7 +86,7 @@ add = 0.05
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Recommends Ship. As of this month the station produces the figure the sponsor reads. Producing less of it than the plan states is itself an entry."
+text = "Recommends Ship and a staffed clock. As of this month the station can produce the figure the sponsor reads. A rail that is true and idle is worse in the packet than a rail that is not built."
 [[option.advice]]
 seat = "air"
 stance = "against"
@@ -66,10 +94,10 @@ text = "Notes the 120 t reserve was set before any loop on this station was meas
 
 [[option]]
 id = "hold"
-label = "Set the throw position to Hold"
-text = "Only what the plant makes above station draw. The tank fills; the ratio grows slower."
+label = "Staff the MDLS and set the throw position to Hold"
+text = "{op1}, {op2} and the untasked arm units onto the clock. Only what the plant makes above station draw leaves."
 tags = ["water", "caution", "capability"]
-chronicle = "MM {turn}. MDLS alignment complete and the first pod thrown. Throw position set to Hold at the reserve. Throughput reporting begins."
+chronicle = "MM {turn}. MDLS alignment complete. {op1} and {op2} placed on the MDLS operations clock with the arm units not already tasked. Throw position set to Hold at the reserve. Throughput reporting begins."
 [[option.effect]]
 unflag = "driver_unaligned"
 [[option.effect]]
@@ -78,6 +106,14 @@ flag = "ui:project:throw"
 flag = "ui:control:throw"
 [[option.effect]]
 flag = "ui:bar:throw"
+[[option.effect]]
+person = "op1"
+assign = "throw"
+[[option.effect]]
+person = "op2"
+assign = "throw"
+[[option.effect]]
+assign_robots = { class = "arm", project = "throw", count = 2 }
 [[option.effect]]
 flag = "throw_hold"
 [[option.effect]]
@@ -92,14 +128,18 @@ add = 8
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Recommends Hold for one window. The plant is at rated for the first time. The tank should see a full month of it before the driver does."
+text = "Recommends Hold with the clock staffed. The tank should see a full month of the plant before the driver does. Staffing is not the same question as position."
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends a staffed clock either way. The clock is rated at eight points, and two ratings with two arm units is the fastest the board can reach that from here."
 
 [[option]]
-id = "stop"
-label = "Set the throw position to Stop"
-text = "Nothing leaves the rail until the tug confirms the first catch. Sixteen months."
-tags = ["caution", "capability", "risk"]
-chronicle = "MM {turn}. MDLS alignment complete and the first pod thrown. Throw position set to Stop pending catch confirmation."
+id = "unstaffed"
+label = "Leave the MDLS unstaffed and the rail stopped"
+text = "No dice on the clock. Nothing is thrown, the ratio stays at zero, and the next review scores zero against an expectation of 1.0."
+tags = ["capability", "caution", "risk"]
+chronicle = "MM {turn}. MDLS alignment complete. The MDLS operations clock was left unstaffed and the throw position set to Stop. Nothing thrown; throughput ratio remains zero."
 [[option.effect]]
 unflag = "driver_unaligned"
 [[option.effect]]
@@ -117,9 +157,15 @@ unflag = "throw_hold"
 [[option.effect]]
 flag = "throw_taught"
 [[option.effect]]
+flag = "throw_unstaffed"
+[[option.effect]]
 q = "sponsor.confidence"
 add = -0.05
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Recommends Stop. One pod on an unproven rail is a test. Sixteen pods is a practice. The result of the test arrives before the sixteenth."
+text = "Recommends holding the dice. One pod on an unproven rail is a test; sixteen is a practice, and the tug confirms the first catch in sixteen months."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Reports the review scores tonnes shipped per tonne received against an expectation of 1.0. An unstaffed clock reports zero, and zero is the entry that moves the sponsor's stage."

@@ -5,19 +5,23 @@ once = true
 priority = 140
 tags = ["tutorial", "machines", "water"]
 text = """
-Robot dice are now shown on the board. A unit is a fixed-rating die, drawn
-square. It fits structured work only, and it does not tire.
+On confirmation the autonomous units appear on the allocation board and a second
+clock opens on the rail. A unit is a fixed-rating die, drawn square. It fits
+structured work only, and it does not tire.
 
-Every unit not placed on a clock carries station upkeep. Upkeep the units carry
-is upkeep the crew does not, so a unit taken off upkeep returns a crew die to it.
+Second clock: BOP volatile extraction. It is a standing clock. It never
+completes and its ring is a rate, not progress. Full ring is rated output, 14 t
+of water a month, and it needs ten points of dice. Nothing is on it, so it makes
+nothing.
 
-Second clock opened to the board: BOP volatile extraction. It is a standing
-clock. It never completes and its ring is a rate, not progress. Full ring is
-rated output, 14 t of water a month. It needs ten points of dice. The ring reads
-what the dice on it produce, and nothing is on it.
+Constraint: every unit not placed on a clock is carrying station upkeep. Placing
+a unit takes its hours off upkeep and a crew die is eaten in its place. A haul
+unit carries 300 h a month and a plant unit 320 h. One crew die is 228 h. Three
+haul units and two plant units on the BOP returns 1,540 h to the crew, which is
+six or seven crew dice: the free count falls by that much in the same month.
 
 New question at the board: who answers for the water and metal. {extraction}
-holds the plant log.
+holds the plant log and {hauler} runs the haul loop.
 """
 
 [[when]]
@@ -32,13 +36,18 @@ fired = "tut_dead_dex"
 [[cast]]
 role = "extraction"
 skill = "extraction"
+top = true
+
+[[cast]]
+role = "hauler"
+skill = "extraction"
 
 [[option]]
 id = "units_to_plant"
-label = "Task units to the bake-out"
-text = "Units off upkeep and onto the plant. The upkeep they carried returns to the crew."
+label = "Task five units to the bake-out"
+text = "Three haul units and two plant units: ten points against a rated ten, from the units not already tasked. Their upkeep returns to the crew."
 tags = ["water", "throughput", "machines"]
-chronicle = "MM {turn}. SMB directive: autonomous units to the BOP ahead of upkeep. Upkeep returned to the roster in the same month."
+chronicle = "MM {turn}. SMB directive: three haul units and two plant units to the BOP, ten points against a rated ten. The units not already tasked were placed with this entry and the upkeep they carried returned to the crew roster."
 [[option.effect]]
 flag = "ui:robots"
 [[option.effect]]
@@ -46,17 +55,26 @@ flag = "ui:project:bake_out"
 [[option.effect]]
 flag = "seat:extraction"
 [[option.effect]]
-q = "stocks.water"
-add = 4
+assign_robots = { class = "haul", project = "bake_out", count = 3 }
+[[option.effect]]
+assign_robots = { class = "plant", project = "bake_out", count = 2 }
 [[option.effect]]
 all_strain = 0.04
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends tasking the units. They were shipped to run the plant and they are running nothing. A unit holds its rating in a month nobody sleeps."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "Assesses the exchange at 1,540 h. That is six or seven dice off the board this month for ten points of extraction, and the excavation is where they were."
 
 [[option]]
 id = "crew_to_plant"
-label = "Task crew to the bake-out; units stay on upkeep"
-text = "Crew ratings on the plant, units left carrying the loops. Free dice fall; upkeep does not."
+label = "Task two crew to the bake-out; the units stay on upkeep"
+text = "{extraction} and {hauler} onto the plant clock. Upkeep does not move and the free count does not fall."
 tags = ["water", "hours"]
-chronicle = "MM {turn}. SMB directive: crew dice to the BOP, autonomous units held on station upkeep."
+chronicle = "MM {turn}. SMB directive enacted: {extraction} and {hauler} placed on the BOP clock. The autonomous units were held on station upkeep."
 [[option.effect]]
 flag = "ui:robots"
 [[option.effect]]
@@ -66,15 +84,22 @@ flag = "seat:extraction"
 [[option.effect]]
 flag = "units_on_upkeep"
 [[option.effect]]
-q = "stocks.water"
-add = 2
+person = "extraction"
+assign = "bake_out"
+[[option.effect]]
+person = "hauler"
+assign = "bake_out"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends the crew dice. Two ratings on the plant cost the board two dice, not seven. The units carry the loops for nothing."
 
 [[option]]
 id = "keep_first"
 label = "Leave the bake-out unstaffed"
-text = "No dice on the plant. The excavation keeps the free allocation."
+text = "No dice on the plant. The excavation keeps the free allocation and the tank runs on what landed."
 tags = ["capability", "dose"]
-chronicle = "MM {turn}. SMB directive: the BOP left unstaffed; the free allocation stays on KEEP excavation."
+chronicle = "MM {turn}. SMB directive: the BOP left unstaffed; the free allocation stays on KEEP excavation. The plant clock reads zero."
 [[option.effect]]
 flag = "ui:robots"
 [[option.effect]]
@@ -83,3 +108,7 @@ flag = "ui:project:bake_out"
 flag = "seat:extraction"
 [[option.effect]]
 flag = "plant_held"
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Objects to an unstaffed plant. Water is the only product this station makes and the tank is the only buffer under it."

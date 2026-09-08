@@ -1,11 +1,12 @@
 id = "tut_power"
-title = "MM 15: Power Budget"
+title = "Power Budget and Reactor Life"
 act = 1
 once = true
 priority = 128
 tags = ["tutorial", "hulls"]
 text = """
-Ledger: Power margin added. Countdown: reactor core life added.
+On confirmation the ledger gains a Power bar and the board gains a reactor
+countdown.
 
 The bar reads capacity minus demand. Capacity is the reactor at 400 kW plus the
 photovoltaic array; demand is the farm, the loops, the plant and the driver.
@@ -17,7 +18,9 @@ from belt material. The countdown reads what remains.
 Constraint: when capacity falls below demand, load is shed in a fixed order. The
 MDLS is shed first at 180 kW. The farm is shed last.
 
-No action is required this month.
+{hulls} raises one option beyond entering the figures. A core held below rated
+thermal output ages more slowly. The derate is a control-drum reset: six crates
+of spares, and twelve months added to the countdown.
 """
 
 [[when]]
@@ -36,9 +39,9 @@ seat = "hulls"
 [[option]]
 id = "noted"
 label = "Enter the power budget"
-text = "Capacity, demand and remaining core life go on the standing record."
+text = "Capacity, demand and remaining core life go on the standing record. The core runs at rated."
 tags = ["hulls", "capability"]
-chronicle = "MM {turn}. Power budget entered on the ledger with the reactor countdown. Core rated for 150 months and not refuellable from belt material."
+chronicle = "MM {turn}. Power budget entered on the ledger with the reactor countdown. Core rated for 150 months, run at rated thermal output, and not refuellable from belt material."
 [[option.effect]]
 flag = "ui:bar:power"
 [[option.effect]]
@@ -51,3 +54,33 @@ text = "Notes the core is the only power on station that does not depend on the 
 seat = "air"
 stance = "for"
 text = "Records that the farm is last in the shedding order and asks that it stay there in every revision of the order."
+
+[[option]]
+id = "derate"
+label = "Derate the core and reset the control drums"
+text = "Twelve months added to rated core life. Six crates of spares and a fortnight of {hulls}'s time."
+tags = ["capability", "independence", "caution"]
+chronicle = "MM {turn}. Power budget entered on the ledger with the reactor countdown. The core was derated and the control drums reset: rated life extended by twelve months at a cost of six crates."
+[[option.effect]]
+flag = "ui:bar:power"
+[[option.effect]]
+flag = "ui:clock:reactor"
+[[option.effect]]
+flag = "reactor_derated"
+[[option.effect]]
+q = "power.reactor_life"
+add = 12
+[[option.effect]]
+q = "stocks.spares"
+add = -6
+[[option.effect]]
+person = "hulls"
+strain = 0.08
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends the derate. The end of the core is the end of the driver and the loops together. Twelve months bought now is twelve months to build mirrors in."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Advises against. Six crates and an engineer for a fortnight, spent on a date twelve years out. The sponsor's model does not carry a line for core life."

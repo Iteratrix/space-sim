@@ -101,7 +101,7 @@ with sync_playwright() as p:
         else:
             d.click()
             tgt.click()
-            time.sleep(0.2)
+            time.sleep(0.6)
             out = page.evaluate(JS_STATE)
     elif cmd == "set":
         ctl, val = args[1], args[2]

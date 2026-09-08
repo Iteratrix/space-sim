@@ -2,6 +2,22 @@
 
 Written for whoever picks this up next (human or agent). Newest at the top.
 
+## Day 2, night: two more playtests, the feel gate, calm months
+
+- Playtests 3 (the careful reader) and 4 (the impatient player) on v0.1.4 — most
+  reveals landed from the screen alone; the throw lesson failed structurally
+  (clock opened empty, nobody asked to staff it); the game "never raised its voice"
+  when the plant sat idle. Fixed: upkeep evicts the worst face and says so; idle
+  standing projects reported; scenes can place robots (`assign_robots`); projects
+  opened by a scene are droppable at once; a lifted die shows its face beside each
+  clock; clocks show their pips the moment dice land; the events pane survives a
+  reload; the tutorial rewritten again (the throw lesson names operations and
+  staffs the MDLS; directives enacted; single-option briefings given a choice).
+- **The feel gate** (`space-sim feel`, in CI): quiet streaks, never-fired,
+  never-chosen, silent seats, endings — limits 5 (tutorial) and 9 (act 1).
+- **Twelve calm-month scenes** (`40-calm-*`): act 1's worst silence 12 → 7-9;
+  attention decay retuned so act 1 stays near fifteen years.
+
 ## Day 2, evening: the report register and progressive disclosure
 
 - **The report register.** Act 1's narrator is the station mind under the HRA giving

@@ -5,9 +5,10 @@ once = true
 priority = 146
 tags = ["tutorial", "hours"]
 text = """
-Allocation board enabled. One die per crew member. The number on a die is that
-person's rating in the work the die is placed on. Each task reads a different
-rating, so a die is not worth the same everywhere.
+On confirmation the allocation board opens below the rail. One die per crew
+member. The number shown on a die is that person's best rating. It is not the
+number the die will read on every clock: each kind of work reads a different
+rating.
 
 Status: fourteen adults. Two are consumed by station upkeep this month and are
 shown dimmed. Twelve are free.

@@ -5,8 +5,8 @@ once = true
 priority = 142
 tags = ["tutorial", "machines", "hulls"]
 text = """
-The KEEP clock has taken one month of one die. Points carry from month to month;
-six of them fill a segment.
+The KEEP clock has taken its first month. Points carry from month to month; six
+of them fill a segment, and what is left over is carried, not lost.
 
 Each open clock also rolls once a month, on its best die. A high roll adds a
 segment. A low roll on a poor or strained die loses one. The roll is the only

@@ -8,8 +8,9 @@ text = """
 KEEP pressurised. Fifty metres of drum under 160,000 t of Fortuna, spun at 3 rpm
 for half a gravity.
 
-Ledger: Crew added. The bar reads headcount, residents and contract holders. Mean
-cumulative effective dose is carried on it, per person, by name.
+On confirmation the ledger gains a Crew bar. It reads headcount, residents and
+contract holders. Mean cumulative effective dose is carried on it, per person, by
+name.
 
 {bodies} closes the surface line on the CED ledger this month. Surface rate was
 120 mSv/yr. KEEP rate is 12. Cataract risk begins above 0.5 Gy. The sponsor's

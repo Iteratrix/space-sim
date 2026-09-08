@@ -5,12 +5,13 @@ once = true
 priority = 105
 tags = ["tutorial", "people", "air"]
 text = """
-Pressure region enabled. A pressure is not a stock. It does not run out and it
-cannot be spent. It crosses bands.
+On confirmation the pressure region opens under the ledger. A pressure is not a
+stock. It does not run out and it cannot be spent. It crosses bands.
 
-Shown now: the N2 make-up rate. Its bands are tight, weeping, rationed, the
-collar. Thresholds are 2, 4.5 and 7. Two further pressures exist and appear when
-each leaves its first band: sponsor oversight status, and crew cohesion index.
+The first ring shown is the N2 make-up rate. Its bands are tight, weeping,
+rationed, the collar. Thresholds are 2, 4.5 and 7. Two further pressures exist
+and appear when each leaves its first band: sponsor oversight status, and crew
+cohesion index.
 
 A pressure that reaches its last band forces a decision the board cannot defer,
 in the month it crosses, ahead of anything else on the agenda.

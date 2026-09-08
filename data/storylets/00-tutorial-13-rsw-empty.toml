@@ -5,17 +5,20 @@ once = true
 priority = 150
 tags = ["tutorial", "sponsor"]
 text = """
-Ledger: Spares added. Spares are imported parts the station cannot make: seals,
-bearings, membranes, boards. Consumption is about 0.12 crates per person per
-month. Each RSW brings a baseline. There is no baseline this window. At zero, the
-loops run on improvised repair and the closure fraction falls.
+On confirmation the ledger gains a Spares bar. Spares are imported parts the
+station cannot make: seals, bearings, membranes, boards. Consumption is about
+0.12 crates per person per month. Each RSW brings a baseline. There is no
+baseline this window. At zero, the loops run on improvised repair and the closure
+fraction falls.
 
 {liaison} has the sponsor's message. It runs to two lines: launch slipped, the
 next hull carries the combined manifest. The request stays on file and the
 combined hull will be loaded against it. The manifest control is the one thing at
 this table that can still be changed.
 
-Project opened: MDLS alignment and catch calibration. Eight segments.
+The alignment and catch calibration of the MDLS opens as a project clock with
+this entry and takes dice the same month. Eight segments, and it reads
+engineering.
 """
 
 [[when]]

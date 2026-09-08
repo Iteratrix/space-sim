@@ -5,7 +5,8 @@ once = true
 priority = 130
 tags = ["tutorial", "sponsor"]
 text = """
-Countdown: sponsor review added. Sponsor track enabled.
+On confirmation the review countdown joins the board and the sponsor track opens
+under it: seven stages, the mood word, and the ratio against expectation.
 
 The review falls in two months and happens whether or not a packet is sent. The
 sponsor scores throughput ratio — tonnes shipped per tonne received — against an

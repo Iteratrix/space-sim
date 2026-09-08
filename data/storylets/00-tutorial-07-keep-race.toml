@@ -5,11 +5,16 @@ once = true
 priority = 138
 tags = ["tutorial", "dose", "bodies"]
 text = """
-Ledger enabled. First bar: Hours. It reads free dice against crew.
+On confirmation the ledger opens with one bar on it: Hours. It reads free dice
+against crew.
 
 Upkeep is taken first, every month, before anything is assigned. The crew it
 takes are dimmed on the board. Upkeep rises as the crew grows and falls as units
 cover it. The Hours bar is the free fraction and nothing else.
+
+When upkeep needs more dice than are free, it takes them back off the clocks. The
+log records it in this form: Upkeep recalled 2 from KEEP excavation. Expect that
+line in any month more dice stand on clocks than the board has free.
 
 {bodies} opened the Cumulative Effective Dose (CED) ledger this morning. Surface
 habitat: 120 mSv/yr, ten a month, per person, counted by name. KEEP: 12 mSv/yr.

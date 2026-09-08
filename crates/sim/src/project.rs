@@ -684,6 +684,40 @@ pub fn refresh_hand(game: &mut Game, defs: &[ProjectDef]) {
         });
     }
     game.hand.dice = dice;
+    preview_rates(game, defs);
+}
+
+/// Recomputes each open project's pips and rate from the current assignments, so a
+/// placement shows its effect at once; `progress` recomputes them for real next count.
+pub fn preview_rates(game: &mut Game, defs: &[ProjectDef]) {
+    let n_present = game.present().count().az::<f64>();
+    let mut per_project: std::collections::BTreeMap<ProjectId, u32> =
+        std::collections::BTreeMap::new();
+    for (die, pid) in &game.assignments {
+        let Some(def) = defs.iter().find(|d| &d.id == pid) else {
+            continue;
+        };
+        let pips = match die {
+            DieId::Person(p) => u32::from(face(game, *p, def.domain)),
+            DieId::Robot(class, _) => u32::from(class.pips()),
+        };
+        *per_project.entry(pid.clone()).or_insert(0) += pips;
+    }
+    for state in &mut game.projects {
+        let Some(def) = defs.iter().find(|d| d.id == state.id) else {
+            continue;
+        };
+        let pips = per_project.get(&state.id).copied().unwrap_or(0);
+        state.pips_this_count = pips;
+        if def.standing {
+            let needed = def.pips_needed + def.pips_per_person * n_present;
+            state.rate = if needed > 0.0 {
+                (f64::from(pips) / needed).min(1.5)
+            } else {
+                1.0
+            };
+        }
+    }
 }
 
 /// Opens projects whose conditions hold and closes none; content opens manual ones.
