@@ -44,17 +44,40 @@ function headline(v) {
   return "";
 }
 
+function revealed(name) {
+  const flags = new Set(view.flags);
+  const inTutorial = flags.has("tutorial") && !flags.has("tutorial_done");
+  return !inTutorial || flags.has("ui:all") || flags.has(`ui:${name}`);
+}
+
+function gate(elm, name) {
+  if (!elm) return;
+  const show = revealed(name);
+  if (show && elm.hidden) elm.classList.add("revealed");
+  elm.hidden = !show;
+}
+
 function render() {
   const v = view;
+  gate(el("countdowns"), "countdowns");
+  gate(el("projects"), "projects");
+  gate(el("hand"), "hand");
+  gate(el("ledger"), "ledger");
+  gate(el("pressures"), "pressures");
+  gate(el("ring"), "ring");
+  gate(el("btn-chronicle"), "chronicle");
+  gate(el("hand").querySelector("label.control:nth-of-type(1)"), "control:roster");
+  gate(el("hand").querySelector("label.control:nth-of-type(2)"), "control:auto_deal");
   el("headline").textContent = `count ${v.turn} · ${headline(v)}`;
   el("countdowns").querySelector(".clocks").innerHTML = v.countdowns
-    .map((c) => `<div class="clock${c.urgent ? " urgent" : ""}" title="${c.why}">${ring(c.filled, c.segments)}<div><div class="label">${c.label}</div><div class="sub">${c.remaining == null ? "" : c.remaining + " left"}${c.id === "rsw" ? ` · manifest <select data-control="manifest"><option${v.controls.manifest === "throughput" ? " selected" : ""}>throughput</option><option${v.controls.manifest === "balanced" ? " selected" : ""}>balanced</option><option${v.controls.manifest === "capability" ? " selected" : ""}>capability</option><option${v.controls.manifest === "people" ? " selected" : ""}>people</option></select>` : ""}</div></div></div>`)
+    .filter((c) => revealed(`clock:${c.id}`))
+    .map((c) => `<div class="clock${c.urgent ? " urgent" : ""}" title="${c.why}">${ring(c.filled, c.segments)}<div><div class="label">${c.label}</div><div class="sub">${c.remaining == null ? "" : c.remaining + " left"}${c.id === "rsw" && revealed("control:manifest") ? ` · manifest <select data-control="manifest"><option${v.controls.manifest === "throughput" ? " selected" : ""}>throughput</option><option${v.controls.manifest === "balanced" ? " selected" : ""}>balanced</option><option${v.controls.manifest === "capability" ? " selected" : ""}>capability</option><option${v.controls.manifest === "people" ? " selected" : ""}>people</option></select>` : ""}</div></div></div>`)
     .join("");
   el("projects").querySelector(".clocks").innerHTML = v.projects
     .map((p) => {
       const clock = p.standing ? ring(Math.round(Math.min(p.rate, 1) * 12), 12, "rate") : ring(p.filled, p.segments);
       const sub = p.standing ? `rate ${p.rate.toFixed(2)} · ${p.pips}/${Math.round(p.pips_needed)} pips` : `${p.filled}/${p.segments}${p.roll === "setback" ? " · setback" : p.roll === "bonus" ? " · bonus" : ""}`;
-      const throwCtl = p.id === "throw" ? ` <select data-control="throw"><option value="ship"${v.controls.throw === "ship" ? " selected" : ""}>ship</option><option value="hold"${v.controls.throw === "hold" ? " selected" : ""}>hold at reserve</option><option value="stop"${v.controls.throw === "stop" ? " selected" : ""}>stop</option></select>` : "";
+      const throwCtl = p.id === "throw" && revealed("control:throw") ? ` <select data-control="throw"><option value="ship"${v.controls.throw === "ship" ? " selected" : ""}>ship</option><option value="hold"${v.controls.throw === "hold" ? " selected" : ""}>hold at reserve</option><option value="stop"${v.controls.throw === "stop" ? " selected" : ""}>stop</option></select>` : "";
       return `<div class="clock" data-project="${p.id}" title="${p.description}">${clock}<div><div class="label">${p.title}</div><div class="sub">${sub}${throwCtl}</div><div class="dice">${p.dice.map(die).join("")}</div></div></div>`;
     })
     .join("");
@@ -66,6 +89,7 @@ function render() {
   el("roster").value = v.controls.roster;
   el("auto-deal").checked = v.controls.auto_deal;
   el("ledger").querySelector(".bars").innerHTML = v.ledger
+    .filter((b) => revealed(`bar:${b.id}`))
     .map((b) => {
       const pct = Math.max(0, Math.min(100, (b.value / (b.full || 1)) * 100));
       const warn = ["below reserve", "dry", "critical", "zero", "failing", "farm short", "short", "brittle"].includes(b.word);
@@ -74,9 +98,11 @@ function render() {
     })
     .join("");
   el("pressures").querySelector(".rings").innerHTML = v.pressures
+    .filter((p) => revealed(`pressure:${p.id}`))
     .map((p) => `<div class="pressure" title="${p.label}: ${p.value.toFixed(1)} of 10">${ring(Math.round(p.value), 10, "p" + Math.max(p.band, 1))}${p.id}<br><em>${p.band_name}</em></div>`)
     .join("");
   const s = v.sponsor;
+  gate(el("sponsor-track"), "sponsor");
   el("sponsor-track").innerHTML = `sponsor: ${[0, 1, 2, 3, 4, 5, 6].map((i) => `<span class="dot${i <= s.stage ? " on" : ""}"></span>`).join("")} ${s.stage_name} · ${s.mood}<br>φ ${s.phi.toFixed(1)} against ${s.phi_expected.toFixed(1)} · review in ${s.counts_to_review}`;
   renderRing();
   bindDice();
@@ -206,6 +232,7 @@ el("btn-close").addEventListener("click", () => { el("drawer").hidden = true; })
 el("btn-new").addEventListener("click", () => { el("dialog").hidden = false; });
 el("btn-cancel").addEventListener("click", () => { el("dialog").hidden = true; });
 el("btn-start").addEventListener("click", () => { el("dialog").hidden = true; start(el("seed").value || 3, el("scenario").value); });
+el("btn-skip").addEventListener("click", () => { el("dialog").hidden = true; start(el("seed").value || 3, "tutorial"); setControl("flag", "ui:all"); setControl("flag", "tutorial_open"); });
 el("roster").addEventListener("change", () => setControl("roster", el("roster").value));
 el("auto-deal").addEventListener("change", () => setControl("auto_deal", el("auto-deal").checked ? "on" : "off"));
 

@@ -37,9 +37,9 @@ with sync_playwright() as p:
     print("hand:", page.text_content("#hand-count"), "|", page.text_content("#hand-note"))
     print("projects:", [e.text_content().strip()[:40] for e in page.query_selector_all("#projects .label")])
     print("ring:", [e.text_content().strip() for e in page.query_selector_all("#seats .who")][:6])
-    dice = page.query_selector_all("#hand-dice .die[draggable=true]")
+    dice = [d for d in page.query_selector_all("#hand-dice .die[draggable=true]") if d.is_visible()]
     proj = page.query_selector(".clock[data-project='dig_keep']") or page.query_selector(".clock[data-project]")
-    if dice and proj:
+    if dice and proj and proj.is_visible():
         before = len(proj.query_selector_all(".die"))
         dice[0].click()
         proj.click()
@@ -47,11 +47,19 @@ with sync_playwright() as p:
         proj = page.query_selector(f".clock[data-project='{proj.get_attribute('data-project')}']")
         after = len(proj.query_selector_all(".die"))
         print(f"tap-tap assign: project dice {before} -> {after}")
-    page.select_option("select[data-control='manifest']", "capability")
-    time.sleep(0.1)
-    print("manifest control:", page.eval_on_selector("select[data-control='manifest']", "e => e.value"))
-    page.click("#btn-chronicle")
-    print("chronicle lines:", len(page.text_content("#chronicle").strip().splitlines()))
+    sel = page.query_selector("select[data-control='manifest']")
+    if sel and sel.is_visible():
+        page.select_option("select[data-control='manifest']", "capability")
+        time.sleep(0.1)
+        print("manifest control:", page.eval_on_selector("select[data-control='manifest']", "e => e.value"))
+    else:
+        print("manifest control: hidden (tutorial gating)")
+    btn = page.query_selector("#btn-chronicle")
+    if btn and btn.is_visible():
+        btn.click()
+        print("chronicle lines:", len(page.text_content("#chronicle").strip().splitlines()))
+    else:
+        print("chronicle: hidden (tutorial gating)")
     page.screenshot(path="web/test/smoke.png")
     browser.close()
 print("console errors:", errors if errors else "none")

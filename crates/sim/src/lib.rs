@@ -145,6 +145,9 @@ impl Engine {
             ("roster", "name") => game.controls.roster = RosterOrder::Name,
             ("auto_deal", "on") => game.controls.auto_deal = true,
             ("auto_deal", "off") => game.controls.auto_deal = false,
+            ("flag", f) if f == "tutorial_done" || f == "tutorial_open" || f.starts_with("ui:") => {
+                game.flags.insert(f.to_owned());
+            }
             _ => return Err(format!("unknown control or value: {control} = {value}")),
         }
         Ok(())
