@@ -1,0 +1,50 @@
+id = "tut_margin"
+title = "Consumables Margin"
+act = 1
+once = true
+priority = 126
+tags = ["tutorial", "air", "closure"]
+text = """
+Ledger: consumables margin added.
+
+Margin is the smaller of two figures: the farm's food buffer and the time to
+nitrogen exhaustion at the present make-up rate. It has not been above ten months
+since landing. The word beside the bar is the closure status — nominal, patched,
+tight, failing.
+
+Margin does not measure comfort or output. It measures how long the station
+functions with no arrival. Every other bar can be recovered from stock. This one
+is recovered only by closing loops or by a hull.
+
+No action is required this month.
+"""
+
+[[when]]
+turn_min = 16
+
+[[when]]
+turn_max = 22
+
+[[when]]
+fired = "tut_power"
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[option]]
+id = "noted"
+label = "Enter the margin"
+text = "The figure is read at the head of the agenda with the make-up rate."
+tags = ["air", "closure", "caution"]
+chronicle = "MM {turn}. Consumables margin entered on the ledger, read with the N2 make-up rate at the head of the agenda."
+[[option.effect]]
+flag = "ui:bar:margin"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Reports closure at 0.90. The figure is the buffer, not the plan. It moves with the make-up rate and with the farm, and with nothing else the board controls."
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Notes the food buffer is the other half of the figure and that it falls with every additional crew member the sponsor sends."

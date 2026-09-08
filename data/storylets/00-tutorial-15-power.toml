@@ -1,0 +1,53 @@
+id = "tut_power"
+title = "MM 15: Power Budget"
+act = 1
+once = true
+priority = 128
+tags = ["tutorial", "hulls"]
+text = """
+Ledger: Power margin added. Countdown: reactor core life added.
+
+The bar reads capacity minus demand. Capacity is the reactor at 400 kW plus the
+photovoltaic array; demand is the farm, the loops, the plant and the driver.
+Demand rises with every arrival and the array rises with it.
+
+The core is rated for 150 months from first criticality and is not refuellable
+from belt material. The countdown reads what remains.
+
+Constraint: when capacity falls below demand, load is shed in a fixed order. The
+MDLS is shed first at 180 kW. The farm is shed last.
+
+No action is required this month.
+"""
+
+[[when]]
+turn_min = 15
+
+[[when]]
+turn_max = 19
+
+[[when]]
+fired = "tut_review"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[option]]
+id = "noted"
+label = "Enter the power budget"
+text = "Capacity, demand and remaining core life go on the standing record."
+tags = ["hulls", "capability"]
+chronicle = "MM {turn}. Power budget entered on the ledger with the reactor countdown. Core rated for 150 months and not refuellable from belt material."
+[[option.effect]]
+flag = "ui:bar:power"
+[[option.effect]]
+flag = "ui:clock:reactor"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Notes the core is the only power on station that does not depend on the Sun, and it is the only one with an end date."
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Records that the farm is last in the shedding order and asks that it stay there in every revision of the order."

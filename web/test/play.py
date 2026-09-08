@@ -36,24 +36,26 @@ cmd = args[0] if args else "state"
 
 JS_STATE = """
 () => {
-  const t = (sel) => { const e = document.querySelector(sel); return e ? e.textContent.trim() : null; };
+  const vis = (e) => !!e && e.offsetParent !== null;
+  const t = (sel) => { const e = document.querySelector(sel); return e && vis(e) ? e.textContent.trim() : null; };
   const opts = [...document.querySelectorAll('.options li')].map((li, i) => ({ n: i + 1, id: li.dataset.option, label: li.firstChild.textContent.trim(), desc: li.querySelector('.desc')?.textContent.trim(), favoured: li.classList.contains('favoured') }));
-  const seats = [...document.querySelectorAll('.seat')].map((s) => ({ question: s.querySelector('.q')?.textContent.trim(), holder: s.querySelector('.who')?.textContent.trim(), mood: s.querySelector('.mood')?.textContent.trim(), says: s.querySelector('.say')?.textContent.trim(), favours: s.querySelector('.fav')?.textContent.trim(), silent: s.classList.contains('silent') }));
-  const dice = (root) => [...root.querySelectorAll('.die')].map((d) => ({ id: d.dataset.die, face: d.textContent.trim(), title: d.title, robot: d.classList.contains('robot'), upkeep: d.classList.contains('upkeep') }));
-  const projects = [...document.querySelectorAll('.clock[data-project]')].map((c) => ({ id: c.dataset.project, title: c.querySelector('.label')?.textContent.trim(), sub: c.querySelector('.sub')?.textContent.trim().replace(/\\s+/g, ' '), dice: dice(c) }));
-  const countdowns = [...document.querySelectorAll('#countdowns .clock')].map((c) => ({ label: c.querySelector('.label')?.textContent.trim(), sub: c.querySelector('.sub')?.textContent.trim().replace(/\\s+/g, ' '), urgent: c.classList.contains('urgent'), why: c.title }));
-  const ledger = [...document.querySelectorAll('.bar')].map((b) => ({ id: b.querySelector('span')?.textContent.trim(), word: b.querySelector('.word')?.textContent.trim(), why: b.title }));
-  const pressures = [...document.querySelectorAll('.pressure')].map((p) => ({ text: p.textContent.trim().replace(/\\s+/g, ' '), why: p.title }));
+  const seats = [...document.querySelectorAll('.seat')].filter(vis).map((s) => ({ question: s.querySelector('.q')?.textContent.trim(), holder: s.querySelector('.who')?.textContent.trim(), mood: s.querySelector('.mood')?.textContent.trim(), says: s.querySelector('.say')?.textContent.trim(), favours: s.querySelector('.fav')?.textContent.trim(), silent: s.classList.contains('silent') }));
+  const dice = (root) => [...root.querySelectorAll('.die')].filter(vis).map((d) => ({ id: d.dataset.die, face: d.textContent.trim(), title: d.title, robot: d.classList.contains('robot'), upkeep: d.classList.contains('upkeep') }));
+  const projects = [...document.querySelectorAll('.clock[data-project]')].filter(vis).map((c) => ({ id: c.dataset.project, title: c.querySelector('.label')?.textContent.trim(), sub: c.querySelector('.sub')?.textContent.trim().replace(/\\s+/g, ' '), dice: dice(c) }));
+  const countdowns = [...document.querySelectorAll('#countdowns .clock')].filter(vis).map((c) => ({ label: c.querySelector('.label')?.textContent.trim(), sub: c.querySelector('.sub')?.textContent.trim().replace(/\\s+/g, ' '), urgent: c.classList.contains('urgent'), why: c.title }));
+  const ledger = [...document.querySelectorAll('.bar')].filter(vis).map((b) => ({ id: b.querySelector('span')?.textContent.trim(), word: b.querySelector('.word')?.textContent.trim(), why: b.title }));
+  const pressures = [...document.querySelectorAll('.pressure')].filter(vis).map((p) => ({ text: p.textContent.trim().replace(/\\s+/g, ' '), why: p.title }));
   return {
     headline: t('#headline'),
     scene: { title: t('#scene h2'), must: !!document.querySelector('#scene h2.must'), text: t('#scene p'), options: opts },
     events: [...document.querySelectorAll('#events div')].map((d) => d.textContent.trim()),
     can_end: !document.getElementById('btn-end').disabled,
-    hand: { count: t('#hand-count'), note: t('#hand-note'), dice: dice(document.getElementById('hand-dice')), roster: document.getElementById('roster').value, auto_deal: document.getElementById('auto-deal').checked },
+    hand: vis(document.getElementById('hand')) ? { count: t('#hand-count'), note: t('#hand-note'), dice: dice(document.getElementById('hand-dice')), roster: document.getElementById('roster').value, auto_deal: document.getElementById('auto-deal').checked } : null,
     countdowns, projects, ledger, pressures,
     sponsor: t('#sponsor-track'),
     ring: seats,
-    controls: { manifest: document.querySelector("select[data-control='manifest']")?.value, throw: document.querySelector("select[data-control='throw']")?.value },
+    controls: { manifest: vis(document.querySelector("select[data-control='manifest']")) ? document.querySelector("select[data-control='manifest']").value : null, throw: vis(document.querySelector("select[data-control='throw']")) ? document.querySelector("select[data-control='throw']").value : null },
+    captions: [...document.querySelectorAll('.reveal')].filter(vis).map((e) => e.textContent.trim()),
   };
 }
 """

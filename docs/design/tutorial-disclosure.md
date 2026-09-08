@@ -278,12 +278,12 @@ expiry."
 
 ### L19 — Roster order and auto-deal. MM 22–34.
 **Appears:** the **roster** select and the **auto-deal** switch in the hand
-(`ui:control:roster`, `ui:control:autodeal`). Auto-deal is offered, not forced.
+(`ui:control:roster`, `ui:control:auto_deal`). Auto-deal is offered, not forced.
 **Must:** nothing; the option sets `roster_*`.
 **Mind:** "Roster order sets which crew upkeep consumes first: lowest rating,
 highest strain, or by name. Auto-deal lets SX-19F place free dice on standing
 clocks each month. The Commander may leave it on and override by hand."
-**Flags:** `ui:control:roster`, `ui:control:autodeal`, `roster_*`.
+**Flags:** `ui:control:roster`, `ui:control:auto_deal`, `roster_*`.
 **Scene:** `tut_roster` (survives, `once = true`).
 
 ### L20 — Expansion, the Sun, and the handoff. MM 28 and MM 43.
@@ -390,7 +390,7 @@ count).
 | var. | `tut_keep_done` | survives | L16 | `ui:bar:people` |
 | 19+ | `tut_pressures` | survives, `once` | L17 | `ui:pressures` |
 | 20–22 | `tut_contracts_clock` | **new**, one option | L18 | `ui:clock:contract` |
-| 22+ | `tut_roster` | survives, `once` | L19 | `ui:control:roster`, `ui:control:autodeal` |
+| 22+ | `tut_roster` | survives, `once` | L19 | `ui:control:roster`, `ui:control:auto_deal` |
 | 24 | `tut_driver_still` | survives (fallback) | — | — |
 | 25+ | `tut_throw_position` | survives, `once`; gate `flag = throw_taught` | L12 reprise | — |
 | 27 | `tut_contract` | survives | L18 decision | — |
@@ -456,7 +456,7 @@ is the instruction, when there is one.
 | `#hand` section | `ui:hand` |
 | robot dice in the hand | `ui:robots` |
 | `#roster` select | `ui:control:roster` |
-| `#auto-deal` switch | `ui:control:autodeal` |
+| `#auto-deal` switch | `ui:control:auto_deal` |
 | `#ledger` section | `ui:ledger` |
 | bar by id | `ui:bar:<id>` |
 | `#pressures` section | `ui:pressures` |

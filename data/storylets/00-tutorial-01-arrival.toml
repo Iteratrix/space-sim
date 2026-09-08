@@ -5,30 +5,30 @@ once = true
 priority = 150
 tags = ["tutorial", "hulls", "hours"]
 text = """
-Mission Month 1. The transfer hull is docked to the surface habitat the
-automated effort assembled thirty-one months ago, and the handover inventory is
-on the table. The robots did what their tasking allowed: the Bake-Out Plant
-(BOP) is running at a third of rated output on a single haul loop; the Mass
-Driver Launch System (MDLS) is assembled, unaligned, and has never thrown a pod
-that was caught; the photovoltaic array (PV-A) is unrolled to 3,200 square
-metres; two dexterous units are logged as non-responsive. There is no
-Kilotonne-class Excavated Environmental Protection habitat (KEEP). The crew will
-sleep under regolith bags at 120 millisieverts a year until there is.
+SX-19F reporting. Mission month 1. Fourteen crew landed. Robotic site work is
+handed over.
 
-The Station Management Board (SMB) is constituted with this entry and it is
-empty. A seat on it is a question, not a chair: it exists from the month the
-question is first asked, and it is held by whoever the board accepts the answer
-from. Two questions are open tonight. Someone has to answer for the hulls — what
-the robots actually built, what the fab can and cannot make, what a bearing
-costs in hours — and {hulls} has the assembly drawings open at the checksum
-error. Someone has to answer for the hours — the roster, the tasking list, what
-the sponsor's quarterly actually reads — and {hours} has the manifest.
+Status: the Bake-Out Plant (BOP) is assembled and idle. Nothing is tasked to it
+and it makes nothing. The Mass Driver Launch System (MDLS) is assembled,
+unaligned, and has never thrown a pod that was caught. The photovoltaic array is
+unrolled to 3,200 square metres. Two dexterous units are non-responsive. There is
+no Kilotonne-class Excavated Environmental Protection habitat (KEEP). Surface
+dose is 120 mSv/yr under regolith bags.
 
-First item: who goes to the surface first, and to what.
+This screen is the station log. One entry is one month. Decisions are logged when
+made. End count advances the month.
+
+Station Management Board (SMB) constituted. {hulls} answers for the hulls.
+{hours} answers for the hours.
+
+First item: the first surface task.
 """
 
 [[when]]
 turn_min = 1
+
+[[when]]
+turn_max = 2
 
 [[cast]]
 role = "hulls"
@@ -40,10 +40,12 @@ skill = "logistics"
 
 [[option]]
 id = "engineer_first"
-label = "The survey kit to the MDLS before anything is planned around it"
-text = "The alignment log ends at MM -4 with a checksum error. Find out what the robots actually built."
+label = "Survey the MDLS"
+text = "The alignment log ends at MM -4 with a checksum error. Establish what the robots built."
 tags = ["hulls", "capability"]
-chronicle = "MM {turn}. Site handover complete. The SMB constituted itself on two questions, hulls and hours. First surface task: MDLS survey. Two dexterous units confirmed non-responsive. KEEP not started."
+chronicle = "MM {turn}. Site handover complete. SMB constituted on two questions: hulls, hours. First surface task: MDLS survey. Two dexterous units confirmed non-responsive."
+[[option.effect]]
+flag = "ui:chronicle"
 [[option.effect]]
 flag = "seat:hulls"
 [[option.effect]]
@@ -53,21 +55,15 @@ flag = "tut_survey_first"
 [[option.effect]]
 person = "hulls"
 strain = 0.05
-[[option.advice]]
-seat = "hulls"
-stance = "for"
-text = "The alignment log ends at MM -4 with a checksum error. I want to see the rails before I believe the log."
-[[option.advice]]
-seat = "hours"
-stance = "against"
-text = "A survey is hours that do not appear on any tasking line. The BOP is at a third. Start there and survey on the way."
 
 [[option]]
 id = "plant_first"
-label = "The haul crew to the BOP and the plant to rated output"
-text = "Water is the schedule. Every tonne the plant does not make is a tonne the manifest has to carry."
+label = "Restart the BOP haul loop"
+text = "Rated output is 14 t of water a month. Present output is nothing."
 tags = ["throughput", "hours", "water"]
-chronicle = "MM {turn}. Site handover complete. The SMB constituted itself on two questions, hulls and hours. First surface task: BOP restart. Rated output not yet reached. KEEP not started."
+chronicle = "MM {turn}. Site handover complete. SMB constituted on two questions: hulls, hours. First surface task: BOP haul loop restart. Rated output not reached."
+[[option.effect]]
+flag = "ui:chronicle"
 [[option.effect]]
 flag = "seat:hulls"
 [[option.effect]]
@@ -77,30 +73,20 @@ flag = "tut_plant_first"
 [[option.effect]]
 q = "stocks.water"
 add = 6
-[[option.advice]]
-seat = "hours"
-stance = "for"
-text = "Every tonne the plant does not make this month is a tonne the manifest has to carry. Plant first."
-[[option.advice]]
-seat = "hulls"
-stance = "against"
-text = "You do not task a plant you have not walked around. Two hours of survey buys a year of not guessing."
 
 [[option]]
 id = "all_hands"
-label = "All hands to the surface habitat, settle in, then task"
-text = "Fourteen people, nine months, one hull. The sleep log says give them a day; the dose will still be there tomorrow."
+label = "Stand the crew down one month"
+text = "Fourteen crew, nine months in transit. Tasking deferred to MM 2."
 tags = ["people", "risk"]
-chronicle = "MM {turn}. Site handover complete. The SMB constituted itself on two questions, hulls and hours. All hands to surface habitat; tasking deferred one month. KEEP not started."
+chronicle = "MM {turn}. Site handover complete. SMB constituted on two questions: hulls, hours. Tasking deferred one month. Crew rest logged."
+[[option.effect]]
+flag = "ui:chronicle"
 [[option.effect]]
 flag = "seat:hulls"
 [[option.effect]]
 flag = "seat:hours"
 [[option.effect]]
-all_strain = -0.08
-[[option.effect]]
 flag = "tut_all_hands"
-[[option.advice]]
-seat = "hours"
-stance = "against"
-text = "A month of tasking deferred is a month the sponsor's number is zero. They read the number."
+[[option.effect]]
+all_strain = -0.08

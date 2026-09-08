@@ -1,0 +1,53 @@
+id = "tut_contracts_clock"
+title = "Contract Countdown"
+act = 1
+once = true
+priority = 118
+tags = ["tutorial", "people", "hours"]
+text = """
+Countdown: next contract end added.
+
+Crew contracts run thirty months from landing. Most of the crew who landed hold
+one. At expiry a crew member rotates home on the next RSW unless residence is
+elected. The clock reads the months to the earliest expiry on station, not to the
+last.
+
+A departure removes a die from the board. It also removes that rating from every
+clock the die was worth something on. A replacement arrives no sooner than the
+window after the request. That is two windows after a departure is known.
+
+No action is required this month.
+"""
+
+[[when]]
+turn_min = 20
+
+[[when]]
+turn_max = 26
+
+[[when]]
+flag = "tutorial"
+
+[[when]]
+not_flag = "tutorial_done"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[option]]
+id = "noted"
+label = "Enter the contract countdown"
+text = "The earliest expiry is minuted with the window that follows it."
+tags = ["people", "hours", "caution"]
+chronicle = "MM {turn}. The crew contract countdown was entered on the board. Terms run thirty months from landing; the first expiry was minuted with the window that follows it."
+[[option.effect]]
+flag = "ui:clock:contract"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends minuting the expiry now. A berth home is booked a window ahead or it is not booked. The replacement request is a window ahead of that."
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Notes that the last quarter of a fixed term is where people decide what they want, and that they are usually correct about themselves."

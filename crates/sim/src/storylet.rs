@@ -925,6 +925,8 @@ pub fn apply(game: &mut Game, storylet: &Storylet, option: &Option_, casting: &C
                     "roster_skill" => game.controls.roster = crate::project::RosterOrder::Skill,
                     "roster_strain" => game.controls.roster = crate::project::RosterOrder::Strain,
                     "roster_name" => game.controls.roster = crate::project::RosterOrder::Name,
+                    "auto_deal_on" => game.controls.auto_deal = true,
+                    "auto_deal_off" => game.controls.auto_deal = false,
                     _ => {}
                 }
             }

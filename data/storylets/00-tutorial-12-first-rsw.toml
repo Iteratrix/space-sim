@@ -1,0 +1,116 @@
+id = "tut_first_rsw"
+title = "MM 12: RSW-1 Arrival"
+act = 1
+once = true
+priority = 150
+tags = ["tutorial", "sponsor"]
+text = """
+Ledger: Spares added. Spares are imported parts the station cannot make: seals,
+bearings, membranes, boards. Consumption is about 0.12 crates per person per
+month, so it rises with every arrival. Each RSW brings a baseline. At zero, the
+loops run on improvised repair and the closure fraction falls.
+
+On the pad is the request this board transmitted before the window, and nothing
+else. The hull was loaded against the file and the file closed before launch. The
+sponsor's reply is an acknowledgement of receipt.
+
+Project opened: MDLS alignment and catch calibration. Eight segments. Pods have
+nowhere to go until the driver is true.
+"""
+
+[[when]]
+turn_min = 12
+
+[[when]]
+turn_max = 18
+
+[[when]]
+q = "counts_since_convoy"
+le = 1
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[option]]
+id = "inventory"
+label = "Reconcile the manifest before unpacking"
+text = "Every crate against the file, every discrepancy logged, before a lid comes off."
+tags = ["hours", "caution"]
+chronicle = "MM {turn}. RSW-1 manifest reconciled in full against the standing request; two crates short, logged as a discrepancy."
+[[option.effect]]
+flag = "ui:bar:spares"
+[[option.effect]]
+flag = "ui:project:align_driver"
+[[option.effect]]
+flag = "open_project:align_driver"
+[[option.effect]]
+flag = "tutorial_open"
+[[option.effect]]
+q = "stocks.spares"
+add = 6
+[[option.effect]]
+counter = "inventories"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends reconciliation now. Two crates will be missing; they always are. Unlogged this month, they are the station's loss in thirty."
+
+[[option]]
+id = "unpack"
+label = "Commission the units today"
+text = "Hardware to work first, paperwork after. Reconciliation deferred one window."
+tags = ["throughput", "water"]
+chronicle = "MM {turn}. RSW-1 units commissioned on the day of landing; manifest reconciliation deferred. BOP haul loop at full complement."
+[[option.effect]]
+flag = "ui:bar:spares"
+[[option.effect]]
+flag = "ui:project:align_driver"
+[[option.effect]]
+flag = "open_project:align_driver"
+[[option.effect]]
+flag = "tutorial_open"
+[[option.effect]]
+q = "stocks.water"
+add = 10
+[[option.effect]]
+q = "stocks.spares"
+add = 2
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Recommends immediate commissioning. The plant has run under rated since MM 1 and every day on the pad is a day off the loop."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Cites the requirement to reconcile within one RSW. Deferred reconciliation is a finding, and a finding is read by people who have not seen the pad."
+
+[[option]]
+id = "pod_first"
+label = "Load the first pod from hull ballast"
+text = "The driver has not thrown. A loaded pod waits on the rail against the month it does."
+tags = ["throughput", "sponsor"]
+chronicle = "MM {turn}. RSW-1 landed; first MDLS pod loaded with hull ballast pending alignment. Manifest reconciliation partial."
+[[option.requires]]
+not_flag = "driver_aligned"
+[[option.effect]]
+flag = "ui:bar:spares"
+[[option.effect]]
+flag = "ui:project:align_driver"
+[[option.effect]]
+flag = "open_project:align_driver"
+[[option.effect]]
+flag = "tutorial_open"
+[[option.effect]]
+flag = "pod_loaded"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends loading now. Eight segments of alignment finish faster when there is a loaded pod waiting on the rail."

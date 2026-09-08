@@ -1,0 +1,125 @@
+id = "tut_driver_aligned"
+title = "MDLS Alignment Complete"
+act = 1
+once = true
+priority = 150
+tags = ["tutorial", "throughput", "sponsor"]
+text = """
+MDLS alignment and catch calibration complete. The first pod went down the rail
+this month. Catch confirmation from the Earth-side tug arrives in sixteen months.
+
+Project region: MDLS operations added. It is a standing clock. Its dice set
+tonnes thrown per month.
+
+Control: throw position, on the MDLS clock. Ship sends everything above the 120 t
+water reserve. Hold sends only what the plant makes above station draw. Stop
+sends nothing. It is a standing setting and holds until it is moved.
+
+Ledger: throughput ratio added. Tonnes shipped per tonne received. It is the one
+figure the sponsor reads.
+"""
+
+[[when]]
+flag = "driver_aligned"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[option]]
+id = "ship"
+label = "Set the throw position to Ship"
+text = "Everything above the reserve goes into the pods each month."
+tags = ["throughput", "sponsor"]
+chronicle = "MM {turn}. MDLS alignment complete and the first pod thrown. Throw position set to Ship. Throughput reporting begins."
+[[option.effect]]
+unflag = "driver_unaligned"
+[[option.effect]]
+flag = "ui:project:throw"
+[[option.effect]]
+flag = "ui:control:throw"
+[[option.effect]]
+flag = "ui:bar:throw"
+[[option.effect]]
+flag = "throw_ship"
+[[option.effect]]
+unflag = "throw_hold"
+[[option.effect]]
+unflag = "throw_stop"
+[[option.effect]]
+flag = "throw_taught"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.05
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Recommends Ship. As of this month the station produces the figure the sponsor reads. Producing less of it than the plan states is itself an entry."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "Notes the 120 t reserve was set before any loop on this station was measured. The error in it will be found in the month the station is under it."
+
+[[option]]
+id = "hold"
+label = "Set the throw position to Hold"
+text = "Only what the plant makes above station draw. The tank fills; the ratio grows slower."
+tags = ["water", "caution", "capability"]
+chronicle = "MM {turn}. MDLS alignment complete and the first pod thrown. Throw position set to Hold at the reserve. Throughput reporting begins."
+[[option.effect]]
+unflag = "driver_unaligned"
+[[option.effect]]
+flag = "ui:project:throw"
+[[option.effect]]
+flag = "ui:control:throw"
+[[option.effect]]
+flag = "ui:bar:throw"
+[[option.effect]]
+flag = "throw_hold"
+[[option.effect]]
+unflag = "throw_ship"
+[[option.effect]]
+unflag = "throw_stop"
+[[option.effect]]
+flag = "throw_taught"
+[[option.effect]]
+q = "stocks.water"
+add = 8
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Recommends Hold for one window. The plant is at rated for the first time. The tank should see a full month of it before the driver does."
+
+[[option]]
+id = "stop"
+label = "Set the throw position to Stop"
+text = "Nothing leaves the rail until the tug confirms the first catch. Sixteen months."
+tags = ["caution", "capability", "risk"]
+chronicle = "MM {turn}. MDLS alignment complete and the first pod thrown. Throw position set to Stop pending catch confirmation."
+[[option.effect]]
+unflag = "driver_unaligned"
+[[option.effect]]
+flag = "ui:project:throw"
+[[option.effect]]
+flag = "ui:control:throw"
+[[option.effect]]
+flag = "ui:bar:throw"
+[[option.effect]]
+flag = "throw_stop"
+[[option.effect]]
+unflag = "throw_ship"
+[[option.effect]]
+unflag = "throw_hold"
+[[option.effect]]
+flag = "throw_taught"
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.05
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends Stop. One pod on an unproven rail is a test. Sixteen pods is a practice. The result of the test arrives before the sixteenth."

@@ -6,14 +6,17 @@ priority = 160
 tags = ["tutorial"]
 text = """
 Third window. The allocation board has been running on its own routine for a
-year; nobody looks at the tasking list from Earth before the meal any more,
-because {hours} reads it aloud after. {air} keeps a page for every seal on the
-station and knows without checking which one is making the noise this month. The
-CED ledger is read on the twelfth by whoever is nearest to it.
+year; nobody reads the tasking list from Earth before the meal any more, because
+{hours} reads it aloud after. {air} keeps a page for every seal on the station
+and knows without checking which one is making the noise this month. The CED
+ledger is read on the twelfth by whoever is nearest to it.
 
-{hulls} proposes that the SMB minutes stop recording the mission month and
-start recording the count since landing. It is the same number. It is not the
-same number.
+{hulls} proposes that the minutes stop recording the mission month and start
+recording the count since landing. It is the same number. It is not the same
+number.
+
+SX-19F closes the briefing log here. The board has the whole screen from this
+entry.
 """
 
 [[when]]
@@ -39,7 +42,9 @@ id = "count"
 label = "Minute it as the count from now on"
 text = "Mission Month is the sponsor's clock. The count is ours."
 tags = ["independence", "people"]
-chronicle = "Forty-three since we came down. The sponsor's calendar reads the same number in its own unit and we have stopped correcting it. This is the log now, and it is ours."
+chronicle = "{turn} since we came down. The sponsor's calendar reads the same number in its own unit and we have stopped correcting it. This is the log now, and it is ours."
+[[option.effect]]
+flag = "ui:all"
 [[option.effect]]
 flag = "tutorial_done"
 [[option.effect]]
@@ -57,10 +62,12 @@ text = "The sponsor's minutes are in Mission Months. Two calendars is a reconcil
 
 [[option]]
 id = "mm"
-label = "Keep Mission Month in the minutes; the count is for the meal"
+label = "Keep Mission Month in the minutes"
 text = "The sponsor's paper stays the sponsor's. What we say to each other is ours."
 tags = ["sponsor", "caution"]
-chronicle = "Forty-three since we came down. The minutes keep the sponsor's unit, for the sponsor. At the meal nobody uses it. This is the log now."
+chronicle = "{turn} since we came down. The minutes keep the sponsor's unit, for the sponsor. At the meal nobody uses it. This is the log now."
+[[option.effect]]
+flag = "ui:all"
 [[option.effect]]
 flag = "tutorial_done"
 [[option.effect]]

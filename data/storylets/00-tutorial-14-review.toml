@@ -1,0 +1,109 @@
+id = "tut_review"
+title = "MM 14: The First Quarterly Packet"
+act = 1
+once = true
+priority = 130
+tags = ["tutorial", "sponsor"]
+text = """
+Countdown: sponsor review added. Sponsor track enabled.
+
+The review falls in two months and happens whether or not a packet is sent. The
+sponsor scores throughput ratio — tonnes shipped per tonne received — against an
+expectation that rises at every review. Present expectation: 1.0. The score sets
+confidence; confidence sets what the next RSW carries. Seven stages run from
+nominal to no further arrivals. The station is at the first.
+
+{liaison} is building the packet. Page one carries one figure. The CED ledger,
+the LSS-C fraction and the make-up log go in an annex the sponsor's model does
+not read.
+"""
+
+[[when]]
+turn_min = 14
+
+[[when]]
+turn_max = 20
+
+[[when]]
+q = "sponsor.counts_to_review"
+le = 2
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[option]]
+id = "true"
+label = "Send the figure as recorded"
+text = "The ratio is low because the driver is young. The annex says so once."
+tags = ["sponsor", "caution"]
+chronicle = "MM {turn}. First quarterly packet transmitted: throughput ratio as recorded, CED ledger and LSS-C fraction in the annex. No adjustment made."
+[[option.effect]]
+flag = "ui:clock:review"
+[[option.effect]]
+flag = "ui:sponsor"
+[[option.effect]]
+flag = "phi_honest"
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.3
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends the recorded figure. A number that is true at MM 14 is a number nobody has to remember at MM 80."
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Reports the review model discounts the first two quarters. A true low figure costs nothing now. An adjusted one costs at every later review."
+
+[[option]]
+id = "shape"
+label = "Report loaded pods as shipped"
+text = "Loaded counts as shipped under a generous reading. The definition is noted in the annex."
+tags = ["sponsor", "throughput", "risk"]
+chronicle = "MM {turn}. First quarterly packet transmitted: shipped tonnage reported inclusive of loaded pods, definition noted in the annex."
+[[option.effect]]
+flag = "ui:clock:review"
+[[option.effect]]
+flag = "ui:sponsor"
+[[option.effect]]
+flag = "numbers_cooked"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.06
+[[option.effect]]
+q = "menace.suspicion"
+add = 1.0
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Reports the tonnes exist and are in the pods. The catch is sixteen months out on either reading of the definition."
+
+[[option]]
+id = "annex_first"
+label = "Lead with the annex"
+text = "Ledger, closure fraction and make-up log on page one; the ratio behind them."
+tags = ["independence", "capability", "sponsor"]
+chronicle = "MM {turn}. First quarterly packet transmitted with the CED ledger, the LSS-C fraction and the N2 make-up log on page one and the throughput ratio behind them."
+[[option.effect]]
+flag = "ui:clock:review"
+[[option.effect]]
+flag = "ui:sponsor"
+[[option.effect]]
+flag = "phi_honest"
+[[option.effect]]
+flag = "annex_first"
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.5
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Recommends the annex first. Closure is 0.90 and the last tenth is uncosted. If one page of this station's is read in three years, it should be that one."

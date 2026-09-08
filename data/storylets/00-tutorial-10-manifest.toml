@@ -1,0 +1,136 @@
+id = "tut_manifest"
+title = "MM 10: Resupply Request, RSW-1"
+act = 1
+once = true
+priority = 132
+tags = ["tutorial", "sponsor", "manifest"]
+text = """
+Manifest control enabled on the RSW clock. It sets the class of what the next
+hull carries. Whatever it reads on the day the window opens is what flies.
+
+Constraint: the request must transmit this month to make RSW-1. Every tonne is
+one of two classes. Throughput hardware — pods, propellant, units — moves the one
+figure the sponsor reads. Capability hardware — spares, formulary, tooling —
+moves nothing the sponsor reads until a loop fails.
+
+The reply will answer the pre-launch request, not this one. The file runs one
+window behind and does not catch up.
+
+New question at the board: who answers to the sponsor. {liaison} has held the
+post for another agency.
+"""
+
+[[when]]
+turn_min = 10
+
+[[when]]
+turn_max = 11
+
+[[when]]
+fired = "tut_nitrogen"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+skill = "logistics"
+
+[[option]]
+id = "throughput"
+label = "Request throughput hardware"
+text = "Pods, propellant, one dexterous unit. The class the sponsor's model expects."
+tags = ["throughput", "sponsor"]
+chronicle = "MM {turn}. RSW-1 request transmitted: throughput hardware. Manifest control set to throughput."
+[[option.effect]]
+flag = "ui:control:manifest"
+[[option.effect]]
+flag = "seat:liaison"
+[[option.effect]]
+flag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.effect]]
+unflag = "manifest_balanced"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.03
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends throughput. The sponsor reads tonnes. A request for the thing that makes tonnes needs no explanation at review."
+
+[[option]]
+id = "balanced"
+label = "Request a balanced manifest"
+text = "Half throughput, half spares and formulary. No line the sponsor will query."
+tags = ["capability", "throughput"]
+chronicle = "MM {turn}. RSW-1 request transmitted: balanced manifest. Manifest control set to balanced."
+[[option.effect]]
+flag = "ui:control:manifest"
+[[option.effect]]
+flag = "seat:liaison"
+[[option.effect]]
+flag = "manifest_balanced"
+[[option.effect]]
+unflag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Recommends the split. Pods cannot be filled until the plant is at rated. A haul unit arrives either way, which is the only line that matters here."
+
+[[option]]
+id = "capability"
+label = "Request capability hardware"
+text = "Spares, formulary, fabrication tooling, one boron crate. Invisible on the quarterly."
+tags = ["capability", "spares", "independence"]
+chronicle = "MM {turn}. RSW-1 request transmitted: capability hardware including fabrication tooling. Manifest control set to capability. Sponsor query anticipated."
+[[option.effect]]
+flag = "ui:control:manifest"
+[[option.effect]]
+flag = "seat:liaison"
+[[option.effect]]
+flag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.effect]]
+unflag = "manifest_balanced"
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.8
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends tooling. Everything can be made here except the parts that cannot. A tooling crate is the difference between a station and a camp."
+
+[[option]]
+id = "people"
+label = "Request crew"
+text = "Four additional hands. Each new die also consumes upkeep."
+tags = ["people", "hours"]
+chronicle = "MM {turn}. RSW-1 request transmitted: crew augmentation. Manifest control set to crew."
+[[option.effect]]
+flag = "ui:control:manifest"
+[[option.effect]]
+flag = "seat:liaison"
+[[option.effect]]
+flag = "manifest_people"
+[[option.effect]]
+unflag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_balanced"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Recommends hands. Fourteen is at the floor of every isolation study for a rotation of this length. Four more is a margin against one illness."

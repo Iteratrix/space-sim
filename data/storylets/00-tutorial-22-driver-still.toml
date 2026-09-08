@@ -1,0 +1,90 @@
+id = "tut_driver_still"
+title = "MM 24: MDLS Alignment Overdue"
+act = 1
+once = true
+priority = 110
+tags = ["tutorial", "throughput", "sponsor"]
+text = """
+Status: MDLS alignment incomplete at MM {turn}. The sponsor's model had the
+driver throwing at MM 14. Nothing has gone down the rail. Throughput ratio is
+zero and has been zero since landing.
+
+{liaison} has the sponsor's query. It is worded as a query and cites the section
+of the Act it is raised under.
+
+{hulls} reports an eight-segment clock and no month in which the free allocation
+had a weaker claim elsewhere.
+
+The next window is on the countdown.
+"""
+
+[[when]]
+turn_min = 24
+
+[[when]]
+turn_max = 34
+
+[[when]]
+not_flag = "driver_aligned"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[cast]]
+role = "rigger"
+skill = "engineering"
+min_skill = 1
+
+[[option]]
+id = "staff_it"
+label = "Put the alignment clock ahead of every other clock"
+text = "Eight segments. Two ratings on the clock with this entry; the rest is the board's to hold there."
+tags = ["throughput", "sponsor", "hulls"]
+chronicle = "MM {turn}. MDLS alignment overdue against the sponsor's model. SMB directive: alignment ahead of every other clock until the first throw. Two engineering dice placed."
+[[option.effect]]
+flag = "align_priority"
+[[option.effect]]
+person = "hulls"
+assign = "align_driver"
+[[option.effect]]
+person = "rigger"
+assign = "align_driver"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends the directive. Two ratings for a month and it throws before the window. This seat has assessed the same figure since MM 2."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "Notes that two ratings off the excavation is another month at surface rate. Requests the two names before the directive is signed."
+
+[[option]]
+id = "explain"
+label = "Send the CED ledger as the explanation"
+text = "Ten millisieverts a month against a career limit of 600. The reason goes on the record."
+tags = ["sponsor", "dose", "independence"]
+chronicle = "MM {turn}. MDLS alignment overdue against the sponsor's model. The CED ledger was transmitted to the sponsor as the justification for excavation priority."
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.6
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.effect]]
+all_strain = -0.03
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Recommends sending it. Six hundred millisieverts is the sponsor's own limit. The ledger answers the query in the sponsor's own units."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Reports no dose line exists in the sponsor's model. An unrequested ledger explaining an unexpected zero puts two documents in the file instead of none."

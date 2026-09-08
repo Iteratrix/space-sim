@@ -72,7 +72,25 @@ const CAPTIONS = {
   "control:throw": "MDLS position: ship, hold at reserve, stop.",
   "control:roster": "Roster order: which crew upkeep takes first when hours are short.",
   "control:auto_deal": "Auto-deal: the station places free dice on standing work.",
+  "project:dig_keep": "KEEP excavation: a one-time clock. Twenty-four segments. Six pips fill one.",
+  "project:align_driver": "MDLS alignment: eight segments. Unstructured work; robot units do not fit.",
+  "project:bake_out": "BOP: a standing clock. Its ring is a rate, not a progress. It never completes.",
+  "project:throw": "MDLS operations: a standing clock. Its rate is tonnes thrown per month.",
+  "clock:review": "Sponsor review: every sixteen months. Confidence moves on the throughput ratio.",
+  "clock:reactor": "Reactor core life. Not refuellable from belt material.",
+  "clock:contract": "Next contract end: crew rotate home at the RSW after expiry.",
+  "clock:sun": "Solar cycle: eleven years. Storm risk at maximum; galactic dose at minimum.",
+  "pressure:leak": "N2 make-up: the first pressure. Its band names the state; the last band is a scene.",
 };
+function noteReveal(name, host) {
+  if (shown.has(name) || !revealed(name)) return;
+  shown.add(name);
+  const flags = new Set(view.flags);
+  if (!(flags.has("tutorial") && !flags.has("tutorial_done")) || !CAPTIONS[name]) return;
+  let cap = host.querySelector(":scope > .reveal");
+  if (!cap) { cap = document.createElement("div"); cap.className = "reveal"; const h = host.querySelector(":scope > h3"); if (h) h.after(cap); else host.prepend(cap); }
+  cap.textContent = CAPTIONS[name];
+}
 const shown = new Set();
 
 function gate(elm, name, captionHost) {
@@ -109,6 +127,12 @@ function render() {
     .map((c) => `<div class="clock${c.urgent ? " urgent" : ""}" title="${c.why}">${ring(c.filled, c.segments)}<div><div class="label">${c.label}</div><div class="sub">${c.remaining == null ? "" : c.remaining + " left"}${c.id === "rsw" && revealed("control:manifest") ? ` · manifest <select data-control="manifest"><option${v.controls.manifest === "throughput" ? " selected" : ""}>throughput</option><option${v.controls.manifest === "balanced" ? " selected" : ""}>balanced</option><option${v.controls.manifest === "capability" ? " selected" : ""}>capability</option><option${v.controls.manifest === "people" ? " selected" : ""}>people</option></select>` : ""}</div></div></div>`)
     .join("");
   const lessonProjects = new Set(["dig_keep", "align_driver", "bake_out", "throw"]);
+  v.countdowns.forEach((c) => noteReveal(`clock:${c.id}`, el("countdowns")));
+  v.projects.forEach((p) => { if (lessonProjects.has(p.id)) noteReveal(`project:${p.id}`, el("projects")); });
+  v.pressures.forEach((p) => noteReveal(`pressure:${p.id}`, el("pressures")));
+  noteReveal("control:manifest", el("countdowns"));
+  noteReveal("control:throw", el("projects"));
+  noteReveal("robots", el("hand"));
   el("projects").querySelector(".clocks").innerHTML = v.projects
     .filter((p) => !lessonProjects.has(p.id) || revealed(`project:${p.id}`))
     .map((p) => {

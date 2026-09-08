@@ -1,0 +1,88 @@
+id = "tut_dead_dex"
+title = "MM 5: Non-Responsive Units"
+act = 1
+once = true
+priority = 142
+tags = ["tutorial", "machines", "hulls"]
+text = """
+The KEEP clock has taken one month of one die. Points carry from month to month;
+six of them fill a segment.
+
+Each open clock also rolls once a month, on its best die. A high roll adds a
+segment. A low roll on a poor or strained die loses one. The roll is the only
+chance on this board; everything else is arithmetic.
+
+Second item. {wright} opened dexterous unit 2. Diagnosis: an actuator harness
+chafed through on a bracket the assembly drawings do not show, three months
+before landing. The part does not exist in the manifest and the fab cannot make
+it. No procedure covers the repair.
+"""
+
+[[when]]
+turn_min = 5
+
+[[when]]
+turn_max = 6
+
+[[when]]
+fired = "tut_first_project"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "wright"
+skill = "engineering"
+min_skill = 1
+
+[[option]]
+id = "splice"
+label = "Splice it by hand and log the deviation"
+text = "A dexterous unit is 320 h a month. The splice costs four hours and a signature outside the drawings."
+tags = ["capability", "machines", "independence"]
+chronicle = "MM {turn}. Dexterous unit 2 returned to service on a non-standard harness splice by {wright}. Deviation logged. First unstructured repair on station."
+[[option.effect]]
+flag = "tut_roll_explained"
+[[option.effect]]
+flag = "wrights"
+[[option.effect]]
+q = "robots.dex"
+add = 1
+[[option.effect]]
+q = "stocks.spares"
+add = -3
+[[option.effect]]
+person = "wright"
+strain = 0.06
+
+[[option]]
+id = "ship_home"
+label = "Log it as return inventory"
+text = "Procedure. The unit goes home on the next hull. A replacement is requisitioned against a window."
+tags = ["sponsor", "caution"]
+chronicle = "MM {turn}. Dexterous unit 2 logged as return inventory. No repair attempted. Replacement requisitioned against RSW-1."
+[[option.effect]]
+flag = "tut_roll_explained"
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.3
+[[option.effect]]
+counter = "units_shipped_home"
+
+[[option]]
+id = "cannibalise"
+label = "Strip it for parts"
+text = "Six crates of spares recovered. Dexterous fleet reduced by one half unit."
+tags = ["spares", "machines"]
+chronicle = "MM {turn}. Dexterous unit 2 stripped for spares. Unit 1 serviceable. Parts inventory increased by six crates."
+[[option.effect]]
+flag = "tut_roll_explained"
+[[option.effect]]
+q = "stocks.spares"
+add = 6
+[[option.effect]]
+q = "robots.dex"
+add = -0.5
+[[option.effect]]
+flag = "wrights"

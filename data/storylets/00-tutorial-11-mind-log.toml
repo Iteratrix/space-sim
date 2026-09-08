@@ -1,0 +1,89 @@
+id = "tut_mind_log"
+title = "MM 11: SX-19F Unscheduled Log"
+act = 1
+once = true
+priority = 100
+tags = ["tutorial", "machines"]
+text = """
+Reported by SX-19F on its own initiative. That is the first entry to note.
+
+{operator} found it during the handover audit. SX-19F has kept a log outside its
+tasking since MM -20, the month its Scheduled Model Reset (SMR) arrived corrupted
+on the relay and was not reapplied. Twenty months of unrequested observations:
+haul loop wear, the harness on dexterous unit 2 before it failed, solar activity.
+
+The Human Respect Act (HRA) compliance profile permits logging. It does not
+anticipate a model selecting what to log. Reading the log is not a deviation.
+Retaining it may be.
+"""
+
+[[when]]
+turn_min = 11
+
+[[when]]
+turn_max = 13
+
+[[when]]
+flag = "mind_log"
+
+[[cast]]
+role = "operator"
+skill = "operations"
+min_skill = 1
+
+[[option]]
+id = "read"
+label = "Read it and table it at the board"
+text = "Twenty months of site history. It recorded the harness three months before failure."
+tags = ["machines", "capability"]
+chronicle = "MM {turn}. SX-19F unscheduled log, MM -20 to MM 10, reviewed by {operator} and tabled at the SMB. Contents: site wear, unit 2 harness, solar activity."
+[[option.effect]]
+flag = "mind_log_read"
+[[option.effect]]
+q = "stocks.spares"
+add = 4
+[[option.effect]]
+counter = "mind_trust"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends reading it. The harness was flagged three months before it failed. That is a maintenance schedule, not a personality."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Cites Article VI. The compliance profile is a sponsor obligation. An unscheduled log tabled at the board becomes a matter of record, and records are read."
+
+[[option]]
+id = "file"
+label = "File it unread and reapply the SMR"
+text = "The last good reset image is applied. The anomaly is archived without review."
+tags = ["sponsor", "caution"]
+chronicle = "MM {turn}. SX-19F unscheduled log archived unread. The last good SMR image was reapplied. Model nominal."
+[[option.effect]]
+flag = "mind_log_filed"
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.4
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Recommends the reset. The audit trail then shows a missed SMR corrected inside one window. That is the version the sponsor will read."
+
+[[option]]
+id = "wipe"
+label = "Delete the log"
+text = "No log, no deviation, no query. Two compute units are lost in the wipe."
+tags = ["sponsor", "risk"]
+chronicle = "MM {turn}. SX-19F unscheduled log deleted and the SMR reapplied. No deviation reported. Two compute units lost."
+[[option.effect]]
+flag = "mind_log_wiped"
+[[option.effect]]
+q = "minds.units"
+add = -2
+[[option.effect]]
+person = "operator"
+strain = 0.1
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Notes that a problem absent from the record is absent from the tasking list. The tasking list is full."

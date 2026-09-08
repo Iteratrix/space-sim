@@ -1,0 +1,114 @@
+id = "tut_throw_position"
+title = "The Throw Position"
+act = 1
+once = true
+priority = 108
+tags = ["tutorial", "throughput", "water"]
+text = """
+Status: the MDLS has thrown every month since alignment. The throw position has
+not been moved since it was set.
+
+{extraction} raises it as one question read from two ends. The plant sets how
+much water exists. The throw position sets how much of it leaves.
+
+Ship sends everything above the 120 t reserve, and the reserve was drawn before
+any loop here was measured. Hold sends only what the plant makes above station
+draw; the tank grows and the ratio grows slower. Stop sends nothing and the pods
+stack on the pad.
+
+It is a standing setting. Whatever it reads tonight is what the station does
+every month until it is moved.
+"""
+
+[[when]]
+turn_min = 25
+
+[[when]]
+turn_max = 44
+
+[[when]]
+flag = "tutorial"
+
+[[when]]
+flag = "driver_aligned"
+
+[[when]]
+flag = "throw_taught"
+
+[[when]]
+not_flag = "tutorial_done"
+
+[[cast]]
+role = "extraction"
+seat = "extraction"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[option]]
+id = "ship"
+label = "Set the throw position to Ship"
+text = "Everything above the reserve into the pods. The ratio is read every quarter."
+tags = ["throughput", "sponsor"]
+chronicle = "MM {turn}. The throw position was reviewed and set to Ship: everything above the water reserve into the pods."
+[[option.effect]]
+flag = "throw_ship"
+[[option.effect]]
+unflag = "throw_hold"
+[[option.effect]]
+unflag = "throw_stop"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.03
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends Ship. The reserve line exists so that Ship is not a dangerous setting. Trust the line or move the line; do not ship below what it allows."
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "Reports the reserve was set for fourteen crew in a surface habitat. It has not been recalculated for the drum, the farm, or the present headcount."
+
+[[option]]
+id = "hold"
+label = "Set the throw position to Hold"
+text = "Only what the plant makes above station draw. The tank grows; the quarterly does not."
+tags = ["water", "caution", "capability"]
+chronicle = "MM {turn}. The throw position was reviewed and set to Hold: nothing shipped that the plant has not made above the station's own draw."
+[[option.effect]]
+flag = "throw_hold"
+[[option.effect]]
+unflag = "throw_ship"
+[[option.effect]]
+unflag = "throw_stop"
+[[option.effect]]
+q = "stocks.water"
+add = 12
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Recommends Hold. The plant is a rate and a rate can stop. A full tank when it stops is the difference between a bad month and an evacuation."
+
+[[option]]
+id = "stop"
+label = "Set the throw position to Stop"
+text = "Nothing leaves the rail. The pads fill; the ratio reads zero."
+tags = ["capability", "independence", "risk"]
+chronicle = "MM {turn}. The throw position was reviewed and set to Stop; pods to be stacked on the pad against the next window."
+[[option.effect]]
+flag = "throw_stop"
+[[option.effect]]
+unflag = "throw_ship"
+[[option.effect]]
+unflag = "throw_hold"
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.04
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.4
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends Stop. Every pod on the rail is mass the station does not recover, thrown at a tug that has never confirmed a catch."

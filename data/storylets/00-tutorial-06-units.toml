@@ -1,0 +1,85 @@
+id = "tut_units"
+title = "MM 6: Autonomous Units"
+act = 1
+once = true
+priority = 140
+tags = ["tutorial", "machines", "water"]
+text = """
+Robot dice are now shown on the board. A unit is a fixed-rating die, drawn
+square. It fits structured work only, and it does not tire.
+
+Every unit not placed on a clock carries station upkeep. Upkeep the units carry
+is upkeep the crew does not, so a unit taken off upkeep returns a crew die to it.
+
+Second clock opened to the board: BOP volatile extraction. It is a standing
+clock. It never completes and its ring is a rate, not progress. Full ring is
+rated output, 14 t of water a month. It needs ten points of dice. The ring reads
+what the dice on it produce, and nothing is on it.
+
+New question at the board: who answers for the water and metal. {extraction}
+holds the plant log.
+"""
+
+[[when]]
+turn_min = 6
+
+[[when]]
+turn_max = 7
+
+[[when]]
+fired = "tut_dead_dex"
+
+[[cast]]
+role = "extraction"
+skill = "extraction"
+
+[[option]]
+id = "units_to_plant"
+label = "Task units to the bake-out"
+text = "Units off upkeep and onto the plant. The upkeep they carried returns to the crew."
+tags = ["water", "throughput", "machines"]
+chronicle = "MM {turn}. SMB directive: autonomous units to the BOP ahead of upkeep. Upkeep returned to the roster in the same month."
+[[option.effect]]
+flag = "ui:robots"
+[[option.effect]]
+flag = "ui:project:bake_out"
+[[option.effect]]
+flag = "seat:extraction"
+[[option.effect]]
+q = "stocks.water"
+add = 4
+[[option.effect]]
+all_strain = 0.04
+
+[[option]]
+id = "crew_to_plant"
+label = "Task crew to the bake-out; units stay on upkeep"
+text = "Crew ratings on the plant, units left carrying the loops. Free dice fall; upkeep does not."
+tags = ["water", "hours"]
+chronicle = "MM {turn}. SMB directive: crew dice to the BOP, autonomous units held on station upkeep."
+[[option.effect]]
+flag = "ui:robots"
+[[option.effect]]
+flag = "ui:project:bake_out"
+[[option.effect]]
+flag = "seat:extraction"
+[[option.effect]]
+flag = "units_on_upkeep"
+[[option.effect]]
+q = "stocks.water"
+add = 2
+
+[[option]]
+id = "keep_first"
+label = "Leave the bake-out unstaffed"
+text = "No dice on the plant. The excavation keeps the free allocation."
+tags = ["capability", "dose"]
+chronicle = "MM {turn}. SMB directive: the BOP left unstaffed; the free allocation stays on KEEP excavation."
+[[option.effect]]
+flag = "ui:robots"
+[[option.effect]]
+flag = "ui:project:bake_out"
+[[option.effect]]
+flag = "seat:extraction"
+[[option.effect]]
+flag = "plant_held"

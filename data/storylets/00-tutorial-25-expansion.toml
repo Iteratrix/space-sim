@@ -1,0 +1,111 @@
+id = "tut_expansion"
+title = "MM 28: Crew Augmentation"
+act = 1
+once = true
+priority = 140
+tags = ["tutorial", "sponsor", "people", "hours"]
+text = """
+Countdown: solar cycle added. It reads a phase, not a date. The Sun is rising
+toward maximum. Storm risk rises. Galactic dose falls.
+
+The hull carried crew the request did not ask for. The sponsor's model prices a
+person below a dexterous unit and does not model the allocation board.
+
+{hours} reports the arithmetic. Each additional crew member consumes about one
+and a half dice of upkeep. That holds until the drum's routine work is automated.
+The Hours bar will read lower this month than it did last month.
+
+{liaison} confirms the sponsor records the augmentation as nominal. The manifest
+control now reads for RSW-3.
+"""
+
+[[when]]
+turn_min = 28
+
+[[when]]
+turn_max = 36
+
+[[when]]
+q = "counts_since_convoy"
+le = 1
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[option]]
+id = "accept"
+label = "Mark RSW-3 for units"
+text = "Dexterous and haul units, no crew. Machines return hours; crew consume them."
+tags = ["throughput", "hours", "machines"]
+chronicle = "MM {turn}. Crew augmentation accepted. Manifest control set to throughput for RSW-3: dexterous and haul units, no crew."
+[[option.effect]]
+flag = "ui:clock:sun"
+[[option.effect]]
+flag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.effect]]
+unflag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_balanced"
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.03
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends units. A dexterous unit is three hundred hours a month and consumes none of them. Request the thing that returns hours."
+
+[[option]]
+id = "spares"
+label = "Mark RSW-3 for spares and tooling"
+text = "More crew is more loops. Request what keeps loops closed."
+tags = ["capability", "spares", "air"]
+chronicle = "MM {turn}. Crew augmentation accepted. Manifest control set to capability for RSW-3: LSS-C spares and fabrication tooling."
+[[option.effect]]
+flag = "ui:clock:sun"
+[[option.effect]]
+flag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.effect]]
+unflag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_balanced"
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.5
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "Assesses each crew member at nine hundred kilograms of water through the loops a month and a tenth of a spares crate. The loops are the roster."
+
+[[option]]
+id = "push_back"
+label = "Log an objection to unplanned augmentation"
+text = "The drum was dug for a number. The roster passed it without a request."
+tags = ["independence", "sponsor", "risk"]
+chronicle = "MM {turn}. Crew augmentation received under SMB objection, logged with the sponsor. Manifest control unchanged for RSW-3."
+[[option.effect]]
+flag = "ui:clock:sun"
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.9
+[[option.effect]]
+q = "menace.grievance"
+add = -0.4
+[[option.effect]]
+flag = "objected_augmentation"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Recommends the objection on medical grounds. Berthing is rated. The drum was excavated for a stated number and the roster has passed it."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Advises against. An objection to the sponsor's staffing decision, from the station the sponsor staffs, is a sentence this seat cannot explain."

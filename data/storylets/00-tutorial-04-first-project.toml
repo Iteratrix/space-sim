@@ -1,0 +1,49 @@
+id = "tut_first_project"
+title = "MM 4: KEEP Excavation Clock"
+act = 1
+once = true
+priority = 144
+tags = ["tutorial", "capability", "dose"]
+text = """
+Project region enabled. A project clock is work in progress. Dice placed on a
+clock advance it.
+
+Open: Kilotonne-class Excavated Environmental Protection habitat (KEEP)
+excavation. Twenty-four segments. A die adds its rating to the clock each month;
+six points fill one segment. Surface dose is 120 mSv/yr. KEEP dose is 12.
+
+{digger} holds the highest engineering rating present. That die is placed on the
+KEEP clock with this entry, so that the clock is not idle for a month.
+
+Commander: place the next one by hand. Drag a die from the board onto the clock.
+It stays where it is put until it is moved.
+"""
+
+[[when]]
+turn_min = 4
+
+[[when]]
+turn_max = 5
+
+[[when]]
+fired = "tut_hand"
+
+[[cast]]
+role = "digger"
+seat = "hulls"
+
+[[option]]
+id = "open"
+label = "Open the clock"
+text = "Twenty-four segments at six points each. Nothing else on the board is longer."
+tags = ["capability", "dose", "hulls"]
+chronicle = "MM {turn}. KEEP excavation opened as a project clock: 24 segments, 0 filled. One engineering die placed by directive."
+[[option.effect]]
+flag = "ui:projects"
+[[option.effect]]
+flag = "ui:project:dig_keep"
+[[option.effect]]
+flag = "open_project:dig_keep"
+[[option.effect]]
+person = "digger"
+assign = "dig_keep"
