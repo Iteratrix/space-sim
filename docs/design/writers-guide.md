@@ -142,6 +142,65 @@ labels, chronicle lines, and advice are.
 
 ---
 
+## 2b. The report register
+
+Act 1 has one narrator and it is not a person. The station's machine mind — licensed
+under the HRA, its personality layer stripped by the same Act — writes everything the
+player reads, and it writes it as a status report to the Commander. Scene text, option
+labels, option descriptions, chronicle lines, and the seats' counsel as the mind relays
+it are all one voice: flat, precise, unliterary. Write every act-1 storylet this way.
+The lexicon loosens the register later; you never do.
+
+**Sentences.** Short and declarative. Most under twelve words. No metaphor, no simile,
+no idiom, no rhetorical question, no aphorism. If a sentence would survive being read
+aloud by a person who is moved by it, cut it back until it would not.
+
+**Structure.** Use labelled blocks where they earn their place — `Status:`,
+`Constraint:`, `Options:`, `Recommendation:` — but do not make every scene a form.
+Roughly one scene in three should carry a labelled block; the rest are plain report
+paragraphs. Vary which labels appear. A scene that is nothing but a form reads as
+furniture.
+
+**Numbers.** Precise and unitised: `t`, `kg`, `mSv`, `kW`, `h`, `MM`. Acronyms exactly
+as canon §9 has them — KEEP, MDLS, RJSA, RSW, SMB, CED, LSS-C, BOP, STE, SMR, HRA, N2
+make-up, CCI, SOS. No adjectives except technical ones: *nominal*, *off-nominal*,
+*degraded*, *unrecoverable*, *rated*, *derated*. "Serious", "quiet", "beautiful",
+"terrible" are not available to the mind.
+
+**The Commander.** Address the player as "Commander" at most once per scene, and
+usually in the recommendation. A scene with no "Commander" in it is fine. Two is wrong.
+
+**Advice is relayed, not quoted.** The mind reports what each seat holder said; it does
+not perform them. Write counsel in the third person, clipped, with the seat's own
+concern in it: `Chief Engineer assesses bearing failure inside the window. Re-line
+consumes 30 units.` Each seat keeps its subject — hours, dose, nitrogen, the sponsor's
+number, the bone ledger — and keeps its bias. A low-skill holder still recommends
+confidently and wrongly; the mind relays the confidence without correcting it. Note
+that the engine already prints the attribution (`Okonkwo (Chief Engineer), for [2]:`)
+and, for an `against` line, the option it opposes; so the advice text carries the
+reasoning, and names the seat only where the sentence needs a subject.
+
+**Chronicle lines are log entries.** `MM 31. Formulary at 6 units. Rationing directive
+issued.` Past tense, or timestamped present. Never a feeling, never a judgement, never
+a moral. The crew's feelings enter only as observed facts: `Two crew declined the
+meal.` `Three crew did not attend.` Everything §4 says about the chronicle still holds
+— it must be true in every branch of the state the option leaves behind, and it must
+not claim a consequence the engine decides.
+
+**Options.** Labels are imperative and short: `Ration the formulary`; `Open the store
+to the crew`; `Pull the governor board`. Descriptions state the consequence the mind
+can predict from its instruments and nothing it cannot. The mind does not predict how
+the crew will feel, what Earth is thinking, or what a decision will mean in ten years;
+it predicts tonnes, kilograms, millisieverts, hours, and the readings that follow.
+
+**What the mind will not do.** It does not console. It does not editorialise. It does
+not speculate past its instruments. It does not use "we" for the settlement's people —
+the settlement is the outpost, the crew, the SMB. Where an older draft carried warmth,
+the fact survives the rewrite and the warmth does not; the reader supplies the warmth,
+which is the point.
+
+---
+
 ## 3. The seats and how they speak
 
 A seat is a question; the holder is whoever the ring accepts the answer from. The

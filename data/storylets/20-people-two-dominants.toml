@@ -4,12 +4,12 @@ act = 1
 once = true
 tags = ["people", "hulls"]
 text = """
-{first} and {second} have stopped speaking to each other except through the
-shift log. Each is the best at what they do and each believes the other is in
-the way of it: the KEEP schedule against the bake-out schedule, the fab hours
-against the haul hours, and beneath that, two people who both expect to be
-obeyed in a place with one mess hall. The ICE literature is plain about this.
-Two of thirty-six produce most of the friction, and these are the two.
+Status: coherence below 0.75. {first} and {second} communicate only through
+the shift log.
+Each holds the top rating in their domain. The disputes are the KEEP
+schedule against the bake-out schedule, and fab hours against haul hours.
+Note: the ICE literature attributes most friction in a crew of this size to
+two individuals. These are the two.
 """
 
 [[when]]
@@ -31,10 +31,10 @@ min_skill = 2
 
 [[option]]
 id = "arbitrate"
-label = "Choose an arbiter both will accept and bind them to the finding"
-text = "Not the SMB and not the sponsor. Someone with no stake, paid in hours."
+label = "Appoint an arbiter and bind both to the finding"
+text = "Hindrance falls both ways. Arbiter paid in hours. Strain -0.03 across the crew."
 tags = ["people", "independence"]
-chronicle = "{first} and {second} were put before an arbiter of their own choosing. The finding held, mostly, and the arbiter was paid a tenth in hours."
+chronicle = "{first} and {second} were bound to the finding of an arbiter of their own selection. The finding largely held. The arbiter was paid a tenth in hours."
 [[option.effect]]
 tie = ["first", "second"]
 hindrance = -0.25
@@ -48,18 +48,18 @@ counter = "arbitrations"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "An arbiter costs me ten hours. The two of them not speaking costs me forty a month in duplicated work."
+text = "Logistics Lead costs an arbiter at 10 h and the present dispute at 40 h a month in duplicated work."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "There is a grievance procedure. It goes through me and then to Earth. Inventing our own is the kind of thing the audit notices."
+text = "Sponsor Liaison reports a grievance procedure exists and routes through the liaison to Earth. A local substitute is audit-visible."
 
 [[option]]
 id = "separate"
-label = "Split the watches so they never share a shift"
-text = "Escape capacity is the one lever the habitat has. Give them somewhere not to be."
+label = "Split the watches so they never overlap"
+text = "Hindrance falls, joint output falls further. Both strain -0.1. Strain +0.02 across the crew."
 tags = ["people", "hours"]
-chronicle = "The roster was cut so that {first} and {second} never stood a watch together. The work got worse and the mess hall got quieter."
+chronicle = "The roster was cut so that {first} and {second} never stood a watch together. Joint output fell."
 [[option.effect]]
 tie = ["first", "second"]
 hindrance = -0.1
@@ -80,18 +80,18 @@ all_strain = 0.02
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "In a can this size the only cure I know is distance. Give them a schedule that is a wall."
+text = "Medical Officer reports distance is the only reliable measure in a habitat this size. Recommends a schedule that functions as separation."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "The drum and the bake-out share a power bus. If they cannot be in the same room they cannot be on the same bus, and I cannot build them a second one."
+text = "Chief Engineer reports the KEEP and the bake-out share one power bus. Separation on the roster does not separate the bus, and a second bus cannot be built."
 
 [[option]]
 id = "back_one"
-label = "Back {first} and say so"
-text = "One of them has to be the one the SMB listens to. Decide, and take the cost of deciding."
+label = "Rule for {first} on the record"
+text = "{second} strain +0.15, return intent +0.25. Hindrance toward {first} rises."
 tags = ["hulls", "risk"]
-chronicle = "The SMB came down for {first}. {second} put in for the next ship and said nothing further on the record."
+chronicle = "The SMB ruled for {first}. {second} applied for the next ship and made no further statement on the record."
 [[option.effect]]
 tie = ["second", "first"]
 hindrance = 0.3
@@ -109,18 +109,18 @@ all_strain = -0.02
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Somebody has to hold the KEEP schedule and it is not going to be the person who thinks a bearing can wait a month."
+text = "Chief Engineer requires one holder of the KEEP schedule and rules out anyone who rates a bearing as deferrable by a month."
 [[option.advice]]
 seat = "extraction"
 stance = "against"
-text = "You back the one with the louder voice and you lose the one who knows where the water is. That is not a trade, that is a loss."
+text = "ISRU Lead reports the ruling retains the louder voice and loses the water survey. That is a loss, not a trade."
 
 [[option]]
 id = "let_it_run"
-label = "Let it run"
-text = "They are adults on contract. The work gets done."
+label = "No action"
+text = "Hindrance rises both ways. Strain +0.08 across the crew. CCI +0.5."
 tags = ["hours", "risk"]
-chronicle = "The SMB let {first} and {second} fight it out. The work got done and everybody chose a side."
+chronicle = "No ruling was issued. Work continued. The crew divided by preference."
 [[option.effect]]
 tie = ["first", "second"]
 hindrance = 0.2
@@ -135,8 +135,8 @@ add = 0.5
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Every station I ever wintered on had two of these. You do not fix them, you wait for the ship."
+text = "ISRU Lead reports every station wintered on carried a pair of these. They were not resolved; they were outlasted."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "Everyone else is already taking sides. Another month of this and it is not two people, it is two halves."
+text = "Medical Officer reports the crew is already dividing. One further month makes it two blocs rather than two individuals."

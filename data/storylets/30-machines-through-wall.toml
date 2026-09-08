@@ -5,13 +5,14 @@ once = true
 priority = 50
 tags = ["machines", "capability", "hulls"]
 text = """
-The two through-wall manipulators on the carbonyl plant are wearing and there
-are no more coming. {machinist} has a proposal: hot-cell arms in belt steel
-with seals from the polymer line, uglier than the sponsor's and half as
-precise, built in the fabrication bay from what is on the shelf. They would
-convert suit hours into shirt-sleeve hours and take suit wear off the
-vitamin list. They would also be the first robot the outpost had made itself,
-and the manifest's autonomy score would show it.
+Status: both through-wall manipulators on the carbonyl plant are wearing.
+No replacements are scheduled.
+{machinist} has submitted a proposal: hot-cell arms in belt steel with
+seals from the polymer line. Below sponsor precision. Buildable in the
+fabrication bay from shelf stock.
+Effect if built: suit hours convert to shirt-sleeve hours and suit wear
+falls. It would also be the first robot the outpost manufactured, and the
+manifest's autonomy score would record it.
 """
 
 [[when]]
@@ -32,10 +33,10 @@ skill = "engineering"
 
 [[option]]
 id = "build"
-label = "Build them in belt steel"
-text = "Spend the shelf spares and a season of bay time. The first arm the outpost grew itself."
+label = "Build the arms in belt steel"
+text = "Spares -15. Through-wall units +1.0. One season of bay time."
 tags = ["capability", "independence", "hulls", "spares"]
-chronicle = "The first arms we made ourselves went through the wall of the carbonyl plant that season, ugly and ours."
+chronicle = "The first locally manufactured arms were fitted through the wall of the carbonyl plant that season."
 [[option.effect]]
 q = "robots.through_wall"
 add = 1.0
@@ -50,22 +51,22 @@ strain = -0.1
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "It is steel, seals, and an RSW. We can make steel, seals, and RSWs. It is the one robot in the belt I can promise you will still exist in twenty years."
+text = "Chief Engineer reports the inputs are steel, seals and one RSW of time, all of which the outpost produces. Rates it as the only robot certain to exist here in twenty years."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "The autonomy score is computed from the manifest. Every part you make instead of ordering lowers it, and the score is the sponsor's proxy for whether we are theirs."
+text = "Sponsor Liaison reports the autonomy score is computed from the manifest. Every part made rather than ordered lowers it, and the sponsor uses the score as a proxy for control."
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "Every suit hour is a suit seal, and every suit seal leaks. Put the arms through the wall and I get my nitrogen back."
+text = "ECLSS Lead reports every suit hour is a suit seal and every suit seal leaks. The arms return nitrogen to the loop."
 
 [[option]]
 id = "order"
 label = "Order the sponsor's pattern"
-text = "Put a proper manipulator on the manifest and nurse the two we have until it comes. Precision over pride."
+text = "Through-wall units +0.4 on arrival. Confidence +0.02. Existing arms nursed until the RSW."
 tags = ["sponsor", "throughput"]
-chronicle = "We put a manipulator on the manifest and nursed the old arms until the RSW, and the RSW brought half of one."
+chronicle = "A manipulator was placed on the manifest and the existing arms were nursed until the RSW. The RSW delivered half of one unit."
 [[option.effect]]
 q = "robots.through_wall"
 add = 0.4
@@ -77,8 +78,8 @@ flag = "through_wall_ordered"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "This is exactly what the manifest is for. Order the part and the sponsor sees an outpost that uses its supply chain."
+text = "Sponsor Liaison reports this is the manifest's designed use and shows an outpost operating its supply chain."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Thirty months for a crate that may not be on it. The plant does not wait thirty months."
+text = "Chief Engineer reports thirty months for a crate that may not be aboard. The plant does not hold for thirty months."

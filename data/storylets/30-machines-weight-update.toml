@@ -5,13 +5,14 @@ once = true
 priority = 60
 tags = ["machines", "sponsor"]
 text = """
-The quarterly weight update for the minds is nine days of dish time per hundred
-gigabytes, and this quarter the dish time was not allocated. No message says so.
-{operator} found it the way operators find things: {mind} answered a question
-about a supply catalogue with last year's prices. The mind's knowledge is
-frozen at the last update and will stay frozen. {operator} says this is what
-it looks like when a sponsor stops paying for something it has not yet decided
-to stop paying for, and that the messages will thin next.
+Status: the quarterly weight update for the minds costs 216 h of dish
+time per 100 GB. This quarter the dish time was not allocated. No message
+states so.
+{operator} detected it by output: {mind} answered a supply-catalogue query
+with last year's prices. The minds' knowledge is frozen at the last update.
+{operator} assesses this as the signature of a sponsor discontinuing a
+service it has not yet decided to discontinue, and projects message traffic
+as the next reduction.
 """
 
 [[when]]
@@ -31,10 +32,10 @@ optional = true
 
 [[option]]
 id = "tell_ring"
-label = "Tell the SMB what it means"
-text = "Put it in the minutes: the updates have stopped, this is the first sign, and everyone should plan as if the messages are next."
+label = "Report the assessment to the SMB"
+text = "Entered in the minutes. Strain +0.06 across the crew. Return intent falls."
 tags = ["people", "machines", "independence"]
-chronicle = "The operator told the SMB that the minds had stopped learning, and what that meant, and the SMB wrote it down and was quiet for a while."
+chronicle = "The operator reported to the SMB that the minds had stopped learning and what the signature indicated. The assessment was minuted."
 [[option.effect]]
 flag = "ring_told_updates"
 [[option.effect]]
@@ -44,18 +45,18 @@ all_return_intent = -0.03
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "I would rather know which crates are the last crates now than find out from an empty window."
+text = "Chief Engineer prefers to identify the last crate as the last crate now rather than from an empty window."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Dish time is reallocated every quarter. You are reading a budget line as a prophecy and the SMB will hear it as one."
+text = "Sponsor Liaison reports dish time is reallocated every quarter. The proposal reads a budget line as a forecast and the SMB will receive it as one."
 
 [[option]]
 id = "keep_quiet"
-label = "Keep it in the hub"
-text = "The operators know. Nobody else needs to, yet. A frozen catalogue is not a crisis and a ring that thinks it has been abandoned will act like one."
+label = "Hold it in the hub"
+text = "No minute. {operator} strain +0.15. Confidence unaffected."
 tags = ["sponsor", "risk"]
-chronicle = "The operators kept the frozen update to themselves for a season, and were the only ones who knew why the mind's prices were wrong."
+chronicle = "The frozen update was held among the operators for a season. They were the only crew who knew why the mind's prices were wrong."
 [[option.effect]]
 flag = "updates_kept_quiet"
 [[option.effect]]
@@ -64,18 +65,18 @@ strain = 0.15
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Confidence is the one stock the SMB can lower by talking. Let the operators carry it."
+text = "Sponsor Liaison reports confidence is the one stock the SMB can reduce by speaking. Recommends the operators carry it."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "If the minds are not being told what the sponsor knows, then neither am I, and I set the nitrogen budget on what the sponsor knows."
+text = "ECLSS Lead sets the nitrogen budget on what the sponsor knows. If the minds are not being told, neither is ECLSS."
 
 [[option]]
 id = "ask"
-label = "Ask the sponsor for the dish time"
-text = "Send a formal request for the missed allocation. It costs a month of the liaison's attention budget and it puts on record that we noticed."
+label = "Request the dish time formally"
+text = "Attention +0.03. Confidence -0.03. Costs one month of the liaison's budget."
 tags = ["sponsor", "machines"]
-chronicle = "We asked Earth for the dish time in writing. The answer, a month late, thanked us for our patience."
+chronicle = "The missed dish-time allocation was requested in writing. The reply, one month late, thanked the outpost for its patience."
 [[option.effect]]
 q = "sponsor.attention"
 add = 0.03
@@ -87,8 +88,8 @@ flag = "updates_requested"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "An allocation request is the language they speak. Anything else is a complaint, and complaints are read by a different desk."
+text = "Sponsor Liaison reports an allocation request is in the sponsor's language. Anything else routes to the complaints desk."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "You will spend the attention we have left on a question we already know the answer to."
+text = "Chief Engineer reports the proposal spends remaining attention on a question whose answer is already assessed."

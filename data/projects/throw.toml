@@ -1,6 +1,6 @@
 id = "throw"
 title = "MDLS operations (mass driver)"
-description = "Pod packing, alignment checks, launch cadence. Rate follows the dice on it; the throw position sets what is shipped."
+description = "Pod packing, alignment checks, launch cadence. Rate follows assigned dice; the throw position sets what is shipped."
 domain = "operations"
 structured = true
 standing = true

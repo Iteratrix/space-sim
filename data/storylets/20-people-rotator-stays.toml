@@ -5,11 +5,11 @@ weight = 0.4
 cooldown = 28
 tags = ["people", "independence"]
 text = """
-{stayer} came to the SMB with the opposite request. The contract ends at the
-window; {stayer} does not want the seat. Not for the lay, not for anything the
-sponsor can offer. The reasons given are practical: the work is unfinished,
-the replacement will not know the loop. The reasons not given are the ones
-everyone hears. The sponsor's headcount does not have a line for this.
+Status: {stayer}'s contract terminates at the window. {stayer} has declined
+the berth.
+Stated reasons: unfinished work, and a replacement unfamiliar with the
+loop. No lay incentive was requested.
+Constraint: the sponsor's headcount has no category for a declined berth.
 """
 
 [[when]]
@@ -32,10 +32,10 @@ seat = "hours"
 
 [[option]]
 id = "accept"
-label = "Accept. {stayer} is a resident now"
-text = "Off the rotation list. Whatever the sponsor's paper says."
+label = "Record {stayer} as a resident"
+text = "Off the rotation list. {stayer} strain -0.1. Confidence -0.02."
 tags = ["people", "independence"]
-chronicle = "{stayer} came off the rotation list before the RSW and the SMB wrote it down as residence. The sponsor's headcount was one long for a year before anyone on Earth noticed."
+chronicle = "{stayer} came off the rotation list before the RSW and was recorded as a resident. The sponsor's headcount ran one long for a year."
 [[option.effect]]
 person = "stayer"
 resident = true
@@ -54,18 +54,18 @@ counter = "stayed_by_choice"
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "A person who knows the loop and wants to stay is worth three who know it and are counting the months. Yes."
+text = "ECLSS Lead rates one loop-rated crew member who intends to stay above three who are counting months."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "There is no category on the headcount for someone who declined a ship. I will have to invent one, and inventions get audited."
+text = "Sponsor Liaison reports no headcount category exists for a declined berth. A new category will be audited."
 
 [[option]]
 id = "new_paper"
-label = "Stay, on a new contract with a new end date"
-text = "Another two RSWs. The sponsor understands renewals."
+label = "Issue a further contract"
+text = "Two more RSWs on the sponsor's paper. {stayer} return intent -0.25."
 tags = ["sponsor", "hours"]
-chronicle = "{stayer} signed another contract with another end date. Everyone understood it was a formality, including the sponsor, who preferred formalities."
+chronicle = "{stayer} signed a further contract with a new end date. Both parties treated the date as a formality."
 [[option.effect]]
 person = "stayer"
 return_intent = -0.25
@@ -78,18 +78,18 @@ add = 0.02
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "A renewal is a line the sponsor already has. It keeps the hands and it keeps the paper clean."
+text = "Logistics Lead reports a renewal uses a line the sponsor already holds. It retains the hands and keeps the record clean."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "A person with an end date has a third quarter. You are buying one. If they want to stay, let them stay."
+text = "Chief Engineer notes a contract with an end date reintroduces the third-quarter curve. Recommends granting residence instead."
 
 [[option]]
 id = "send_home"
-label = "The contract ends at the RSW. {stayer} boards"
-text = "The rotation is the sponsor's, and a crew that chooses its own headcount is not a crew."
+label = "Enforce the rotation"
+text = "{stayer} boards. Strain +0.03 across the crew. Confidence +0.02."
 tags = ["sponsor", "caution"]
-chronicle = "The SMB held {stayer} to the contract and left the name on the rotation list. {stayer} did not argue, and the ones who heard it remembered it."
+chronicle = "The SMB enforced the contract and {stayer} remained on the rotation list. No appeal was lodged."
 [[option.effect]]
 person = "stayer"
 leave = true
@@ -104,8 +104,8 @@ add = 0.02
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "The rotation schedule is the one promise the sponsor keeps. If we break it from this end they will stop keeping it from theirs."
+text = "Sponsor Liaison reports the rotation schedule is the sponsor's one reliably kept undertaking. Breaking it locally invites reciprocity."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You are sending home the one person here who is not counting the months. Think about what that does to the ones who are."
+text = "Medical Officer notes {stayer} is the one crew member not counting months. Removing that case affects the crew who are."

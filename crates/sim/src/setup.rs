@@ -370,7 +370,7 @@ pub fn new_game_scenario(
     }
     game.chronicle(
         format!(
-            "First count at {}. {} of us, {} on contract, the {} minds running under the Act.",
+            "MM 1. {} occupied. {} crew present, {} on contract. {} minds running under the HRA.",
             game.outpost_name,
             n,
             game.people

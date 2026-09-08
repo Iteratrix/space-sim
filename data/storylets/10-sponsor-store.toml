@@ -5,12 +5,11 @@ weight = 1.2
 cooldown = 24
 tags = ["sponsor", "spares", "cost"]
 text = """
-The spares count is low enough that {hulls} has stopped rounding. The
-sponsor's store will sell what the loops need at the store's markup, charged
-against the lay, delivered on the next RSW if the request goes before the
-window. Or the bay makes a worse version out of what the rock gives, at a
-cost in hours {hours} has already written down and does not like. Or the
-loops run on what there is.
+Status: spares below 90 units. {hulls} has stopped rounding the figure.
+Options: the sponsor's store will supply loop parts at markup, charged
+against the lay, delivered next RSW if the request precedes the window. The
+fabrication bay can produce substitutes from belt material at an hours cost
+{hours} has already recorded. Or the loops run at present stock.
 """
 
 [[when]]
@@ -34,10 +33,10 @@ seat = "hours"
 
 [[option]]
 id = "buy"
-label = "Buy from the store, against the lay"
-text = "Pay the markup. The parts come in a crate with the sponsor's name on it, and the crew's lay comes back a little lighter at settlement."
+label = "Buy from the store against the lay"
+text = "Spares +30. CCI +0.5. Every contract pays a share at settlement."
 tags = ["spares", "sponsor", "cost"]
-chronicle = "The SMB bought spares from the sponsor's store at the store's price, and every contract on the roster paid a little of it at settlement."
+chronicle = "Spares were purchased from the sponsor's store at list price plus markup, charged against every contract on the roster."
 [[option.effect]]
 q = "stocks.spares"
 add = 30
@@ -54,18 +53,18 @@ counter = "store_purchases"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "A real bearing at thirty per cent over is cheaper than a plain one I have to re-line every Fortune. Buy the real one while there is a store."
+text = "Chief Engineer rates a specified bearing at 30 per cent markup as cheaper than a plain bearing re-lined each season."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "Every markup comes out of thirty lays and nobody sees it until settlement, and then everybody sees it at once."
+text = "Logistics Lead reports the markup distributes across thirty lays and is invisible until settlement."
 
 [[option]]
 id = "fabricate"
-label = "Make a worse version in the bay"
-text = "The bay can turn out a plain bearing, a silicone seal, a bracket that will do. It costs hours and it is not the part. It is ours."
+label = "Fabricate substitutes in the bay"
+text = "Spares +12. Strain +0.04 across the crew. LSS-C +0.005."
 tags = ["capability", "independence", "hours", "hulls"]
-chronicle = "The SMB put the bay onto making its own spares, worse than the store's and belonging to nobody else. The first plain bearing ran for a season and was re-lined."
+chronicle = "The fabrication bay was tasked with producing spares. Output was below the store's specification. The first plain bearing ran one season before re-lining."
 [[option.effect]]
 q = "stocks.spares"
 add = 12
@@ -81,18 +80,18 @@ counter = "fabrication_runs"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Everything the store sells, I can make a crude one of, at one and a half times the mass and twice the hours. The day the store closes that is the only bearing there is. Start now."
+text = "Chief Engineer can produce a crude equivalent of every store line at 1.5 times mass and twice the hours. That is the only bearing available once the store closes."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The bay hours come out of the health hours, because they always do. Four hundred hours of fabrication is a season of nobody getting their bloods done."
+text = "Medical Officer reports bay hours are drawn from health hours. Four hundred hours of fabrication is one season without routine bloods."
 
 [[option]]
 id = "run_short"
-label = "Run the loops on what there is"
-text = "Ask for nothing. Let the LSS-C slip a little and the N2 make-up grow a little, and see how far the store's last crate stretches."
+label = "Run the loops at present stock"
+text = "LSS-C -0.01. N2 make-up rises. SOS -0.3. No hours, no markup."
 tags = ["caution", "cost", "closure"]
-chronicle = "The SMB asked the store for nothing and ran the loops on what there was. LSS-C slipped a point that season and nobody on Earth was charged for it."
+chronicle = "No store request was made and the loops ran at present stock. LSS-C fell one point that season."
 [[option.effect]]
 q = "closure"
 add = -0.01
@@ -107,8 +106,8 @@ flag = "ran_short"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "No hours, no markup, no line on the manifest. It is the cheapest option until the day it is not, and I can tell you roughly which day."
+text = "Logistics Lead reports no hours, no markup, and no manifest line. Cheapest option until the failure, which is datable."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "Every point of LSS-C is a tonne of water a year and a seal I cannot replace. You are not saving. You are borrowing from the N2 make-up."
+text = "ECLSS Lead costs each point of LSS-C at one tonne of water a year plus one unreplaceable seal. The saving is borrowed from N2 make-up."

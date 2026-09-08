@@ -5,12 +5,13 @@ once = true
 priority = 60
 tags = ["machines", "capability", "spares"]
 text = """
-The dexterous units are the ones nobody can repair: the sponsor's manual says
-return to depot, and there is no depot. Two of the four are down. {wright} has
-been keeping the third alive with parts from the second, without asking, and
-has a notebook of procedures that are not in any manual. {hulls} says the
-arms and the haulers will go the same way and there is a choice to make about
-whether repairing the unrepairable is a hobby or a craft the outpost keeps.
+Status: dex units below 3. The sponsor's manual specifies return to depot.
+There is no depot. Two of four units are down.
+{wright} has kept the third in service using parts from the second, without
+authorisation, and holds a notebook of procedures absent from any manual.
+{hulls} projects the same failure path for the arm and haul classes, and
+requires a ruling on whether unstructured repair is an individual activity
+or a retained capability.
 """
 
 [[when]]
@@ -27,10 +28,10 @@ skill = "engineering"
 
 [[option]]
 id = "teach"
-label = "Make it a craft"
-text = "Give the notebook a shelf and the repairer two apprentices and the hours to fail. Unstructured repair becomes a thing the outpost does on purpose."
+label = "Establish repair as a retained craft"
+text = "Dex units +0.5. Two apprentices and hours allocated. Strain +0.04 across the crew."
 tags = ["capability", "spares", "independence", "hours"]
-chronicle = "We gave the repairer apprentices and hours, and the notebook of things nobody could fix became the first book the Wrights kept."
+chronicle = "The repairer was assigned apprentices and hours. The notebook of unsupported procedures became the first record the Wrights kept."
 [[option.effect]]
 flag = "wrights"
 [[option.effect]]
@@ -44,18 +45,18 @@ strain = -0.1
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Every fleet I have read about goes dex, arm, hauler, plant, in that order, and the outposts that lasted were the ones that had someone who could not read the manual and fixed it anyway."
+text = "Chief Engineer reports the fleet failure order is dex, arm, hauler, plant, and that surviving outposts retained a repairer who worked outside the manual."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Field repair of a depot-only unit voids the warranty and the autonomy score both. The sponsor reads the score."
+text = "Sponsor Liaison reports field repair of a depot-only unit voids the warranty and lowers the autonomy score. The sponsor reads the score."
 
 [[option]]
 id = "request"
-label = "Ask the sponsor for replacements"
-text = "Put two dex units on the next manifest and stop the improvising. The manual says depot; let the depot do it."
+label = "Request replacement dex units"
+text = "Confidence -0.02. {wright} strain +0.2. Improvisation ordered to stop."
 tags = ["sponsor", "throughput"]
-chronicle = "We asked for new dex units on the manifest and told the repairer to stop taking things apart. The repairer did not stop."
+chronicle = "Two dex units were requested on the manifest and the repairer was instructed to stop stripping hardware. The instruction was not followed."
 [[option.effect]]
 flag = "dex_requested"
 [[option.effect]]
@@ -67,18 +68,18 @@ strain = 0.2
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Replacement is a line on a manifest. Improvisation is a line in an audit."
+text = "Sponsor Liaison reports replacement is a manifest line and improvisation is an audit line."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "The manifest is thirty months away and the scrubber actuator is a dex part. I will be breathing the answer before it arrives."
+text = "ECLSS Lead reports the manifest is thirty months out and the scrubber actuator is a dex part."
 
 [[option]]
 id = "strip"
-label = "Strip the dead ones for the arms"
-text = "The dex actuators keep three arm units alive for a year. Fabrication over fingers."
+label = "Strip the dead units for the arms"
+text = "Dex -0.8. Arm +0.6. Spares +6. No procedure recorded."
 tags = ["spares", "capability", "throughput"]
-chronicle = "We stripped the dead dex units for their actuators and the arms ran another year on them. Nobody wrote down how."
+chronicle = "The dead dex units were stripped for actuators and the arm units ran a further year. The procedure was not written down."
 [[option.effect]]
 q = "robots.dex"
 add = -0.8
@@ -91,8 +92,8 @@ add = 6
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "An arm makes parts. A dex unit uses them. If I can only keep one alive I know which."
+text = "Chief Engineer reports an arm produces parts and a dex unit consumes them. Where only one class can be sustained, the arm is retained."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Cannibalising sponsor assets shows on the inventory count as loss. I will have to explain a loss."
+text = "Sponsor Liaison reports cannibalised sponsor assets appear on the inventory count as loss, and a loss requires an explanation."

@@ -6,11 +6,12 @@ weight = 0.5
 priority = 0
 tags = ["air", "nitrogen", "hulls"]
 text = """
-{air} has the nitrogen ledger open at the SMB again. The rotating hub seal is
-weeping: not a failure, a trend, a few kilograms a day more than last season
-and the season before. The seal profile is sponsor polymer. {hulls} can patch
-it with shelf parts, can try to cut a replacement from what the polymer line
-makes, or can leave it another season and let the ledger say what it says.
+Status: the RJSA is passing nitrogen above trend. Not a failure. The rate is
+a few kilograms above last season, and last season was above the one
+before.
+{air} has the ledger open at the SMB.
+Constraint: the seal profile is sponsor polymer. {hulls} can patch from
+shelf stock, attempt a cut seal from the polymer line, or defer.
 """
 
 [[when]]
@@ -30,10 +31,10 @@ seat = "hulls"
 
 [[option]]
 id = "patch"
-label = "Patch it from the shelf"
-text = "Twelve units of parts and a watch in the RJSA. It stops weeping for a season or two."
+label = "Patch the seal from the shelf"
+text = "Spares -12. One watch in the RJSA. N2 make-up -1.5. Holds one to two seasons."
 tags = ["spares", "nitrogen", "air"]
-chronicle = "We patched the RJSA seal from the shelf and the ledger was quiet for a season."
+chronicle = "The RJSA seal was patched from shelf stock. The nitrogen ledger was flat for one season."
 [[option.requires]]
 q = "stocks.spares"
 ge = 12
@@ -46,18 +47,18 @@ add = -1.5
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "Twelve units now or eight hundred kilograms later. I have done the sum at every ring for a year."
+text = "ECLSS Lead costs the choice at 12 units now or 800 kg later, and has run the sum at every SMB for a year."
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "A patch is a patch. It is also the only thing I can do in a watch."
+text = "Chief Engineer classes it as a patch and reports it is the only intervention completable within one watch."
 
 [[option]]
 id = "defer"
-label = "Leave it another season"
-text = "The parts are needed for the loops. The collar has wept before and the reserve has covered it."
+label = "Defer another season"
+text = "Nitrogen -150 kg. N2 make-up +3.0. Parts retained for the loops."
 tags = ["throughput", "spares", "risk"]
-chronicle = "We left the RJSA to weep another season and put the parts into the loops, and the ECLSS Lead wrote the number down and said nothing."
+chronicle = "The RJSA was left to weep another season and the parts went to the loops. The ECLSS Lead recorded the figure."
 [[option.effect]]
 q = "menace.leak"
 add = 3.0
@@ -67,18 +68,18 @@ add = -150
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Loop LSS-C is on the quarterly. The collar is not. Spend the parts where the sponsor can see them."
+text = "Sponsor Liaison reports loop LSS-C is on the quarterly and the RJSA is not. Recommends spending parts where the sponsor reads them."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "It does not weep less because we look away. It weeps more, and I count it either way."
+text = "ECLSS Lead reports the rate does not fall under deferral. It rises, and it is counted either way."
 
 [[option]]
 id = "cut"
 label = "Cut a seal from belt polymer"
-text = "The polymer line makes a silicone that is not the profile the seal wants. Try it anyway; the arms can hold the tolerance if the hands cannot."
+text = "Spares -4. N2 make-up -0.8. Profile will be off-specification."
 tags = ["capability", "independence", "hulls", "risk"]
-chronicle = "We cut a collar seal from our own polymer and fitted it with the arms, and it was wrong in a way we could live with."
+chronicle = "A collar seal was cut from local polymer and fitted by arm units. The profile was off-specification within tolerance."
 [[option.requires]]
 q = "robots.arm"
 ge = 3
@@ -93,8 +94,8 @@ flag = "seal_made"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "It will be wrong. But the one after it will be less wrong, and I will not learn how to make a seal by not making one."
+text = "Chief Engineer expects the first seal to be off-specification and the second to be less so. The capability is not acquired without the attempt."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "A seal that is wrong in a way we can live with is a leak with a name. I would rather the patch."
+text = "ECLSS Lead classes an off-specification seal as a named leak. Prefers the shelf patch."

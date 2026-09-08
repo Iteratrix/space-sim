@@ -4,13 +4,14 @@ act = 1
 once = true
 tags = ["people", "families", "dose"]
 text = """
-{asker} has asked the SMB for a child. Not permission, exactly; the sponsor's
-medical policy says no children on station and does not say who would stop
-one. {bodies} has the numbers: the KEEP runs at twelve millisieverts a year,
-which is less than some cities; gestation here roughly doubles a childhood
-cancer risk that starts small; the policy was written for a coil ship and
-copied to the rock without anyone reading it. {asker} is a resident. There is
-no ship in the plan that takes {asker} home to do this.
+Status: {asker} has petitioned the SMB for a child. The sponsor's medical
+policy prohibits children on station and names no enforcing authority.
+{bodies} reports the figures. KEEP interior runs at 12 mSv per year, below
+several terrestrial cities. Gestation here approximately doubles a
+childhood cancer risk with a low base rate. The policy was written for a
+coil ship and copied without revision.
+Constraint: {asker} is a resident. No scheduled transport returns {asker}
+to Earth for this.
 """
 
 [[when]]
@@ -33,10 +34,10 @@ seat = "bodies"
 
 [[option]]
 id = "defy"
-label = "The policy was written for a hull. The Keep is not a hull. Yes"
-text = "No permission asked. The CED book says it is survivable and the SMB says so."
+label = "Approve it locally"
+text = "SOS +1.5. {asker} strain -0.15, return intent -0.3. Sponsor not consulted."
 tags = ["families", "independence", "risk"]
-chronicle = "The SMB told {asker} yes, and wrote the CED numbers next to the decision so that anyone reading later would know it was not made blind. The sponsor was not asked."
+chronicle = "The SMB approved {asker}'s petition and entered the CED figures beside the decision. The sponsor was not consulted."
 [[option.effect]]
 flag = "families_defied"
 [[option.effect]]
@@ -58,18 +59,18 @@ counter = "policies_defied"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "Twelve millisieverts. I would sign that on Earth. The policy is a hull policy with the word hull crossed out, and I will not enforce a crossing-out."
+text = "Medical Officer would sign 12 mSv per year on Earth. Classes the policy as a hull policy applied to a buried habitat and declines to enforce it."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A child on the headcount is a line the sponsor cannot explain to its insurers. That is not a policy, that is the end of the outpost as the sponsor understands it."
+text = "Sponsor Liaison reports a child on the headcount cannot be presented to the sponsor's insurers. That terminates the outpost as the sponsor defines it."
 
 [[option]]
 id = "ask"
-label = "Put it to the sponsor as a formal request, with the CED numbers"
-text = "Wait for the answer. The answer is an RSW away and probably no."
+label = "Refer it to the sponsor with the CED figures"
+text = "Attention +0.05. Confidence -0.03. Answer one RSW out. {asker} strain +0.15."
 tags = ["sponsor", "families", "caution"]
-chronicle = "The SMB sent the request to Earth with the CED numbers attached and told {asker} to wait for the RSW. The sponsor answered with a longer policy."
+chronicle = "The petition was uplinked with the CED figures attached and {asker} was told to await the RSW. The sponsor's reply was a longer policy."
 [[option.effect]]
 flag = "families_asked"
 [[option.effect]]
@@ -87,18 +88,18 @@ return_intent = 0.1
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Ask. With numbers. The worst case is a no we already have, and the best case is a policy someone actually wrote for a rock."
+text = "Sponsor Liaison recommends referral with figures. Worst case restates a refusal already in force."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "You are asking a board that has never seen this place to rule on what a body can bear in it. They will say no and then we are defying them instead of ignoring them."
+text = "Chief Engineer notes referral converts a policy being ignored into a directive being defied."
 
 [[option]]
 id = "refuse"
-label = "The policy is the policy. Not here, not yet"
-text = "The Bodies seat does not disagree with the numbers. The SMB does not want the fight."
+label = "Apply the policy"
+text = "{asker} strain +0.2, return intent +0.35. Confidence +0.02."
 tags = ["sponsor", "caution"]
-chronicle = "The SMB told {asker} no, and read the policy aloud so that it would be the policy saying it. {asker} asked about the next ship."
+chronicle = "The petition was refused and the policy was read aloud on the record. {asker} asked about the next ship."
 [[option.effect]]
 person = "asker"
 strain = 0.2
@@ -114,8 +115,8 @@ add = 0.02
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "A pregnancy is a person off the roster for a year and a person on the ration for eighteen. I do not have the hours. Say no and say why."
+text = "Logistics Lead costs a pregnancy at one crew off the roster for a year and on the ration for eighteen months. The hours are not available."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You want me to tell a patient the risk is unacceptable when I have just told the SMB it is not. Find someone else to say it."
+text = "Medical Officer declines to state a risk as unacceptable after reporting it as acceptable to the SMB."

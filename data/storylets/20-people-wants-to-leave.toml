@@ -5,11 +5,12 @@ weight = 0.5
 cooldown = 30
 tags = ["people", "hours"]
 text = """
-{leaver} came to the SMB with the contract and a finger on the end date and
-asked to be on the next ship instead. Not sick, not in trouble, just done: the
-can, the month, the same thirty-five faces. Half the outpost would say the same
-if asked, and {hours} knows exactly what one seat on the ship costs in tonnes
-and what one pair of hands costs in the ledger.
+Status: {leaver} has requested passage on the next ship, ahead of the
+contract end date. No medical cause, no disciplinary cause.
+Note: return share across the crew is above 0.55. The request is
+representative.
+{hours} holds the cost of one berth in outbound tonnes and the cost of one
+pair of hands in the ledger.
 """
 
 [[when]]
@@ -32,10 +33,10 @@ seat = "hours"
 
 [[option]]
 id = "let_go"
-label = "Put {leaver} on the next ship"
-text = "A seat, a forfeited lay, and a message to everyone else that the door opens."
+label = "Grant the berth"
+text = "{leaver} departs. Lay forfeited. Return intent rises across the crew."
 tags = ["people", "cost"]
-chronicle = "{leaver} asked to go before the contract was out and the SMB said yes. There was a seat on the next ship and everyone watched it fill."
+chronicle = "{leaver} was granted passage ahead of the contract end date. The berth on the next ship was filled and the roster noted it."
 [[option.effect]]
 person = "leaver"
 leave = true
@@ -47,18 +48,18 @@ add = -0.02
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "A person who has decided to leave and cannot is the person the record says becomes the problem. Let them go while it is still their idea."
+text = "Medical Officer reports a crew member who has decided to leave and cannot becomes the documented problem case. Recommends release while it is still voluntary."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "One pair of hands off the roster and a seat that could have been a hundred kilos of spares. And the next one asks tomorrow."
+text = "Logistics Lead costs the berth at one pair of hands and 100 kg of inbound spares, and expects the next request within a month."
 
 [[option]]
 id = "persuade"
-label = "Sit down with {leaver} and find out what would make them stay"
-text = "A different watch, a different bunk, a word. Cheap if it works."
+label = "Interview {leaver} for the actual cause"
+text = "{leaver} return intent -0.3, strain -0.1. Cost is one evening."
 tags = ["people", "hours"]
-chronicle = "{hours} sat with {leaver} for an evening and found out what the trouble actually was. It was a watch schedule. It was changed."
+chronicle = "{hours} interviewed {leaver} and identified the cause as a watch schedule. The schedule was changed."
 [[option.effect]]
 person = "leaver"
 return_intent = -0.3
@@ -74,18 +75,18 @@ work_positive = 0.15
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "Nine times in ten it is a roster. Ask before you spend a seat on it."
+text = "Logistics Lead reports nine cases in ten resolve to a roster. Recommends asking before spending a berth."
 [[option.advice]]
 seat = "extraction"
 stance = "against"
-text = "You can talk someone into another RSW. You cannot talk them into liking it, and I have to stand watches with them."
+text = "ISRU Lead reports retention can be negotiated and consent cannot, and will stand watches with the result."
 
 [[option]]
 id = "hold"
-label = "Hold {leaver} to the paper"
-text = "The contract has an end date and this is not it."
+label = "Enforce the contract date"
+text = "{leaver} strain +0.2, return intent +0.15. CCI +0.3."
 tags = ["sponsor", "hours"]
-chronicle = "The SMB held {leaver} to the contract. {leaver} stood the watches until the end date and did not speak to {hours} again."
+chronicle = "{leaver} was held to the contract date and stood the watches to term. Communication with {hours} ceased."
 [[option.effect]]
 person = "leaver"
 strain = 0.2
@@ -101,8 +102,8 @@ add = 0.3
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "The contract is the sponsor's paper, not ours. If we start releasing people from it the sponsor will ask who authorised that, and I do not have an answer."
+text = "Sponsor Liaison reports the contract is the sponsor's instrument. Local release requires an authority the outpost does not hold."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You will get the hours. You will not get the person, and the difference will show up in my clinic."
+text = "Medical Officer reports the hours will be obtained and the crew member will not. The difference presents at the clinic."

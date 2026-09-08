@@ -6,12 +6,12 @@ cooldown = 12
 weight = 0.6
 tags = ["people", "families"]
 text = """
-{one} and {other} have started arranging their watches so that they end at the
-same time, and everyone in the can noticed a month before they said anything.
-It is not a problem. {third} has made it one: two watches skipped, a remark at
-the meal, and a request to the SMB to be moved off {one}'s shift that gave no
-reason. The sponsor's fraternisation policy exists and nobody has read it since
-the ship.
+Status: {one} and {other} have been aligning their watch ends for a month.
+No performance effect recorded.
+Constraint: {third} has skipped two watches, made a statement at the meal,
+and requested transfer off {one}'s shift without stating a reason.
+Note: the sponsor's fraternisation policy is in force and has not been
+opened since transit.
 """
 
 [[when]]
@@ -32,10 +32,10 @@ role = "third"
 
 [[option]]
 id = "let_be"
-label = "Their business. Move {third} off the shift and say nothing"
-text = "The SMB does not run the bunks."
+label = "Transfer {third} and record nothing further"
+text = "Watches unchanged for {one} and {other}. {third} strain +0.05."
 tags = ["people", "caution"]
-chronicle = "{one} and {other} kept their watches and {third} was moved to another shift without a reason given. The SMB did not discuss it further."
+chronicle = "{one} and {other} kept their watches. {third} was transferred to another shift with no reason recorded. The SMB took no further action."
 [[option.effect]]
 tie = ["one", "other"]
 work_positive = 0.2
@@ -51,18 +51,18 @@ strain = 0.05
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "I move people between shifts every month. This is a shift change. Do not make it a policy."
+text = "Logistics Lead moves crew between shifts every month. Recommends classing this as a shift change and not a policy matter."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You have not solved anything for {third}, you have moved it to a different shift. It will come back at the meal."
+text = "Medical Officer reports the transfer relocates {third}'s position rather than resolving it. Expect recurrence at the meal."
 
 [[option]]
 id = "separate"
 label = "Split {one} and {other} across the rota"
-text = "Different shifts, different sleep cycles. The sponsor's policy, more or less."
+text = "Opposite shifts. Both strain +0.12. {third} strain -0.08. Loop cover degrades."
 tags = ["sponsor", "hours"]
-chronicle = "The SMB put {one} and {other} on opposite shifts, which is what the sponsor's policy would have said if anyone had looked it up. They found the gaps anyway."
+chronicle = "{one} and {other} were placed on opposite shifts, consistent with the sponsor's policy. Watch-end alignment resumed by other means."
 [[option.effect]]
 tie = ["one", "other"]
 work_positive = -0.1
@@ -81,18 +81,18 @@ hindrance = 0.15
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "The policy is there because it has been a problem on every station before this one. Separate them on the rota and it is a non-event on the record."
+text = "Sponsor Liaison reports the policy exists because the case has occurred on every prior station. Separation on the rota keeps it off the record."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "They are the two who know the loop. Putting them on opposite shifts means the loop is never fully attended by anyone who likes being there."
+text = "ECLSS Lead reports both hold the loop rating. Opposite shifts leave the loop without a rated attendant who wants the watch."
 
 [[option]]
 id = "witness"
-label = "Make it a lay, witnessed, with terms"
-text = "A first marriage in the can, on our own terms, written down. {third} attends."
+label = "Record it as a lay before the SMB"
+text = "Terms written and witnessed. Strain -0.03 across the crew. {third} strain +0.1."
 tags = ["families", "independence"]
-chronicle = "{one} and {other} put their lay before the SMB with the SMB as witness, the first in the outpost. {third} attended, and everyone noticed that too."
+chronicle = "{one} and {other} entered a lay before the SMB as witness, the first recorded on station. {third} attended."
 [[option.effect]]
 tie = ["one", "other"]
 work_positive = 0.3
@@ -111,8 +111,8 @@ counter = "lays_witnessed"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Every ship I ever crewed had one of these and the ones that went well were the ones that got said out loud. Say it out loud."
+text = "ISRU Lead reports every crewed vessel produces this case and the recorded ones ran better than the unrecorded."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A marriage registered by an outpost has no standing anywhere and the sponsor will want to know why we are registering things."
+text = "Sponsor Liaison reports a marriage registered by an outpost has no legal standing and invites a query about what else is being registered."

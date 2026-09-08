@@ -1,6 +1,6 @@
 id = "dig_keep"
 title = "KEEP excavation"
-description = "Kilotonne-class Excavated Environmental Protection: the buried habitat. Dose drops when it is done."
+description = "Kilotonne-class Excavated Environmental Protection. Buried habitat. CED falls on completion."
 domain = "engineering"
 structured = true
 segments = 24

@@ -1,6 +1,6 @@
 id = "repair_relay"
 title = "Relay repair"
-description = "The Earth link's transponder chain. Spares and hands."
+description = "Earth link transponder chain. Consumes spares and crew hours."
 domain = "operations"
 structured = false
 segments = 4

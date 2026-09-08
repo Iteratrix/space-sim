@@ -4,11 +4,12 @@ act = 1
 once = true
 tags = ["people", "air"]
 text = """
-The date is coming round again and this time people know it is a date. The
-new hands off the last ship have heard about it and think it is a joke;
-{veteran} was here for the first one and does not. {newcomer} asked, at the
-meal, whether it was compulsory. The ritual either becomes a thing that is
-done here, or it becomes a thing that was done once.
+Status: the fixed date recurs this month. Crew who arrived on the last ship
+have been briefed on it and treat it as informal. {veteran} attended the
+first and does not.
+{newcomer} asked at the meal whether attendance is required.
+Constraint: a second observance establishes it as procedure. A lapse
+records it as a single event.
 """
 
 [[when]]
@@ -30,10 +31,10 @@ rotator = true
 
 [[option]]
 id = "keep"
-label = "Hold it again, and hold it bigger"
-text = "The second time is the one that makes it a custom."
+label = "Hold it again, at larger scale"
+text = "Strain -0.08 across the crew. Food margin -0.5 months. Custom established."
 tags = ["people", "independence"]
-chronicle = "The second Midwinter was held with the new hands watching, and by the end of the night they were not watching. It was a custom after that."
+chronicle = "The second observance was held with the new hands present. Attendance was full by the end of the night."
 [[option.effect]]
 all_strain = -0.08
 [[option.effect]]
@@ -52,18 +53,18 @@ counter = "rituals"
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "I have been saving again. That is what the date is for, now."
+text = "ECLSS Lead has held stock against the date again and reports that is now the date's function."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "It cost half a month of margin last year and I am being asked for more. I can find it. I want it noticed that I am finding it."
+text = "Logistics Lead reports last year cost half a month of margin and this request is larger. Will source it and requests the sourcing noted."
 
 [[option]]
 id = "veterans_only"
-label = "Let {veteran} and the old hands hold it; the rest may come"
-text = "A thing the first crew does. In or out."
+label = "Restrict it to those who attended the first"
+text = "{veteran} strain -0.1. {newcomer} strain +0.08. Hindrance rises between intakes."
 tags = ["people", "risk"]
-chronicle = "The second Midwinter was held by those who had been at the first. The new hands were welcome and knew they were guests. That distinction lasted."
+chronicle = "The second observance was held by those present at the first. New hands attended as guests. The distinction persisted."
 [[option.effect]]
 all_strain = -0.03
 [[option.effect]]
@@ -82,18 +83,18 @@ counter = "rituals"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Every ship has the ones who crossed the line and the ones who have not. It gives the new ones something to become."
+text = "ISRU Lead reports every crewed vessel separates those who have crossed from those who have not, and that the boundary gives the new intake a target state."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You are inventing an in-group in a can of thirty-six. The record on that is not good."
+text = "Medical Officer reports the proposal constructs an in-group inside a crew of 36. The record on that is poor."
 
 [[option]]
 id = "lapse"
-label = "Let it lapse"
-text = "It was a good night. It does not have to be a calendar."
+label = "Let the date lapse"
+text = "Strain +0.03 across the crew. {veteran} strain +0.1. Margin retained."
 tags = ["hours", "caution"]
-chronicle = "There was no second Midwinter. Some people ate together on the date and did not call it anything."
+chronicle = "No second observance was held. Some crew ate together on the date without designating it."
 [[option.effect]]
 unflag = "midwinter"
 [[option.effect]]
@@ -104,8 +105,8 @@ strain = 0.1
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "Half a month of margin, every year, forever, for a night. Say it plainly and let the SMB decide with the number in front of it."
+text = "Logistics Lead costs the observance at half a month of margin annually and indefinitely. Requests the SMB decide with the figure present."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "Then what did I save the strawberries for."
+text = "ECLSS Lead requests a disposition for the reserved stock."

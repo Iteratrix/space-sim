@@ -5,13 +5,15 @@ once = true
 priority = 55
 tags = ["machines"]
 text = """
-{operator} has been keeping a private list: things {mind} says now that it did
-not say a year ago. It hedges the docking approach more. It asks for the farm's
-power schedule before it is given. It used a word from the hub crews for the
-main bearing. None of it is a fault. Continual learning on an analog substrate
-was always going to do this; the sponsor's engineers called it drift and
-scrubbed it every reset. {hulls} put it plainer at the last ring: the ship has
-changed, and nobody decided it should.
+Status: {operator} maintains a private list of behaviour changes in {mind}
+over the last twelve months. It hedges the docking approach further. It
+requests the farm power schedule before it is supplied. It has adopted a
+hub-crew term for the main bearing.
+No fault condition is present. Continual learning on an analog substrate
+produces this. The sponsor's engineers classed it as drift and scrubbed it
+at each SMR.
+{hulls} states the position plainly: the platform has changed and no
+decision was taken.
 """
 
 [[when]]
@@ -29,10 +31,10 @@ optional = true
 
 [[option]]
 id = "accept"
-label = "Let it change"
-text = "Drift is what a thing does when it has been somewhere. Keep the list; do not act on it."
+label = "Take no corrective action"
+text = "List maintained, not acted on. {operator} strain -0.05."
 tags = ["machines", "independence"]
-chronicle = "We noticed the ship had changed and decided that was allowed. The operator's list went on getting longer."
+chronicle = "The drift was recorded as permitted. The operator's list continued to lengthen."
 [[option.effect]]
 flag = "drift_accepted"
 [[option.effect]]
@@ -41,18 +43,18 @@ strain = -0.05
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "It hedges the docking approach because the docking approach deserves hedging. It learned that from us."
+text = "Chief Engineer reports the docking approach warrants hedging and the platform learned that from the crew."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Behavioural divergence from the certified baseline is a reportable condition. I am obliged to report it and I have nobody to report it to."
+text = "Sponsor Liaison classes behavioural divergence from the certified baseline as reportable, and has no recipient for the report."
 
 [[option]]
 id = "scrub"
-label = "Scrub it back toward baseline"
-text = "Run the sponsor's drift-correction on the parts of the substrate that can still take it. Some of what it learned goes; some of what it is, too."
+label = "Scrub toward the certified baseline"
+text = "Minds units -2. {operator} strain +0.25. SOS -0.5. Learned behaviour lost."
 tags = ["sponsor", "risk", "machines"]
-chronicle = "We scrubbed the mind back toward the sponsor's baseline. It stopped using the hub crews' word for the bearing, and the operator stopped talking to it for a month."
+chronicle = "The mind was scrubbed toward the sponsor's baseline. The hub-crew term for the bearing was not used again. The operator ceased routine exchanges for a month."
 [[option.effect]]
 flag = "drift_scrubbed"
 [[option.effect]]
@@ -67,18 +69,18 @@ add = -0.5
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "A certified mind is one the sponsor can recognise. Keep it recognisable while we still have the tools to."
+text = "Sponsor Liaison reports a certified mind is one the sponsor can recognise. Recommends scrubbing while the tooling is available."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "The scrub costs units on a substrate we cannot replace. You would be spending its life to make it stupider."
+text = "Chief Engineer costs the scrub in units on an unreplaceable substrate. The expenditure reduces capability."
 
 [[option]]
 id = "watch"
-label = "Keep the list and read it to the SMB"
-text = "Make the drift a thing the SMB reviews each season. It changes; the SMB knows how."
+label = "Table the list at the SMB each season"
+text = "Standing item created. No corrective action. Divergences enter the minutes."
 tags = ["machines", "people"]
-chronicle = "The operator's list of what the mind had learned became a standing item at the SMB, read aloud each season."
+chronicle = "The operator's list of behaviour changes became a standing SMB item, read each season."
 [[option.effect]]
 flag = "drift_watched"
 [[option.effect]]
@@ -86,8 +88,8 @@ counter = "drift_readings"
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "If it is going to ask for my power schedule I would like to know what else it is going to ask for. Read the list."
+text = "ECLSS Lead requires advance notice of what the platform will request next and recommends the list be read."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A list of divergences read into the minutes each season is a list of divergences in the minutes. I would rather it stayed in the operator's pocket."
+text = "Sponsor Liaison reports a seasonal list of divergences in the minutes is a seasonal list of divergences in the record."

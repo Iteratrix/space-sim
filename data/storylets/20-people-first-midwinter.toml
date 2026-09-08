@@ -4,12 +4,12 @@ act = 1
 once = true
 tags = ["people", "air"]
 text = """
-A year of months. There is no winter here and no midwinter; the KEEP's lights
-run the same twenty-four hours they ran on the first day. But every station in
-the record that lasted had a feast on a date it chose, and the ones that did
-not have one had a worse year. {air} has been keeping something back in the
-farm's cold store that nobody has asked about. {hours} has the calendar and
-could put a mark on it.
+Status: twelve mission months elapsed. The KEEP runs a fixed 24-hour light
+cycle. There is no seasonal marker.
+Note: every long-duration station in the record that fixed an annual date
+reported better outcomes than those that did not.
+{air} is holding stock in the farm's cold store that is not on the ration
+schedule. {hours} holds the calendar and can enter a date on it.
 """
 
 [[when]]
@@ -25,10 +25,10 @@ seat = "hours"
 
 [[option]]
 id = "feast"
-label = "A feast from what the farm has been hoarding"
-text = "One night, everything on the table, the lights up. Fixed on the calendar."
+label = "Hold a feast on a fixed date"
+text = "Strain -0.1 across the crew. Food margin -0.5 months. Date entered on the calendar."
 tags = ["people", "air"]
-chronicle = "At the year's end {air} opened the cold store and the outpost ate everything in it under full light. The date went on the calendar as Midwinter, though there is no winter."
+chronicle = "MM {turn}. The farm cold store was opened and the outpost ate under full light. The date was entered on the calendar as the anniversary."
 [[option.effect]]
 all_strain = -0.1
 [[option.effect]]
@@ -43,18 +43,18 @@ counter = "rituals"
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "I have been saving the strawberries since the eighth month and I would like a reason. Give me a date."
+text = "ECLSS Lead has held strawberry stock since MM 8 and requests a date to release it against."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "A night of everyone off watch is a night of nobody on watch. Half a month of food margin for a party. I will do it if the SMB says, but I will write the number down."
+text = "Logistics Lead costs the proposal at half a month of food margin and one night with no watch standing. Will comply and will record the figure."
 
 [[option]]
 id = "read_the_ledger"
-label = "A month of the marks: the CED ledger read aloud, then the meal"
-text = "Not a party. A reckoning. Everyone hears what the year has cost everyone."
+label = "Read the CED ledger aloud, then the meal"
+text = "Strain -0.05 across the crew. Every name and every millisievert stated."
 tags = ["people", "dose"]
-chronicle = "At the year's end the medical officer read every name and every millisievert aloud before the meal. Nobody had known the totals. It became the thing the date was for."
+chronicle = "MM {turn}. The medical officer read every name and CED total aloud before the meal. The totals had not previously been published."
 [[option.effect]]
 all_strain = -0.05
 [[option.effect]]
@@ -68,18 +68,18 @@ counter = "rituals"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "They should know the number. It is their number. Once a year, out loud, with the meal after so that it is not only a number."
+text = "Medical Officer recommends annual publication of individual CED totals, with the meal following so the figure is not the whole of it."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Reading CED totals aloud at a party is exactly the sort of thing that turns up in a sponsor's risk review, and I will be the one asked about the party."
+text = "Sponsor Liaison reports published CED totals at an unscheduled gathering will appear in a sponsor risk review."
 
 [[option]]
 id = "no_ritual"
-label = "The sponsor's calendar is enough"
-text = "There is an anniversary on the quarterly. That is a date."
+label = "Keep the sponsor's calendar"
+text = "Strain +0.02 across the crew. Confidence +0.01. Cold store stays closed."
 tags = ["sponsor", "caution"]
-chronicle = "The SMB decided the outpost did not need a feast of its own. The anniversary was noted on the quarterly and the farm's cold store stayed shut."
+chronicle = "No local date was established. The anniversary was noted on the quarterly and the farm cold store remained closed."
 [[option.effect]]
 all_strain = 0.02
 [[option.effect]]
@@ -88,8 +88,8 @@ add = 0.01
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "We are an outpost of a company. The company has an anniversary. Inventing holidays is the first step on a road the sponsor has seen other stations walk."
+text = "Sponsor Liaison reports the operator has an anniversary. Locally instituted observances are the first item in a documented sequence."
 [[option.advice]]
 seat = "extraction"
 stance = "against"
-text = "The winter I had no midwinter was the worst one. You do not need to believe in it. You need the night."
+text = "ISRU Lead reports the worst overwinter on record was the one with no fixed date. The date does not require belief."

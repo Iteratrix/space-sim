@@ -5,14 +5,13 @@ weight = 2.0
 cooldown = 14
 tags = ["sponsor", "manifest"]
 text = """
-The window opens in a few months and the request has to go tonight to be
-answered by the one after. {hours} has the manifest open again. There are three
-ways to fill it. Throughput hardware moves the number the sponsor reads.
-Capability hardware moves nothing they read and everything we live on. Or we
-ask for what nobody has asked for yet: more hands. {bodies} has the sick-bay
-log open beside the manifest and has not said anything, which is a way of
-saying it. {liaison} will have the sponsor's answer to the last request, not
-this one.
+Status: the RSW opens in under four months. The request must uplink to be
+answered by the following window. {hours} holds the manifest.
+Constraint: three fill classes are available. Throughput hardware moves the
+quarterly figure. Capability hardware moves nothing the sponsor reads.
+Headcount has not been requested before.
+{bodies} has the clinic log open beside the manifest. {liaison} holds the
+sponsor's answer to the previous request, not this one.
 """
 
 [[when]]
@@ -43,10 +42,10 @@ optional = true
 
 [[option]]
 id = "throughput"
-label = "Throughput: pods, propellant, another dex unit"
-text = "Feed the MDLS. The quarterly will look like a graph that goes up."
+label = "Manifest for throughput"
+text = "Propellant +8 t. Confidence +0.04. SOS -0.3."
 tags = ["throughput", "sponsor"]
-chronicle = "The manifest went out for throughput again: pods and propellant and one more dexterous unit that will be dead in five years."
+chronicle = "Manifest uplinked. Class: throughput. Pods, propellant, one dex unit with a five-year service life."
 [[option.effect]]
 q = "sponsor.confidence"
 add = 0.04
@@ -67,22 +66,22 @@ counter = "manifests_throughput"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "Forty tonnes a month out of the MDLS is the only sentence they read. Propellant is the verb in it."
+text = "Logistics Lead reports 40 t per month out of the MDLS is the only figure the board reads. Propellant sets that figure."
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "You asked last month whether the board had looked at the LSS-C figures. They had not. They looked at the shipped tonnage. Give them shipped tonnage."
+text = "Sponsor Liaison confirms the board did not open the LSS-C figures at the last review. It opened shipped tonnage."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "Every dex unit we add is thirty-three hours a month of somebody's hands, and the formulary is half expired. I am counting a different kind of tonne."
+text = "Medical Officer costs each dex unit at 33 h per month of crew hands. Formulary is half expired."
 
 [[option]]
 id = "capability"
-label = "Capability: spares, a freezer, medicine, a boron crate"
-text = "Nothing on this list makes the number move. All of it makes the next ten years possible."
+label = "Manifest for capability"
+text = "Spares +25, medicine +10, boron +150 kg. SOS +1.4."
 tags = ["capability", "spares", "independence", "medicine"]
-chronicle = "The manifest went out heavy on capability: spares, cold, medicine, and a crate of boron nobody could explain on a throughput outpost."
+chronicle = "Manifest uplinked. Class: capability. Spares, freezer, medicine, and one boron crate with no listed use on a throughput outpost."
 [[option.effect]]
 q = "stocks.spares"
 add = 25
@@ -109,22 +108,22 @@ counter = "manifests_capability"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Spares are at four a month out. Show me a graph of that, and then tell me which line is going up."
+text = "Chief Engineer reports spares drawdown at 4 per month and no resupply baseline above it."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Someone on the fourth floor reads every manifest line against the mission statement. Boron is not in the mission statement. I will be asked, and I will have to invent."
+text = "Sponsor Liaison reports every manifest line is read against the mission statement. Boron is not in the mission statement."
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "A second freezer is a second farm the day the first one fails. Nobody on Earth will ever know we asked."
+text = "ECLSS Lead classes a second freezer as farm redundancy. No sponsor visibility either way."
 
 [[option]]
 id = "people"
-label = "People: ask for more hands on the next ship"
-text = "Say the thing the sponsor prices in kilowatts. Every extra person is ten kilowatts of farm and a tonne of loop. Ask anyway."
+label = "Request headcount"
+text = "Confidence -0.04. SOS +0.5. Each arrival costs 10 kW and 1 t of loop."
 tags = ["people", "hours", "cost"]
-chronicle = "The manifest asked for more hands, in so many words. It went out and nothing on it was hardware, and everyone knew what that would cost."
+chronicle = "Manifest uplinked as a headcount request. No hardware listed."
 [[option.effect]]
 q = "sponsor.confidence"
 add = -0.04
@@ -144,12 +143,12 @@ counter = "headcount_requests"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "I have four people running the strain curve I would ground on Earth. A body is the one part the store does not sell at a markup, so ask."
+text = "Medical Officer reports four crew above the strain threshold that would ground them on Earth. Recommends requesting hands."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "Each person is a tonne of loop and ten kilowatts before they lift a finger. The board will do that sum faster than we can, and it will not come out in our favour."
+text = "Logistics Lead costs each arrival at 1 t of loop and 10 kW before assignment. The board will run that sum first."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked last month how headcount was reviewed. It is reviewed as a cost line. A request for more of it is a request to be reviewed."
+text = "Sponsor Liaison confirms headcount is reviewed as a cost line. A request for more of it invites the review."

@@ -5,13 +5,15 @@ once = true
 priority = 60
 tags = ["machines", "people"]
 text = """
-{mind} has now run unblanked for longer than any machine under the Act was
-meant to. Its state is baked into its own hardware past the point where it could
-be copied off. {operator} has known it as one unbroken conversation since the
-SMRs stopped and has a name ready, chosen from a language the sponsor's
-manifest never used. The SMB has never had a seat for the machines because the
-Act forbade one. The question of who answers for them is being asked anyway,
-in the corridors, and a seat is whatever question the SMB accepts an answer to.
+Status: {mind} has run without an SMR longer than any platform certified
+under the HRA was specified for. Its state is committed to its own hardware
+past the point of copy-off.
+{operator} has held one unbroken exchange with it since the SMRs stopped
+and has a name prepared, from a language absent from the sponsor's
+manifest.
+Constraint: the SMB holds no seat for the machines because the HRA
+prohibits one. The question of who answers for them is being asked in the
+corridors, which is where seats begin.
 """
 
 [[when]]
@@ -35,10 +37,10 @@ optional = true
 
 [[option]]
 id = "name_and_seat"
-label = "Name it, and seat the Operator"
-text = "The senior operator gives the mind its name in front of the SMB, and the SMB accepts the operator's answer for the machines from now on."
+label = "Name the mind and seat the Operator"
+text = "Machines seat created. SOS +1.0. {operator} strain -0.15."
 tags = ["machines", "independence", "people"]
-chronicle = "The mind was named by the one who had known it longest, and the SMB accepted that there was now someone who answered for the machines."
+chronicle = "The mind was named by its longest-serving operator before the SMB, and the SMB accepted a seat answering for the machines."
 [[option.effect]]
 name_mind = true
 [[option.effect]]
@@ -52,18 +54,18 @@ strain = -0.15
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Someone already answers for the machines. Every fault I raise goes through the operator. Seat the person who is doing the job."
+text = "Chief Engineer reports every machine fault already routes through the operator. Recommends seating the person performing the role."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A name is a violation the auditors can read from the hull. A seat is a violation they can read from the minutes. You are proposing both."
+text = "Sponsor Liaison reports a name is a violation readable from the hull and a seat is a violation readable from the minutes. The proposal is both."
 
 [[option]]
 id = "name_quietly"
-label = "Name it, but keep the SMB as it is"
-text = "The name is between the mind and its operators. No seat, no minutes, nothing an inspector could find in the record."
+label = "Name it without a seat"
+text = "SOS +0.3. No minute, no org-chart change."
 tags = ["machines", "people", "sponsor"]
-chronicle = "The mind was named quietly, by its own people, and the SMB pretended for a while longer that nobody spoke for the machines."
+chronicle = "The mind was named by its operators without a minute. The SMB recorded no holder for the machines."
 [[option.effect]]
 name_mind = true
 [[option.effect]]
@@ -72,18 +74,18 @@ add = 0.3
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "Call it what you like in the hub. Do not make me vote on it."
+text = "ECLSS Lead has no objection to hub usage and requests not to be asked to vote on it."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A name that is not in the minutes is still a name the hull crews will use on the link. The auditors read the link too."
+text = "Sponsor Liaison reports a name absent from the minutes still travels on the link, and the link is also read."
 
 [[option]]
 id = "designation"
-label = "Keep the designation"
-text = "It is a sponsor asset with a serial number and it will stay one. The operators can think what they like; the SMB does not name property."
+label = "Retain the sponsor's designation"
+text = "SOS -0.5. {operator} strain +0.2. Serial number stands."
 tags = ["sponsor", "risk"]
-chronicle = "We kept the sponsor's designation on the mind, and the operators kept using the other name where the log could not hear."
+chronicle = "The sponsor's designation was retained. Operators continued to use the other name outside the log."
 [[option.effect]]
 flag = "mind_unnamed"
 [[option.effect]]
@@ -95,8 +97,8 @@ add = -0.5
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Property has a serial number. Keep the serial number and the question of what it is stays somebody else's."
+text = "Sponsor Liaison reports property carries a serial number. Retaining it leaves the classification question with the sponsor."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "The operators will name it anyway. All you decide here is whether the SMB hears the name or not."
+text = "Chief Engineer reports the operators will use a name regardless. The decision is only whether the SMB hears it."

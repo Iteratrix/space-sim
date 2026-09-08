@@ -6,13 +6,13 @@ weight = 3.0
 priority = 70
 tags = ["sponsor", "people", "rotation"]
 text = """
-The message is short. No crew ship this RSW; cargo only; the next
-rotation "will be scheduled". {rotator} has eleven months left on contract
-and read it standing up. Half the outpost is on contract and every one of
-them is doing the same arithmetic. {resident} has said nothing, which the
-rotators have already noticed, because the residents have just become the
-people who were right. {liaison} says the sponsor's words are "deferred",
-not "cancelled", and does not sound convinced.
+Status: message received. No crew transport this RSW. Cargo only. Next
+rotation to be scheduled.
+{rotator} has eleven months remaining on contract. Half the roster is on
+contract and is running the same arithmetic. {resident} has made no
+statement, which the rotators have registered.
+Constraint: {liaison} reports the sponsor's term is deferred, not
+cancelled, and does not rate the distinction as reliable.
 """
 
 [[when]]
@@ -39,10 +39,10 @@ optional = true
 
 [[option]]
 id = "promise"
-label = "Promise them the next ship"
-text = "Tell the rotators the SMB will hold the sponsor to the word deferred. Make it the outpost's promise, not Earth's."
+label = "Guarantee the next ship locally"
+text = "CCI +0.8. Return intent rises. {rotator} strain +0.1."
 tags = ["people", "sponsor"]
-chronicle = "The SMB told the rotators the next ship would carry them, and made it the outpost's promise. The outpost would find out what its promises were worth."
+chronicle = "The SMB guaranteed the rotators passage on the next ship and issued the guarantee in its own name."
 [[option.effect]]
 q = "menace.grievance"
 add = 0.8
@@ -56,18 +56,18 @@ flag = "promised_next_ship"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "You asked last month whether deferred meant anything. It means the line item still exists. Lines that exist sometimes get funded. Promise on that."
+text = "Sponsor Liaison reports deferred means the line item persists. Persisting line items are sometimes funded."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The third quarter of a contract is when people break, and you are about to make every contract on the roster a third quarter with no end."
+text = "Medical Officer reports the third quarter of a contract is the failure point. The proposal makes every contract a third quarter with no terminus."
 
 [[option]]
 id = "localise_lay"
-label = "Settle the lay here"
-text = "Pay the rotators' lay from the outpost's own stocks in water and hours, as if their contracts were done. They are residents by any measure that matters; say so."
+label = "Settle the lay from outpost stocks"
+text = "Water -30 t. Return intent -0.12. CCI -0.8. {rotator} becomes resident."
 tags = ["people", "independence", "water", "cost"]
-chronicle = "The SMB settled the rotators' lay from its own water and hours, and wrote them into the roster as residents. Nobody had asked the sponsor, and the sponsor did not ask back."
+chronicle = "The rotators' lay was settled from outpost water and hours and they were entered on the roster as residents. The sponsor was not consulted and did not query it."
 [[option.effect]]
 q = "stocks.water"
 add = -30
@@ -87,22 +87,22 @@ flag = "lay_settled_locally"
 [[option.advice]]
 seat = "extraction"
 stance = "against"
-text = "Thirty tonnes of water is two months of the MDLS's whole take. You are paying wages in the one thing we ship. I want that recorded."
+text = "ISRU Lead reports 30 t is two months of total plant output. The proposal pays wages in the shipped commodity. Requests it minuted."
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "A rotator who thinks the ship is coming works to the ship. A resident works to the outpost. I would pay thirty tonnes for that difference on the schedule."
+text = "Logistics Lead reports a rotator schedules to the ship and a resident schedules to the outpost. Thirty tonnes is within the value of that difference."
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "Give them an end to the contract, even a paper one. The body needs the month to stop somewhere."
+text = "Medical Officer recommends supplying a contract terminus, including a nominal one. The body requires an endpoint."
 
 [[option]]
 id = "let_it_burn"
-label = "Say nothing and let them be angry"
-text = "There is no promise the SMB can keep and no lay it can afford. Let the rotators say what they need to say, at whom they need to say it."
+label = "Issue no guarantee"
+text = "CCI +1.5. Strain +0.06 across the crew. Hindrance rises between crews."
 tags = ["people", "caution"]
-chronicle = "The SMB made no promise about the ship. The rotators were angry for a season, mostly at Earth and some of it closer, and the residents were quietly relieved and said nothing."
+chronicle = "The SMB issued no guarantee regarding the next ship. Grievance ran high for a season, directed mostly at Earth. The residents made no statement."
 [[option.effect]]
 q = "menace.grievance"
 add = 1.5
@@ -116,8 +116,8 @@ flag = "rotation_fury"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "You cannot fix a thing the sponsor broke by lying about it. Let them be angry at the right people while the right people are still listening."
+text = "Chief Engineer reports the fault is the sponsor's and cannot be corrected locally by a statement."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The sponsor is a long way away to be angry at, and {resident} is in the next bunk. I know where this lands. I will be treating it."
+text = "Medical Officer projects displacement onto {resident} within two months. The sponsor is not present. {resident} is."

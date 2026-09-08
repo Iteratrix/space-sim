@@ -5,12 +5,13 @@ weight = 0.5
 cooldown = 30
 tags = ["people", "hours"]
 text = """
-{rotator} is past the half of the contract and not yet near the end of it, which
-is the place where the ICE studies say everything goes flat. Nothing is wrong.
-{rotator} stopped joining the meal a month ago, does the watch, does it slower,
-and made two small errors on the bake-out log that were caught. {bodies} has
-seen it before and says so: the third quarter. It passes. The question is what
-{outpost} does while it passes.
+Status: {rotator} is past the midpoint of contract and not near the end.
+Mean strain is above threshold.
+Observed: {rotator} stopped attending the meal a month ago, stands the
+watch at reduced rate, and made two errors on the bake-out log that were
+caught downstream.
+{bodies} identifies the third-quarter curve. It is self-limiting. The
+question is what {outpost} does while it runs.
 """
 
 [[when]]
@@ -27,10 +28,10 @@ seat = "bodies"
 
 [[option]]
 id = "lighten"
-label = "Take the worst watches off {rotator} for a month"
-text = "The others carry it. The hours ledger will show the hole."
+label = "Take the night watches off {rotator} for a month"
+text = "{rotator} strain -0.15. Strain +0.02 across the crew. The hours move, they do not vanish."
 tags = ["people", "hours"]
-chronicle = "{rotator} hit the long middle and the SMB took the night watches off the roster for a month. The rest of us carried them."
+chronicle = "{rotator} was taken off the night watches for one month. The hours were redistributed across the roster."
 [[option.effect]]
 person = "rotator"
 strain = -0.15
@@ -42,18 +43,18 @@ reliance = 0.15
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "It is a known curve and it has a known bottom. A month of lighter watches is cheaper than the error we have not caught yet."
+text = "Medical Officer reports the curve has a known floor. One month of reduced watches costs less than the error not yet caught."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "Every hour I take off one roster I put on another. There are twenty-four people in the same quarter of the same contract."
+text = "Logistics Lead reports every hour removed from one roster is added to another, and 24 crew are in the same quarter of the same contract."
 
 [[option]]
 id = "name_it"
-label = "Tell {rotator} what it is, and tell everyone"
-text = "The medical officer explains the curve at the meal. No exceptions, no hole in the roster."
+label = "Brief the whole crew on the curve"
+text = "{rotator} strain -0.06. Strain -0.02 across the crew. No roster change."
 tags = ["people", "medicine"]
-chronicle = "The medical officer stood up at the meal and explained the third-quarter curve to the whole outpost. Half of us recognised ourselves."
+chronicle = "The medical officer briefed the outpost on the third-quarter curve at the meal. Recognition was widespread."
 [[option.effect]]
 person = "rotator"
 strain = -0.06
@@ -65,18 +66,18 @@ work_positive = 0.1
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "The literature says naming it helps and I have nothing else in the formulary for it."
+text = "Medical Officer reports naming the curve improves outcomes and holds nothing else in the formulary for it."
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Better a lecture than a roster with a hole in it. Tell them, and put them back on the KEEP."
+text = "Chief Engineer prefers a briefing to a hole in the roster. Recommends briefing and returning the crew to the KEEP."
 
 [[option]]
 id = "early_ship"
-label = "Put {rotator} on the list for the next ship"
-text = "End the contract early. The slump ends when the end is in sight."
+label = "List {rotator} for the next ship"
+text = "Contract ends one RSW early. {rotator} strain -0.12, return intent +0.3."
 tags = ["people", "sponsor", "cost"]
-chronicle = "{rotator} went on the list for the next ship home an RSW early. The slump lifted the day the list was posted."
+chronicle = "{rotator} was listed for the next ship, one RSW ahead of the contract date. Performance recovered in the month the list was posted."
 [[option.requires]]
 stage_max = 3
 [[option.effect]]
@@ -91,18 +92,18 @@ add = -0.02
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "A seat on the ship is a tonne of something else that does not come out. And the next one in the same quarter will ask for the same."
+text = "Logistics Lead costs a berth at one tonne of outbound mass and expects the same request from the next crew member in the same quarter."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "An early return is a line on the quarterly with a question next to it."
+text = "Sponsor Liaison reports an early return appears on the quarterly with a query attached."
 
 [[option]]
 id = "leave_it"
-label = "Let it pass on its own"
-text = "It is a curve. Curves end."
+label = "No action; the curve is self-limiting"
+text = "{rotator} strain +0.08. Logs to be monitored."
 tags = ["hours", "risk"]
-chronicle = "{rotator} was left to the long middle. It passed, as the medic said it would, and the errors were small."
+chronicle = "No action was taken. The curve resolved as predicted. The errors recorded in the period were small."
 [[option.effect]]
 person = "rotator"
 strain = 0.08
@@ -111,8 +112,8 @@ counter = "slumps_ignored"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "I went flat in my second winter on the ice. Nobody did anything. It ended. Watch the logs and wait."
+text = "ISRU Lead went flat in a second overwinter with no intervention and recovered. Recommends monitoring the logs and waiting."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The curve has a bottom, and the bake-out log has two errors on it already. I would rather not find out what the third one is on the night watch."
+text = "Medical Officer reports two errors already on the bake-out log and declines to locate the third on a night watch."

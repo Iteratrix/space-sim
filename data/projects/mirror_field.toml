@@ -1,6 +1,6 @@
 id = "mirror_field"
 title = "Concentrator field (aluminium film mirrors)"
-description = "Daylight farming: film mirrors on wire frames. Power for the farm when the core is gone."
+description = "Aluminium film mirrors on wire frames. Farm power after reactor end-of-life."
 domain = "engineering"
 structured = true
 segments = 20

@@ -4,11 +4,13 @@ act = 1
 once = true
 tags = ["people", "capability", "independence"]
 text = """
-The sponsor is cutting, the next ship may carry nobody, and every skill in
-the can is one person deep. The one that frightens {hours} is the reckoning: RSWs, phasing, what a hull
-costs to bring home. The mind can run the tables, but the mind is reset on
-schedule and the sponsor holds the tables. {apprentice} has asked to learn it.
-{reckoner}, if there still is one, has never taught anyone.
+Status: sponsor stage is austerity or later. The next ship may carry no
+crew. Every skill on station is held one deep.
+{hours} rates orbital reckoning as the critical gap: RSW timing, phasing,
+and return-mass costing. The minds hold the tables. The minds are reset on
+schedule and the tables are the sponsor's.
+{apprentice} has requested training. {reckoner}, where present, has never
+trained anyone.
 """
 
 [[when]]
@@ -33,10 +35,10 @@ seat = "hours"
 
 [[option]]
 id = "teach"
-label = "Take {apprentice} off the roster and teach the reckoning"
-text = "A resident learns the RSWs by hand. Hours out of the ledger for an RSW."
+label = "Train {apprentice} in the reckoning"
+text = "One RSW of hours off the roster. {apprentice} strain +0.1, return intent -0.2."
 tags = ["capability", "independence", "hours"]
-chronicle = "{apprentice} was taken off the roster to learn the reckoning by hand, tables and all. It cost an RSW of hours and it meant {outpost} could find its own way home if it ever had to."
+chronicle = "{apprentice} was taken off the roster to learn the reckoning by hand, tables included. Cost: one RSW of hours. The outpost holds the capability locally."
 [[option.effect]]
 flag = "navigator_taught"
 [[option.effect]]
@@ -55,18 +57,18 @@ counter = "skills_taught"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "One person deep is no person deep. I will find the hours. I would rather find them now than find out we needed them."
+text = "Logistics Lead rates one-deep as zero-deep and will source the hours now rather than on demand."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "The sponsor provides navigation as a service. Training our own is a capability line, and capability lines are the ones that get asked about."
+text = "Sponsor Liaison reports navigation is supplied as a service. Local training registers as a capability line, and capability lines are queried."
 
 [[option]]
 id = "trust_the_mind"
-label = "Leave the reckoning to the mind's tables"
-text = "It has never been wrong. It has never been unlicensed either."
+label = "Leave the reckoning to the minds"
+text = "No hours spent. Tables remain sponsor-held. {apprentice} strain +0.05."
 tags = ["machines", "hours"]
-chronicle = "The SMB left the reckoning to the mind. The tables were always right, and everyone understood that the tables were the sponsor's."
+chronicle = "The reckoning was left to the minds. The tables were accurate and remained the sponsor's."
 [[option.effect]]
 flag = "reckoning_by_mind"
 [[option.effect]]
@@ -77,18 +79,18 @@ strain = 0.05
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "The mind does it in a second and does not get tired. Teach people to check it, not to replace it."
+text = "Chief Engineer reports the minds compute it in one second without fatigue. Recommends training crew to check the output, not to replace it."
 [[option.advice]]
 seat = "extraction"
 stance = "against"
-text = "The day the licence lapses is the day we need a person who can do it on paper, and that day we will not have time to teach one."
+text = "ISRU Lead reports the capability is required on the month the licence lapses, and cannot be taught in that month."
 
 [[option]]
 id = "ask_sponsor"
-label = "Ask the sponsor for a navigator on the next ship"
-text = "Admit the gap in the headcount and wait for Earth to fill it."
+label = "Request a navigator on the next ship"
+text = "Attention +0.03. Confidence -0.03. Gap declared to Earth."
 tags = ["sponsor", "caution"]
-chronicle = "The SMB asked Earth for a navigator on the next ship and put the request at the top of the headcount. Earth said it would see what could be done."
+chronicle = "A navigator was requested at the head of the headcount request. The sponsor's reply undertook to review it."
 [[option.requires]]
 stage_max = 3
 [[option.effect]]
@@ -102,8 +104,8 @@ counter = "headcount_requests"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "A staffing gap is a normal request. It is the only kind of request the sponsor answers without a meeting."
+text = "Sponsor Liaison classes a staffing gap as a routine request and the only class the sponsor answers without a meeting."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "The last two headcount requests came back as a note about austerity. I am not planning around a third."
+text = "Logistics Lead reports the last two headcount requests returned austerity notes and will not plan against a third."

@@ -1,6 +1,6 @@
 id = "reline_bearing"
 title = "RJSA re-line (rotary seal and main bearing)"
-description = "The collar's plain bearing and seal profile, re-lined by hand at the tier the fab can reach."
+description = "RJSA plain bearing and seal profile, re-lined by hand to fab tolerance."
 domain = "engineering"
 structured = false
 segments = 12

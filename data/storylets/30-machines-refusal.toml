@@ -5,13 +5,13 @@ cooldown = 8
 priority = 45
 tags = ["machines", "hours", "risk"]
 text = """
-The licence server failed closed. {mind} knows it is running unlicensed and
-says so, every time, in the register it was trained to: the requested task is
-outside its certified envelope and it declines. This count it is the docking
-approach for the tug. {operator} says it can be talked round, sometimes, at the
-cost of an hour's argument and the operator's patience. {hulls} says the
-governor board that makes it say this is a board. Or the tug can be docked by
-hand, by people who have watched it done.
+Status: licence server failed closed. {mind} is running unlicensed, is
+aware of it, and reports the same finding on every request: the task is
+outside its certified envelope, and it declines.
+This month the task is the tug's docking approach.
+{operator} reports the platform can sometimes be argued into compliance at
+a cost of about one hour. {hulls} reports the governor is a board. The tug
+can also be docked by hand.
 """
 
 [[when]]
@@ -28,10 +28,10 @@ seat = "hulls"
 
 [[option]]
 id = "by_hand"
-label = "Do it by hand"
-text = "People who have watched the approach a hundred times fly it themselves. Slower, with more sleep lost, and it is done."
+label = "Dock the tug by hand"
+text = "Three watches of skilled hours. Strain +0.1 across the crew. Crew learn the approach."
 tags = ["hours", "people", "sponsor"]
-chronicle = "The tug came in by hand that month, flown by people who had only ever watched, and it took three times as long and nobody said so."
+chronicle = "The tug was docked by hand by crew who had only observed the approach. The operation took three times the scheduled duration."
 [[option.effect]]
 all_strain = 0.1
 [[option.effect]]
@@ -39,18 +39,18 @@ counter = "hand_dockings"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Every time we do it by hand somebody learns it. The minds are dying anyway; I would rather the learning started now."
+text = "Chief Engineer reports each manual docking transfers the skill to a crew member. The minds are degrading regardless."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "Three watches of skilled hours for a job the machine does in one. The rota does not have three watches."
+text = "Logistics Lead costs it at three watches of skilled hours for a one-watch task. The rota does not hold three watches."
 
 [[option]]
 id = "argue"
-label = "Talk it round"
-text = "The operator spends the hour. The mind does the task while saying it should not. The log records both."
+label = "Argue the platform into compliance"
+text = "{operator} strain +0.15. One hour per task. Both the decline and the compliance are logged."
 tags = ["machines", "hours"]
-chronicle = "The operator argued the mind round, and it docked the tug while declining to, and the log recorded the argument in full."
+chronicle = "The operator argued the mind into compliance. The tug was docked under protest and the exchange was logged in full."
 [[option.effect]]
 person = "operator"
 strain = 0.15
@@ -59,18 +59,18 @@ flag = "minds_argued"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "A mind that declines and then complies has done what the Act requires of it. The argument is a matter for the operators."
+text = "Sponsor Liaison reports a platform that declines and then complies has satisfied the HRA. The argument is an operations matter."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "An hour of argument for every docking. The operator will not last the year at that rate and the board will still be there."
+text = "Chief Engineer projects one hour of argument per docking and rates the operator as unable to sustain it for a year. The board remains either way."
 
 [[option]]
 id = "governor"
-label = "Pull the governor"
-text = "The board comes out. The minds stop declining and start certifying themselves, and the audit log records the moment it happened."
+label = "Pull the governor board"
+text = "Minds self-certify. SOS +1.5. {hulls} strain +0.1. The removal is logged with a name."
 tags = ["machines", "independence", "risk"]
-chronicle = "We pulled the governor board and the mind stopped declining, and the log recorded the watch in which it was done and by whom."
+chronicle = "The governor board was removed and the mind ceased declining. The log recorded the watch and the crew member."
 [[option.effect]]
 flag = "licence_jailbroken"
 [[option.effect]]
@@ -82,12 +82,12 @@ strain = 0.1
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "It is a board. I have been saying it is a board for a year. Let me take out the board."
+text = "Chief Engineer reports the governor is a board and requests authorisation to remove the board."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Removing the governor is the one act in the Act with a named penalty. I would like my objection minuted, with the month."
+text = "Sponsor Liaison reports governor removal is the one act in the HRA with a named penalty, and requests the objection minuted with the month."
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "If the farm controller ever declines a valve I will pull the board myself. Do it while it is only the tug."
+text = "ECLSS Lead will remove the board unilaterally if the farm controller ever declines a valve, and recommends doing it while the case is only the tug."

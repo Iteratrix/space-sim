@@ -5,10 +5,11 @@ once = true
 priority = 50
 tags = ["sponsor", "manifest"]
 text = """
-The request for the next RSW has to be sent this month to make the RSW.
-{hours} has the manifest open: every tonne is either throughput hardware, which
-the sponsor can see on the quarterly, or capability hardware, which nobody on
-Earth will notice until the day it saves us.
+Status: the RSW request must uplink this month to make the window.
+{hours} holds the manifest. Every tonne is one of two classes. Throughput
+hardware appears on the sponsor's quarterly. Capability hardware does not
+appear anywhere until the month it is needed.
+Constraint: one manifest, one window, no amendment after uplink.
 """
 
 [[when]]
@@ -28,10 +29,10 @@ optional = true
 
 [[option]]
 id = "throughput"
-label = "Throughput: more pods, more propellant, another dex unit"
-text = "Ship what makes the numbers move."
+label = "Manifest for throughput"
+text = "Pods, propellant, one dex unit. Sponsor confidence rises."
 tags = ["throughput", "sponsor"]
-chronicle = "The first manifest went out heavy on throughput, and the first quarterly came back warm."
+chronicle = "First manifest uplinked. Class: throughput. Sponsor response nominal."
 [[option.effect]]
 q = "sponsor.confidence"
 add = 0.05
@@ -40,38 +41,38 @@ flag = "manifest_throughput"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "The board reads one number. Give them the number."
+text = "Sponsor Liaison reports the board reads one number. Recommends supplying that number."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Another dex unit is another thing I cannot repair. Spares are two hundred units and going at four a month; do the sum before the pods."
+text = "Chief Engineer notes a dex unit is depot-only and cannot be repaired here. Spares at 200 units, drawdown 4 per month."
 
 [[option]]
 id = "balanced"
-label = "Balance: half throughput, half spares and a second freezer"
-text = "Enough to keep the review civil and enough to keep the loops closed."
+label = "Split the manifest"
+text = "Half throughput, half spares and a second freezer. Spares +20."
 tags = ["capability", "throughput"]
-chronicle = "The first manifest went out split down the middle. Nobody was happy and nothing broke."
-[[option.advice]]
-seat = "hours"
-stance = "for"
-text = "Half the tonnage on the quarterly and half on the shelf. It is the only manifest I can defend to both ends of the link."
-[[option.advice]]
-seat = "air"
-stance = "for"
-text = "A second freezer is the farm's insurance. Put it on the half the sponsor does not read."
+chronicle = "First manifest uplinked. Class: balanced. No seat recorded an objection."
 [[option.effect]]
 q = "stocks.spares"
 add = 20
 [[option.effect]]
 flag = "manifest_balanced"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Logistics Lead reports half the tonnage is defensible at the review and half is defensible on the shelf."
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "ECLSS Lead classes a second freezer as farm redundancy. It does not appear on the quarterly."
 
 [[option]]
 id = "capability"
-label = "Capability: spares, medicine, a boron crate, fabrication tooling"
-text = "Invisible to the sponsor. Visible to anyone who has watched a loop fail."
+label = "Manifest for capability"
+text = "Spares +40, boron 400 kg, fabrication tooling. SOS rises."
 tags = ["capability", "spares", "independence"]
-chronicle = "The first manifest went out heavy on capability. Someone on Earth asked why, a month later, and the question went in the file."
+chronicle = "First manifest uplinked. Class: capability. Sponsor query on boron received one month later and logged."
 [[option.effect]]
 q = "stocks.spares"
 add = 40
@@ -86,8 +87,8 @@ flag = "manifest_capability"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "I can make anything here except the parts I cannot make. Ship me those."
+text = "Chief Engineer reports the fab covers all classes except the parts it cannot make. Requests those parts."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A boron crate on a throughput outpost is a question I will have to answer, and I do not have an answer."
+text = "Sponsor Liaison reports boron on a throughput outpost is a question with no prepared answer."

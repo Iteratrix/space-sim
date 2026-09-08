@@ -203,13 +203,13 @@ fn word_for(value: f64, bands: &[(f64, &str)]) -> String {
 
 fn mood(strain: f64) -> &'static str {
     if strain < 0.25 {
-        "steady"
+        "nominal"
     } else if strain < 0.45 {
-        "tired"
+        "fatigued"
     } else if strain < 0.65 {
-        "worn"
+        "degraded"
     } else {
-        "brittle"
+        "critical"
     }
 }
 
@@ -232,10 +232,10 @@ pub fn view(
         remaining: Some(to_window),
         urgent: to_window <= 3,
         why: if game.earth_window_open() {
-            "The window is open. A ship can leave Earth for us this month.".into()
+            "RSW open. A ship can depart Earth this month.".into()
         } else {
             format!(
-                "Best LEO-to-Fortuna cost is {:.1} km/s this month; the window opens at {:.1}.",
+                "LEO-to-Fortuna cost {:.1} km/s this month. Window threshold {:.1} km/s.",
                 q(Quality::EarthWindowCost),
                 game.calendar.outbound_best * crate::state::WINDOW_RATIO
             )
@@ -303,9 +303,9 @@ pub fn view(
         remaining: None,
         urgent: solar > 0.85,
         why: if solar > 0.7 {
-            "Near solar maximum: storm risk up, galactic dose down.".into()
+            "Near solar maximum. STE risk elevated; galactic dose reduced.".into()
         } else {
-            "Quiet Sun: galactic dose at its highest.".into()
+            "Solar minimum. Galactic dose at maximum.".into()
         },
     });
     if let Licence::Grace { remaining } = game.licence {
@@ -317,7 +317,7 @@ pub fn view(
             remaining: Some(remaining),
             urgent: true,
             why:
-                "No heartbeat from the licence server. When grace ends the fail mode is discovered."
+                "No heartbeat from the licence server. Fail mode unknown until grace expires."
                     .into(),
         });
     }
@@ -329,7 +329,7 @@ pub fn view(
             segments: 1,
             remaining: None,
             urgent: false,
-            why: "Earth is behind the Sun. No link this month.".into(),
+            why: "Superior conjunction. No Earth link this month.".into(),
         });
     }
 
@@ -382,7 +382,7 @@ pub fn view(
             full: 400.0,
             delta: 0.0,
             why: format!(
-                "Losing {water_loss:.1} t a month to the closure gap; the reserve line is 120 t."
+                "Closure gap losing {water_loss:.1} t a month. Reserve line 120 t."
             ),
             word: word_for(
                 game.stocks.water_t,
@@ -412,13 +412,13 @@ pub fn view(
         },
         Bar {
             id: "spares".into(),
-            label: "Spares (vitamin parts)".into(),
+            label: "Spares (consumable parts)".into(),
             value: game.stocks.spares,
             unit: "crates".into(),
             full: 300.0,
             delta: 0.0,
             why: format!(
-                "Burning {:.1} a month for {} people; the next RSW brings a baseline.",
+                "Consuming {:.1} a month for {} crew. Next RSW restores a baseline.",
                 n * params.closure.spares_per_person_count,
                 n
             ),
@@ -440,7 +440,7 @@ pub fn view(
             full: game.power.demand_kw.max(1.0),
             delta: 0.0,
             why: format!(
-                "{:.0} kW capacity against {:.0} kW demand; the MDLS draws {:.0} and is first to go dark.",
+                "{:.0} kW capacity against {:.0} kW demand. The MDLS draws {:.0} kW and sheds first.",
                 game.power.capacity_kw, game.power.demand_kw, params.extraction.driver_kw
             ),
             word: if game.power.capacity_kw >= game.power.demand_kw {
@@ -453,13 +453,13 @@ pub fn view(
         },
         Bar {
             id: "hours".into(),
-            label: "Hours (the hand)".into(),
+            label: "Hours (allocation dice)".into(),
             value: f64::from(game.hand.free),
             unit: "dice".into(),
             full: f64::from(game.hand.adults.max(1)),
             delta: 0.0,
             why: format!(
-                "{} of {} free; {} eating and breathing; {} robot units, {} on upkeep.",
+                "{} of {} free. {} consuming. {} robot units, {} on upkeep.",
                 game.hand.free,
                 game.hand.adults,
                 game.hand.eaten,

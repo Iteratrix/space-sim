@@ -200,13 +200,7 @@ fn print_firing(engine: &Engine, game: &Game, f: &Firing) {
             .iter()
             .position(|o| o.index == c.favours)
             .map_or(0, |i| i + 1);
-        println!(
-            "    {} ({}), for [{}]: {}",
-            c.holder,
-            c.seat.title(),
-            opt,
-            c.text
-        );
+        println!("    {}, for [{}]: {}", c.holder, opt, c.text);
     }
     let _ = engine;
 }

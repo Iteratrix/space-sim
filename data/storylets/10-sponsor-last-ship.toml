@@ -6,13 +6,13 @@ weight = 4.0
 priority = 100
 tags = ["sponsor", "people", "rotation"]
 text = """
-A ship is on approach for the RSW, cargo only by the manifest, but {liaison} has read
-the lading twice and there are two berths on it, unlisted, and no return
-ship scheduled after it. Nobody says it is the last. Everybody plans as if
-it is. {expert} is on contract and is the best pair of hands in the
-engineering bay by a distance; the loops run because {expert} understands
-them. {expert} has not asked to go. {expert} has not asked to stay either,
-which is a way of asking the SMB to decide.
+Status: a ship is on approach for this RSW. The manifest lists cargo only.
+{liaison} has read the lading twice and reports two unlisted berths. No
+return ship is scheduled after it.
+Constraint: {expert} is on contract and holds the highest engineering rating
+on station. LSS-C maintenance depends on that rating. {expert} has requested
+neither departure nor residence.
+Recommendation: the SMB decides, Commander.
 """
 
 [[when]]
@@ -40,10 +40,10 @@ optional = true
 
 [[option]]
 id = "go"
-label = "Put {expert} on the ship"
-text = "The best hands go home while there is a home to go to. The outpost keeps the loops running some other way, or does not."
+label = "Board {expert} on the ship"
+text = "Contract honoured. Closure -0.01. Engineering rating lost."
 tags = ["people", "dose", "caution"]
-chronicle = "The SMB put {expert} on the last ship, because a contract is a promise and this was the last chance to keep one. The loops have been running on notes ever since."
+chronicle = "{expert} departed on the last scheduled ship at contract end. Loop maintenance has run on written procedure since."
 [[option.effect]]
 person = "expert"
 leave = true
@@ -60,18 +60,18 @@ flag = "expert_went_home"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "{expert} has a CED of forty millisieverts a year for three years and somewhere on Earth to spend the rest of a life. That is the arithmetic. Let it go."
+text = "Medical Officer records {expert} at 40 mSv per year for three years. Contract term complete. Recommends release."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "There is nobody else who can strip a heat exchanger blind. I say that as the one who would have to learn. Do not put the loops on a ship."
+text = "Chief Engineer reports no other hand can strip a heat exchanger without instruments. That capability leaves with the ship."
 
 [[option]]
 id = "stay"
-label = "Ask {expert} to stay"
-text = "Say the thing plainly: there is no outpost without those hands, and no ship after this one. Ask. Make it a resident's lay, in water and standing, and mean it."
+label = "Offer {expert} residence"
+text = "Rating retained. CCI +0.5. Return intent falls across the crew."
 tags = ["people", "independence", "capability"]
-chronicle = "The SMB asked {expert} to stay, and said why, and {expert} stayed. The berth went home empty. It was the last one that ever did."
+chronicle = "{expert} accepted residence and the berth went home empty. It was the last empty berth recorded."
 [[option.effect]]
 person = "expert"
 resident = true
@@ -90,18 +90,18 @@ flag = "someone_stayed"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "I will say it to {expert} myself if the SMB will not. We need those hands more than Earth does. Earth has hands."
+text = "Chief Engineer will put the request to {expert} directly. Assesses the outpost's need for the rating as higher than Earth's."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked me last month whether there would be another crew ship. I said I did not know. I am telling you now that I do, and the answer is why those berths are not on the lading."
+text = "Sponsor Liaison now confirms no further crew transport is scheduled. That is why the berths are not on the lading."
 
 [[option]]
 id = "draw"
-label = "Draw lots for the berths, {expert} included"
-text = "The SMB does not choose who goes home on the last ship. Everyone on contract puts a name in. Skill is not a reason."
+label = "Draw lots for both berths"
+text = "Skill not weighted. CCI -1.0. {expert} return intent +0.2."
 tags = ["people", "families", "risk"]
-chronicle = "The SMB drew lots for the last two berths and did not weight them by skill. The names that came out were the names that came out, and nobody argued with a draw."
+chronicle = "The two remaining berths were allocated by unweighted draw. No appeal was lodged."
 [[option.effect]]
 person = "expert"
 return_intent = 0.2
@@ -115,8 +115,8 @@ flag = "berths_drawn"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "If the SMB picks, the SMB is the thing people hate for the rest of their lives here. If the lots pick, they hate the lots. Lots do not run a sick-bay."
+text = "Medical Officer reports a board that selects becomes the target. A draw does not. CCI outcome is better under a draw."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "A draw that can send home the one person who keeps the water clean is not fair. It is a random number with a loop attached."
+text = "Logistics Lead notes a draw can remove the only hand certified on water treatment. That is an unmanaged risk."

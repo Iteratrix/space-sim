@@ -6,14 +6,13 @@ weight = 3.0
 priority = 70
 tags = ["sponsor", "sale", "people"]
 text = """
-The outpost has been sold. The new owners' first message is a list of what
-they do recognise, and the lay is not on it: every contract is "under
-transition", every accrued share is "subject to valuation". {rotator} has
-three years of lay on the books and reads the message as a theft. {hours}
-has done the sum of what the outpost itself holds that could stand in for
-the lay: water, spares, propellant, hours. It could pay. It would be paying
-Earth's debt from its own tanks. {liaison} does not know who the new owners
-are, and says so.
+Status: the outpost has been sold. The new operator's first message lists
+what it recognises. The lay is not listed. Contracts are under transition;
+accrued shares are subject to valuation.
+{rotator} holds three years of accrued lay. {hours} has costed what the
+outpost holds that could substitute: water, spares, propellant, hours. The
+outpost can pay. It would be settling Earth's obligation from local stock.
+{liaison} has no identification for the new operator.
 """
 
 [[when]]
@@ -34,10 +33,10 @@ optional = true
 
 [[option]]
 id = "honour"
-label = "Honour the lay from our own stocks"
-text = "Pay every contract's share in water, spares, and hours, at the old schedule. The outpost becomes the owner of its own obligations, and poorer."
+label = "Settle every lay from local stock"
+text = "Water -40 t. Spares -20. Propellant -8 t. CCI -2.0."
 tags = ["people", "independence", "water", "spares", "cost"]
-chronicle = "The SMB honoured the lay the new owners had voided, out of its own tanks and stores. It was a debt Earth did not hold, paid in water Earth had never seen."
+chronicle = "The lay voided by the new operator was settled in full from outpost tanks and stores, at the old schedule."
 [[option.effect]]
 q = "stocks.water"
 add = -40
@@ -60,22 +59,22 @@ flag = "lay_honoured"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "I can find forty tonnes and twenty spares. I cannot find thirty people who will work for an owner who took their pay. Pay it."
+text = "Logistics Lead can source 40 t and 20 spares. Cannot source thirty crew who will work for an operator that voided their pay."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Twenty spares is five months of the loops. You are proposing to pay a wage in the parts that keep the wage-earners breathing."
+text = "Chief Engineer costs 20 spares at five months of loop consumption. The proposal pays wages in the parts that sustain the wage earners."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked last month who to write to at the new owners. I still do not have a name. If we pay out the lay before we do, we have set a precedent for someone we have never met."
+text = "Sponsor Liaison still has no name at the new operator. Settlement before identification sets a precedent with an unknown party."
 
 [[option]]
 id = "partial"
-label = "Pay what the water allows, and no more"
-text = "Settle a part of every lay in water now, and write the rest as owed by the outpost. A debt the outpost carries is at least a debt the outpost can see."
+label = "Settle in part and record the balance as owed"
+text = "Water -20 t. CCI -0.8. Remainder booked as an outpost debt."
 tags = ["people", "water", "cost", "caution"]
-chronicle = "The SMB paid part of the voided lay in water and wrote the rest as owed. The book it was written in belonged to the outpost, not to any owner."
+chronicle = "Part of the voided lay was settled in water and the balance recorded as owed by the outpost. The book was the outpost's own."
 [[option.effect]]
 q = "stocks.water"
 add = -20
@@ -90,18 +89,18 @@ flag = "lay_partial"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Twenty tonnes I can replace in two months if the MDLS holds. Forty I cannot, not this Fortune. Pay twenty and write the rest."
+text = "ISRU Lead can replace 20 t in two months at current MDLS rate. Cannot replace 40 t this cycle."
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "A debt that is written down does less harm than one that is denied. People can carry owed. They cannot carry stolen."
+text = "Medical Officer reports a recorded debt produces lower strain than a denied one."
 
 [[option]]
 id = "refuse"
-label = "Let the new owners answer for it"
-text = "The lay was Earth's promise. Refuse to pay Earth's debts from Fortuna's tanks, and let the anger go where it belongs."
+label = "Refer the lay to the new operator"
+text = "CCI +1.5. Return intent +0.1. No local stock spent."
 tags = ["independence", "caution", "cost"]
-chronicle = "The SMB did not pay the lay the new owners had voided. The anger went to Earth, and some of it, having nowhere else to land, stayed home."
+chronicle = "The lay voided by the new operator was not settled locally. The obligation was referred to Earth."
 [[option.effect]]
 q = "menace.grievance"
 add = 1.5
@@ -115,8 +114,8 @@ flag = "lay_voided"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "We did not sell the outpost and we did not void the lay. Do not spend the shielding paying for a decision made on a floor we have never seen."
+text = "Chief Engineer notes the outpost neither sold the asset nor voided the lay. Recommends not spending shielding on an Earth decision."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "Every rotator on the roster is now working for nothing they can name. I will lose hours to that faster than I would lose water to paying it."
+text = "Logistics Lead projects hour losses across the rotator roster exceeding the water cost of settlement."

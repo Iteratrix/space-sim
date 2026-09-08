@@ -5,14 +5,13 @@ cooldown = 12
 priority = 100
 tags = ["air", "nitrogen", "hulls", "machines"]
 text = """
-The rotating hub seal is now losing more nitrogen than the rest of the outpost
-together. {air} has the number and has stopped rounding it. The seal profile is
-a polymer the sponsor shipped and the polymer line cannot make; the last of the
-spare profiles went in two seasons ago. {hulls} says there are three things
-that can be done and all of them are bad: rebuild the seal from whatever the
-shelf has and hope, slow the KEEP so the seal wears at half the rate and the
-children live at a weight nobody chose, or let it leak and buy the loss from
-the reserve.
+Status: N2 make-up at threshold. The RJSA is now losing more nitrogen than
+the rest of the outpost combined. {air} has the figure and has stopped
+rounding it.
+Constraint: the seal profile is a sponsor polymer the local line cannot
+produce. The last spare profile was fitted two seasons ago.
+Options: rebuild from shelf stock; halve KEEP spin to halve the wear rate
+and the make-up rate; or accept the loss against the reserve.
 """
 
 [[when]]
@@ -30,9 +29,9 @@ seat = "air"
 [[option]]
 id = "spares"
 label = "Rebuild the seal from the shelf"
-text = "A season of bay time and thirty units of parts the loops needed for something else. The collar holds again, for a while."
+text = "Spares -30. One season of bay time. N2 make-up resets to 2."
 tags = ["spares", "nitrogen", "air", "hulls"]
-chronicle = "We rebuilt the RJSA seal from shelf parts and it held, and the shelf was thirty units lighter for the rest of that year."
+chronicle = "The RJSA seal was rebuilt from shelf stock and held. The shelf was 30 units down for the remainder of the year."
 [[option.requires]]
 q = "stocks.spares"
 ge = 30
@@ -45,22 +44,22 @@ set = 2
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "I can make a seal that is worse than the sponsor's and better than nothing. Thirty units. It will not be the last time."
+text = "Chief Engineer can produce a seal below sponsor specification and above nothing, at 30 units, and expects to repeat the work."
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "Every kilogram through that collar is a kilogram the farm does not get in the Lean. Spend the parts."
+text = "ECLSS Lead reports every kilogram through the collar is a kilogram the farm does not receive. Recommends spending the parts."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Thirty units off the inventory count, on a part the sponsor shipped spares for. I will be asked where the spares went."
+text = "Sponsor Liaison reports 30 units off the inventory count on a part the sponsor supplied spares for will be queried."
 
 [[option]]
 id = "slow"
-label = "Slow the KEEP"
-text = "Take the KEEP from three revolutions to one and a half. The seal wears slower, the N2 make-up halves, and everyone in the KEEP lives at a fraction of the weight they were promised."
+label = "Halve the KEEP spin"
+text = "Three rpm to one and a half. N2 make-up -3. Everyone in the KEEP lives at reduced weight."
 tags = ["nitrogen", "air", "risk", "families"]
-chronicle = "We slowed the KEEP to spare the seal. The children in the KEEP learned to walk at a weight the manifest had never listed."
+chronicle = "KEEP spin was halved to reduce seal wear. Occupants live at a fraction of the specified weight."
 [[option.effect]]
 flag = "drum_slowed"
 [[option.effect]]
@@ -71,22 +70,22 @@ all_strain = 0.08
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "Half the spin is half the N2 make-up and I do not have to spend a single part. I count nitrogen, not gravity."
+text = "ECLSS Lead reports half spin is half N2 make-up at zero parts cost, and counts nitrogen rather than gravity."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The bone ledger has no entry for what happens at a third of a g for ten years. You are proposing to write that entry with the children."
+text = "Medical Officer reports the bone ledger holds no entry for a third of a g over ten years. The proposal writes that entry using the children."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "The bearing is scored for three rpm. Run it slow and it scores differently, and I do not know which way is worse."
+text = "Chief Engineer reports the bearing is scored for three rpm. At half rate it scores differently and the outcome is not characterised."
 
 [[option]]
 id = "accept"
-label = "Let it leak"
-text = "Neither parts nor spin. Pack the RJSA with what is to hand, and let the reserve pay for what still gets through until the next time it weeps."
+label = "Accept the loss against the reserve"
+text = "Nitrogen -800 kg. N2 make-up -1.5. No parts, no spin change."
 tags = ["throughput", "sponsor", "risk"]
-chronicle = "We let the RJSA leak and paid for it from the reserve, and the number the ECLSS Lead read at each ring got smaller and nobody argued with it."
+chronicle = "The RJSA loss was accepted and paid from the nitrogen reserve. The figure read at each SMB fell thereafter."
 [[option.effect]]
 q = "stocks.nitrogen"
 add = -800
@@ -98,8 +97,8 @@ flag = "collar_leak_accepted"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Nitrogen is on the manifest. Parts and spin are not. Spend the thing the sponsor can replace."
+text = "Sponsor Liaison reports nitrogen is on the manifest and parts and spin are not. Recommends spending the replaceable item."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "Eight hundred kilograms is four months of the whole outpost's breathing. I would like whoever votes for this to say the number aloud."
+text = "ECLSS Lead reports 800 kg is four months of total outpost respiration and requests the figure stated aloud before the vote."

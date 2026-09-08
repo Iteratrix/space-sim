@@ -318,7 +318,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
             note(
                 game,
                 events,
-                "Licence server failed closed. Minds running unlicensed and aware of it.".into(),
+                "Licence server failed closed. Minds running unlicensed. Status known to the minds.".into(),
             );
             Licence::Unlicensed
         }
@@ -353,7 +353,7 @@ fn machines(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut E
         note(
             game,
             events,
-            format!("{name} has gone dark. Its hull is blind."),
+            format!("{name} off-line. Its hull cannot fix position."),
         );
         game.lexicon_triggers.insert("mind_death".into());
     }
@@ -467,14 +467,14 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         game.flags.insert("cataracts_begun".into());
         let text = if first {
             format!(
-                "{}'s eyes have gone milky. The dose ledger says whose will be next.",
+                "Cataract onset recorded: {}. The CED ledger identifies the next at-risk crew.",
                 lines.join(" and ")
             )
         } else if lines.len() == 1 {
-            format!("{}'s eyes have gone milky.", lines[0])
+            format!("Cataract onset recorded: {}.", lines[0])
         } else {
             format!(
-                "{} more pairs of eyes have gone milky this count.",
+                "{} further cataract onsets recorded this month.",
                 lines.len()
             )
         };
@@ -532,7 +532,7 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
             game,
             events,
             format!(
-                "{} contracts ended with no ship to carry anyone home. They are residents now, whether they meant to be or not.",
+                "{} contracts ended with no transport scheduled. Those crew are recorded as residents.",
                 due.len()
             ),
         );
@@ -720,9 +720,9 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
         game.sponsor.runway = (game.sponsor.runway - params.sponsor.shock_runway_hit).max(0.0);
         game.sponsor.confidence = (game.sponsor.confidence - 0.08).max(0.0);
         let variants = [
-            "News from home, fragmentary: something happened to the budget. The liaison will not say what.",
-            "A line item vanished from the quarterly and nobody on Earth would say which department it belonged to.",
-            "The liaison's counterpart on Earth changed without a handover message. The new one asks for the numbers again.",
+            "Fragmentary traffic from Earth. A budget change is indicated. The liaison declines to specify.",
+            "A line item is absent from the quarterly. No department has been identified as its owner.",
+            "The liaison's counterpart on Earth has been replaced with no handover. The replacement has requested the figures again.",
         ];
         let k = rng.random_range(0..variants.len());
         note(game, events, variants[k].to_owned());
@@ -884,7 +884,7 @@ fn convoy(
         note(
             game,
             events,
-            format!("Rotation took hands off the work: {}.", parts.join(", ")),
+            format!("Rotation removed hands from open work: {}.", parts.join(", ")),
         );
     }
     if people_ship {
@@ -1127,7 +1127,7 @@ fn endings(game: &mut Game, events: &mut Events) {
             note(
                 game,
                 events,
-                format!("{name} died. The farm could not carry everyone."),
+                format!("{name} died. Farm output below subsistence for present headcount."),
             );
         }
     }

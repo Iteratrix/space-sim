@@ -5,13 +5,14 @@ weight = 1.0
 cooldown = 30
 tags = ["sponsor", "review", "throughput"]
 text = """
-The review is in two months and the number is short. Not by much; by the
-fifteen per cent the sponsor added to the target last time and the fifteen
-before that. {hours} has three ways to make it right, laid out on the same
-sheet. One is a tonnage figure that months the batch on the pad as shipped.
-One is the reserve water, which is in the tanks and could be on the MDLS
-by the review. One is the number as it is. {extraction} has been asked to
-say how much the reserve is really worth and has not answered yet.
+Status: review in two months. Throughput is short of target. The target has
+risen 15 per cent at each of the last two reviews.
+{hours} has laid out three corrections on one sheet. First: report the batch
+on the pad as shipped. Second: ship the reserve water, which is in the tanks
+and can be on the MDLS before the review. Third: report the figure as
+measured.
+{extraction} has been asked to value the reserve and has not returned a
+figure.
 """
 
 [[when]]
@@ -43,10 +44,10 @@ optional = true
 
 [[option]]
 id = "cook"
-label = "Count the batch on the pad"
-text = "It will be shipped next month. Say it was shipped this one. The sponsor's figure and the MDLS's figure will disagree by one batch forever."
+label = "Report the pad batch as shipped"
+text = "Shipped +25 t on paper. Confidence +0.03. SOS +2.0."
 tags = ["throughput", "sponsor", "risk"]
-chronicle = "The review number counted a batch that was still on the pad. It was a small lie in a column of true ones, and the two ledgers never agreed again."
+chronicle = "The review figure included a batch still on the pad. The sponsor's shipped total and the MDLS log diverged by one batch and were never reconciled."
 [[option.effect]]
 q = "throughput.shipped"
 add = 25
@@ -63,18 +64,21 @@ flag = "numbers_cooked"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "It is accrual. Every ledger on Earth does it. The batch is real, the pad is real, and the date is a convention."
+text = "Logistics Lead classes the entry as accrual. The batch exists, the pad exists, the date is a convention."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked me last month how closely the audit checks the MDLS log against the manifest. Line by line. Every line."
+text = "Sponsor Liaison confirms the audit checks the MDLS log against the manifest line by line."
 
 [[option]]
 id = "ship_reserve"
 label = "Ship the reserve water"
-text = "Forty tonnes of shield and drinking margin, on the MDLS by the review. The number is honest. The tanks are not."
+text = "Water -40 t. Shipped +40 t. Confidence +0.06. N2 make-up rises."
 tags = ["throughput", "water", "risk"]
-chronicle = "The reserve water went onto the MDLS to make the review number. The number was honest and the tanks were forty tonnes down when the next thing went wrong."
+chronicle = "Forty tonnes of reserve water were shipped to make the review figure. The figure was accurate. The tanks were 40 t down."
+[[option.requires]]
+q = "stocks.water"
+ge = 100
 [[option.effect]]
 q = "stocks.water"
 add = -40
@@ -89,28 +93,25 @@ q = "menace.leak"
 add = 0.3
 [[option.effect]]
 flag = "reserve_shipped"
-[[option.requires]]
-q = "stocks.water"
-ge = 100
 [[option.advice]]
 seat = "extraction"
 stance = "against"
-text = "The reserve is the reserve. I mine fourteen tonnes a month on a good month. Forty is three good months, and I have not had three good months in a row since the Bright."
+text = "ISRU Lead reports the plant at 14 t per month on a good month. Forty tonnes is three good months and there have not been three in sequence."
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "It is the one thing on this rock that is both in the tank and on the target. Ship it and mine it back."
+text = "Logistics Lead reports the reserve is the only mass that is both in tank and on target. Recommends shipping and remining."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "That water is shielding before it is anything else. You are proposing to sell the wall."
+text = "ECLSS Lead classes reserve water as shielding first. The proposal sells shielding."
 
 [[option]]
 id = "honest"
-label = "Send the number as it is"
-text = "Short is short. Let the review say so, and let the sponsor decide what it thinks of a target that goes up fifteen per cent whether the MDLS does or not."
+label = "Report the measured figure"
+text = "Confidence -0.05. SOS -0.5. No change to stocks."
 tags = ["caution", "sponsor", "capability"]
-chronicle = "The review number went in short and true. The sponsor's target had gone up again, and the outpost had decided, without saying so, to stop chasing it."
+chronicle = "The review figure was reported short and accurate. The target had risen again and was not challenged in the reply."
 [[option.effect]]
 q = "sponsor.confidence"
 add = -0.05
@@ -124,8 +125,8 @@ flag = "phi_honest"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "A target that compounds is a target that was designed to be missed. Miss it on purpose and keep your water."
+text = "Chief Engineer notes a target that compounds 15 per cent per review is unmeetable by design. Recommends missing it and retaining the water."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A short number with no explanation is read as a trend. Two of them are read as a decision. The board is very good at reading decisions."
+text = "Sponsor Liaison reports one short figure is read as a trend and two as a decision."

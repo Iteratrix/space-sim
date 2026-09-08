@@ -5,13 +5,13 @@ priority = 100
 cooldown = 12
 tags = ["sponsor", "menace", "suspicion"]
 text = """
-The sponsor has sent an auditor, or the nearest thing that fits on a link: a
-mandate, a checklist, and the audit log's full read access handed to
-someone on Earth with time to use it. Every manifest line, every sign-off in
-a blackout, every crate that moved without a form. {liaison} has been given
-a list of questions and forty-eight hours. {hours} has the real books and
-the ones the sponsor sees, and they are not the same set. {hulls} has the
-spares that were not supposed to be there.
+Status: SOS at threshold. The sponsor has issued an audit mandate, a
+checklist, and full read access to the audit log to an operator on Earth.
+Scope: every manifest line, every blackout sign-off, every uncoded crate
+movement. {liaison} has 48 h to answer a written question list.
+Constraint: {hours} maintains two inventories and they do not reconcile.
+{hulls} holds spares that are not on the sponsor's inventory count.
+Options: disclose, reconcile, or terminate access.
 """
 
 [[when]]
@@ -39,10 +39,10 @@ optional = true
 
 [[option]]
 id = "open"
-label = "Open the books"
-text = "Every crate, every sign-off, every batch. Give the auditor the truth and let the sponsor decide what it thinks of an outpost that kept itself alive."
+label = "Disclose the full inventory"
+text = "SOS resets to 2. Confidence -0.12. Spares -25. Boron halved."
 tags = ["sponsor", "caution", "risk"]
-chronicle = "The SMB opened the real books to the sponsor's audit. The crates went back on the manifest under their right names, and some of them went back to the store."
+chronicle = "Full inventory disclosed to the sponsor's audit. Uncoded crates re-manifested; part of the holding returned to the store."
 [[option.effect]]
 q = "menace.suspicion"
 set = 2.0
@@ -62,18 +62,18 @@ counter = "audits"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "You asked me last month what happens to a liaison who is found to have lied to an audit. There is no next month for that liaison. Open the books."
+text = "Sponsor Liaison states a liaison found to have misled an audit is not retained. Recommends disclosure."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Those spares are in the loops now. Giving them back means opening a wall to take them out, and I will not do that for a checklist."
+text = "Chief Engineer reports the disputed spares are installed in the loops. Recovery requires opening a wall."
 
 [[option]]
 id = "cook"
-label = "Reconcile the books"
-text = "Two sets of books can become one set with enough hours and a good memory for dates. Give the auditor a truth that adds up."
+label = "Reconcile the two inventories"
+text = "SOS -4. Two months of crew hours. Received tonnage restated down 10 t."
 tags = ["independence", "risk", "hours"]
-chronicle = "The SMB reconciled its books before the audit read them. The numbers added up, the dates were plausible, and the outpost learned it could lie in a column."
+chronicle = "The two inventories were reconciled before the audit read them. Dates were consistent. The outpost demonstrated it could produce a compliant column."
 [[option.effect]]
 q = "menace.suspicion"
 add = -4.0
@@ -91,22 +91,22 @@ counter = "numbers_cooked"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "I have the dates. Give me two months and everyone on the SMB who can add, and the audit will find a store that balances."
+text = "Logistics Lead holds the dates. Estimates two months and every numerate seat to produce a balancing store."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "The auditor is not looking for a store that balances. The auditor is looking for the reason it did not before. A balanced store with no reason is the loudest thing we could send."
+text = "Sponsor Liaison reports the audit is looking for the cause of the imbalance, not the balance. A balanced store with no cause raises the flag higher."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You want the whole ring awake for two months forging a ledger. Then I want the whole ring in the sick-bay for two more. That is the trade."
+text = "Medical Officer projects two months of extended shifts followed by two months of clinic load. Net hours negative."
 
 [[option]]
 id = "refuse"
-label = "Refuse the audit"
-text = "The audit log is a sponsor tool on a sponsor link. Cut the read access. The outpost answers to the SMB, and the SMB has answered."
+label = "Terminate the sponsor's read access"
+text = "SOS -2. Confidence -0.18. Attention -0.1. Access cannot be restored from this end."
 tags = ["independence", "risk", "machines"]
-chronicle = "The SMB cut the sponsor's read access to the audit log. It was the first door the outpost closed on Earth, and it was closed from the inside."
+chronicle = "Sponsor read access to the audit log was terminated at the outpost end. First closure of an Earth interface by local action."
 [[option.effect]]
 q = "menace.suspicion"
 add = -2.0
@@ -126,8 +126,8 @@ counter = "audits"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "The log is a board behind a panel. I can pull it in an hour. Everything after that is the SMB's problem and not a checklist's."
+text = "Chief Engineer reports the log interface is one board behind a panel. Removal time one hour."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Cut the log and you cut the licence heartbeat with it, and the minds go into grace, and I will have to explain that too. There is no version of this where I am not explaining."
+text = "Sponsor Liaison warns the licence heartbeat shares the interface. Termination puts the minds into HRA grace."

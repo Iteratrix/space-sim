@@ -5,11 +5,13 @@ weight = 0.3
 cooldown = 48
 tags = ["people", "air"]
 text = """
-{brewer} has a still. Everyone knows where it is except the SMB, formally,
-and the SMB knows now because {air} found the sugar draw in the loop budget.
-Every station in the record brewed, and every station's disciplinary log is
-mostly what happened after. It is also the only licensed ritual most of them
-had. The sponsor's policy is dry. The can is not.
+Status: {brewer} operates a still. Its location is generally known and was
+not formally known to the SMB until {air} identified the sugar draw in the
+loop budget.
+Note: every station in the record brewed. Disciplinary logs are largely
+downstream of it. It was also the only sanctioned observance most of them
+held.
+Constraint: the sponsor's policy is dry.
 """
 
 [[when]]
@@ -30,10 +32,10 @@ seat = "air"
 
 [[option]]
 id = "license"
-label = "License it: a bar, a ration, a night"
-text = "The loop pays a known sugar draw. The SMB owns the ration."
+label = "License the still and set a ration"
+text = "Strain -0.06 across the crew. Food margin -0.3 months. Sugar draw becomes a budgeted line."
 tags = ["people", "air"]
-chronicle = "The SMB gave {brewer} a licence and a ration and a corner of the mess to pour it in, one night in the round. The loop budget got a line called sugar and nobody argued with it."
+chronicle = "{brewer} was issued a licence, a ration, and a corner of the mess, one night in the round. The loop budget gained a line for sugar."
 [[option.effect]]
 all_strain = -0.06
 [[option.effect]]
@@ -49,18 +51,18 @@ counter = "rituals"
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "If it is licensed I know the draw. If it is not I find it in the loop budget by surprise. I would rather know."
+text = "ECLSS Lead can budget a licensed draw and cannot budget an unlicensed one. Prefers the measured case."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "Nine per cent of everything I will ever treat here comes out of that still, and every fight. A ration is a fight with a schedule."
+text = "Medical Officer attributes 9 per cent of projected clinic load and most recorded altercations to the still. A ration schedules them."
 
 [[option]]
 id = "forbid"
-label = "Break it up. The policy is dry"
-text = "The still goes. The next one is better hidden."
+label = "Break up the still"
+text = "{brewer} strain +0.15. CCI +0.4. Replacement expected within two months."
 tags = ["sponsor", "caution"]
-chronicle = "The SMB broke up the still and cited the policy. There was another one within two months and the SMB was not told where."
+chronicle = "The still was broken up and the policy cited. A second still was operating within two months at an undisclosed location."
 [[option.effect]]
 all_strain = 0.04
 [[option.effect]]
@@ -75,18 +77,18 @@ add = 0.4
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "A dry station is a line in the sponsor's safety case. Do not make me explain a bar."
+text = "Sponsor Liaison reports a dry station is a line in the sponsor's safety case. A licensed bar requires an explanation."
 [[option.advice]]
 seat = "extraction"
 stance = "against"
-text = "Every dry station I wintered on had a still and every one of them had a worse still after they broke the first."
+text = "ISRU Lead reports every dry station wintered on had a still, and each successor still was worse hidden and worse made."
 
 [[option]]
 id = "look_away"
-label = "Look the other way"
-text = "No licence, no ration, no line in the budget. The sugar draw stays a mystery."
+label = "Take no formal notice"
+text = "Strain -0.03 across the crew. Food margin -0.3 months. Draw stays unmeasured."
 tags = ["hours", "risk"]
-chronicle = "The SMB decided it had not found a still. {air} adjusted the loop budget for a sugar draw with no name and the nights went on as they had."
+chronicle = "The SMB recorded no finding on the still. {air} adjusted the loop budget for an unattributed sugar draw."
 [[option.effect]]
 all_strain = -0.03
 [[option.effect]]
@@ -102,8 +104,8 @@ flag = "still_ignored"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "A licence is a document and a document is a thing the audit reads. Do not write it down."
+text = "Logistics Lead reports a licence is a document and documents are read by audits. Recommends not creating one."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "An unlicensed draw is an unmeasured draw. I do not want a mystery in my loop budget."
+text = "ECLSS Lead classes an unlicensed draw as an unmeasured draw and declines to carry it in the loop budget."

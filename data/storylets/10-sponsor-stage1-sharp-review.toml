@@ -6,11 +6,12 @@ weight = 3.0
 priority = 60
 tags = ["sponsor", "review"]
 text = """
-The review came back and for the first time the tone was not warm. Somebody
-on the board has drawn a line through the throughput target and written a
-new number above it. {liaison} has read the message three times and says the
-word they keep coming back to is "trajectory". {hours} has run the MDLS's
-numbers against the new line and it does not meet it. The reply goes tonight.
+Status: review returned off-nominal. The board has struck the throughput
+target and entered a higher figure above it.
+{liaison} reports the recurring term in the message is trajectory.
+{hours} has run the MDLS against the new figure. The MDLS does not meet it
+at any duty cycle.
+Constraint: the reply uplinks tonight.
 """
 
 [[when]]
@@ -26,10 +27,10 @@ seat = "hours"
 
 [[option]]
 id = "promise"
-label = "Promise the number"
-text = "Tell them the trajectory bends this year. Then bend it: longer driver shifts, less time on the loops."
+label = "Commit to the new figure"
+text = "Confidence +0.08. Shipped +12 t. Strain +0.06 across the crew."
 tags = ["throughput", "sponsor", "hours"]
-chronicle = "The reply promised the sponsor its new number, and the outpost began working the hours that a promise like that costs."
+chronicle = "The reply committed to the sponsor's revised figure. MDLS shifts were extended and loop maintenance hours reduced."
 [[option.effect]]
 q = "sponsor.confidence"
 add = 0.08
@@ -43,18 +44,18 @@ flag = "promised_phi"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "The question you asked me last month was what the board wanted to hear. This is it. A promise buys a review; that is what promises are for."
+text = "Sponsor Liaison reports a commitment is what the board is asking for. A commitment buys one review cycle."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The driver crews are already on fours. You are promising Earth a number in hours that I have to take out of sleep."
+text = "Medical Officer reports MDLS crews already on four-hour rotations. The commitment is payable in sleep."
 
 [[option]]
 id = "explain"
-label = "Explain the physics"
-text = "Send them the transfer calendar and the MDLS's duty cycle. The number they want is not a matter of effort."
+label = "Uplink the transfer calendar and duty cycle"
+text = "Confidence -0.04. SOS +0.8. The figure is not restated."
 tags = ["capability", "independence", "risk"]
-chronicle = "The reply sent the sponsor a transfer calendar and a duty cycle in place of a promise. It was correct and it was read as an excuse."
+chronicle = "The reply supplied a transfer calendar and an MDLS duty cycle in place of a commitment. The submission was accurate and was logged as an excuse."
 [[option.effect]]
 q = "sponsor.confidence"
 add = -0.04
@@ -66,18 +67,18 @@ flag = "explained_phi"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "Forty tonnes a month is the MDLS's ceiling with the propellant we have. I can write that in a way that a board can read, and it will still be forty."
+text = "Logistics Lead reports 40 t per month is the MDLS ceiling at current propellant. The figure does not move under effort."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A calendar is not an answer to a board. A board asks who is responsible, and a calendar is nobody."
+text = "Sponsor Liaison reports a board asks who is accountable. A calendar names nobody."
 
 [[option]]
 id = "ask"
-label = "Ask what changed on their side"
-text = "Do not answer the number. Ask why the number moved. The answer, if it comes, will arrive a month late and tell us more than the review did."
+label = "Query what changed at the sponsor"
+text = "Attention +0.04. Confidence -0.02. Answer expected one month late."
 tags = ["sponsor", "risk"]
-chronicle = "The reply asked the sponsor, politely, what had changed on Earth. The answer took a month, and it was not about throughput."
+chronicle = "The reply queried what had changed on Earth rather than answering the figure. The response took a month and did not concern throughput."
 [[option.effect]]
 q = "sponsor.attention"
 add = 0.04
@@ -89,8 +90,8 @@ flag = "asked_what_changed"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "I do not know why it moved. I would like to. If we ask now, I will know by the time you ask me again."
+text = "Sponsor Liaison has no data on the cause and states so. A query now returns an answer before the next request."
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "When a spec changes without an engineering reason, the reason is somewhere else in the building. Find it before you build to it."
+text = "Chief Engineer notes a specification change with no engineering cause originates elsewhere. Recommends locating it before building to it."

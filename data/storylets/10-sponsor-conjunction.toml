@@ -5,13 +5,12 @@ weight = 1.5
 cooldown = 30
 tags = ["sponsor", "conjunction"]
 text = """
-Earth is behind the Sun. Nothing gets through for three months, and the
-sponsor's standing orders assume the link. The driver has a launch window on
-a batch that {extraction} says is short of the shipping spec by a whisker
-and would pass if anybody were there to say so. {hours} points out that
-nobody is there to say so. {liaison}
-is at the SMB with nothing to relay, and looks like someone who has
-noticed what that feels like.
+Status: superior conjunction. No Earth link for three months. Sponsor
+standing orders assume a link.
+Constraint: the MDLS has a launch window on a batch {extraction} rates
+0.1 per cent outside shipping spec. The spec requires a sponsor sign-off.
+{hours} confirms no sign-off authority is reachable. {liaison} is seated
+with nothing to relay.
 """
 
 [[when]]
@@ -35,10 +34,10 @@ optional = true
 
 [[option]]
 id = "ship"
-label = "Ship the batch on the SMB's own say-so"
-text = "Sign it off here. The sponsor's rule was written for a link that exists; when the link does not, the SMB is the rule."
+label = "Sign the batch locally and ship"
+text = "Shipped +20 t. Propellant -4 t. SOS +0.6. Sign-off field carries a local name."
 tags = ["throughput", "independence", "risk"]
-chronicle = "With Earth behind the Sun the SMB signed off a batch the sponsor would have held, and shipped it. Nobody on Earth was listening, and the sign-off field carried a name from the rock."
+chronicle = "Batch signed off under local authority during conjunction and launched. Sign-off field recorded a name from the outpost."
 [[option.effect]]
 q = "throughput.shipped"
 add = 20
@@ -55,18 +54,18 @@ counter = "blackout_decisions"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "The batch is dry to within a tenth of a per cent. On Earth it would go out with a note. Write the note ourselves."
+text = "ISRU Lead rates the batch dry to within 0.1 per cent. Standard practice is to ship with a note. Recommends writing the note here."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Everything shipped shows on the audit log with a sign-off field, and for three months that field will say a name that is not the sponsor's. Someone will read it."
+text = "Sponsor Liaison notes every shipment writes a sign-off field to the audit log. For three months that field will not read as the sponsor's."
 
 [[option]]
 id = "hold"
-label = "Hold the batch until the link is back"
-text = "Do what the sponsor would do. Hold it, lose the launch, and ask when Earth comes round."
+label = "Hold the batch until the link returns"
+text = "Launch window lost. Confidence -0.02. CCI +0.3."
 tags = ["sponsor", "caution"]
-chronicle = "With Earth behind the Sun the SMB held a batch it could have shipped, because the rule said ask and there was nobody to ask. The launch was lost."
+chronicle = "Batch held through conjunction for want of a sign-off. Launch window lost."
 [[option.effect]]
 q = "sponsor.confidence"
 add = -0.02
@@ -78,18 +77,18 @@ flag = "held_in_blackout"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "You asked last month what happens when a sign-off is missing from the log. Nothing, if the batch was held. A great deal, if it was shipped."
+text = "Sponsor Liaison reports a missing sign-off on a held batch is not actionable. A missing sign-off on a shipped batch is."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "A lost launch is twenty tonnes I do not get back, and the MDLS crew stood down for a batch that was fine. That is a cost with no line to charge it to."
+text = "Logistics Lead records 20 t unrecoverable and one MDLS crew stood down against a batch within spec."
 
 [[option]]
 id = "use_the_dark"
-label = "Ship it, and move the spares while nobody is watching"
-text = "Sign the batch and, while the audit log has no reader, walk the capability crates out of the sponsor's store into the outpost's own."
+label = "Ship, and transfer the store's spares"
+text = "Shipped +20 t. Propellant -4 t. Spares +18. SOS +1.8."
 tags = ["independence", "spares", "capability", "risk"]
-chronicle = "With Earth behind the Sun the SMB shipped the batch and quietly moved the store's spares into its own lockers. The log recorded it; nobody on Earth was reading the log."
+chronicle = "Batch launched during conjunction. Capability crates transferred from the sponsor's store to outpost lockers. The transfer was logged; the log had no reader."
 [[option.effect]]
 q = "throughput.shipped"
 add = 20
@@ -109,8 +108,8 @@ counter = "blackout_decisions"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "Every part in that store is on a shelf I cannot open without a form that goes to Earth. For three months the form goes nowhere. I have a list."
+text = "Chief Engineer reports store release requires an Earth-routed form. For three months the form has no destination. A list is prepared."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "The log is not paused. It is buffered. When the Sun moves, three months of entries arrive at once, and the one that says spares moved will be read first."
+text = "Sponsor Liaison reports the audit log is buffered, not paused. Three months of entries deliver at once and the spares entry sorts first."

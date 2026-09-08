@@ -5,12 +5,12 @@ cooldown = 10
 priority = 45
 tags = ["sponsor", "spares", "machines"]
 text = """
-A relay string has failed and the link to Earth is running on what is left:
-fewer bits a day, more of them lost, the heartbeat and the messages queued
-behind each other. {hulls} can rebuild the string from the shelf, if the shelf
-can bear it. {liaison} points out that a replacement is not on any manifest,
-and that a link this thin is how an outpost stops being heard from before it
-stops talking.
+Status: a relay string has failed. Earth link degraded: reduced bit rate,
+increased loss, heartbeat and traffic queued behind each other.
+{hulls} can rebuild the string from shelf stock.
+Constraint: {liaison} reports no relay hardware is on any manifest, and
+that a link at this rate stops being heard from before it stops
+transmitting.
 """
 
 [[when]]
@@ -29,9 +29,9 @@ optional = true
 [[option]]
 id = "repair"
 label = "Rebuild the string from the shelf"
-text = "Twenty-five units of parts that the loops will miss. The link comes back to most of what it was."
+text = "Spares -25. Relay health +0.4. Loops run short of parts for a season."
 tags = ["spares", "sponsor", "hulls"]
-chronicle = "We rebuilt the relay from the shelf and the link came back, and the loops ran a season short of parts for it."
+chronicle = "The relay was rebuilt from shelf stock and the link recovered. The loops ran a season short of parts."
 [[option.requires]]
 q = "stocks.spares"
 ge = 25
@@ -44,18 +44,18 @@ add = 0.4
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Without the link there is no heartbeat, no manifest, and no quarterly. Spend the parts."
+text = "Sponsor Liaison reports no link means no heartbeat, no manifest and no quarterly. Recommends spending the parts."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Twenty-five units to keep a dish pointed at people who have not allocated us dish time in a year."
+text = "Chief Engineer costs it at 25 units to keep a dish pointed at an operator that has allocated no dish time in a year."
 
 [[option]]
 id = "thin"
-label = "Let the link thin"
-text = "Keep the parts for the loops. Messages take longer and some do not arrive. The sponsor's attention was never a thing the relay controlled."
+label = "Leave the link degraded"
+text = "Parts retained. Attention -0.05. Message loss continues."
 tags = ["spares", "independence", "risk"]
-chronicle = "We let the link stay thin and kept the parts, and after that the sponsor's messages came a month late, which was how the liaison's advice had always come."
+chronicle = "The link was left degraded and the parts were retained. Sponsor traffic ran a month behind thereafter."
 [[option.effect]]
 flag = "relay_thinned"
 [[option.effect]]
@@ -64,22 +64,22 @@ add = -0.05
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "The loops keep us alive. The relay keeps us audited. When both need the same board I know which gets it."
+text = "Chief Engineer reports the loops sustain life and the relay sustains audit. Where both require the same board, the loops take it."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "An outpost that stops answering stops being asked. That is not a threat, it is how attention is budgeted."
+text = "Sponsor Liaison reports an outpost that stops answering stops being asked. Attention is budgeted."
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "I have valves waiting on that family of board. The dish can wait; the scrubber cannot."
+text = "ECLSS Lead has valves waiting on that board family. The scrubber cannot wait; the dish can."
 
 [[option]]
 id = "ask"
-label = "Ask the sponsor for the part"
-text = "Put a relay string on the manifest, formally, and hold the shelf. If it comes, it comes in thirty months."
+label = "Request a relay string on the manifest"
+text = "Attention +0.02. Confidence -0.02. Delivery, if approved, in thirty months."
 tags = ["sponsor", "cost"]
-chronicle = "We asked the sponsor for a relay string and nursed the thin link until the answer, which was a question about why we needed one."
+chronicle = "A relay string was formally requested and the degraded link was nursed pending an answer. The answer was a query about the requirement."
 [[option.effect]]
 flag = "relay_requested"
 [[option.effect]]
@@ -91,8 +91,8 @@ add = -0.02
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "Relay hardware is sponsor-owned infrastructure. A request is the proper channel and the proper channel is what they fund."
+text = "Sponsor Liaison classes relay hardware as sponsor-owned infrastructure. The proper channel is what the sponsor funds."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Thirty months on a link that is already losing packets. The request may not arrive to be refused."
+text = "Chief Engineer reports thirty months on a link already dropping packets. The request may not arrive to be refused."

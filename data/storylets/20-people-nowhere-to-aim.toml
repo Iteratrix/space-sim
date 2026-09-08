@@ -4,12 +4,13 @@ act = 1
 cooldown = 30
 tags = ["people", "sponsor"]
 text = """
-For years the can had somewhere to put it: the tasking list, the quarterly,
-the voice on the link that never understood. The link is mostly quiet now.
-{voice} said something at the meal this month that a year ago would have been
-about Earth, and it was about {target}. The hindrance graph, if anyone drew it,
-would show what the record predicts: with no outside party to blame, the blame
-turns inward within a few months. The SMB can choose where it lands.
+Status: sponsor attention below 0.2. Inbound traffic is near zero.
+{voice} made a statement at the meal this month directed at {target}. The
+equivalent statement a year ago was directed at Earth.
+Note: the record indicates that with no external party available,
+attribution turns inward within a few months. The hindrance graph is
+consistent with that.
+Constraint: the SMB can direct where it lands.
 """
 
 [[when]]
@@ -29,10 +30,10 @@ optional = true
 
 [[option]]
 id = "inner_system"
-label = "Name the inner system: they left us, and we say so"
-text = "A distant target, still. Nobody here has to wear it."
+label = "Name the inner system"
+text = "Strain -0.06 across the crew. Return intent -0.04. CCI -0.3."
 tags = ["people", "independence"]
-chronicle = "The SMB gave the can a new name for what it hated: the inner system, which had left. It worked, and it made going home a stranger idea."
+chronicle = "The SMB named the inner system as the party that had withdrawn. Strain fell. Stated intent to return fell with it."
 [[option.effect]]
 all_strain = -0.06
 [[option.effect]]
@@ -45,18 +46,18 @@ add = -0.3
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "They did leave. Saying it at the meal costs nothing and it is true."
+text = "ISRU Lead reports the statement is accurate and costs nothing to make at the meal."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "The moment we decide the inner system is the enemy we stop writing manifests. I am not ready to stop writing manifests."
+text = "Logistics Lead reports that designating the inner system an adversary ends manifest writing. Recommends against at this stage."
 
 [[option]]
 id = "old_guard"
-label = "Let it land on {target} and the old schedule"
-text = "Someone has to have been wrong. The people who kept the sponsor's rules the longest are the obvious candidates."
+label = "Let it land on {target}"
+text = "{target} strain +0.2. Strain -0.04 across the crew. Hindrance rises."
 tags = ["people", "risk"]
-chronicle = "The anger found {target}, who had kept the old schedule longest. The can was calmer for it. {target} was not."
+chronicle = "Attribution settled on {target}, who had kept the sponsor's schedule longest. Crew strain fell. {target}'s did not."
 [[option.effect]]
 tie = ["voice", "target"]
 hindrance = 0.3
@@ -70,18 +71,18 @@ counter = "scapegoats"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "The schedule was wrong for two years and everyone knew it. If a name goes with that, so be it."
+text = "Chief Engineer reports the schedule was wrong for two years and the fact was general knowledge. Accepts an attached name."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You want to make one of us into the sponsor. The sponsor could not hear it. {target} can."
+text = "Medical Officer reports the proposal substitutes a crew member for the sponsor. The sponsor could not receive it. {target} can."
 
 [[option]]
 id = "hold_it"
-label = "Say it plainly: there is no one to blame now but us"
-text = "No target. The can holds its own anger, and pays for it in strain."
+label = "State that there is no external party"
+text = "Strain +0.04 across the crew. CCI -0.6. No target designated."
 tags = ["people", "independence", "caution"]
-chronicle = "The SMB stood up and said there was nobody left to blame but ourselves. It was true, and it was a hard month."
+chronicle = "The SMB stated on the record that no external party remained to hold responsible. The statement was accurate. Strain rose that month."
 [[option.effect]]
 all_strain = 0.04
 [[option.effect]]
@@ -92,8 +93,8 @@ flag = "held_the_anger"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "Displacement is a habit, and the record says it turns inward whatever we do. Better to name that than to pick a victim for it."
+text = "Medical Officer reports displacement recurs regardless and recommends naming the mechanism rather than selecting a subject."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Somebody on Earth still reads this log, occasionally. Announcing that we have no one to blame reads, from there, like an announcement."
+text = "Sponsor Liaison reports the log is still read on Earth at intervals. The statement reads from there as a declaration."

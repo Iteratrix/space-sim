@@ -5,13 +5,13 @@ weight = 1.2
 cooldown = 40
 tags = ["sponsor", "liaison"]
 text = """
-{liaison} asked for a word after the SMB, alone, and then did not say much.
-The dish time has been cut twice this year and the second cut was not
-announced. The people {liaison} used to write to at the sponsor have been
-replaced by an address. There is something else, something from a private
-channel, that {liaison} started to say and then called "not confirmed".
-{liaison} answers for the sponsor at the SMB. The SMB has to decide what
-to do with a liaison who knows more than the sponsor is saying.
+Status: sponsor attention degraded. Dish time cut twice this year; the
+second cut was not announced. Named correspondents at the sponsor have been
+replaced by a routing address.
+{liaison} requested a private word after the SMB and reported one item from
+a private channel, then classed it unconfirmed and stopped.
+Constraint: {liaison} answers for the sponsor at the SMB and now holds
+information the sponsor has not released.
 """
 
 [[when]]
@@ -32,10 +32,10 @@ optional = true
 
 [[option]]
 id = "press"
-label = "Press for the rest of it"
-text = "Ask {liaison} to say the unconfirmed thing to the SMB, on the record. Whatever it is, the outpost plans better with it than without."
+label = "Require the unconfirmed item on the record"
+text = "Confidence -0.03. CCI +0.4. {liaison} strain +0.08."
 tags = ["independence", "risk", "sponsor"]
-chronicle = "The SMB asked {liaison} to say the unconfirmed thing aloud, and {liaison} did. It was about the budget, and it was worse than the reviews had been letting on."
+chronicle = "{liaison} stated the unconfirmed item to the SMB on the record. Subject: the budget. Worse than the review minutes indicated."
 [[option.effect]]
 flag = "liaison_confided"
 [[option.effect]]
@@ -52,18 +52,18 @@ add = 0.4
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "I plan spares against the ship that is coming. If the ship is not coming I need to know a year before, not a month after. Make {liaison} say it."
+text = "Chief Engineer plans spares against scheduled arrivals. Requires twelve months of warning on a cancellation, not one month of hindsight."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked me last month what I was not telling you. If I answer that here it goes in the chronicle, and the chronicle goes in the audit, and then the thing I am not telling you becomes the thing I told you."
+text = "Sponsor Liaison notes anything said here enters the chronicle, and the chronicle enters the audit."
 
 [[option]]
 id = "protect"
-label = "Let {liaison} keep it, and plan as if it were true"
-text = "Do not make {liaison} choose between the sponsor and the SMB. Read the silence and act on the reading."
+label = "Plan on the inference; leave the item unstated"
+text = "Spares +10. No record created. {liaison} strain -0.05."
 tags = ["caution", "capability", "spares"]
-chronicle = "The SMB let {liaison} keep what {liaison} knew, and quietly began planning as though it were already true. Spares went into the outpost's own store that month."
+chronicle = "The unconfirmed item was left unstated. Planning assumptions were revised as though it were confirmed. Spares were moved to the outpost store that month."
 [[option.effect]]
 flag = "planning_for_silence"
 [[option.effect]]
@@ -78,18 +78,18 @@ work_positive = 0.15
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "{liaison} is the only person here whose job is to be loyal to someone who is not here. Do not ask for a betrayal you could get by paying attention."
+text = "Medical Officer notes {liaison} is the only crew member whose duty is to an absent principal. The inference is available without a disclosure."
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "I do not need the sentence. I need the schedule to assume half the dish time and a lighter RSW, and I can do that without anyone saying why."
+text = "Logistics Lead requires only the assumption: half dish time, lighter RSW. The schedule can be rebuilt without a stated cause."
 
 [[option]]
 id = "report"
-label = "Have {liaison} send it up the line as a formal query"
-text = "Turn the rumour into a question the sponsor has to answer. If the address answers, we learn something. If it does not, we learn more."
+label = "Uplink it as a formal query"
+text = "Attention +0.03. SOS +0.7. Answer expected one month late."
 tags = ["sponsor", "risk"]
-chronicle = "The SMB had {liaison} put the unconfirmed thing to the sponsor as a formal query. The answer came a month late, said nothing, and said it very carefully."
+chronicle = "The item was uplinked to the sponsor as a formal query. The answer arrived one month late and contained no information."
 [[option.effect]]
 q = "sponsor.attention"
 add = 0.03
@@ -101,8 +101,8 @@ flag = "queried_the_sponsor"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "A query is my job. A rumour is not. Give me the query and I will send it, and then whatever comes back is theirs and not mine."
+text = "Sponsor Liaison classes a query as in-role and a rumour as out of role. The response then belongs to the sponsor."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Every formal question we send tells them what we are afraid of. I would rather they did not know we had started to be afraid."
+text = "Chief Engineer notes each formal query discloses what the outpost is planning against."

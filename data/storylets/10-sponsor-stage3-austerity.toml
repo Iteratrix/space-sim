@@ -6,14 +6,14 @@ weight = 3.0
 priority = 70
 tags = ["sponsor", "people", "austerity"]
 text = """
-The review says austerity. The manifest is cut by a third and the headcount
-is "under review", which {liaison} says means one berth home on the next ship
-that will not be refilled. The sponsor has left the choosing to the SMB,
-which is either respect or the thing that looks like it. {hours} has the
-roster. {rotator} is on contract and could go home early with the lay
-settled. {resident} came out to stay and has no home berth to go to, and
-would be going anyway. {bodies} has strain scores for both and will not read
-them aloud.
+Status: review directive is austerity. Next manifest cut by one third.
+Headcount under review. {liaison} reads that as one berth outbound on the
+next ship, not refilled.
+Constraint: the sponsor has delegated the selection to the SMB.
+{hours} holds the roster. {rotator} is on contract and can be released
+early with the lay settled. {resident} has no home berth. {bodies} holds
+strain figures for both and has not read them aloud.
+Recommendation: name one, or decline, Commander.
 """
 
 [[when]]
@@ -43,10 +43,10 @@ optional = true
 
 [[option]]
 id = "cut_rotator"
-label = "Send {rotator} home early"
-text = "A contract is a contract. Settle the lay, put {rotator} on the ship, and let the residents keep the outpost they chose."
+label = "Release {rotator} early"
+text = "Lay settled. Confidence +0.05. CCI +0.5. One pair of hands off the roster."
 tags = ["people", "sponsor", "cost"]
-chronicle = "The SMB gave the sponsor its berth: {rotator} went home early with the lay settled, and the residents stayed on, one pair of hands lighter."
+chronicle = "{rotator} was released early with the lay settled and took the sponsor's berth. Residents remained, one pair of hands short."
 [[option.effect]]
 person = "rotator"
 leave = true
@@ -64,18 +64,18 @@ flag = "austerity_cut_rotator"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "A rotator is a lay to settle and a berth that was already booked. It is the cheapest cut on the sheet and I have counted the sheet twice."
+text = "Logistics Lead costs a rotator at one lay settlement and one berth already booked. Lowest cost on the sheet."
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "You asked me last month what the board would accept. The board accepts a contract ending. It does not have a category for a resident."
+text = "Sponsor Liaison reports the board accepts a contract ending. It holds no category for a resident."
 
 [[option]]
 id = "cut_resident"
 label = "Send {resident} home"
-text = "{resident} has no berth to go to. That is a reason to be kinder about it, not a reason to keep the person who stays."
+text = "Confidence +0.05. CCI +1.2. Return intent rises across the crew."
 tags = ["people", "sponsor", "risk"]
-chronicle = "The SMB chose {resident} for the sponsor's berth, someone who had come out to stay. The rotators noticed what that meant for the word resident."
+chronicle = "{resident}, who had taken residence, was named for the sponsor's berth. The rotators recorded what that made the word resident worth."
 [[option.effect]]
 person = "resident"
 leave = true
@@ -92,18 +92,18 @@ flag = "austerity_cut_resident"
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "A resident has no home to be sent to. I have watched what that does to a person's numbers on the flight home, and it is worse than staying."
+text = "Medical Officer reports a resident has no destination. Transit outcomes for that case are worse than remaining on station."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "Residents are the only hands I can plan more than thirty months out. A rotator is a loan; a resident is capital."
+text = "Logistics Lead reports residents are the only hands schedulable beyond thirty months."
 
 [[option]]
 id = "refuse"
-label = "Refuse the cut"
-text = "Tell the sponsor the outpost is at the labour floor already, and a berth home is a berth they can save by not sending the ship."
+label = "Decline the cut"
+text = "Confidence -0.08. SOS +1.5. CCI -0.5. No name supplied."
 tags = ["people", "independence", "risk"]
-chronicle = "The SMB refused to name anyone for the sponsor's berth. It was an instruction declined in writing, and the sponsor did not reply to the refusal."
+chronicle = "The SMB named nobody for the sponsor's berth and declined the directive in writing. No reply to the refusal was received."
 [[option.effect]]
 q = "sponsor.confidence"
 add = -0.08
@@ -120,18 +120,18 @@ flag = "austerity_refused"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "Every cut lands on the health hours first, because they are the ones nobody sees until they matter. Tell them no."
+text = "Medical Officer reports cuts land on health hours first and are not visible until they are. Recommends refusal."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A refusal goes into the same file as the throughput number. It will be the first thing read at the next review and the number will be the second."
+text = "Sponsor Liaison reports a refusal files alongside the throughput figure and is read first at the next review."
 
 [[option]]
 id = "cut_hours"
-label = "Cut hours instead of people"
-text = "Keep everyone. Take the sponsor's saving out of the MDLS schedule and the fabrication bay and give them a smaller number."
+label = "Cut hours instead of headcount"
+text = "Shipped -15 t. Confidence -0.05. CCI -0.8. Roster unchanged."
 tags = ["people", "hours", "capability"]
-chronicle = "The SMB kept everyone and gave the sponsor a smaller number instead of a name. The driver ran short shifts for a season and the review noticed."
+chronicle = "The SMB supplied the sponsor a reduced figure in place of a name. MDLS shifts were shortened for a season and the review recorded it."
 [[option.effect]]
 q = "sponsor.confidence"
 add = -0.05
@@ -146,8 +146,8 @@ flag = "austerity_cut_hours"
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "You are proposing to take the saving out of the one line they read. I can find those hours; I cannot hide where they came from."
+text = "Logistics Lead reports the saving is taken from the one line the board reads. The hours are findable; the source is not concealable."
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "I would rather be slow than short-handed. A driver on half shifts still ships. A bay with nobody in it makes nothing."
+text = "Chief Engineer prefers reduced rate to reduced headcount. An MDLS on half shifts still ships. An empty bay produces nothing."

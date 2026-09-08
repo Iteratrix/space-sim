@@ -5,12 +5,12 @@ weight = 0.6
 cooldown = 30
 tags = ["people", "medicine"]
 text = """
-{bodies} has counted the formulary twice and got the same number both times.
-Half of what came out on the first ship has expired and the rest is a shelf
-that would not fill a kit bag. {patient} needs a course of what is on that
-shelf, and so, probably, will someone else before the next RSW. The medical
-officer can stretch it thin across everyone who might need it, or spend it on
-the one who needs it now.
+Status: {bodies} has counted the formulary twice with the same result. Half
+the original shipment has expired. Remaining stock would not fill a kit
+bag.
+Constraint: {patient} requires a course from that shelf. Projected demand
+before the next RSW is at least one further course.
+Options: distribute thin, or treat the present case in full.
 """
 
 [[when]]
@@ -30,10 +30,10 @@ role = "patient"
 
 [[option]]
 id = "ration"
-label = "Ration it: half courses, everyone, until the ship"
-text = "Nobody gets the full course. Nobody gets nothing."
+label = "Ration the formulary"
+text = "Half courses to all. Medicine stock held at 85 per cent. {patient} strain +0.15."
 tags = ["medicine", "caution"]
-chronicle = "The medical officer cut every course in half and posted the shelf count on the door, so that everyone could see what was not there."
+chronicle = "A rationing directive was issued: every course halved. The shelf count was posted on the clinic door."
 [[option.effect]]
 person = "patient"
 strain = 0.15
@@ -45,18 +45,18 @@ mul = 0.85
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "A half course is a bad course. But a shelf with nothing on it when the next one comes in with a fever is worse, and I have to be able to say I kept something."
+text = "Medical Officer rates a half course as a poor course and an empty shelf as worse. Recommends retaining stock against the next presentation."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "You do not run a pump at half pressure and call it maintained. Fix the one that is broken."
+text = "Chief Engineer notes a pump run at half pressure is not maintained. Recommends treating the case in hand."
 
 [[option]]
 id = "spend"
-label = "Use the last of it on {patient}"
-text = "A full course for one. The shelf is empty afterwards and everyone knows it."
+label = "Treat {patient} in full"
+text = "Full course to one. Medicine stock falls to 10 per cent. {patient} strain -0.2."
 tags = ["medicine", "people", "risk"]
-chronicle = "The medical officer gave {patient} the last full course in the formulary. The shelf was bare afterwards and the whole outpost watched the door."
+chronicle = "{patient} received the last full course in the formulary. The shelf was bare afterwards."
 [[option.requires]]
 q = "stocks.medicine"
 ge = 3
@@ -74,18 +74,18 @@ all_strain = 0.03
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "I have one patient in front of me and a shelf that might treat a patient I do not have. The one in front of me wins. That is what the oath says, when there is one."
+text = "Medical Officer has one presenting patient and a shelf reserved against a hypothetical one. Treats the presenting patient."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "It is not one shelf, it is thirty-six people and one shelf. Spend it on one and the other thirty-five are uninsured until the RSW."
+text = "Logistics Lead reports one shelf against 36 crew. Spending it on one leaves 35 uncovered until the RSW."
 
 [[option]]
 id = "manifest"
-label = "Put a medicine crate at the top of the next manifest and hold {patient} until it comes"
-text = "Admit the shortage to Earth. Wait."
+label = "Head the next manifest with medicine and hold {patient}"
+text = "Shortage declared to Earth. {patient} strain +0.2. Attention +0.03."
 tags = ["sponsor", "medicine", "caution"]
-chronicle = "The SMB put a medicine crate at the head of the manifest and told {patient} to wait for the RSW. The sponsor asked why the first crate had not been enough."
+chronicle = "A medicine crate was placed at the head of the manifest and {patient} was held until the RSW. The sponsor queried why the original shipment was insufficient."
 [[option.requires]]
 stage_max = 3
 [[option.effect]]
@@ -102,8 +102,8 @@ counter = "medicine_requested"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "A medical shortage is the one line item nobody on the board argues with. Ask, and ask loudly."
+text = "Sponsor Liaison reports a medical shortage is the one line item the board does not contest. Recommends requesting it at volume."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The window is a long way off, and a course that starts in six months is not the same course."
+text = "Medical Officer reports the RSW is distant and a course beginning in six months is not the same course."

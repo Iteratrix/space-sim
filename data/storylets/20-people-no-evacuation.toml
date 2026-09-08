@@ -5,12 +5,13 @@ cooldown = 30
 weight = 0.35
 tags = ["people", "medicine", "risk"]
 text = """
-{patient} went down on the watch with a pain in the belly that has not
-stopped, and {bodies} has the diagnosis narrowed to two things, one of which
-is an operation and the other of which is also an operation. On Earth this is
-an ambulance. Here the nearest hospital is an RSW away and the RSW is not
-open. The formulary is what it is; the surgical kit was packed for cuts and
-burns; the medical officer has a manual, an uplink with a lag, and two hands.
+Status: {patient} went down on watch with continuing abdominal pain.
+{bodies} has narrowed the differential to two conditions. Both are
+surgical.
+Constraint: nearest surgical facility is one RSW distant. The RSW is not
+open. The surgical kit was specified for cuts and burns. Available
+resources are the formulary, a manual, an uplink with lag, and one pair of
+hands.
 """
 
 [[when]]
@@ -25,10 +26,10 @@ role = "patient"
 
 [[option]]
 id = "operate"
-label = "Operate here, with the manual and what is in the kit"
-text = "The medical officer cuts. It costs the formulary and it costs the medic."
+label = "Operate here"
+text = "Medicine -4. {patient} strain +0.3. {bodies} strain +0.2."
 tags = ["medicine", "risk", "capability"]
-chronicle = "{bodies} operated on {patient} in the mess with the manual open and two engineers holding lights. It took the rest of the formulary and most of a month to know it had worked."
+chronicle = "{bodies} operated on {patient} in the mess with the manual open and two crew holding lights. The outcome was not confirmed for a month."
 [[option.requires]]
 q = "stocks.medicine"
 ge = 2
@@ -53,18 +54,18 @@ counter = "operations_in_the_can"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "I am not a surgeon. I have a manual and a lag and I am what there is. Hold the light steady and do not talk to me."
+text = "Medical Officer is not a surgeon and holds a manual, a lag, and the only qualification on station. Will proceed."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "If it goes wrong we have lost a medic as well as a patient, because nobody will trust the next cut. Consider the odds before the knife."
+text = "Logistics Lead reports a failed procedure costs the medical officer as well as the patient. Recommends assessing the odds first."
 
 [[option]]
 id = "talk_through"
-label = "Put Earth on the link and have them talk {bodies} through it"
-text = "Telemedicine with a lag. Every instruction arrives late; the sponsor learns what we are."
+label = "Operate with Earth on the link"
+text = "Medicine -3. Attention +0.05. Every instruction arrives late."
 tags = ["medicine", "sponsor"]
-chronicle = "Earth talked {bodies} through the operation on {patient}, each instruction arriving late. It held. The sponsor put the whole exchange in the quarterly."
+chronicle = "Earth talked {bodies} through the procedure on {patient} with instructions arriving late. The patient held. The exchange was published in the quarterly."
 [[option.requires]]
 q = "sponsor.attention"
 ge = 0.3
@@ -91,18 +92,18 @@ flag = "operated_here"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "This is the one thing the sponsor's medical desk is for. Use it, and let them see us using it."
+text = "Sponsor Liaison reports the sponsor's medical desk exists for this case. Recommends use, and visible use."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Twenty minutes of lag between the question and the answer. I have watched that kill a pump. A person is not slower."
+text = "Chief Engineer rates twenty minutes of lag between question and answer as sufficient to lose a pump. A patient is not slower than a pump."
 
 [[option]]
 id = "nurse"
-label = "No knife. Bed, fluids, and watching"
-text = "Treat what can be treated and hope the rest resolves. A long recovery if it does."
+label = "No surgery: bed, fluids, observation"
+text = "{patient} strain +0.4, return intent +0.3. Recovery, if any, is long."
 tags = ["medicine", "caution"]
-chronicle = "{patient} was put to bed and watched around the clock, and it resolved, slowly. It was three months before {patient} stood a watch again."
+chronicle = "{patient} was put to bed and observed continuously. The condition resolved slowly. {patient} stood no watch for three months."
 [[option.effect]]
 person = "patient"
 strain = 0.4
@@ -116,18 +117,18 @@ counter = "long_recoveries"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "Some of these resolve. Not most. But a wrong cut with no blood bank is not a risk, it is a certainty, and I am not sure enough."
+text = "Medical Officer reports a minority of these resolve without surgery and rates an incorrect incision with no blood bank as unrecoverable."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "Three months of one person in bed and one person watching is six person-counts out of the farm. Say so before you choose it."
+text = "ECLSS Lead costs three months of one patient and one attendant at six person-months out of the farm."
 
 [[option]]
 id = "wait_for_ship"
-label = "Keep {patient} comfortable and wait for the RSW"
-text = "The evacuation protocol says a ship. There is no ship. There is comfort."
+label = "Follow the evacuation protocol"
+text = "Stabilise and await transport. No transport is scheduled."
 tags = ["caution", "sponsor"]
-chronicle = "The SMB followed the evacuation protocol, which said to wait for a ship. {patient} died on the fourth day. It was the first death and nobody had decided what to do with the body."
+chronicle = "The evacuation protocol was followed. It required a ship. {patient} died 96 h after presentation. First death on station; no disposition procedure existed."
 [[option.effect]]
 person = "patient"
 die = true
@@ -143,8 +144,8 @@ counter = "deaths"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "The protocol exists so that nobody has to make this decision alone. It says stabilise and evacuate. I do not have another protocol."
+text = "Sponsor Liaison reports the protocol states stabilise and evacuate, and holds no alternative protocol."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The protocol was written for a place with a ship. Stabilise and wait is a phrase for a death certificate."
+text = "Medical Officer reports the protocol assumes an available ship. Under present conditions it is a certification of death."

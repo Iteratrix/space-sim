@@ -5,12 +5,12 @@ act = 1
 cooldown = 40
 tags = ["people", "sponsor"]
 text = """
-The tasking list from Earth this month is longer than the last, again, and
-{voice} read it out at the meal in a voice that made everyone laugh, and then
-nobody laughed. The complaint is not really about the list. But it is a thing
-that everyone in the can can hate together, and the ICE record says a crew that
-hates mission control together is a crew that is not hating each other.
-{liaison} has to send something up the link.
+Status: this month's tasking list from Earth is longer than the last.
+{voice} read it aloud at the meal. Crew response was laughter, then
+silence.
+Note: ICE records indicate a crew directing complaint at mission control is
+a crew not directing it at itself. Mean strain is above threshold.
+Constraint: {liaison} must uplink a response.
 """
 
 [[when]]
@@ -30,10 +30,10 @@ seat = "liaison"
 
 [[option]]
 id = "front_the_crew"
-label = "Send the complaint up in the crew's words"
-text = "Let Earth read what the can thinks of the tasking list. The unity is worth the confidence."
+label = "Uplink the complaint unedited"
+text = "Strain -0.08 across the crew. Confidence -0.06. Attention +0.04."
 tags = ["people", "independence"]
-chronicle = "The SMB sent the complaint about the tasking list to Earth unedited. The can loved it and the sponsor did not."
+chronicle = "The crew's complaint about the tasking list was uplinked unedited. Confidence fell at the following review."
 [[option.effect]]
 all_strain = -0.08
 [[option.effect]]
@@ -48,18 +48,18 @@ work_positive = 0.2
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "I will send it if the SMB tells me to. I want the record to show that I said the quarterly review is in four months."
+text = "Sponsor Liaison will transmit if directed and requests the record show the quarterly review is four months out."
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "They asked for three things this month that need parts they have not shipped. Tell them. In those words."
+text = "Chief Engineer reports three tasks on this month's list require parts that have not shipped. Recommends stating that."
 
 [[option]]
 id = "absorb"
-label = "{liaison} takes it and sends up something calm"
-text = "The anger stays in the can, aimed at the one person who talks to Earth."
+label = "Have {liaison} file a summary"
+text = "{liaison} strain +0.2. Strain -0.03 across the crew. Confidence +0.02."
 tags = ["sponsor", "caution"]
-chronicle = "{liaison} took the complaint, filed it, and sent Earth a summary with the anger removed. The can knew, and aimed it at {liaison} instead."
+chronicle = "{liaison} filed the complaint and uplinked a summary with the grievance removed. The crew were aware of the edit."
 [[option.effect]]
 person = "liaison"
 strain = 0.2
@@ -74,18 +74,18 @@ add = 0.02
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "That is what the job is. I would rather they hated me than that the review went badly."
+text = "Sponsor Liaison classes this as in-role and rates a bad review as the higher cost."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You are asking one person to be the wall the whole outpost throws things at. I have seen what that does to the wall."
+text = "Medical Officer reports the proposal designates one crew member as the outpost's absorber. Outcomes for that role are documented and poor."
 
 [[option]]
 id = "enforce"
 label = "Work the list as written"
-text = "The sponsor is paying. The tasking gets done and the complaining stops on the record."
+text = "Strain +0.06 across the crew. Confidence +0.05. CCI +0.6."
 tags = ["sponsor", "throughput"]
-chronicle = "The SMB worked the tasking list as written and told the can to stop complaining on the record. The can did, on the record."
+chronicle = "The tasking list was worked as written and complaint on the record was closed. Complaint off the record was not measured."
 [[option.effect]]
 all_strain = 0.06
 [[option.effect]]
@@ -100,8 +100,8 @@ hindrance = 0.1
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "Half the list is things we would do anyway. Do them, log them, and the sponsor sees throughput."
+text = "Logistics Lead reports half the list duplicates scheduled work. Recommends doing it, logging it, and reporting throughput."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "The list has a sampling schedule on it that nobody on Earth has costed in hours. Doing it as written means the farm goes a month without a second pair of hands."
+text = "ECLSS Lead reports the list carries an uncosted sampling schedule. Working it as written removes a second pair of hands from the farm for a month."

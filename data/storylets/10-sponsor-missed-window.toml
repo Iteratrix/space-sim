@@ -6,12 +6,12 @@ weight = 3.0
 priority = 60
 tags = ["sponsor", "silence"]
 text = """
-The window opened, stayed open for its two months, and closed. Nothing came
-through it. There was no message saying nothing would come. {hours} has
-already recounted the spares and the propellant on the assumption of one
-more window. {liaison} has the last message from Earth open and it is about
-throughput, from before the RSW, and says nothing about a ship. The
-outpost needs a sentence to say about this to itself.
+Status: the RSW opened, held for two months, and closed. No arrival. No
+message declaring a no-arrival.
+{hours} has recounted spares and propellant against an assumption of one
+further window. {liaison} reports the last received message predates the
+window, concerns throughput, and does not reference a ship.
+Constraint: the crew requires a statement. The mind has no data on cause.
 """
 
 [[when]]
@@ -29,10 +29,10 @@ optional = true
 
 [[option]]
 id = "schedule"
-label = "A scheduling slip; the next RSW will carry double"
-text = "Say what the sponsor would say if the sponsor were saying anything. Convoys slip. Budgets are annual. The next one will be heavier."
+label = "Declare it a scheduling slip"
+text = "Strain -0.03 across the crew. CCI -0.3. No change to planning."
 tags = ["sponsor", "caution"]
-chronicle = "The outpost told itself the empty window was a scheduling slip and that the next one would carry double. It was the kind of sentence people said in the corridors."
+chronicle = "The empty window was declared a scheduling slip, with the next RSW expected to carry double. The statement was not sourced."
 [[option.effect]]
 all_strain = -0.03
 [[option.effect]]
@@ -43,18 +43,18 @@ flag = "silence_explained"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "You asked me last month whether the RSW was manifested. It was. A manifested RSW that does not sail is a slip, not a decision. I have seen slips."
+text = "Sponsor Liaison confirms the RSW was manifested. A manifested window that does not sail is a slip, not a decision."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "I will believe double when I see the tonnage. Until then I am running the loops as if the spares in the store are the spares there are."
+text = "Chief Engineer will plan on the spares present in the store until tonnage lands."
 
 [[option]]
 id = "test"
-label = "They are watching to see what we do"
-text = "The sponsor has dish time. It could have said nothing was coming. It chose not to. Read that as a question."
+label = "Declare it a test and raise throughput"
+text = "Shipped +10 t. Strain +0.05. CCI +0.4."
 tags = ["sponsor", "throughput", "risk"]
-chronicle = "The outpost decided the empty window was a test and threw itself at the MDLS to pass it. It was a way of not having to think about the other explanation."
+chronicle = "The empty window was declared a test of the outpost. MDLS output was raised for the following month."
 [[option.effect]]
 q = "throughput.shipped"
 add = 10
@@ -68,18 +68,18 @@ flag = "silence_as_test"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "If it is a test, the answer is tonnes. If it is not a test, tonnes still cost nothing we were not already spending."
+text = "Logistics Lead reports tonnage answers a test and costs nothing that was not already committed."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You are proposing that thirty-six people work harder for an audience that may have left the room. I would rather they slept."
+text = "Medical Officer reports the proposal raises load on 36 crew for an unverified audience. Recommends rest."
 
 [[option]]
 id = "count"
-label = "Start counting the silences"
-text = "Say nothing about why. Write it down as the first, so that if there is a second the outpost has a word for it already."
+label = "Log it as the first, and number the next"
+text = "No cause stated. CCI +0.2. Return intent falls."
 tags = ["independence", "caution"]
-chronicle = "The outpost did not explain the empty window. It wrote it down as the first silence, so that a second would have a number."
+chronicle = "No cause was stated for the empty window. It was entered in the log as the first, so that a second would have a number."
 [[option.effect]]
 counter = "silences_counted"
 add = 1
@@ -93,8 +93,8 @@ flag = "counting_silences"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Water does not care why the ship did not come. Count the RSW, adjust the reserve, and stop asking the sky for reasons."
+text = "ISRU Lead recommends logging the missed RSW, adjusting the reserve, and requesting no explanation."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "If you give it a number you have decided there will be more. I am not ready to tell Earth that we have started counting."
+text = "Sponsor Liaison notes numbering the event asserts that there will be more. That assertion is premature on the record."

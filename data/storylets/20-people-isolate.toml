@@ -5,12 +5,12 @@ weight = 0.3
 cooldown = 36
 tags = ["people"]
 text = """
-{isolate} eats after everyone else has finished and stands the watches alone
-when the roster allows it. Nobody dislikes {isolate}. Nobody would go on a
-three-year mission with {isolate} either, if asked, and the record is clear
-about where that ends: an error at work, then a name for it, then a group that
-has agreed without meeting that {isolate} is the problem. {warm} is someone
-people talk to, and has noticed.
+Status: {isolate} takes the late meal after the mess clears and stands
+watches alone where the roster permits. No conflict reported.
+Note: the ICE record gives the sequence as withdrawal, error, attribution,
+then group consensus that the withdrawn crew member is the fault. Mean
+strain is above threshold.
+{warm} is a high-contact crew member and has registered the pattern.
 """
 
 [[when]]
@@ -25,10 +25,10 @@ role = "warm"
 
 [[option]]
 id = "draw_in"
-label = "{warm} draws {isolate} back in"
-text = "The expressive leader does the work. It is work."
+label = "Task {warm} with re-integrating {isolate}"
+text = "{isolate} strain -0.15. {warm} strain +0.06. No roster change."
 tags = ["people"]
-chronicle = "{warm} started taking the late meal with {isolate}, and then so did others. It cost {warm} something and nobody wrote down what."
+chronicle = "{warm} began taking the late meal with {isolate}. Others followed. The hours were not logged."
 [[option.effect]]
 tie = ["isolate", "warm"]
 work_positive = 0.3
@@ -44,18 +44,18 @@ strain = 0.06
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "This is the intervention the literature actually supports. One person who is good at people, doing it on purpose. It does not need a policy."
+text = "Medical Officer reports this is the intervention the literature supports: one high-contact crew member, acting deliberately. No policy required."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "{warm} is on the roster too. Every meal is an hour. I am not against it, I want it in the ledger."
+text = "Logistics Lead notes {warm} is also on the roster and each meal is one hour. Requests the hours entered in the ledger."
 
 [[option]]
 id = "reassign"
-label = "Move {isolate} to a shared watch with a different task"
-text = "A role change. Meaningful work in company, not the same task alone."
+label = "Move {isolate} to a shared watch"
+text = "{isolate} strain -0.1. Farm watch cannot be stood alone."
 tags = ["people", "hours"]
-chronicle = "The SMB moved {isolate} onto the shared farm watch, where nobody works alone. It was a smaller thing than it looked and it worked better than it should have."
+chronicle = "{isolate} was reassigned to the shared farm watch, where no station is worked alone."
 [[option.effect]]
 person = "isolate"
 strain = -0.1
@@ -67,18 +67,18 @@ all_strain = 0.01
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "Give me {isolate} on the beds. The farm is the one watch where you cannot be alone if you try."
+text = "ECLSS Lead requests {isolate} on the beds. The farm watch cannot be worked in isolation."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "I lose a pair of hands that knows the KEEP to a watch that does not need them. Do it if you must, and tell me who replaces them."
+text = "Chief Engineer loses one KEEP-rated pair of hands to a watch that does not require the rating. Requests a named replacement."
 
 [[option]]
 id = "rotate_out"
-label = "Put {isolate} on the next ship"
-text = "Rotation is the one cure the sponsor still offers."
+label = "Rotate {isolate} out on the next ship"
+text = "{isolate} departs. Strain -0.02 across the crew. Confidence -0.02."
 tags = ["sponsor", "people", "cost"]
-chronicle = "{isolate} went home on the next ship, early, as the sponsor's policy on morale cases allowed. The can was easier afterwards and nobody was proud of it."
+chronicle = "{isolate} returned early on the next ship under the sponsor's morale-case provision."
 [[option.requires]]
 stage_max = 3
 [[option.effect]]
@@ -92,18 +92,18 @@ add = -0.02
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "There is a category on the rotation form for this and it does not require a diagnosis. Use it while the form still exists."
+text = "Sponsor Liaison reports a rotation category exists for this and requires no diagnosis. Recommends use while the form is current."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "You are sending someone home for being quiet. The next quiet one will hear that."
+text = "Medical Officer notes the criterion applied is withdrawal. The next withdrawn crew member will have observed the criterion."
 
 [[option]]
 id = "leave_be"
-label = "Leave {isolate} be"
-text = "Some people want the edge. The record says otherwise, but the record has not met everyone."
+label = "No action"
+text = "{isolate} strain +0.15. Pattern continues."
 tags = ["caution", "hours"]
-chronicle = "The SMB left {isolate} to the late meal and the lone watches. The error, when it came, was small, and the name for it was not."
+chronicle = "No action was taken on {isolate}. The error, when it came, was small. The attribution was not."
 [[option.effect]]
 person = "isolate"
 strain = 0.15
@@ -115,8 +115,8 @@ counter = "isolates_ignored"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "I was the one at the edge on the ice for a whole winter and I was fine. Not everyone who eats alone is drowning."
+text = "ISRU Lead overwintered at the edge of a station crew and returned nominal. Reports that eating alone is not itself a finding."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The chain is withdrawal, error, scapegoat. We are at the first link and it is the cheapest one to break."
+text = "Medical Officer reports the sequence is withdrawal, error, attribution. The outpost is at the first link, which is the cheapest to break."

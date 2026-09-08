@@ -5,12 +5,11 @@ weight = 1.5
 cooldown = 14
 tags = ["sponsor", "people", "rotation"]
 text = """
-The window is open and the ship is loading. {rotator} has come to the SMB
-with the contract in hand and asked not to be on it. No reason given that
-would fit on a form; something about the light in the KEEP at dim, and
-having stopped reading the messages from home. The sponsor months residents
-as a cost line that never closes. {bodies} has {rotator}'s CED and strain
-in front of them. The ship leaves in two months.
+Status: RSW open, ship loading. {rotator} has presented the contract to the
+SMB and requested removal from the return berth. No reason given that fits
+the form.
+Constraint: the sponsor accounts residents as an open cost line. {bodies}
+holds {rotator}'s CED and strain figures. Ship departs in two months.
 """
 
 [[when]]
@@ -42,10 +41,10 @@ optional = true
 
 [[option]]
 id = "stay"
-label = "Let {rotator} stay"
-text = "Tear up the return berth. {rotator} is a resident from this month, with a resident's lay and no ship to plan around."
+label = "Grant residence"
+text = "Berth returns empty. Confidence -0.03. Roster gains a resident."
 tags = ["people", "independence", "families"]
-chronicle = "{rotator} asked to stay and the SMB said yes. The berth went home empty and the sponsor's roster gained a line it did not have a column for."
+chronicle = "{rotator} was granted residence and the return berth went home empty. The sponsor's roster gained a line with no column for it."
 [[option.effect]]
 person = "rotator"
 resident = true
@@ -59,22 +58,22 @@ counter = "chose_to_stay"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "The strain curve on someone who has stopped wanting to leave goes down, not up. I have seen it twice. Let this one stay and I will have seen it three times."
+text = "Medical Officer reports strain falls in crew who have stopped intending to leave. Two prior observations on station."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "You asked last month how the board sees residents. As a permanent cost with no exit clause. Every one we add is a line that never closes, and they count the lines."
+text = "Sponsor Liaison reports the board accounts residents as permanent cost with no exit clause, and counts the lines."
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "A resident is a pair of hands I can plan beyond thirty months. I will take that over a berth any day the MDLS is running."
+text = "Logistics Lead can schedule a resident beyond thirty months. A berth cannot be scheduled at all."
 
 [[option]]
 id = "send_home"
-label = "Hold {rotator} to the contract"
-text = "The contract says home. The sponsor pays for a rotation, not a settlement, and a berth refused is a berth the sponsor paid for and did not get."
+label = "Enforce the contract"
+text = "{rotator} departs. Confidence +0.02. CCI +0.6."
 tags = ["sponsor", "caution", "cost"]
-chronicle = "{rotator} asked to stay and the SMB held the contract. The ship left with {rotator} on it, looking at the rock the whole burn out."
+chronicle = "The SMB enforced the contract and {rotator} boarded. Departure was recorded as nominal."
 [[option.effect]]
 person = "rotator"
 leave = true
@@ -89,18 +88,18 @@ all_return_intent = 0.03
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "A contract that ends when it says it ends is the only kind the board trusts. Keep the board trusting contracts. We will need it to."
+text = "Sponsor Liaison reports the board trusts contracts that terminate as written. That trust is a standing asset."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The flight home is nine months in a can with a person who did not want to be in it. I would not sign that off on Earth and I will not here."
+text = "Medical Officer rates a nine-month transit with an unwilling passenger as off-nominal. Would not sign it on Earth."
 
 [[option]]
 id = "one_more"
-label = "One more contract, and then we will see"
-text = "Neither yes nor no. Renew {rotator} for another term on the sponsor's paper, and let the question come back in thirty months."
+label = "Renew the contract for one term"
+text = "Thirty months added. Return intent -0.3. Question deferred."
 tags = ["people", "sponsor", "caution"]
-chronicle = "{rotator} asked to stay and the SMB gave one more contract instead of an answer. Thirty more months, and the same question with a different sky."
+chronicle = "{rotator} was renewed for a further term instead of granted residence. The question returns in thirty months."
 [[option.effect]]
 person = "rotator"
 return_intent = -0.3
@@ -112,8 +111,8 @@ flag = "renewed_instead"
 [[option.advice]]
 seat = "hours"
 stance = "for"
-text = "A renewal is a form the sponsor already has. Residency is a form it does not. Use the one that exists."
+text = "Logistics Lead reports a renewal uses a form the sponsor already holds. Residency does not."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Someone who has stopped reading the messages from home is not going to start again in thirty months. Say yes now, or say no; do not say later."
+text = "Chief Engineer assesses the request will not change in thirty months. Recommends a decision now, either way."

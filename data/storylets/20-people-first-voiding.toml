@@ -4,12 +4,13 @@ act = 1
 once = true
 tags = ["people", "dose", "risk"]
 text = """
-{walker} has taken a suit and a surface pod and gone out onto the rock, alone,
-and has sent one message: not coming in until the RSW. Not a fault, not a
-breakdown that anyone could see from the outside; {walker} had been quiet for
-counts and is now somewhere under the sky with two grams of aluminium between
-skin and everything. {bodies} has done the sum: an RSW outside the shielding
-is most of a sievert, and an STE is death. Nobody has a word for what this is.
+Status: {walker} has taken a suit and a surface pod onto the rock, alone,
+and transmitted one message: not returning until the RSW. No fault
+reported. No equipment failure detected. {walker} has been logged as
+withdrawn for several months.
+{bodies} reports the exposure: one RSW outside the shielding is
+approximately 700 mSv. An STE during that period is fatal.
+Constraint: recovery requires three crew on the surface.
 """
 
 [[when]]
@@ -28,10 +29,10 @@ seat = "bodies"
 
 [[option]]
 id = "let_go_logged"
-label = "Let {walker} stay out, and log the CED honestly"
-text = "A window outside. The ledger takes the number and the sponsor reads it."
+label = "Permit it and log the CED"
+text = "{walker} dose +700 mSv, strain -0.4. Confidence -0.05. Ledger uplinked."
 tags = ["dose", "people", "independence"]
-chronicle = "{walker} stayed on the surface a whole window and came in thin and quiet with most of a sievert in the ledger. It was written down. Nobody could say what had been done, only that it had been done first."
+chronicle = "{walker} remained on the surface for one RSW and returned with approximately 700 mSv entered in the CED ledger. The entry was uplinked."
 [[option.effect]]
 person = "walker"
 dose = 0.7
@@ -55,18 +56,18 @@ counter = "voidings"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "I cannot make {walker} come in without three people and a fight on the surface, and that is more CED than talking. Let it be a choice, and let the ledger say so."
+text = "Medical Officer reports recovery requires three crew and a struggle on the surface, at a higher aggregate CED than negotiation. Recommends recording it as a choice."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "A crew member voluntarily taking a year's coil CED in a month is a psychiatric event in the sponsor's book and it will be read as one."
+text = "Sponsor Liaison reports a crew member voluntarily taking a year of coil CED in one month is classified as a psychiatric event."
 
 [[option]]
 id = "let_go_quiet"
-label = "Let {walker} stay out, and keep it off the uplink"
-text = "The ledger takes the number. The sponsor does not."
+label = "Permit it and withhold the CED from the uplink"
+text = "{walker} dose +700 mSv, strain -0.4. SOS +0.8. Ledger local only."
 tags = ["dose", "independence", "risk"]
-chronicle = "{walker} stayed on the surface a whole window. The CED went in the ledger and not in the quarterly. It was the first thing {outpost} kept from Earth on purpose."
+chronicle = "{walker} remained on the surface for one RSW. The CED entry was made locally and omitted from the quarterly. First deliberate omission from an Earth report."
 [[option.effect]]
 person = "walker"
 dose = 0.7
@@ -90,18 +91,18 @@ counter = "voidings"
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "The number is ours. The sponsor gets the tonnage. Nobody on Earth needs a line about a person sitting on a rock."
+text = "Chief Engineer reports the figure is the outpost's. The sponsor receives tonnage."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "The CED ledger is on the audit log. If it is in one place and not the other, somebody will eventually have the two side by side."
+text = "Sponsor Liaison reports the CED ledger writes to the audit log. Two divergent copies will eventually be compared."
 
 [[option]]
 id = "bring_in"
-label = "Go out and bring {walker} in"
-text = "Three people, a suit each, an argument on the surface. Dose for all of them."
+label = "Recover {walker} from the surface"
+text = "Three crew take surface CED. {walker} dose +80 mSv, strain +0.1."
 tags = ["dose", "caution", "medicine"]
-chronicle = "Three went out after {walker} and brought {walker} in by the second watch. Everyone involved took CED and {walker} did not speak to any of them for a month."
+chronicle = "A three-crew party recovered {walker} by the second watch. All three took CED. {walker} did not speak to the party for a month."
 [[option.effect]]
 person = "walker"
 dose = 0.08
@@ -119,8 +120,8 @@ all_strain = 0.02
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "The sum is three people at surface CED for a watch against one person at surface CED for an RSW. The sum says go. I am not sure the sum is the whole question."
+text = "Medical Officer computes three crew at surface CED for one watch against one crew at surface CED for one RSW. The sum favours recovery. States the sum is not the whole question."
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "A flare comes and we have a body on the surface. Bring {walker} in and argue about it under rock."
+text = "ECLSS Lead reports an STE with a body on the surface is unrecoverable. Recommends recovery first and discussion under rock."

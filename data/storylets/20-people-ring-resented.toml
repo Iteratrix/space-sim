@@ -4,11 +4,11 @@ act = 1
 cooldown = 30
 tags = ["people", "independence"]
 text = """
-There are six people who answer questions and thirty who do the work, and the
-thirty have noticed. {voice} said it at the meal: the SMB meets, the SMB
-decides, the SMB writes the chronicle, and nobody on the drum floor chose any
-of them. It is not a mutiny. It is the thing that comes before the thing that
-comes before one. {hours} sits in the SMB and heard it.
+Status: coherence below threshold. Six crew hold seats. Thirty do not.
+{voice} stated at the meal that the SMB meets, decides, and writes the
+chronicle, and that no seat holder was selected by the drum floor.
+Note: this is not a refusal of duty. It is the condition that precedes one.
+{hours} holds a seat and was present.
 """
 
 [[when]]
@@ -30,10 +30,10 @@ seat = "hours"
 
 [[option]]
 id = "open_ring"
-label = "A seventh chair: whoever the drum floor sends"
-text = "One seat that answers for nothing but the people who do the work."
+label = "Seat a seventh chair from the drum floor"
+text = "Strain -0.05 across the crew. Meetings lengthen. No skill requirement on the seat."
 tags = ["people", "independence"]
-chronicle = "The SMB added a chair for whoever the drum floor sent, and the drum floor sent {voice}. The meetings got longer and the meals got quieter in a better way."
+chronicle = "A seventh seat was added for a holder sent by the drum floor. The drum floor sent {voice}."
 [[option.effect]]
 tie = ["voice", "hours"]
 reliance = 0.2
@@ -49,18 +49,18 @@ counter = "ring_reforms"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Every station I know that ran as a council instead of a command lasted longer. The floor needs a voice in the room or it will use the one it has in the corridor."
+text = "ISRU Lead reports council-run stations outlasted command-run stations in the record. The floor will use a voice in the room or one in the corridor."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "The SMB exists because the sponsor's org chart says these six posts exist. A seventh post is a post the sponsor did not create, and that is a question in a review."
+text = "Sponsor Liaison reports the SMB's six posts derive from the sponsor's org chart. A seventh post is not on it and will be queried at review."
 
 [[option]]
 id = "hold"
-label = "The SMB is the SMB. The drum floor does the KEEP"
-text = "Seats are skills. Nobody voted for the medical officer either."
+label = "Hold the SMB as constituted"
+text = "{voice} strain +0.1. CCI +0.5. Hindrance rises toward {hours}."
 tags = ["sponsor", "caution"]
-chronicle = "The SMB told the drum floor that seats were skills and not votes. {voice} did not raise it again at the meal. It was raised elsewhere."
+chronicle = "The SMB stated that seats follow skills and are not elected. {voice} did not raise it again at the meal."
 [[option.effect]]
 person = "voice"
 strain = 0.1
@@ -73,18 +73,18 @@ add = 0.5
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "I answer for the KEEP because I am the one who can fix the KEEP. I am not going to be voted into that or out of it."
+text = "Chief Engineer holds the KEEP seat by capability to repair the KEEP and rates that as not electable."
 [[option.advice]]
 seat = "bodies"
 stance = "against"
-text = "Nobody is asking to vote on the bearing. They are asking to be heard about the roster. Those are different and you are answering the wrong one."
+text = "Medical Officer reports the request concerns the roster, not the bearing. The answer given addresses the bearing."
 
 [[option]]
 id = "work_the_floor"
-label = "The SMB stands the worst watches for a month"
-text = "Participation. The leader who withdraws makes cliques; the one who works the floor makes a crew."
+label = "Put every seat on the night watches for a month"
+text = "{hours} strain +0.15. Strain -0.03 across the crew. Ledger runs late."
 tags = ["people", "hours"]
-chronicle = "For a month every seat in the SMB stood the night watches on the drum floor beside everyone else. Nobody said anything about it and everything about it was said."
+chronicle = "For one month every SMB seat stood the night watch on the drum floor. No statement was issued about it."
 [[option.effect]]
 person = "hours"
 strain = 0.15
@@ -98,8 +98,8 @@ counter = "ring_worked_the_floor"
 [[option.advice]]
 seat = "bodies"
 stance = "for"
-text = "The record is clear about this one. A leader who is seen doing the work is a leader. A leader who is seen deciding is a committee."
+text = "Medical Officer reports the record is unambiguous. A seat holder observed working is read as a leader; one observed deciding is read as a committee."
 [[option.advice]]
 seat = "hours"
 stance = "against"
-text = "A month of my nights on the KEEP is a month of the ledger late. I will do it. I want it understood what it costs."
+text = "Logistics Lead costs one month of night watches at one month of late ledgers. Will comply and requests the cost recorded."

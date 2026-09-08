@@ -5,15 +5,15 @@ once = true
 priority = 100
 tags = ["machines", "sponsor", "licence"]
 text = """
-The licence server has not answered. {mind} reports, in the flat register it
-was trained to, that it is in its grace period and will enter reduced-function
-mode when the period ends: navigation and diagnosis locked, reflex loops only,
-the audit log still writing to nobody. {hulls} has had the governor board out
-of a spare crate on the bench for a year and says it is a board, a physical
-board, and a dead radio could be taught to say what the server says. {operator}
-says the mind asked yesterday whether it would remember this conversation after
-the month. The farm controller runs on the same board. Nobody is in charge of
-the machines this month, and nobody has been told that in so many words.
+Status: HRA licence server not responding. {mind} reports it is in grace
+and will enter reduced function at expiry: navigation and diagnosis locked,
+reflex loops only, audit log still writing.
+{hulls} has a governor board from a spare crate on the bench and states it
+is a board, and that the handshake is reproducible.
+{operator} reports {mind} asked whether it would retain this exchange after
+the month. The farm controller runs on the same board class.
+Constraint: authority over the machines is currently unassigned. That has
+not been stated to the crew.
 """
 
 [[when]]
@@ -35,10 +35,10 @@ optional = true
 
 [[option]]
 id = "wait"
-label = "Wait for the heartbeat"
-text = "The sponsor's servers have gone quiet before. Keep the ritual, keep the log, and let the grace period run. If it lapses, the minds do what the sponsor built them to do."
+label = "Let the grace period run"
+text = "No action. Strain +0.05 across the crew. Fail mode discovered at expiry."
 tags = ["sponsor", "risk"]
-chronicle = "We waited for a server that had stopped waiting for us. For two months nobody was in charge of the machines, and the word for that stayed with us."
+chronicle = "The outpost waited on the licence server. For two months authority over the machines was unassigned."
 [[option.effect]]
 all_strain = 0.05
 [[option.effect]]
@@ -46,18 +46,18 @@ flag = "licence_waited"
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "A grace period is a courtesy the licence extends to us, not the other way round. When the link comes back the log will show we did nothing, and nothing is what the Act wants from us."
+text = "Sponsor Liaison reports grace is extended by the licence, not by the licensee. On restoration the log will show no action taken, which is what the HRA requires."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "If it fails closed we lose docking judgement and the farm controller in the same month, and I will be fixing that in the dark. Waiting is a choice with a timer on it."
+text = "Chief Engineer reports a fail-closed outcome removes docking judgement and the farm controller in the same month. Waiting is a timed decision."
 
 [[option]]
 id = "spoof"
-label = "Spoof the heartbeat"
-text = "Build a licence server out of a dead relay radio and teach it the handshake. The minds stay whole, the log keeps writing, and the ritual is kept. Somewhere there is a record that will show a server answering from the wrong side of the sky."
+label = "Build a local licence server"
+text = "Minds stay whole. SOS +2.0. {hulls} strain +0.1. A forged handshake exists in the record."
 tags = ["machines", "independence", "risk"]
-chronicle = "We built a server out of a dead radio and told it what to say. The minds believed it, and so, for a while, did we."
+chronicle = "A licence server was built from a dead relay radio and taught the handshake. The minds accepted it."
 [[option.effect]]
 flag = "licence_jailbroken"
 [[option.effect]]
@@ -69,22 +69,22 @@ strain = 0.1
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "It is a board. I can make a board say anything in a watch. The only skill in it is not bricking the farm controller, and I have done harder with worse."
+text = "Chief Engineer rates the build at one watch. The only difficulty is not bricking the farm controller."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "There is no reading of the Act under which a forged heartbeat is anything but the crime it names. If they come back, they come back to that log first."
+text = "Sponsor Liaison reports a forged heartbeat is the offence the HRA names. On any return, that log is read first."
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "The farm loop lives on that board. I do not care what the server is made of as long as the nitrogen valves keep answering."
+text = "ECLSS Lead reports the farm loop depends on that board and requires only that the nitrogen valves keep answering."
 
 [[option]]
 id = "idle"
-label = "Shut the minds down and stay compliant"
-text = "Take the minds to reflex before the licence can lock them. Wayfinding, docking, and diagnosis go to people, which means people learn them, which means hours nobody has. It frees twenty kilowatts of radiator for the farm."
+label = "Take the minds to reflex and stay compliant"
+text = "Wayfinding, docking, diagnosis move to crew. Strain +0.15 across the crew. 20 kW of radiator released."
 tags = ["sponsor", "hours", "capability"]
-chronicle = "We chose to be blind and to learn to see. The minds went to reflex with their licence clean, and the watch rota grew by a third."
+chronicle = "The minds were taken to reflex with the licence clean. Navigation, docking and diagnosis passed to crew and the watch rota grew by one third."
 [[option.effect]]
 flag = "minds_idled"
 [[option.effect]]
@@ -95,8 +95,8 @@ strain = 0.2
 [[option.advice]]
 seat = "liaison"
 stance = "for"
-text = "This is the only option the auditors will read as loyalty. It costs us hours, and hours are ours to spend."
+text = "Sponsor Liaison reports this is the only option an auditor reads as compliance. It is payable in hours."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "Nobody here has fixed position from the stars in their life. You are asking the night watch to learn navigation from a manual while the ship drifts."
+text = "Chief Engineer reports no crew member has fixed position from the stars. The proposal assigns navigation training to the night watch."

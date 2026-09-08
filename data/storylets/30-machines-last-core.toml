@@ -5,13 +5,13 @@ once = true
 priority = 100
 tags = ["hulls", "risk", "machines"]
 text = """
-The reactor has one core and it is the one it was born with; uranium is eight
-parts per billion in the rock and nobody will refuel it. The wear indicators
-have been climbing for a year. {hulls} has two ways to run it. Derate it: two
-thirds of rated, the farm on short light in the Lean, the coils cycled, and the
-core lasts longer than the manual says it can. Or run it at rating, keep the
-farm and the MDLS and the minds fed, and let the core decide when it is
-finished. {air} has already asked what a third less power does to the freezers.
+Status: reactor wear at threshold. The reactor holds one core, as
+delivered. Uranium is 8 parts per billion in local rock; refuelling is not
+possible.
+Options: derate to two thirds of rated, which extends core life beyond the
+manual figure and puts the farm on short light and the freezers on ration.
+Or run at rating and let the wear indicators set the end date.
+{air} has requested the freezer figures at one third less power.
 """
 
 [[when]]
@@ -32,10 +32,10 @@ seat = "air"
 
 [[option]]
 id = "derate"
-label = "Derate it"
-text = "Two thirds of rated. The Lean is dim and the freezers are rationed. The core lasts two more years than it would have."
+label = "Derate the core"
+text = "Two thirds of rated. Reactor life +24 months. Food margin -2 months. Strain +0.06 across the crew."
 tags = ["capability", "risk", "hulls", "closure"]
-chronicle = "We derated the last core and lived two dim winters in exchange for two more years of it."
+chronicle = "The last core was derated to two thirds of rated. Two dim seasons were traded for two further years of core life."
 [[option.effect]]
 q = "power.reactor_life"
 add = 24
@@ -49,22 +49,22 @@ add = -2
 [[option.advice]]
 seat = "hulls"
 stance = "for"
-text = "A core that dies early dies on a day I did not choose. Derated, I know the day, near enough, and I can build toward it."
+text = "Chief Engineer reports an underated core fails on an unscheduled date. Derated, the end date is estimable and can be built toward."
 [[option.advice]]
 seat = "air"
 stance = "against"
-text = "A third less power is a third less light on the farm in the Lean. The freezers keep it, the farm does not, and I have to choose which of them the nitrogen goes to."
+text = "ECLSS Lead reports one third less power is one third less farm light in the lean season, and requires a ruling on whether nitrogen goes to the freezers or the beds."
 [[option.advice]]
 seat = "liaison"
 stance = "against"
-text = "Derating shows on the power telemetry as under-production. The quarterly will read it as a fault."
+text = "Sponsor Liaison reports derating appears on power telemetry as under-production and will be read at review as a fault."
 
 [[option]]
 id = "hot"
-label = "Run it at rating"
-text = "Everything fed, nothing rationed, and the core finishes when it finishes. Build the mirrors faster and hope they are ready first."
+label = "Run the core at rating"
+text = "Reactor wear +1.5. Nothing rationed. Confidence +0.03. Mirror build continues at full rate."
 tags = ["throughput", "sponsor", "risk"]
-chronicle = "We ran the last core at rating and put everything into the mirrors, and the SMB stopped asking the Chief Engineer how long."
+chronicle = "The last core was run at rating and all available effort went to the mirrors. The SMB stopped requesting a remaining-life estimate."
 [[option.effect]]
 q = "menace.reactor_wear"
 add = 1.5
@@ -76,8 +76,8 @@ add = 0.03
 [[option.advice]]
 seat = "air"
 stance = "for"
-text = "The farm gets its light and the freezers get their cold. Ask me about the day after when it is the day after."
+text = "ECLSS Lead reports the farm holds its light and the freezers hold their cold under this option."
 [[option.advice]]
 seat = "hulls"
 stance = "against"
-text = "It is the last core. There is no argument for running the last of anything hot."
+text = "Chief Engineer reports it is the last core and holds no case for running the last of any item at rating."
