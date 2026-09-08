@@ -481,10 +481,10 @@ fn run_one(
 
 /// The feel gate: batches under the ring policy must not be flat, silent, or partial.
 fn feel(engine: &Engine, args: &Args) -> bool {
-    let allow_never = ["first_manifest", "tut_rsw_empty", "sponsor_empty_chair"];
+    let allow_never = ["first_manifest", "tut_rsw_empty", "sponsor_empty_chair", "hundredth_count"];
     let max_quiet = match args.scenario {
         sim::setup::Scenario::Tutorial => 5,
-        sim::setup::Scenario::Act1 => 12,
+        sim::setup::Scenario::Act1 => 9,
     };
     let mut fired: BTreeMap<String, u32> = BTreeMap::new();
     let mut chosen: BTreeMap<String, u32> = BTreeMap::new();

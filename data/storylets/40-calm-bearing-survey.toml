@@ -1,0 +1,103 @@
+id = "calm_bearing_survey"
+title = "The Quarterly Survey"
+act = 1
+weight = 0.6
+cooldown = 16
+tags = ["hulls", "spares", "capability"]
+text = """
+Status: nothing off-nominal this count. The standing survey of the drum
+gallery is complete and returns one finding.
+{hulls} reports the number three idler bearing on the gallery conveyor is
+running 4 degrees above its neighbours and has been for two counts. It is
+not a failure. It is a bearing that will fail, on a date the log can be
+made to predict.
+Constraint: the re-line takes five spare units and one shift. Deferred to
+the next scheduled shutdown it takes no spares and about ninety hours of
+hand work, because the gallery has to be walked cold.
+"""
+
+[[when]]
+q = "stocks.spares"
+ge = 40
+
+[[when]]
+q = "menace.leak"
+lt = 4
+
+[[when]]
+q = "counts_to_window"
+ge = 4
+
+[[when]]
+turn_min = 18
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[option]]
+id = "now"
+label = "Re-line the bearing this count"
+text = "Spares -5. LSS-C +0.003. Strain +0.05 across the crew."
+tags = ["hulls", "spares", "capability", "caution"]
+chronicle = "MM {turn}. The number three idler was re-lined on the survey finding, before failure. Five spare units were drawn against a part that had not broken."
+[[option.effect]]
+q = "stocks.spares"
+add = -5
+[[option.effect]]
+q = "closure"
+add = 0.003
+[[option.effect]]
+all_strain = 0.05
+[[option.effect]]
+flag = "maintenance_forward"
+[[option.effect]]
+counter = "surveys_acted_on"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Chief Engineer rates five units now against a gallery walked cold later. The second figure is not five units and it is not this month."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "Logistics Lead reports spares are the one stock the outpost cannot make. Recommends spending them on parts that have failed."
+
+[[option]]
+id = "defer"
+label = "Book it for the next shutdown"
+text = "No spares. Strain +0.1 across the crew when it falls due. N2 make-up +0.3."
+tags = ["hours", "cost"]
+chronicle = "MM {turn}. The survey finding was booked to the next scheduled shutdown and the bearing was left running warm."
+[[option.effect]]
+all_strain = 0.1
+[[option.effect]]
+q = "menace.leak"
+add = 0.3
+[[option.effect]]
+flag = "maintenance_deferred"
+[[option.effect]]
+counter = "maintenance_deferred"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "ECLSS Lead reports the gallery is cold at shutdown regardless. Work done then is work not done twice."
+
+[[option]]
+id = "watch"
+label = "Put it on the watch list and read it monthly"
+text = "No cost. The finding stays open. {hulls} strain +0.05."
+tags = ["caution", "hours"]
+chronicle = "MM {turn}. The bearing was entered on the watch list with a monthly temperature reading against it. No work was ordered."
+[[option.effect]]
+person = "hulls"
+strain = 0.05
+[[option.effect]]
+flag = "watch_list_open"
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Chief Engineer reports a watch list is a record of decisions not taken. Two of the four items on the current list are now failures."

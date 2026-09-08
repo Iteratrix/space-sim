@@ -1,0 +1,95 @@
+id = "calm_hull_rumour"
+title = "A Hull on the Link"
+act = 1
+weight = 0.55
+cooldown = 18
+tags = ["sponsor", "capability", "independence"]
+text = """
+Status: traffic report from the Earth link, unverified.
+A prospecting hull under a flag that is not the sponsor's is logged on a
+transfer that passes within 0.4 AU of {outpost} in about fourteen counts.
+The source is a chatter relay, not the operator. {hours} rates it at better
+than rumour and short of a schedule.
+Constraint: a hull that close can be hailed. If it answers it will want
+water and propellant and will have parts, and neither side's paperwork
+covers the transaction. {liaison} reports the operator's berth is the
+operator's, in section four, whoever is standing in it.
+"""
+
+[[when]]
+q = "relay.health"
+gt = 0.5
+
+[[when]]
+q = "counts_to_window"
+ge = 4
+
+[[when]]
+stage_max = 4
+
+[[when]]
+turn_min = 24
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[option]]
+id = "log"
+label = "Log the traffic report and take no action"
+text = "No cost. The report is entered and the hull is not hailed."
+tags = ["caution", "sponsor"]
+chronicle = "MM {turn}. A foreign hull was logged on a passing transfer at 0.4 AU. No hail was made and no reply was expected."
+[[option.effect]]
+counter = "hulls_logged"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Sponsor Liaison reports an entry in the traffic log is a fact the outpost can be asked about and answer in one line. Anything further requires a longer answer."
+
+[[option]]
+id = "confirm"
+label = "Ask the operator to confirm the traffic"
+text = "Attention +0.03. Confidence -0.02. The question is on the record."
+tags = ["sponsor"]
+chronicle = "MM {turn}. The outpost asked the operator to confirm foreign traffic in the volume. The question went up with the count's packet."
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.03
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.effect]]
+flag = "hull_queried"
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "Logistics Lead reports the answer arrives one window after the hull has gone. Recommends the board decide before it asks, not after."
+
+[[option]]
+id = "berth"
+label = "Prepare a berth and a trade list"
+text = "Spares -3. Strain +0.06 across the crew. A list is drawn and held."
+tags = ["independence", "capability", "risk"]
+chronicle = "MM {turn}. A berth was cleared and a trade list was drawn against water and propellant the outpost holds. The list was not transmitted."
+[[option.effect]]
+q = "stocks.spares"
+add = -3
+[[option.effect]]
+all_strain = 0.06
+[[option.effect]]
+flag = "berth_ready"
+[[option.effect]]
+counter = "hulls_logged"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Chief Engineer rates a passing hull as the only source of parts that is not on a manifest. Recommends the berth be ready before the answer is needed."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Sponsor Liaison reports a cleared berth on an operator's site is a question with no available answer. Recommends it not be created."

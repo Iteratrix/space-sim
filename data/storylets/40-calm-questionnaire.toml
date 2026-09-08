@@ -1,0 +1,108 @@
+id = "calm_questionnaire"
+title = "The Questionnaire"
+act = 1
+weight = 0.6
+cooldown = 18
+tags = ["sponsor", "people", "hours"]
+text = """
+Status: uplink received outside the review cycle. It is not a directive.
+The operator's human factors office has sent a questionnaire: 60 items,
+per crew member, on sleep, appetite, privacy, confidence in the chain of
+command, and intention to renew. {liaison} reports it is voluntary in the
+covering note and enumerated in the crew agreement.
+Constraint: 60 items across the present crew is about ninety hours. The
+returns go to an office that has never sent anything to {outpost} before.
+{bodies} notes item 44 asks whether the respondent would raise a family
+here, which is the sponsor's own policy question asked of the wrong people.
+"""
+
+[[when]]
+q = "sponsor.attention"
+gt = 0.3
+
+[[when]]
+q = "sponsor.counts_to_review"
+ge = 4
+
+[[when]]
+stage_max = 2
+
+[[when]]
+turn_min = 14
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[option]]
+id = "full"
+label = "Return it in full"
+text = "Strain +0.06 across the crew. Confidence +0.03. Attention +0.03."
+tags = ["sponsor", "hours"]
+chronicle = "MM {turn}. The human factors questionnaire was returned complete for every crew member on station, item 44 included."
+[[option.effect]]
+all_strain = 0.06
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.03
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.03
+[[option.effect]]
+flag = "questionnaire_full"
+[[option.effect]]
+counter = "questionnaires"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Sponsor Liaison reports a full return from a site that is not in difficulty is read once and filed. A partial return is read twice."
+
+[[option]]
+id = "minimal"
+label = "Return the mandatory items only"
+text = "Attention -0.03. No hours spent. Item 44 left blank."
+tags = ["caution", "hours"]
+chronicle = "MM {turn}. Only the enumerated items were returned. The voluntary section, item 44 among them, went back blank."
+[[option.effect]]
+q = "sponsor.attention"
+add = -0.03
+[[option.effect]]
+counter = "questionnaires"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Logistics Lead costs the full return at ninety hours against an office with no line in the manifest. Recommends the enumerated items and nothing else."
+
+[[option]]
+id = "append"
+label = "Return it in full and append the outpost's own items"
+text = "Strain +0.08 across the crew. Attention +0.04. Confidence -0.02."
+tags = ["sponsor", "people", "independence"]
+chronicle = "MM {turn}. The questionnaire was returned complete with eight items added by the SMB, on rotation length, family policy and the store's markup."
+[[option.effect]]
+all_strain = 0.08
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.04
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.effect]]
+q = "menace.grievance"
+add = -0.3
+[[option.effect]]
+flag = "questionnaire_answered_back"
+[[option.effect]]
+counter = "questionnaires"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Medical Officer reports the crew answer item 44 in the clinic every week and it is never recorded anywhere the operator reads. Recommends it be recorded where it is read."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Sponsor Liaison reports an outpost that returns questions with its answers is an outpost with a position. Positions are minuted and remembered at review."

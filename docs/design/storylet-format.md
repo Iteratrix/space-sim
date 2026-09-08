@@ -96,6 +96,9 @@ person = "engineer"           # a cast role
 assign = "dig_keep"           # put their die on a project, or "hand"
 
 [[option.effect]]
+assign_robots = { class = "haul", project = "bake_out", count = 2 }   # unassigned units of a class
+
+[[option.effect]]
 end = "closed"                # or "extinct"; with reason = "..."
 reason = "evacuated on the sponsor's last ship"
 

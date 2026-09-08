@@ -1,0 +1,100 @@
+id = "calm_farm_menu"
+title = "The Farm Menu"
+act = 1
+weight = 0.6
+cooldown = 20
+tags = ["people", "air", "closure"]
+text = """
+Status: food margin above the line. The farm has capacity the ration
+schedule does not use.
+{air} reports 40 square metres of tray that will grow whatever is seeded in
+it this season. The schedule calls for the standing crop, which is the crop
+with the best mass return and the one every crew member has eaten at every
+meal for a year.
+Constraint: a variety crop returns about a third of the calories per square
+metre. The cold store can also simply be opened. {bodies} notes the clinic
+has logged eleven presentations this year with appetite as the first line.
+"""
+
+[[when]]
+q = "stocks.food_margin"
+gt = 4.5
+
+[[when]]
+q = "menace.grievance"
+lt = 2.5
+
+[[when]]
+turn_min = 10
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[option]]
+id = "standing_crop"
+label = "Seed the standing crop"
+text = "Food margin +0.4. CCI +0.2. The schedule holds."
+tags = ["air", "caution", "throughput"]
+chronicle = "MM {turn}. The trays were seeded to the standing crop and the ration schedule was carried unchanged."
+[[option.effect]]
+q = "stocks.food_margin"
+add = 0.2
+[[option.effect]]
+q = "menace.grievance"
+add = 0.2
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "ECLSS Lead reports the margin is the interval between a missed window and rationing. Recommends the trays be read as margin and nothing else."
+
+[[option]]
+id = "variety"
+label = "Seed a variety crop in the spare trays"
+text = "Food margin -0.3. LSS-C +0.004. Strain -0.06 across the crew."
+tags = ["people", "closure", "air"]
+chronicle = "MM {turn}. Forty square metres were seeded to a variety crop against the schedule. The season's calorie return from those trays fell by two thirds."
+[[option.effect]]
+q = "stocks.food_margin"
+add = -0.3
+[[option.effect]]
+q = "closure"
+add = 0.004
+[[option.effect]]
+all_strain = -0.06
+[[option.effect]]
+flag = "farm_variety"
+[[option.effect]]
+counter = "menu_changes"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Medical Officer reports eleven appetite presentations and no organic finding in any of them. Recommends the trays as the cheaper prescription."
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "Logistics Lead reports the margin is counted in months and the outpost is presently at eight. Two thirds of forty square metres is not free because it is small."
+
+[[option]]
+id = "open_store"
+label = "Open the cold store for one meal"
+text = "Food margin -0.5. Strain -0.1 across the crew. Nothing planted."
+tags = ["people", "air"]
+chronicle = "MM {turn}. The cold store was opened for a single meal taken together under full light. The trays were seeded to the standing crop the next morning."
+[[option.effect]]
+q = "stocks.food_margin"
+add = -0.5
+[[option.effect]]
+all_strain = -0.1
+[[option.effect]]
+flag = "mess_meal"
+[[option.effect]]
+counter = "rituals"
+[[option.advice]]
+seat = "air"
+stance = "against"
+text = "ECLSS Lead reports the cold store is one shipment deep and its contents cannot be regrown from belt material. Recommends it be spent on a date and not on a Tuesday."

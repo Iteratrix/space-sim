@@ -1,0 +1,105 @@
+id = "calm_inventory"
+title = "An Inventory Discrepancy"
+act = 1
+weight = 0.6
+cooldown = 14
+tags = ["spares", "hours", "sponsor"]
+text = """
+Status: stores reconciliation complete. The count does not close.
+Four spare units are on the manifest record and not on the shelf. The
+shortfall is in the LSS-C valve line. {hours} has run the count twice and
+the pick log three times. The pick log has no entry against them.
+Constraint: the discrepancy is four units against a shelf the sponsor
+audits at review. {hulls} reports valve stock is also the class of part
+most often drawn without an entry, because it is drawn at three in the
+morning by whoever is standing the loop watch.
+"""
+
+[[when]]
+q = "stocks.spares"
+gt = 20
+
+[[when]]
+q = "menace.suspicion"
+lt = 3
+
+[[when]]
+turn_min = 16
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[option]]
+id = "write_off"
+label = "Write the four units off"
+text = "Spares -4 on the record. SOS +0.4. The books close."
+tags = ["hours", "cost"]
+chronicle = "MM {turn}. Four spare units were written off against no pick entry and the stores count was closed."
+[[option.effect]]
+q = "stocks.spares"
+add = -4
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.4
+[[option.effect]]
+flag = "discrepancy_written_off"
+[[option.effect]]
+counter = "write_offs"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Logistics Lead reports four units is below the audit threshold and a closed book is worth more than four units. Recommends the write-off and a new pick procedure."
+
+[[option]]
+id = "count"
+label = "Count the whole store by hand"
+text = "Strain +0.08 across the crew. Spares +3 recovered. SOS -0.4."
+tags = ["hours", "spares", "caution"]
+chronicle = "MM {turn}. The store was counted by hand, shelf by shelf. Three units were recovered from the wrong bins and the valve line remained four short."
+[[option.effect]]
+all_strain = 0.08
+[[option.effect]]
+q = "stocks.spares"
+add = 3
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.4
+[[option.effect]]
+flag = "stores_counted"
+[[option.effect]]
+counter = "hand_counts"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Chief Engineer reports a store nobody has walked is a store nobody knows. The hours are recoverable and the shelf count is not."
+[[option.advice]]
+seat = "bodies"
+stance = "against"
+text = "Medical Officer reports a full stores count is two hundred hours drawn off rest and rostered work. Four units do not cost two hundred hours."
+
+[[option]]
+id = "report"
+label = "Report the shortfall to the sponsor"
+text = "Confidence -0.03. Attention +0.03. SOS -0.5."
+tags = ["sponsor", "caution"]
+chronicle = "MM {turn}. The valve shortfall was reported to the operator ahead of the audit, with the pick log attached and no explanation offered."
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.03
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.03
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.5
+[[option.effect]]
+flag = "shortfall_reported"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Sponsor Liaison reports a discrepancy declared by the outpost is a stores note. The same discrepancy found at audit is a finding, and findings are cited by section."

@@ -1,0 +1,105 @@
+id = "calm_cross_training"
+title = "Cross-Training"
+act = 1
+weight = 0.55
+cooldown = 20
+tags = ["capability", "independence", "hours"]
+text = """
+Status: labour nominal. The skills board is not.
+{hours} has posted the depth chart. Six of the nine skills on station are
+held one deep. Navigation and life support are held by one person each, both
+on contract, both rostered to leave at a window that is already on the board.
+{trainee} is a rotator with eleven counts left and no second skill.
+Constraint: teaching costs the teacher's hours and the learner's shift, and
+returns nothing on the quarterly. It returns a name in an empty box on the
+depth chart, which is a document the sponsor has never asked to see.
+"""
+
+[[when]]
+q = "labour.deficit"
+lt = 0.12
+
+[[when]]
+q = "people.mean_strain"
+lt = 0.6
+
+[[when]]
+turn_min = 20
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "trainee"
+rotator = true
+
+[[option]]
+id = "train"
+label = "Cross-train {trainee} into the empty box"
+text = "{trainee} strain +0.1, return intent -0.08. Strain +0.04 across the crew."
+tags = ["capability", "independence", "hours"]
+chronicle = "MM {turn}. {trainee} was put under instruction in a second skill and came off the line for one shift a week. The depth chart gained a second name in one box."
+[[option.effect]]
+person = "trainee"
+strain = 0.1
+[[option.effect]]
+person = "trainee"
+return_intent = -0.08
+[[option.effect]]
+all_strain = 0.04
+[[option.effect]]
+flag = "cross_trained"
+[[option.effect]]
+counter = "skills_taught"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Logistics Lead rates one deep as zero deep on the count the holder boards. Recommends the hours be spent while there are hours."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Sponsor Liaison reports skills are supplied on the rotation. A local training programme reads on the quarterly as a capability line, and capability lines are queried."
+
+[[option]]
+id = "keep_on_line"
+label = "Keep everyone on their rated task"
+text = "Confidence +0.02. No hours spent. The chart stands as posted."
+tags = ["throughput", "sponsor"]
+chronicle = "MM {turn}. The depth chart was noted and no instruction was ordered. Every hand stayed on its rated task."
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.02
+[[option.effect]]
+counter = "training_declined"
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "ISRU Lead reports the plant is at five tonnes against fourteen rated. Every hour taught is an hour not spent closing that gap."
+
+[[option]]
+id = "train_pair"
+label = "Put two on instruction and take the loss"
+text = "Strain +0.08 across the crew. Confidence -0.02. Two boxes filled."
+tags = ["capability", "independence", "people"]
+chronicle = "MM {turn}. Two rotators were placed under instruction in the thinnest skills on the chart. The season's rostered hours fell short by the amount taught."
+[[option.effect]]
+all_strain = 0.08
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.effect]]
+person = "trainee"
+return_intent = -0.1
+[[option.effect]]
+flag = "cross_trained"
+[[option.effect]]
+counter = "skills_taught"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Chief Engineer reports the fabrication bay is one person deep and that person is on contract. Two under instruction is the minimum that survives a rotation."

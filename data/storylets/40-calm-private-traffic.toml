@@ -1,0 +1,100 @@
+id = "calm_private_traffic"
+title = "Private Traffic"
+act = 1
+weight = 0.6
+cooldown = 15
+tags = ["people", "sponsor"]
+text = """
+Status: relay nominal. The count's downlink packet is 40 minutes short of
+its allocation.
+{sender} has asked for eight of those minutes for a message that is not
+addressed to the sponsor and does not go in the packet's body. It is a
+family matter. {sender} has asked that it not be read on station.
+Constraint: every bit that leaves here is carried on the sponsor's relay
+and archived at the sponsor's ground station. {liaison} reports the Act
+gives the operator a right of inspection over all traffic, exercised or
+not.
+"""
+
+[[when]]
+q = "relay.health"
+gt = 0.55
+
+[[when]]
+q = "menace.suspicion"
+lt = 3
+
+[[when]]
+turn_min = 12
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "sender"
+
+[[option]]
+id = "allocate"
+label = "Allocate the minutes unread"
+text = "{sender} strain -0.12. Return intent -0.05 across the crew. Attention -0.02."
+tags = ["people", "independence", "families"]
+chronicle = "MM {turn}. Eight minutes of downlink were allocated to private traffic and were not read on station. The allocation was minuted without its content."
+[[option.effect]]
+person = "sender"
+strain = -0.12
+[[option.effect]]
+all_return_intent = -0.05
+[[option.effect]]
+q = "sponsor.attention"
+add = -0.02
+[[option.effect]]
+flag = "private_traffic"
+[[option.effect]]
+counter = "private_traffic"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Logistics Lead reports the minutes are unspent and expire at the window. Unspent bandwidth returns nothing to anyone."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Sponsor Liaison cites section eleven. Traffic the outpost declines to read is traffic the operator will read, and the outpost will be asked why it did not."
+
+[[option]]
+id = "packet"
+label = "Carry it in the packet body"
+text = "{sender} strain +0.05. SOS -0.3. Content archived on the ground."
+tags = ["sponsor", "caution"]
+chronicle = "MM {turn}. The message went out in the packet body under the outpost's header and entered the sponsor's archive with the count's returns."
+[[option.effect]]
+person = "sender"
+strain = 0.05
+[[option.effect]]
+q = "menace.suspicion"
+add = -0.3
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Sponsor Liaison reports a message in the body is a message the operator has already approved by receiving it. There is no second question."
+
+[[option]]
+id = "refuse"
+label = "Keep the packet to station business"
+text = "{sender} strain +0.12. CCI +0.3. No precedent set."
+tags = ["sponsor", "caution", "cost"]
+chronicle = "MM {turn}. The downlink was held to station business and the request was refused. The forty minutes went unused."
+[[option.effect]]
+person = "sender"
+strain = 0.12
+[[option.effect]]
+q = "menace.grievance"
+add = 0.3
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "Logistics Lead reports a refusal on a Tuesday becomes the rule by the following window. Recommends the board choose the rule deliberately."

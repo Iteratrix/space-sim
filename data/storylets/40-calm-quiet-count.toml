@@ -1,0 +1,108 @@
+id = "calm_quiet_count"
+title = "A Count Without an Item"
+act = 1
+weight = 0.55
+cooldown = 14
+tags = ["hours", "people"]
+text = """
+Status: nominal. Stocks above their lines, pressures below their first
+bands, no window inside four counts, no review inside four counts, no fault
+open on any loop.
+{hours} has circulated the SMB paper for this count. It has an attendance
+list, a date, and no item.
+The board has an hour of everyone's rostered time booked and three ways to
+spend it. The mind's recommendation is that a count with no item is a
+result, and that it be minuted as one.
+"""
+
+[[when]]
+q = "menace.grievance"
+lt = 2
+
+[[when]]
+q = "menace.suspicion"
+lt = 2
+
+[[when]]
+q = "menace.leak"
+lt = 2
+
+[[when]]
+q = "sponsor.confidence"
+gt = 0.5
+
+[[when]]
+q = "counts_to_window"
+ge = 4
+
+[[when]]
+turn_min = 20
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[option]]
+id = "adjourn"
+label = "Adjourn"
+text = "No effect. The hour returns to the roster."
+tags = ["hours", "caution"]
+chronicle = "MM {turn}. The board sat, recorded that there was no item before it, and adjourned. The hour was returned to the roster."
+[[option.effect]]
+flag = "quiet_count_minuted"
+[[option.effect]]
+counter = "quiet_counts"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Logistics Lead reports the hour is worth more unspent than spent on a manufactured item. Recommends the board adjourn and the minute say so."
+
+[[option]]
+id = "drill"
+label = "Run the STE shelter drill"
+text = "Strain +0.06 across the crew. Shelter time improves. Nothing else changes."
+tags = ["risk", "capability", "dose"]
+chronicle = "MM {turn}. The hour was used for an unannounced STE shelter drill. The muster time was recorded and posted beside the previous one."
+[[option.effect]]
+all_strain = 0.06
+[[option.effect]]
+flag = "drill_run"
+[[option.effect]]
+counter = "drills"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Medical Officer reports the last muster ran eleven minutes against a forecast lead time of twenty. Recommends the drill while there is an hour to spend on it."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Chief Engineer reports a drill in a quiet month is an hour of hands off the gallery and one more unannounced alarm the crew learn to walk to."
+
+[[option]]
+id = "clear_watch"
+label = "Read the watch list down"
+text = "Spares -3. Strain +0.05 across the crew. The open findings close."
+tags = ["hulls", "spares", "capability"]
+chronicle = "MM {turn}. The hour was spent on the maintenance watch list, item by item, until the list was empty."
+[[option.requires]]
+flag = "watch_list_open"
+[[option.effect]]
+q = "stocks.spares"
+add = -3
+[[option.effect]]
+all_strain = 0.05
+[[option.effect]]
+unflag = "watch_list_open"
+[[option.effect]]
+q = "closure"
+add = 0.002
+[[option.effect]]
+counter = "surveys_acted_on"
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Chief Engineer reports four items open on the watch list, two of them a season old. An hour with no item in it is the hour those get closed in."

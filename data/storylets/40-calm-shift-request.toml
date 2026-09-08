@@ -1,0 +1,99 @@
+id = "calm_shift_request"
+title = "A Shift Request"
+act = 1
+weight = 0.65
+cooldown = 18
+tags = ["people", "hours"]
+text = """
+Status: roster nominal. One item on the SMB paper that is not a fault.
+{applicant} has asked to be moved off the third watch. The stated reason is
+sleep. The clinic record supports it: {bodies} logs a mean of four hours
+forty in the drum's night side against six twenty on the day side.
+Constraint: the third watch is covered by nine people. Moving one moves the
+gap onto the other eight. {hours} reports no roster rule that covers a
+request of this class, which is why it is on the paper.
+"""
+
+[[when]]
+q = "people.mean_strain"
+lt = 0.6
+
+[[when]]
+q = "menace.grievance"
+lt = 2
+
+[[when]]
+turn_min = 14
+
+[[cast]]
+role = "hours"
+seat = "hours"
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[cast]]
+role = "applicant"
+
+[[option]]
+id = "grant"
+label = "Move {applicant} to the day side"
+text = "{applicant} strain -0.12. Strain +0.03 across the crew. No rule set."
+tags = ["people", "hours"]
+chronicle = "MM {turn}. {applicant} was moved off the third watch on a clinic note. The eight remaining names on that watch were not consulted."
+[[option.effect]]
+person = "applicant"
+strain = -0.12
+[[option.effect]]
+all_strain = 0.03
+[[option.effect]]
+counter = "shift_requests_granted"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Medical Officer reports four hours forty is a figure that produces errors on the surface within a season. Recommends the move on the record."
+
+[[option]]
+id = "refuse"
+label = "Hold the roster as posted"
+text = "{applicant} strain +0.1. CCI +0.3. The roster stands."
+tags = ["hours", "caution"]
+chronicle = "MM {turn}. The request was refused and the roster stood as posted. The clinic note was filed with the refusal."
+[[option.effect]]
+person = "applicant"
+strain = 0.1
+[[option.effect]]
+q = "menace.grievance"
+add = 0.3
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Logistics Lead reports nine names cover that watch and every one of them has a reason. Recommends the roster be read as posted or not at all."
+
+[[option]]
+id = "rule"
+label = "Open the roster to written requests"
+text = "CCI -0.4. Strain +0.05 across the crew. A standing procedure is set."
+tags = ["people", "independence", "hours"]
+chronicle = "MM {turn}. A written procedure for watch requests was entered in the standing orders. {applicant}'s was the first filed under it."
+[[option.effect]]
+q = "menace.grievance"
+add = -0.4
+[[option.effect]]
+all_strain = 0.05
+[[option.effect]]
+person = "applicant"
+strain = -0.08
+[[option.effect]]
+flag = "shift_by_request"
+[[option.effect]]
+counter = "standing_orders"
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "Logistics Lead costs a written procedure at about twelve hours a count in reading and adjudication, permanently, and reports no line on the quarterly that recovers it."
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Medical Officer reports crew who have a route for a request use it instead of the clinic. That is the cheaper of the two channels."

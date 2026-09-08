@@ -1,0 +1,111 @@
+id = "calm_observation"
+title = "An Observation Not Requested"
+act = 1
+weight = 0.6
+cooldown = 20
+tags = ["capability", "sponsor", "independence"]
+text = """
+Status: no fault. A return the sponsor did not ask for.
+{observer} has been running the survey mast between tasks and has ninety
+counts of thermal inertia data on the north face. It shows a buried volatile
+horizon at eleven metres that the sponsor's own site survey missed, because
+the sponsor's survey was flown in one season and this was taken across three.
+Constraint: the data is not on any deliverable. {liaison} reports it can go
+up in the quarterly at no cost, be offered to the two universities that
+still answer the outpost's mail, or stay on the station's own record where
+nobody has asked for it and nobody can take it.
+"""
+
+[[when]]
+q = "sponsor.confidence"
+gt = 0.4
+
+[[when]]
+q = "relay.health"
+gt = 0.5
+
+[[when]]
+q = "counts_to_window"
+ge = 4
+
+[[when]]
+turn_min = 20
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[cast]]
+role = "extraction"
+seat = "extraction"
+
+[[cast]]
+role = "observer"
+skill = "extraction"
+
+[[option]]
+id = "quarterly"
+label = "Put it in the quarterly"
+text = "Confidence +0.04. Attention +0.03. The data becomes the sponsor's."
+tags = ["sponsor", "throughput"]
+chronicle = "MM {turn}. The north face thermal series was appended to the quarterly packet. Ownership followed the packet."
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.04
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.03
+[[option.effect]]
+flag = "science_to_sponsor"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Sponsor Liaison reports an unrequested finding in the quarterly is the only item in that packet the board reads twice. Recommends it go in whole."
+
+[[option]]
+id = "log"
+label = "Keep it on the station's own record"
+text = "{observer} strain -0.05. LSS-C +0.002. No sponsor line."
+tags = ["independence", "capability"]
+chronicle = "MM {turn}. The thermal series was entered on the outpost's own record and was not reported. {observer} was given mast time against it."
+[[option.effect]]
+person = "observer"
+strain = -0.05
+[[option.effect]]
+q = "closure"
+add = 0.002
+[[option.effect]]
+flag = "own_record_kept"
+[[option.effect]]
+counter = "observations_kept"
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "ISRU Lead rates an eleven metre volatile horizon on the north face as the difference between a bake-out at five tonnes and one at eleven. Recommends the outpost hold the number."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Sponsor Liaison reports data held and not declared is data the operator will class as withheld when it is found. It is always found."
+
+[[option]]
+id = "sell"
+label = "Offer it to the two universities"
+text = "Attention +0.02. Confidence -0.02. Strain +0.05 across the crew."
+tags = ["independence", "cost", "capability"]
+chronicle = "MM {turn}. The series was offered outside the sponsor's channel to the two institutions still answering the outpost's mail. A reply was not expected within the window."
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.02
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.02
+[[option.effect]]
+all_strain = 0.05
+[[option.effect]]
+flag = "science_sold"
+[[option.effect]]
+counter = "observations_kept"
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Logistics Lead reports the outpost has one customer and one price. A second correspondent is not income, but it is the first thing that is not the sponsor."

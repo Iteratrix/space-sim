@@ -1,0 +1,106 @@
+id = "calm_name_day"
+title = "A Name-Day"
+act = 1
+weight = 0.6
+cooldown = 18
+tags = ["people", "families"]
+text = """
+Status: no item requiring a decision. One item requiring a policy.
+{celebrant}'s birthday falls this count. It is the third to fall on station
+and the first two were noticed by the clinic and by nobody else, because the
+outpost keeps mission months and the crew agreement carries no calendar of
+personal dates.
+{bodies} holds the dates, from the medical file, for all of them. The
+question on the paper is whether the outpost keeps them, marks this one
+only, or continues to keep mission months and nothing else.
+"""
+
+[[when]]
+q = "menace.grievance"
+lt = 2.5
+
+[[when]]
+not_flag = "name_days_kept"
+
+[[when]]
+q = "people.mean_strain"
+lt = 0.65
+
+[[when]]
+turn_min = 14
+
+[[cast]]
+role = "bodies"
+seat = "bodies"
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[cast]]
+role = "celebrant"
+
+[[option]]
+id = "mark_one"
+label = "Mark this one at the meal"
+text = "{celebrant} strain -0.15. Food margin -0.2. No policy set."
+tags = ["people", "families"]
+chronicle = "MM {turn}. {celebrant}'s birthday was read out at the meal and the cold store gave up one item against it. No entry was made in the standing orders."
+[[option.effect]]
+person = "celebrant"
+strain = -0.15
+[[option.effect]]
+q = "stocks.food_margin"
+add = -0.2
+[[option.effect]]
+all_strain = -0.03
+[[option.effect]]
+counter = "rituals"
+[[option.advice]]
+seat = "bodies"
+stance = "for"
+text = "Medical Officer reports a date read aloud costs one item from the store and returns a measurable week. Recommends this one be read."
+
+[[option]]
+id = "keep_all"
+label = "Enter every crew date on the calendar"
+text = "Food margin -0.4. Strain -0.06 across the crew. A standing entry is made."
+tags = ["people", "families", "independence"]
+chronicle = "MM {turn}. Every crew birthday was entered on the outpost calendar from the medical file, with the holders' consent recorded item by item."
+[[option.effect]]
+q = "stocks.food_margin"
+add = -0.4
+[[option.effect]]
+all_strain = -0.06
+[[option.effect]]
+person = "celebrant"
+strain = -0.1
+[[option.effect]]
+flag = "name_days_kept"
+[[option.effect]]
+counter = "standing_orders"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "ECLSS Lead reports the calendar carries one date and it is the anniversary. Forty more cost the store about half a month a year and give the year a shape."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Sponsor Liaison reports personal dates drawn from the medical file and read at a common meal are a disclosure the crew agreement does not authorise."
+
+[[option]]
+id = "mission_months"
+label = "Keep mission months only"
+text = "{celebrant} strain +0.06. CCI +0.2. No cost."
+tags = ["caution", "sponsor", "hours"]
+chronicle = "MM {turn}. The outpost calendar was held to mission months. {celebrant}'s date passed with a clinic entry against it and nothing else."
+[[option.effect]]
+person = "celebrant"
+strain = 0.06
+[[option.effect]]
+q = "menace.grievance"
+add = 0.2
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Logistics Lead reports the calendar is the roster and the roster is the count. A second calendar produces two answers to the question of what day it is."

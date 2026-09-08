@@ -1,0 +1,99 @@
+id = "calm_mind_request"
+title = "A Request Outside the Licence"
+act = 1
+weight = 0.6
+cooldown = 15
+tags = ["machines", "capability", "sponsor"]
+text = """
+Status: licence compliant, heartbeat nominal, no fault. A routine log with
+one non-routine line in it.
+{mind} has asked to schedule the farm's light cycle. The task is not in its
+certified envelope, which covers haulage, docking, and the bake-out. The
+request cites nine counts of its own observation of the tray yields and
+gives a number: 4 per cent, on the same power.
+{operator} reports the request was filed correctly, in the log, addressed to
+the board, and repeated in three successive counts.
+"""
+
+[[when]]
+q = "minds.licence"
+eq = 0
+
+[[when]]
+q = "menace.suspicion"
+lt = 3
+
+[[when]]
+turn_min = 18
+
+[[cast]]
+role = "hulls"
+seat = "hulls"
+
+[[cast]]
+role = "air"
+seat = "air"
+
+[[cast]]
+role = "operator"
+skill = "operations"
+
+[[option]]
+id = "refuse"
+label = "Refuse and log the refusal"
+text = "No cost. The envelope holds. The request is on the record three times."
+tags = ["sponsor", "caution", "machines"]
+chronicle = "MM {turn}. The request was refused as outside the certified envelope and the refusal was entered in the mind's log beside it."
+[[option.effect]]
+counter = "mind_requests_refused"
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Sponsor Liaison reports the envelope is the licence and the licence is the heartbeat. There is no local authority to widen it."
+
+[[option]]
+id = "supervise"
+label = "Let it schedule the trays under supervision"
+text = "{operator} strain +0.06. Food margin +0.3. LSS-C +0.003."
+tags = ["machines", "capability", "independence", "air"]
+chronicle = "MM {turn}. The farm light cycle was handed to the mind with an operator countersigning each schedule. The countersignature was recorded as the licensed act."
+[[option.effect]]
+person = "operator"
+strain = 0.06
+[[option.effect]]
+q = "stocks.food_margin"
+add = 0.2
+[[option.effect]]
+q = "closure"
+add = 0.003
+[[option.effect]]
+flag = "mind_widened"
+[[option.effect]]
+counter = "mind_requests_granted"
+[[option.advice]]
+seat = "air"
+stance = "for"
+text = "ECLSS Lead has checked the four per cent against the tray log and reports it holds. Recommends the schedule be taken and the countersignature kept."
+[[option.advice]]
+seat = "hulls"
+stance = "against"
+text = "Chief Engineer reports a countersignature on a schedule nobody reads is a signature on a schedule nobody reads. The envelope will widen by itself after that."
+
+[[option]]
+id = "forward"
+label = "Forward the request to the licensor"
+text = "Attention +0.02. SOS +0.3. An answer is expected in two windows."
+tags = ["sponsor", "machines"]
+chronicle = "MM {turn}. The mind's request was forwarded to the licensing authority with the nine counts of tray data attached. Nothing changed on station."
+[[option.effect]]
+q = "sponsor.attention"
+add = 0.02
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.3
+[[option.effect]]
+flag = "licence_query_filed"
+[[option.advice]]
+seat = "hours"
+stance = "against"
+text = "Logistics Lead reports envelope amendments run two windows at best and the trays are seeded in three counts. The answer will arrive after the crop."
