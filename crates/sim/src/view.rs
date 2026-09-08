@@ -316,9 +316,8 @@ pub fn view(
             segments: params.minds.licence_grace_counts,
             remaining: Some(remaining),
             urgent: true,
-            why:
-                "No heartbeat from the licence server. Fail mode unknown until grace expires."
-                    .into(),
+            why: "No heartbeat from the licence server. Fail mode unknown until grace expires."
+                .into(),
         });
     }
     if game.flags.contains("conjunction") {
@@ -381,9 +380,7 @@ pub fn view(
             unit: "t".into(),
             full: 400.0,
             delta: 0.0,
-            why: format!(
-                "Closure gap losing {water_loss:.1} t a month. Reserve line 120 t."
-            ),
+            why: format!("Closure gap losing {water_loss:.1} t a month. Reserve line 120 t."),
             word: word_for(
                 game.stocks.water_t,
                 &[

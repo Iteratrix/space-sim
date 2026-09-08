@@ -54,3 +54,13 @@ jobs:
       - run: cargo install wasm-pack
       - run: wasm-pack build crates/web --target web --out-dir ../../web/pkg
       - run: node web/build.mjs
+
+  feel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo build --release
+      - run: ./target/release/space-sim feel --games 40 --scenario tutorial --max-turns 50
+      - run: ./target/release/space-sim feel --games 60 --scenario act1

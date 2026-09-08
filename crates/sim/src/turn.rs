@@ -884,7 +884,10 @@ fn convoy(
         note(
             game,
             events,
-            format!("Rotation removed hands from open work: {}.", parts.join(", ")),
+            format!(
+                "Rotation removed hands from open work: {}.",
+                parts.join(", ")
+            ),
         );
     }
     if people_ship {

@@ -412,6 +412,9 @@ struct RunResult {
     stage: u8,
     chronicle: Vec<String>,
     summary: String,
+    quiet_streak: u32,
+    counselled_seats: std::collections::BTreeSet<String>,
+    flags: std::collections::BTreeSet<String>,
 }
 
 fn run_one(
@@ -427,8 +430,22 @@ fn run_one(
     let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(seed ^ 0x00C0_FFEE);
     let mut fired: BTreeMap<String, u32> = BTreeMap::new();
     let mut chosen: BTreeMap<String, u32> = BTreeMap::new();
+    let mut streak = 0u32;
+    let mut quiet_streak = 0u32;
+    let mut counselled = std::collections::BTreeSet::new();
     while game.ending.is_none() && game.turn < max_turns {
-        let (_, firings) = engine.advance(&mut game);
+        let (events, firings) = engine.advance(&mut game);
+        if firings.is_empty() && events.lines.is_empty() {
+            streak += 1;
+            quiet_streak = quiet_streak.max(streak);
+        } else {
+            streak = 0;
+        }
+        for f in &firings {
+            for c in &f.counsel {
+                counselled.insert(format!("{:?}", c.seat));
+            }
+        }
         if trace && game.turn.is_multiple_of(6) {
             eprintln!("{}", status_line(&game));
             eprintln!("{}", hand_line(&game));
@@ -456,6 +473,117 @@ fn run_one(
         stage: game.sponsor.stage.index(),
         chronicle: engine.chronicle(&game),
         summary: sim::report::summary(&game),
+        quiet_streak,
+        counselled_seats: counselled,
+        flags: game.flags.clone(),
+    }
+}
+
+/// The feel gate: batches under the ring policy must not be flat, silent, or partial.
+fn feel(engine: &Engine, args: &Args) -> bool {
+    let allow_never = ["first_manifest", "tut_rsw_empty", "sponsor_empty_chair"];
+    let max_quiet = match args.scenario {
+        sim::setup::Scenario::Tutorial => 5,
+        sim::setup::Scenario::Act1 => 12,
+    };
+    let mut fired: BTreeMap<String, u32> = BTreeMap::new();
+    let mut chosen: BTreeMap<String, u32> = BTreeMap::new();
+    let mut seats = std::collections::BTreeSet::new();
+    let mut worst_quiet = 0;
+    let mut worst_seed = 0;
+    let mut controls_moved = false;
+    let mut ended = 0;
+    for g in 0..args.games {
+        let seed = args.seed + g.az::<u64>();
+        let policy = if g % 2 == 0 {
+            Policy::Ring
+        } else {
+            Policy::Random
+        };
+        let r = run_one(engine, seed, policy, args.max_turns, false, args.scenario);
+        if r.quiet_streak > worst_quiet {
+            worst_quiet = r.quiet_streak;
+            worst_seed = seed;
+        }
+        for (id, n) in r.fired {
+            *fired.entry(id).or_default() += n;
+        }
+        for (id, n) in r.chosen {
+            *chosen.entry(id).or_default() += n;
+        }
+        seats.extend(r.counselled_seats);
+        controls_moved |= r.flags.iter().any(|f| {
+            f.starts_with("manifest_") || f.starts_with("throw_") || f.starts_with("roster_")
+        });
+        ended += usize::from(r.ending.is_some() || args.scenario == sim::setup::Scenario::Tutorial);
+    }
+    let mut failures = Vec::new();
+    if worst_quiet > max_quiet {
+        failures.push(format!(
+            "quiet streak {worst_quiet} counts (seed {worst_seed}); limit {max_quiet}"
+        ));
+    }
+    let never: Vec<&str> = engine
+        .content
+        .iter()
+        .map(|s| s.id.as_str())
+        .filter(|id| !fired.contains_key(*id) && !allow_never.contains(id))
+        .filter(|id| match args.scenario {
+            sim::setup::Scenario::Tutorial => id.starts_with("tut_"),
+            sim::setup::Scenario::Act1 => !id.starts_with("tut_"),
+        })
+        .collect();
+    if !never.is_empty() {
+        failures.push(format!("never fired: {never:?}"));
+    }
+    let never_chosen: Vec<String> = engine
+        .content
+        .iter()
+        .filter(|s| match args.scenario {
+            sim::setup::Scenario::Tutorial => s.id.starts_with("tut_"),
+            sim::setup::Scenario::Act1 => !s.id.starts_with("tut_"),
+        })
+        .flat_map(|s| s.options.iter().map(move |o| format!("{}/{}", s.id, o.id)))
+        .filter(|k| {
+            !chosen.contains_key(k) && fired.contains_key(k.split('/').next().unwrap_or(""))
+        })
+        .collect();
+    let never_chosen_share = never_chosen.len().az::<f64>() / chosen.len().max(1).az::<f64>();
+    if never_chosen_share > 0.6 {
+        failures.push(format!(
+            "{} options never chosen under the ring policy ({:.0}% of those chosen)",
+            never_chosen.len(),
+            never_chosen_share * 100.0
+        ));
+    }
+    if seats.len() < 5 {
+        failures.push(format!(
+            "only {} seats ever gave counsel: {seats:?}",
+            seats.len()
+        ));
+    }
+    if args.scenario == sim::setup::Scenario::Act1 && ended < args.games {
+        failures.push(format!(
+            "{} of {} games did not reach an ending by count {}",
+            args.games - ended,
+            args.games,
+            args.max_turns
+        ));
+    }
+    println!(
+        "feel: {} games (ring and random alternating), {:?}, worst quiet streak {worst_quiet} (limit {max_quiet}), {} seats counselled, controls moved by content: {controls_moved}",
+        args.games,
+        args.scenario,
+        seats.len()
+    );
+    if failures.is_empty() {
+        println!("feel: pass");
+        true
+    } else {
+        for f in &failures {
+            println!("feel: FAIL {f}");
+        }
+        false
     }
 }
 
@@ -631,6 +759,11 @@ fn main() {
             );
         }
         "montecarlo" => montecarlo(&engine, &args),
+        "feel" => {
+            if !feel(&engine, &args) {
+                std::process::exit(1);
+            }
+        }
         "calendar" => calendar(&engine, &args),
         _ => {
             println!(

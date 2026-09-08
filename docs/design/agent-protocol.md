@@ -73,3 +73,14 @@ $P screenshot /tmp/shot.png
 
 Each call takes ~2 s (a fresh Chromium with a persistent profile). Use a distinct
 `--profile` per agent; the default profile is `web/test/.profile`.
+
+## The feel gate
+
+`space-sim feel --games G --scenario tutorial|act1` plays G games alternating the ring
+and random policies and fails (exit 1) when the game is flat, silent, or partial: a
+quiet streak (no scene and no engine event) longer than 5 counts in the tutorial or
+12 in act 1; a storylet that never fires under either policy (a short allow-list
+covers deliberate fallbacks); more than 60% of options never chosen; fewer than five
+seats ever giving counsel; an act-1 game that never reaches an ending. CI runs it on
+every push. The limits are the current measured feel, not the target — tighten them
+as content fills the gaps.
