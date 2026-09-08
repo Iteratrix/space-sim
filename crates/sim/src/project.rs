@@ -372,7 +372,7 @@ fn robot_fits(class: RobotClass, def: &ProjectDef) -> bool {
 
 /// Recomputes who is eaten by upkeep, evicts over-assignment, deals free dice if asked,
 /// and returns the hand. Called once per count before projects progress.
-pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) {
+pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) -> Vec<String> {
     let adults: Vec<PersonId> = game
         .present()
         .filter(|p| p.age_counts(game.turn) >= 18 * 12)
@@ -448,13 +448,20 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) {
     let shortfall = eaten_needed.saturating_sub(n);
     let free = n - eaten;
     let mut kept: Vec<PersonId> = ranked.iter().copied().take(free.az::<usize>()).collect();
-    let assigned_people: Vec<PersonId> = assignments
+    let mut assigned_people: Vec<PersonId> = assignments
         .keys()
         .filter_map(|d| match d {
             DieId::Person(p) => Some(*p),
             DieId::Robot(_, _) => None,
         })
         .collect();
+    let face_on_project = |p: PersonId| -> u8 {
+        assignments
+            .get(&DieId::Person(p))
+            .and_then(|pid| defs.iter().find(|d| &d.id == pid))
+            .map_or(0, |d| face(game, p, d.domain))
+    };
+    assigned_people.sort_by(|&a, &b| face_on_project(b).cmp(&face_on_project(a)).then(a.cmp(&b)));
     let mut free_set: Vec<PersonId> = Vec::new();
     for p in &assigned_people {
         if free_set.len() < free.az::<usize>() {
@@ -471,10 +478,27 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) {
     }
     kept.clear();
     kept.extend(free_set.iter().copied());
-    assignments.retain(|die, _| match die {
-        DieId::Person(p) => kept.contains(p),
+    let mut evicted: std::collections::BTreeMap<String, u32> = std::collections::BTreeMap::new();
+    assignments.retain(|die, pid| match die {
+        DieId::Person(p) => {
+            let keep = kept.contains(p);
+            if !keep {
+                *evicted.entry(pid.0.clone()).or_insert(0) += 1;
+            }
+            keep
+        }
         DieId::Robot(_, _) => true,
     });
+    let mut lines: Vec<String> = evicted
+        .iter()
+        .map(|(pid, n)| {
+            let title = defs
+                .iter()
+                .find(|d| d.id.0 == *pid)
+                .map_or(pid.as_str(), |d| d.title.as_str());
+            format!("Upkeep recalled {n} from {title}.")
+        })
+        .collect();
     if game.controls.auto_deal {
         let mut standing: Vec<&ProjectDef> = defs
             .iter()
@@ -572,6 +596,16 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) {
         dice: Vec::new(),
     };
     refresh_hand(game, defs);
+    if game.turn.is_multiple_of(6) {
+        for def in defs.iter().filter(|d| d.standing) {
+            let open = game.projects.iter().any(|s| s.id == def.id);
+            let staffed = game.assignments.values().any(|t| *t == def.id);
+            if open && !staffed {
+                lines.push(format!("{} idle: no dice assigned.", def.title));
+            }
+        }
+    }
+    lines
 }
 
 /// Rebuilds the dice list of the hand from the current assignments without re-dealing.

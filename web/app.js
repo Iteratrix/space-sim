@@ -112,6 +112,7 @@ function gate(elm, name, captionHost) {
 
 function render() {
   const v = view;
+  if (new Set(v.flags).has("tutorial_done")) document.querySelectorAll(".reveal").forEach((e) => e.remove());
   gate(el("countdowns"), "countdowns");
   gate(el("projects"), "projects");
   gate(el("hand"), "hand");
@@ -123,7 +124,7 @@ function render() {
   gate(el("hand").querySelector("label.control:nth-of-type(2)"), "control:auto_deal");
   el("headline").textContent = `count ${v.turn} · ${headline(v)}`;
   el("countdowns").querySelector(".clocks").innerHTML = v.countdowns
-    .filter((c) => c.id === "grace" || c.id === "conjunction" || revealed(`clock:${c.id}`))
+    .filter((c) => (c.id === "grace" || c.id === "conjunction") ? revealed("countdowns") : revealed(`clock:${c.id}`))
     .map((c) => `<div class="clock${c.urgent ? " urgent" : ""}" title="${c.why}">${ring(c.filled, c.segments)}<div><div class="label">${c.label}</div><div class="sub">${c.remaining == null ? "" : c.remaining + " left"}${c.id === "rsw" && revealed("control:manifest") ? ` · manifest <select data-control="manifest"><option${v.controls.manifest === "throughput" ? " selected" : ""}>throughput</option><option${v.controls.manifest === "balanced" ? " selected" : ""}>balanced</option><option${v.controls.manifest === "capability" ? " selected" : ""}>capability</option><option${v.controls.manifest === "people" ? " selected" : ""}>people</option></select>` : ""}</div></div></div>`)
     .join("");
   const lessonProjects = new Set(["dig_keep", "align_driver", "bake_out", "throw"]);
@@ -187,6 +188,15 @@ function bindDice() {
       if (lifted === d.dataset.die) lifted = null;
       else lifted = d.dataset.die;
       document.querySelectorAll(".die").forEach((x) => x.classList.toggle("lifted", x.dataset.die === lifted));
+      const die = lifted ? view.hand.dice.find((x) => x.id === lifted) : null;
+      document.querySelectorAll(".clock[data-project]").forEach((c) => {
+        let b = c.querySelector(".would");
+        if (!die) { if (b) b.remove(); return; }
+        const p = view.projects.find((x) => x.id === c.dataset.project);
+        const face = die.robot ? (p.structured || die.label === "dex" ? die.face : null) : (die.faces[p.domain] || 0);
+        if (!b) { b = document.createElement("span"); b.className = "would"; c.querySelector(".label").appendChild(b); }
+        b.textContent = face == null ? " — no fit" : ` → ${face}`;
+      });
     });
   });
   const targets = [...document.querySelectorAll(".clock[data-project]"), el("hand")];

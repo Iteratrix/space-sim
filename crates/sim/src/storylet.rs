@@ -154,6 +154,20 @@ struct RawEffect {
     project: Option<String>,
     close_project: Option<String>,
     assign: Option<String>,
+    assign_robots: Option<RawAssignRobots>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawAssignRobots {
+    class: String,
+    project: String,
+    #[serde(default = "one_u32")]
+    count: u32,
+}
+
+const fn one_u32() -> u32 {
+    1
 }
 
 #[derive(Debug, Deserialize)]
@@ -330,6 +344,8 @@ pub enum Effect {
     CloseProject(String),
     /// Puts a cast person's die on a project (or back in the hand with "hand").
     Assign(String, String),
+    /// Puts up to `count` unassigned robot units of a class on a project.
+    AssignRobots(crate::state::RobotClass, String, u32),
 }
 
 /// Advice one seat gives about one option, written by the author.
@@ -612,6 +628,16 @@ fn parse_effect(file: &str, roles: &[String], r: RawEffect) -> Result<Effect, Co
     }
     if let Some(p) = r.close_project {
         return Ok(Effect::CloseProject(p));
+    }
+    if let Some(RawAssignRobots {
+        class,
+        project,
+        count,
+    }) = r.assign_robots
+    {
+        let class = crate::state::RobotClass::parse(&class)
+            .ok_or_else(|| invalid(format!("unknown robot class {class}")))?;
+        return Ok(Effect::AssignRobots(class, project, count));
     }
     Err(invalid("empty effect".into()))
 }
@@ -1012,6 +1038,24 @@ pub fn apply(game: &mut Game, storylet: &Storylet, option: &Option_, casting: &C
             Effect::CloseProject(id) => {
                 game.projects.retain(|s| s.id.0 != *id);
                 game.assignments.retain(|_, t| t.0 != *id);
+            }
+            Effect::AssignRobots(class, project, count) => {
+                if game.projects.iter().any(|s| s.id.0 == *project) {
+                    let n = game.robots.count(*class).round().max(0.0);
+                    let units = n.min(f64::from(u32::MAX)).round();
+                    let mut placed = 0;
+                    let mut k = 0u32;
+                    while f64::from(k) < units && placed < *count {
+                        let die = crate::project::DieId::Robot(*class, k);
+                        if let std::collections::btree_map::Entry::Vacant(slot) =
+                            game.assignments.entry(die)
+                        {
+                            slot.insert(crate::project::ProjectId(project.clone()));
+                            placed += 1;
+                        }
+                        k += 1;
+                    }
+                }
             }
             Effect::Assign(role, target) => {
                 if let Some(id) = person(game, role) {

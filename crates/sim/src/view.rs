@@ -467,12 +467,17 @@ pub fn view(
                     .filter(|d| d.robot && d.place == "upkeep")
                     .count()
             ),
-            word: if game.hand.shortfall > 0 {
-                "short".into()
-            } else if game.hand.free <= 2 {
-                "thin".into()
-            } else {
-                "nominal".into()
+            word: {
+                let share = f64::from(game.hand.free) / f64::from(game.hand.adults.max(1));
+                if game.hand.shortfall > 0 {
+                    "short".into()
+                } else if share < 0.15 {
+                    "thin".into()
+                } else if share < 0.3 {
+                    "tight".into()
+                } else {
+                    "nominal".into()
+                }
             },
         },
         Bar {
@@ -508,10 +513,10 @@ pub fn view(
             word: word_for(
                 q(Quality::MeanStrain),
                 &[
-                    (0.6, "brittle"),
-                    (0.4, "worn"),
-                    (0.25, "tired"),
-                    (0.0, "steady"),
+                    (0.6, "critical"),
+                    (0.4, "degraded"),
+                    (0.25, "fatigued"),
+                    (0.0, "nominal"),
                 ],
             ),
         },

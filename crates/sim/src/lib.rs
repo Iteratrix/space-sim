@@ -115,6 +115,18 @@ impl Engine {
             roles: firing.roles.clone(),
         };
         storylet::apply(game, storylet, option, &casting);
+        let to_open: Vec<String> = game
+            .flags
+            .iter()
+            .filter_map(|f| f.strip_prefix("open_project:").map(str::to_owned))
+            .collect();
+        for id in to_open {
+            if let Some(def) = self.projects.iter().find(|d| d.id.0 == id) {
+                project::open(game, def, None);
+                game.flags.remove(&format!("open_project:{id}"));
+            }
+        }
+        project::refresh_hand(game, &self.projects);
         game.chronicle.last().map(lexicon::render_entry)
     }
 

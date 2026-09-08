@@ -95,7 +95,7 @@ with sync_playwright() as p:
     elif cmd == "assign":
         die, target = args[1], args[2]
         d = page.query_selector(f".die[data-die='{die}']")
-        tgt = page.query_selector("#hand") if target == "hand" else page.query_selector(f".clock[data-project='{target}']")
+        tgt = page.query_selector("#hand > h3") if target == "hand" else page.query_selector(f".clock[data-project='{target}']")
         if d is None or tgt is None:
             out = {"error": "no such die or project"}
         else:

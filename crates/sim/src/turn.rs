@@ -120,7 +120,9 @@ fn projects(
         }
     }
     crate::project::open_eligible(game, defs);
-    crate::project::deal(game, defs, upkeep_h, params.labour.capacity_h_per_count);
+    for line in crate::project::deal(game, defs, upkeep_h, params.labour.capacity_h_per_count) {
+        note(game, events, line);
+    }
     for line in crate::project::progress(game, defs, rng) {
         note(game, events, line);
     }
