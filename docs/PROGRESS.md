@@ -2,6 +2,39 @@
 
 Written for whoever picks this up next (human or agent). Newest at the top.
 
+## Day 3 (2026-09-11): onramp v2
+
+- **Diagnosis.** The v1 tutorial taught by telling, gated on the calendar, ran 43
+  counts, and could be clicked through without performing a mechanic (playtests 3-4).
+- **Three required counts.** Count 1: one scene, two options, End count. Count 2: the
+  hand and one short clock ("Shelter, first chamber", 6 segments); End count is held —
+  the button reads the requirement — until a rated die is on it. Count 3: a robot die
+  and the bake-out's rate ring; held until a robot is placed. Then the game is open.
+  `crates/sim/src/tutorial.rs`: `require:place_person:<project>` /
+  `require:place_robot:<project>` flags a scene sets; the engine clears them on the real
+  state (assign, resolve, advance), treats a completed project as satisfied and an
+  unopened one as pending; `view.required` carries the text; the CLI's policies satisfy
+  requirements mechanically (by the project's domain face) and deal free dice from
+  count 4 so headless runs exercise the clocks.
+- **Just-in-time disclosure, engine-owned.** `tutorial::disclose` reveals each part of
+  the screen the first time the state makes it matter (ring on the first seat, RSW
+  clock within six counts, water when it moves, a pressure when it leaves band 0,
+  spares with the first convoy, the mass driver on alignment, crew with the chamber,
+  power/reactor when tight, margin when low, contracts within four counts, roster and
+  auto-deal at twenty crew, the sponsor track at the first review). No condition-opened
+  projects clutter the lesson counts; standing projects are open from the start.
+- **Plain labels** with the acronym in parentheses ("Shelter (KEEP)", "Mass driver
+  (MDLS)", "Resupply window (RSW)"); parenthesised acronyms never drift.
+- **Ten tutorial scenes** (Opus), every report under 80 words, every scene a decision.
+- **Page**: End count held with the requirement as its label; idle standing clocks
+  look off; a lifted die shows its face beside every clock; the last count's lines
+  carry into the next count's events; captions accumulate (last two per section);
+  "favoured" only on a unique plurality of the ring.
+- **Acceptance** (`docs/design/playtest-gui-5.md`, `-6.md`): held at count 2; count 3
+  failed once (the bake-out was suppressed during the lesson — fixed); the careful
+  reader read ≈340 words before the game opened against v1's ~2,500 and called it the
+  same game. A second impatient run (`-7.md`) is the re-check.
+
 ## Day 2, night: two more playtests, the feel gate, calm months
 
 - Playtests 3 (the careful reader) and 4 (the impatient player) on v0.1.4 — most
