@@ -33,7 +33,8 @@ Written for whoever picks this up next (human or agent). Newest at the top.
 - **Acceptance** (`docs/design/playtest-gui-5.md`, `-6.md`): held at count 2; count 3
   failed once (the bake-out was suppressed during the lesson — fixed); the careful
   reader read ≈340 words before the game opened against v1's ~2,500 and called it the
-  same game. A second impatient run (`-7.md`) is the re-check.
+  same game. The impatient re-run (`-7.md`) passed both criteria: held at counts 2
+  and 3, a coherent game by count 12 with nothing read. Released as v0.2.0.
 
 ## Day 2, night: two more playtests, the feel gate, calm months
 
