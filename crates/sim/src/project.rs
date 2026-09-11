@@ -597,11 +597,34 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) -
     };
     refresh_hand(game, defs);
     if game.turn.is_multiple_of(6) {
+        let visible = |game: &Game, id: &str| {
+            !crate::tutorial::active(game) || game.flags.contains(&format!("ui:project:{id}"))
+        };
         for def in defs.iter().filter(|d| d.standing) {
             let open = game.projects.iter().any(|s| s.id == def.id);
             let staffed = game.assignments.values().any(|t| *t == def.id);
-            if open && !staffed {
+            if open && !staffed && visible(game, &def.id.0) {
                 lines.push(format!("{} idle: no dice assigned.", def.title));
+            }
+        }
+        for def in defs.iter().filter(|d| !d.standing) {
+            let Some(state) = game.projects.iter().find(|s| s.id == def.id) else {
+                continue;
+            };
+            let staffed = game.assignments.values().any(|t| *t == def.id);
+            if staffed
+                && visible(game, &def.id.0)
+                && state.pips_this_count < def.pips_per_segment / 2
+            {
+                let months = if state.pips_this_count == 0 {
+                    "no".to_owned()
+                } else {
+                    (def.pips_per_segment / state.pips_this_count).to_string()
+                };
+                lines.push(format!(
+                    "{} at {} pips a month: {months} months to the next segment.",
+                    def.title, state.pips_this_count
+                ));
             }
         }
     }

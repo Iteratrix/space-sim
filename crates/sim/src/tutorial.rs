@@ -28,11 +28,12 @@ pub fn active(game: &Game) -> bool {
     game.flags.contains("tutorial") && !game.flags.contains("tutorial_done")
 }
 
-fn has_person_on(game: &Game, project: &str) -> bool {
+fn has_person_on(game: &Game, defs: &[ProjectDef], project: &str) -> bool {
+    let domain = defs.iter().find(|d| d.id.0 == project).map(|d| d.domain);
     game.assignments.iter().any(|(die, pid)| {
         pid.0 == project
             && match die {
-                DieId::Person(_) => true,
+                DieId::Person(p) => domain.is_none_or(|d| crate::project::face(game, *p, d) >= 1),
                 DieId::Robot(_, _) => false,
             }
     })
@@ -77,7 +78,7 @@ pub fn required(game: &mut Game, defs: &[ProjectDef]) -> Option<Required> {
             .is_some_and(|&c| c > 0.0);
         let satisfied = completed
             || match kind {
-                "place_person" => has_person_on(game, project),
+                "place_person" => has_person_on(game, defs, project),
                 "place_robot" => has_robot_on(game, project),
                 _ => true,
             };
@@ -86,7 +87,7 @@ pub fn required(game: &mut Game, defs: &[ProjectDef]) -> Option<Required> {
             continue;
         }
         let text = match kind {
-            "place_person" => format!("Place one crew die on {title}."),
+            "place_person" => format!("Place one crew die with a rating on {title}."),
             "place_robot" => format!("Place one robot unit on {title}."),
             _ => String::new(),
         };

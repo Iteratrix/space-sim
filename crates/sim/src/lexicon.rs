@@ -364,6 +364,8 @@ fn replace_word(text: &str, old: &str, new: &str) -> String {
             .chars()
             .next()
             .is_none_or(|c| !is_word_char(c));
+        let parenthesised = rest[..pos].ends_with('(') && rest[pos + old.len()..].starts_with(')');
+        let after_ok = after_ok && !parenthesised;
         out.push_str(&rest[..pos]);
         if before_ok && after_ok {
             let sentence_start = rest[..pos]

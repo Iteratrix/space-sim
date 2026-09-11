@@ -5,3 +5,4 @@ __pycache__/
 web/pkg/
 web/out/
 web/test/.profile*/
+web/test/*.png

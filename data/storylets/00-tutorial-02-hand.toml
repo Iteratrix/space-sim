@@ -12,6 +12,7 @@ six segments, five points each.
 {eng1} holds the highest engineering rating on station, {eng2} the second.
 
 Drag a die onto the shelter clock to task it, Commander.
+Lift a die: each clock shows the face it would read there. A zero adds nothing.
 """
 
 [[when]]

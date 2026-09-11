@@ -44,6 +44,7 @@ pub fn advance(
     people(game, params, rng, &mut events);
     sponsor(game, params, rng, &mut events);
     convoy(game, params, defs, rng, &mut events);
+    crate::project::refresh_hand(game, defs);
     menaces(game, params, &mut events);
     zero_crossings(game, &mut events);
     endings(game, &mut events);

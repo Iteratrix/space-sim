@@ -89,9 +89,13 @@ function noteReveal(name, host) {
   shown.add(name);
   const flags = new Set(view.flags);
   if (!(flags.has("tutorial") && !flags.has("tutorial_done")) || !CAPTIONS[name]) return;
-  let cap = host.querySelector(":scope > .reveal");
-  if (!cap) { cap = document.createElement("div"); cap.className = "reveal"; const h = host.querySelector(":scope > h3"); if (h) h.after(cap); else host.prepend(cap); }
+  const cap = document.createElement("div");
+  cap.className = "reveal";
   cap.textContent = CAPTIONS[name];
+  const h = host.querySelector(":scope > h3");
+  if (h) h.after(cap); else host.prepend(cap);
+  const caps = host.querySelectorAll(":scope > .reveal");
+  if (caps.length > 2) caps[caps.length - 1].remove();
 }
 const shown = new Set();
 
@@ -172,7 +176,7 @@ function render() {
     .map((p) => `<div class="pressure" title="${p.label}: ${p.value.toFixed(1)} of 10">${ring(Math.round(p.value), 10, "p" + Math.max(p.band, 1))}${p.id}<br><em>${p.band_name}</em></div>`)
     .join("");
   const s = v.sponsor;
-  gate(el("sponsor-track"), "sponsor");
+  gate(el("sponsor"), "sponsor");
   el("sponsor-track").innerHTML = `sponsor: ${[0, 1, 2, 3, 4, 5, 6].map((i) => `<span class="dot${i <= s.stage ? " on" : ""}"></span>`).join("")} ${s.stage_name} · ${s.mood}<br>φ ${s.phi.toFixed(1)} against ${s.phi_expected.toFixed(1)} · review in ${s.counts_to_review}`;
   renderRing();
   bindDice();
@@ -255,8 +259,12 @@ function showScene() {
   const f = pending[0];
   counsel = f.counsel;
   const must = f.priority >= 100;
+  const votes = {};
+  counsel.forEach((c) => { votes[c.favours] = (votes[c.favours] || 0) + 1; });
+  const ranked = Object.entries(votes).sort((x, y) => y[1] - x[1]);
+  const plurality = ranked.length && (ranked.length === 1 || ranked[0][1] > ranked[1][1]) ? Number(ranked[0][0]) : -1;
   scene.innerHTML = `<h2 class="${must ? "must" : ""}">${f.title}</h2><p>${f.text.trim()}</p><ul class="options">${f.options
-    .map((o) => `<li data-option="${o.id}"${counsel.some((c) => c.favours === o.index) ? ' class="favoured"' : ""}>${o.label}<span class="desc">${o.text}</span></li>`)
+    .map((o) => `<li data-option="${o.id}"${o.index === plurality ? ' class="favoured"' : ""}>${o.label}<span class="desc">${o.text}</span></li>`)
     .join("")}</ul>`;
   scene.querySelectorAll("li[data-option]").forEach((li) => li.addEventListener("click", () => choose(f.id, li.dataset.option)));
   el("btn-end").disabled = true;
