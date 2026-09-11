@@ -126,7 +126,7 @@ function render() {
   gate(el("hand").querySelector("label.control:nth-of-type(2)"), "control:auto_deal");
   el("headline").textContent = `count ${v.turn} · ${headline(v)}`;
   el("countdowns").querySelector(".clocks").innerHTML = v.countdowns
-    .filter((c) => (c.id === "grace" || c.id === "conjunction") ? revealed("countdowns") : revealed(`clock:${c.id}`))
+    .filter((c) => (c.id === "grace" || c.id === "conjunction") ? (revealed("countdowns") && (new Set(view.flags).has("tutorial_open") || !new Set(view.flags).has("tutorial"))) : revealed(`clock:${c.id}`))
     .map((c) => `<div class="clock${c.urgent ? " urgent" : ""}" title="${c.why}">${ring(c.filled, c.segments)}<div><div class="label">${c.label}</div><div class="sub">${c.remaining == null ? "" : c.remaining + " left"}${c.id === "rsw" && revealed("control:manifest") ? ` · manifest <select data-control="manifest"><option${v.controls.manifest === "throughput" ? " selected" : ""}>throughput</option><option${v.controls.manifest === "balanced" ? " selected" : ""}>balanced</option><option${v.controls.manifest === "capability" ? " selected" : ""}>capability</option><option${v.controls.manifest === "people" ? " selected" : ""}>people</option></select>` : ""}</div></div></div>`)
     .join("");
   const lessonProjects = new Set(["shelter_first", "dig_keep", "align_driver", "bake_out", "throw"]);
@@ -143,10 +143,12 @@ function render() {
   el("projects").querySelector(".clocks").innerHTML = v.projects
     .filter((p) => !lessonProjects.has(p.id) || revealed(`project:${p.id}`))
     .map((p) => {
+      const idle = p.standing && p.dice.length === 0;
       const clock = p.standing ? ring(Math.round(Math.min(p.rate, 1) * 12), 12, "rate") : ring(p.filled, p.segments);
+      const idleTag = idle ? ` <span class="idle">idle — no dice</span>` : "";
       const sub = p.standing ? `rate ${p.rate.toFixed(2)} · ${p.pips}/${Math.round(p.pips_needed)} pips` : `${p.filled}/${p.segments}${p.pips ? ` · ${p.pips} pips/month` : ""}${p.roll === "setback" ? " · setback" : p.roll === "bonus" ? " · bonus" : ""}`;
       const throwCtl = p.id === "throw" && revealed("control:throw") ? ` <select data-control="throw"><option value="ship"${v.controls.throw === "ship" ? " selected" : ""}>ship</option><option value="hold"${v.controls.throw === "hold" ? " selected" : ""}>hold at reserve</option><option value="stop"${v.controls.throw === "stop" ? " selected" : ""}>stop</option></select>` : "";
-      return `<div class="clock" data-project="${p.id}" title="${p.description}">${clock}<div><div class="label">${p.title}</div><div class="sub">${sub}${throwCtl}</div><div class="dice">${p.dice.map(die).join("")}</div></div></div>`;
+      return `<div class="clock${idle ? " off" : ""}" data-project="${p.id}" title="${p.description}">${clock}<div><div class="label">${p.title}${idleTag}</div><div class="sub">${sub}${throwCtl}</div><div class="dice">${p.dice.map(die).join("")}</div></div></div>`;
     })
     .join("");
   const h = v.hand;
@@ -286,7 +288,8 @@ function advance() {
   if (r.error) { el("hand-note").textContent = r.error; return; }
   view = r.view;
   pending = r.firings;
-  el("events").innerHTML = r.events.map((e) => `<div>${e}</div>`).join("");
+  const last = [...el("events").querySelectorAll(".chron-line")].map((e) => `<div class="prev">${e.textContent}</div>`).join("");
+  el("events").innerHTML = last + r.events.map((e) => `<div>${e}</div>`).join("");
   render();
   showScene();
   persist();

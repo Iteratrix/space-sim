@@ -31,6 +31,9 @@ chronicle = "MM {turn}. First chamber pressurised; surface CED rate halved for c
 [[option.effect]]
 project = "dig_keep"
 [[option.effect]]
+person = "eng1"
+assign = "dig_keep"
+[[option.effect]]
 flag = "ui:project:dig_keep"
 [[option.effect]]
 unflag = "require:place_person:shelter_first"

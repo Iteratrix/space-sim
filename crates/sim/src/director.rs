@@ -99,9 +99,14 @@ pub fn select(
         && game.menace.leak < 2.0
         && game.counts_to_window() > 3
         && game.sponsor.next_review.saturating_sub(game.turn) > 3;
-    let lesson = game.flags.contains("tutorial") && !game.flags.contains("tutorial_done");
+    let lesson = game.flags.contains("tutorial")
+        && !game.flags.contains("tutorial_done")
+        && !game.flags.contains("tutorial_open");
+    let opened = game.flags.contains("tutorial") && !game.flags.contains("tutorial_done");
     let quiet_chance = if lesson {
         0.15
+    } else if opened {
+        0.3
     } else if calm {
         0.45
     } else {

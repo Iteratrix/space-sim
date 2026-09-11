@@ -71,8 +71,11 @@ pub fn required(game: &mut Game, defs: &[ProjectDef]) -> Option<Required> {
             .iter()
             .find(|d| d.id.0 == project)
             .map_or(project, |d| d.title.as_str());
-        let open = game.projects.iter().any(|s| s.id.0 == project);
-        let satisfied = !open
+        let completed = game
+            .counters
+            .get(&format!("completed:{project}"))
+            .is_some_and(|&c| c > 0.0);
+        let satisfied = completed
             || match kind {
                 "place_person" => has_person_on(game, project),
                 "place_robot" => has_robot_on(game, project),
