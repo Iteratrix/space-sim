@@ -434,6 +434,7 @@ fn run_one(
     let mut quiet_streak = 0u32;
     let mut counselled = std::collections::BTreeSet::new();
     while game.ending.is_none() && game.turn < max_turns {
+        satisfy_required(engine, &mut game);
         let (events, firings) = engine.advance(&mut game);
         if firings.is_empty() && events.lines.is_empty() {
             streak += 1;
@@ -476,6 +477,38 @@ fn run_one(
         quiet_streak,
         counselled_seats: counselled,
         flags: game.flags.clone(),
+    }
+}
+
+/// Performs whatever the tutorial requires before the count may end, as a page would make a player do.
+fn satisfy_required(engine: &Engine, game: &mut Game) {
+    for _ in 0..4 {
+        let Some(req) = engine.required(game) else {
+            return;
+        };
+        let Some(project) = req.project.clone() else {
+            return;
+        };
+        let die = match req.kind.as_str() {
+            "place_person" => game
+                .hand
+                .dice
+                .iter()
+                .filter(|d| !d.robot && d.place != "upkeep")
+                .max_by_key(|d| d.face)
+                .map(|d| d.id.clone()),
+            "place_robot" => game
+                .hand
+                .dice
+                .iter()
+                .find(|d| d.robot && d.place == "upkeep")
+                .map(|d| d.id.clone()),
+            _ => None,
+        };
+        let Some(die) = die else { return };
+        if engine.assign(game, &die, &project).is_err() {
+            return;
+        }
     }
 }
 

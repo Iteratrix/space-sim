@@ -28,6 +28,37 @@ Design principles, so the writer and the page agree:
 5. **The full act-1 screen is the handoff's reward.** At MM 43 everything is lit, the
    language turns, and the mind stops briefing.
 
+## v2 (2026-09-11): three required counts, then just-in-time
+
+The first version taught by telling, gated on the calendar, ran forty-three counts and
+could be clicked through without performing a mechanic. v2:
+
+- **Three required counts.** Count 1: one scene, two options, End count. Count 2: the
+  hand and one short clock ("Shelter, first chamber", six segments); *End count is held*
+  — the button reads "Place one crew die on Shelter, first chamber." — until a die is on
+  it. Count 3: a robot die and the bake-out's rate ring; held until a robot is placed.
+  Then the game is open.
+- **Reveals are computed from state, by the engine** (`crates/sim/src/tutorial.rs`),
+  the first time a thing matters: the ring when a seat exists; the RSW clock when the
+  window is within six counts; water when it first moves; a pressure when it leaves band
+  0; spares with the first convoy; the mass driver, its position and φ on alignment;
+  crew and dose when the shelter chamber is done; power and the reactor clock when
+  power is tight or the core is short; margin when it is low; contracts when one is
+  within four counts; the Sun near maximum; roster order and auto-deal when the crew
+  reaches twenty; the sponsor track and review clock at the first review. Scenes may
+  still set `ui:*` flags, and set `require:place_person:<project>` /
+  `require:place_robot:<project>` to hold End count.
+- **Plain labels** on controls, acronym in parentheses: "Shelter (KEEP)", "Mass driver
+  (MDLS)", "Resupply window (RSW)". The mind's sentences keep the report register.
+- **No click-to-continue scenes**; a count without a decision has no scene.
+- **Deferred to act 1**: reviews as a lesson, contracts, the reactor, the Sun, roster
+  order, auto-deal, grace, conjunction — taught by consequence.
+- **Acceptance**: the impatient player must be held at counts 2 and 3 and be playing a
+  coherent game by count 12 without reading a caption; the careful reader gets the same
+  game with fewer words.
+
+The lesson table below is the v1 design and is kept for the reveal vocabulary.
+
 ## 1. The reveal order
 
 Twenty lessons over the tutorial's forty-three counts. Each entry: **count** it

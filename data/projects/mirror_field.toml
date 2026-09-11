@@ -1,5 +1,5 @@
 id = "mirror_field"
-title = "Concentrator field (aluminium film mirrors)"
+title = "Mirror field"
 description = "Aluminium film mirrors on wire frames. Farm power after reactor end-of-life."
 domain = "engineering"
 structured = true

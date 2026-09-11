@@ -1,0 +1,10 @@
+id = "shelter_first"
+title = "Shelter, first chamber"
+description = "One pressurised chamber under two metres of regolith. Halves surface dose. The full shelter follows."
+domain = "engineering"
+structured = true
+segments = 6
+pips_per_segment = 5
+manual = true
+once = true
+on_complete_flag = "shelter_chamber"

@@ -1,5 +1,5 @@
 id = "throw"
-title = "MDLS operations (mass driver)"
+title = "Mass driver (MDLS)"
 description = "Pod packing, alignment checks, launch cadence. Rate follows assigned dice; the throw position sets what is shipped."
 domain = "operations"
 structured = true

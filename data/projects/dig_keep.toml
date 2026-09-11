@@ -1,10 +1,11 @@
 id = "dig_keep"
-title = "KEEP excavation"
+title = "Shelter (KEEP)"
 description = "Kilotonne-class Excavated Environmental Protection. Buried habitat. CED falls on completion."
 domain = "engineering"
 structured = true
 segments = 24
 pips_per_segment = 6
-manual = true
 once = true
 on_complete_flag = "keep_dug"
+[[when]]
+flag = "shelter_chamber"

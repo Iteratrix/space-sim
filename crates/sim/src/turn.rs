@@ -47,6 +47,7 @@ pub fn advance(
     menaces(game, params, &mut events);
     zero_crossings(game, &mut events);
     endings(game, &mut events);
+    crate::tutorial::disclose(game);
     remember_ledger(game);
     events
 }
@@ -415,10 +416,15 @@ fn people(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Eve
         game.flags.remove("no_keep");
     }
     let game_no_keep = game.flags.contains("no_keep");
+    let game_chamber = game.flags.contains("shelter_chamber");
     let stage = game.sponsor.stage;
     let mut lines = Vec::new();
     for p in game.present_mut() {
         let rate_msv = match p.estate {
+            Estate::Kept if game_no_keep && game_chamber => f64::midpoint(
+                params.tutorial.keep_msv_per_year,
+                params.dose.keep_msv_per_year,
+            ),
             Estate::Kept if game_no_keep => params.tutorial.keep_msv_per_year,
             Estate::Kept => params.dose.keep_msv_per_year,
             Estate::Bore => params.dose.bore_msv_per_year * (1.3 - 0.4 * solar),
@@ -702,6 +708,7 @@ fn sponsor(game: &mut Game, params: &Params, rng: &mut impl Rng, events: &mut Ev
         return;
     }
     game.sponsor.next_review = game.turn + params.sponsor.review_interval;
+    game.flags.insert("reviewed".into());
     let phi = game.quality(crate::quality::Quality::Phi);
     let expected = game.sponsor.phi_expected;
     let delta = ((phi - expected) / expected.max(0.5)).clamp(-1.0, 1.0);

@@ -1,5 +1,5 @@
 id = "through_wall_arm"
-title = "Through-wall manipulator fabrication"
+title = "Through-wall arm"
 description = "Manipulator operated from inside the pressure wall. First robot class the outpost can fabricate."
 domain = "engineering"
 structured = false

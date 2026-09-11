@@ -1,5 +1,5 @@
 id = "bake_out"
-title = "Volatile extraction (bake-out)"
+title = "Bake-out plant (BOP)"
 description = "Thermal extraction of water and ammonium from Ch-class regolith. Output rate follows assigned dice."
 domain = "extraction"
 structured = true

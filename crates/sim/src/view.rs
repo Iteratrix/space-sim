@@ -179,6 +179,8 @@ pub struct View {
     pub flags: Vec<String>,
     /// Ending, if any.
     pub ending: Option<String>,
+    /// A required action before the count may end (tutorial).
+    pub required: Option<crate::tutorial::Required>,
 }
 
 /// The standing controls as strings.
@@ -226,7 +228,7 @@ pub fn view(
     let to_window = game.counts_to_window();
     countdowns.push(Countdown {
         id: "rsw".into(),
-        label: r("RSW (resupply window)"),
+        label: r("Resupply window (RSW)"),
         filled: 16u32.saturating_sub(to_window.min(16)),
         segments: 16,
         remaining: Some(to_window),
@@ -258,7 +260,7 @@ pub fn view(
     let reactor = game.power.reactor_life;
     countdowns.push(Countdown {
         id: "reactor".into(),
-        label: "Reactor core life".into(),
+        label: "Reactor core".into(),
         filled: params.power.reactor_life_counts.saturating_sub(reactor),
         segments: params.power.reactor_life_counts,
         remaining: Some(reactor),
@@ -393,7 +395,7 @@ pub fn view(
         },
         Bar {
             id: "margin".into(),
-            label: "CM-days (consumables margin)".into(),
+            label: "Margin (CM-days)".into(),
             value: margin,
             unit: "months".into(),
             full: 24.0,
@@ -409,7 +411,7 @@ pub fn view(
         },
         Bar {
             id: "spares".into(),
-            label: "Spares (consumable parts)".into(),
+            label: "Spares".into(),
             value: game.stocks.spares,
             unit: "crates".into(),
             full: 300.0,
@@ -450,7 +452,7 @@ pub fn view(
         },
         Bar {
             id: "hours".into(),
-            label: "Hours (allocation dice)".into(),
+            label: "Hours".into(),
             value: f64::from(game.hand.free),
             unit: "dice".into(),
             full: f64::from(game.hand.adults.max(1)),
@@ -482,7 +484,7 @@ pub fn view(
         },
         Bar {
             id: "throw".into(),
-            label: "MDLS throughput (φ)".into(),
+            label: "Throughput (φ)".into(),
             value: q(Quality::Phi),
             unit: "t/t".into(),
             full: game.sponsor.phi_expected.max(1.0),
@@ -535,19 +537,19 @@ pub fn view(
     let pressures = [
         (
             "suspicion",
-            "SOS (sponsor oversight status)",
+            "Oversight (SOS)",
             game.menace.suspicion,
             ["quiet", "noticed", "audited", "the audit"],
         ),
         (
             "grievance",
-            "CCI (crew cohesion index)",
+            "Cohesion (CCI)",
             game.menace.grievance,
             ["quiet", "muttering", "the moot", "the split"],
         ),
         (
             "leak",
-            "N2 make-up",
+            "Nitrogen (N2 make-up)",
             game.menace.leak,
             ["tight", "weeping", "rationed", "the collar"],
         ),
@@ -675,5 +677,6 @@ pub fn view(
         words: game.lexicon_triggers.iter().cloned().collect(),
         flags: game.flags.iter().cloned().collect(),
         ending: game.ending.as_ref().map(|e| format!("{e:?}")),
+        required: None,
     }
 }

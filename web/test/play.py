@@ -50,6 +50,7 @@ JS_STATE = """
     scene: { title: t('#scene h2'), must: !!document.querySelector('#scene h2.must'), text: t('#scene p'), options: opts },
     events: [...document.querySelectorAll('#events div')].map((d) => d.textContent.trim()),
     can_end: !document.getElementById('btn-end').disabled,
+    required: document.getElementById('btn-end').classList.contains('held') ? document.getElementById('btn-end').textContent.trim() : null,
     hand: vis(document.getElementById('hand')) ? { count: t('#hand-count'), note: t('#hand-note'), dice: dice(document.getElementById('hand-dice')), roster: document.getElementById('roster').value, auto_deal: document.getElementById('auto-deal').checked } : null,
     countdowns, projects, ledger, pressures,
     sponsor: t('#sponsor-track'),
@@ -87,7 +88,8 @@ with sync_playwright() as p:
             out = page.evaluate(JS_STATE)
     elif cmd == "end":
         if page.get_attribute("#btn-end", "disabled") is not None:
-            out = {"error": "cannot end: a scene is pending"}
+            label = page.text_content("#btn-end").strip()
+            out = {"error": "cannot end: " + ("a scene is pending" if label == "End count" else "required first: " + label)}
         else:
             page.click("#btn-end")
             time.sleep(0.3)

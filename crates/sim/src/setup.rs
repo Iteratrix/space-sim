@@ -359,7 +359,7 @@ pub fn new_game_scenario(
             "driver_unaligned",
             "no_keep",
             "mind_log",
-            "open_project:dig_keep",
+            "open_project:shelter_first",
         ] {
             game.flags.insert(f.to_owned());
         }

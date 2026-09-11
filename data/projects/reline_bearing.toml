@@ -1,5 +1,5 @@
 id = "reline_bearing"
-title = "RJSA re-line (rotary seal and main bearing)"
+title = "Bearing re-line (RJSA)"
 description = "RJSA plain bearing and seal profile, re-lined by hand to fab tolerance."
 domain = "engineering"
 structured = false

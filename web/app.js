@@ -39,6 +39,7 @@ function die(d) {
 function headline(v) {
   const rsw = v.countdowns.find((c) => c.id === "rsw");
   if (v.ending) return "the Silence";
+  if (!revealed("clock:rsw")) return "";
   if (rsw && rsw.remaining === 0) return "the window is open";
   if (rsw) return `the next RSW is in ${rsw.remaining}`;
   return "";
@@ -219,11 +220,25 @@ function apply(result) {
   if (r.error) { el("hand-note").textContent = r.error; return false; }
   view = r;
   render();
+  if (pending.length === 0) holdEnd();
   persist();
   return true;
 }
 function assign(dieId, target) { apply(wasm.assign(handle, dieId, target)); }
 function setControl(control, value) { apply(wasm.set(handle, control, value)); }
+
+function holdEnd() {
+  const btn = el("btn-end");
+  if (view.required) {
+    btn.disabled = true;
+    btn.textContent = view.required.text;
+    btn.classList.add("held");
+  } else {
+    btn.disabled = !!view.ending;
+    btn.textContent = "End count";
+    btn.classList.remove("held");
+  }
+}
 
 function showScene() {
   const scene = el("scene");
@@ -231,7 +246,7 @@ function showScene() {
     scene.innerHTML = "";
     counsel = [];
     renderRing();
-    el("btn-end").disabled = !!view.ending;
+    holdEnd();
     return;
   }
   const f = pending[0];
@@ -302,7 +317,7 @@ function resume() {
   } catch (_) { return false; }
 }
 
-el("btn-end").addEventListener("click", advance);
+el("btn-end").addEventListener("click", () => { if (!view.required) advance(); });
 el("btn-chronicle").addEventListener("click", () => { el("chronicle").textContent = parse(wasm.chronicle(handle)).join("\n"); el("drawer").hidden = false; });
 el("btn-close").addEventListener("click", () => { el("drawer").hidden = true; });
 el("btn-new").addEventListener("click", () => { el("dialog").hidden = false; });

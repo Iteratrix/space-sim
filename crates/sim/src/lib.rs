@@ -18,6 +18,7 @@ pub mod setup;
 pub mod state;
 pub mod storylet;
 pub mod turn;
+pub mod tutorial;
 pub mod view;
 
 pub use director::Firing;
@@ -133,7 +134,15 @@ impl Engine {
     /// The structured view a front end renders.
     #[must_use]
     pub fn view(&self, game: &Game) -> view::View {
-        view::view(game, &self.projects, &self.params)
+        let mut v = view::view(game, &self.projects, &self.params);
+        let mut probe = game.clone();
+        v.required = tutorial::required(&mut probe, &self.projects);
+        v
+    }
+
+    /// The pending required action, clearing it if the state now satisfies it.
+    pub fn required(&self, game: &mut Game) -> Option<tutorial::Required> {
+        tutorial::required(game, &self.projects)
     }
 
     /// Moves a die onto a project, or back to the hand (`target == "hand"`).

@@ -1,5 +1,5 @@
 id = "align_driver"
-title = "MDLS alignment and catch calibration"
+title = "Mass driver alignment (MDLS)"
 description = "MDLS assembled by robot units. No pod has yet been caught. Calibration required before throughput reporting."
 domain = "engineering"
 structured = false
