@@ -605,6 +605,18 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) -
             let staffed = game.assignments.values().any(|t| *t == def.id);
             if open && !staffed && visible(game, &def.id.0) {
                 lines.push(format!("{} idle: no dice assigned.", def.title));
+            } else if open && visible(game, &def.id.0) {
+                let rate = game
+                    .projects
+                    .iter()
+                    .find(|s| s.id == def.id)
+                    .map_or(0.0, |s| s.rate);
+                if rate < 0.5 {
+                    lines.push(format!(
+                        "{} at rate {rate:.2}: below half of rated output.",
+                        def.title
+                    ));
+                }
             }
         }
         for def in defs.iter().filter(|d| !d.standing) {
@@ -938,6 +950,16 @@ pub fn assign(game: &mut Game, defs: &[ProjectDef], die: &str, target: &str) -> 
                     "{} needs skill {} in {}",
                     def.title,
                     def.min_skill,
+                    def.domain.key()
+                ));
+            }
+            let held = game
+                .flags
+                .contains(&format!("require:place_person:{}", def.id.0));
+            if held && face(game, p, def.domain) == 0 {
+                return Err(format!(
+                    "{} reads 0 in {} here. Place a die with a rating.",
+                    game.person(p).name,
                     def.domain.key()
                 ));
             }

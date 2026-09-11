@@ -83,6 +83,8 @@ const CAPTIONS = {
   "clock:contract": "Next contract end: crew rotate home at the RSW after expiry.",
   "clock:sun": "Solar cycle: eleven years. Storm risk at maximum; galactic dose at minimum.",
   "pressure:leak": "N2 make-up: the first pressure. Its band names the state; the last band is a scene.",
+  "clock:conjunction": "Solar conjunction: Earth is behind the Sun. No link until it clears.",
+  "clock:grace": "Licence grace: the minds' heartbeat is missing. When this fills, the fail mode is discovered.",
 };
 function noteReveal(name, host) {
   if (shown.has(name) || !revealed(name)) return;
@@ -322,8 +324,8 @@ function resume() {
     if (r.error) return false;
     handle = r.handle;
     try { pending = JSON.parse(localStorage.getItem(PENDING_KEY) || "[]"); } catch (_) { pending = []; }
-    apply(wasm.view(handle));
     try { el("events").innerHTML = localStorage.getItem("fortuna-events") || ""; } catch (_) { el("events").innerHTML = ""; }
+    apply(wasm.view(handle));
     showScene();
     return true;
   } catch (_) { return false; }
