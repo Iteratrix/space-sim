@@ -1,0 +1,64 @@
+id = "tut_shelter_done"
+title = "First Chamber Pressurised"
+act = 1
+once = true
+priority = 150
+tags = ["tutorial", "dose", "people"]
+text = """
+First chamber pressurised at 70 kPa. Surface rate was 120 mSv/yr. Under two
+metres of regolith it is 60. Cumulative effective dose (CED) is carried per
+person, by name.
+
+Shelter (KEEP), the Kilotonne-class Excavated Environmental Protection habitat,
+opens as a clock on this entry: twenty-four segments, engineering. It is the
+same work at four times the size.
+"""
+
+[[when]]
+flag = "shelter_chamber"
+
+[[cast]]
+role = "eng1"
+skill = "engineering"
+top = true
+
+[[option]]
+id = "press_on"
+label = "Direct the chamber crew onto the KEEP"
+text = "The same work at four times the size. {eng1} is the board's first name for the clock."
+tags = ["hulls", "dose"]
+chronicle = "MM {turn}. First chamber pressurised; surface CED rate halved for crew sleeping under it. Excavation of the KEEP opened and the chamber crew minuted onto it."
+[[option.effect]]
+project = "dig_keep"
+[[option.effect]]
+flag = "ui:project:dig_keep"
+[[option.effect]]
+unflag = "require:place_person:shelter_first"
+[[option.effect]]
+all_strain = 0.04
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends carrying on. Sixty millisieverts a year is halved, not solved, and the drum is the only number on this ledger that goes to twelve."
+
+[[option]]
+id = "pause"
+label = "Stand the crew down and hold the chamber"
+text = "The chamber is shelter enough for a storm. The dice come off for a month."
+tags = ["people", "hours"]
+chronicle = "MM {turn}. First chamber pressurised; surface CED rate halved for crew sleeping under it. Excavation of the KEEP opened and left unstaffed for the month."
+[[option.effect]]
+project = "dig_keep"
+[[option.effect]]
+flag = "ui:project:dig_keep"
+[[option.effect]]
+unflag = "require:place_person:shelter_first"
+[[option.effect]]
+all_strain = -0.08
+[[option.effect]]
+q = "menace.grievance"
+add = -0.5
+[[option.advice]]
+seat = "hours"
+stance = "for"
+text = "Recommends the month. Four counts of digging came out of the same fourteen hands that carry upkeep, and the plant has been short a die since the first entry."

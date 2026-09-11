@@ -1,0 +1,86 @@
+id = "tut_ring"
+title = "MM 4: Board Constituted"
+act = 1
+once = true
+priority = 155
+tags = ["tutorial", "hulls"]
+text = """
+Station Management Board. A seat is a question; the holder is whoever answers
+it. Recommendations are relayed on this screen with the holder's name against
+them. They are advice, not instruction. The holder's rating in the seat's domain
+sets how often the advice is right.
+
+Seat standing: extraction. Added this entry: hulls, hours.
+
+Item: where the first chamber is cut.
+"""
+
+[[when]]
+fired = "tut_units"
+
+[[when]]
+turn_min = 4
+
+[[option]]
+id = "ridge"
+label = "Cut under the ridge"
+text = "Eight metres of overburden. Four hundred metres from the plant, walked twice a shift."
+tags = ["dose", "people", "hulls"]
+chronicle = "MM {turn}. SMB constituted on hulls and hours. First chamber sited under the ridge: eight metres of overburden, 400 m from the BOP."
+[[option.effect]]
+flag = "seat:hulls"
+[[option.effect]]
+flag = "seat:hours"
+[[option.effect]]
+unflag = "require:place_robot:bake_out"
+[[option.effect]]
+flag = "chamber_ridge"
+[[option.effect]]
+all_strain = 0.03
+[[option.advice]]
+seat = "extraction"
+stance = "against"
+text = "Assesses the ridge as forty minutes of walking a shift, taken off the plant. Overburden is not the only thing that is thick out there."
+
+[[option]]
+id = "apron"
+label = "Cut at the plant apron"
+text = "Two metres of overburden, forty metres from the hopper. Regolith bags carry the rest of the shielding."
+tags = ["hours", "water", "extraction"]
+chronicle = "MM {turn}. SMB constituted on hulls and hours. First chamber sited on the plant apron: two metres of overburden, 40 m from the hopper."
+[[option.effect]]
+flag = "seat:hulls"
+[[option.effect]]
+flag = "seat:hours"
+[[option.effect]]
+unflag = "require:place_robot:bake_out"
+[[option.effect]]
+flag = "chamber_apron"
+[[option.effect]]
+q = "stocks.water"
+add = 4
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Recommends the apron. The plant is the only thing on this site making anything, and a crew that sleeps beside it is on it inside a minute when the hopper jams."
+
+[[option]]
+id = "berm"
+label = "Cut into the driver berm"
+text = "The robots have already moved the spoil. Shoring consumes six crates of spares."
+tags = ["hulls", "spares", "risk"]
+chronicle = "MM {turn}. SMB constituted on hulls and hours. First chamber cut into the mass driver berm; six crates of spares drawn for shoring."
+[[option.requires]]
+q = "stocks.spares"
+ge = 10
+[[option.effect]]
+flag = "seat:hulls"
+[[option.effect]]
+flag = "seat:hours"
+[[option.effect]]
+unflag = "require:place_robot:bake_out"
+[[option.effect]]
+flag = "chamber_berm"
+[[option.effect]]
+q = "stocks.spares"
+add = -6

@@ -1,0 +1,61 @@
+id = "tut_units"
+title = "MM 3: Autonomous Units"
+act = 1
+once = true
+priority = 160
+tags = ["tutorial", "machines"]
+text = """
+Eleven autonomous units are on station. A unit is a square die with a fixed
+face. It fits structured work only; the bake-out plant (BOP) is structured.
+
+The BOP clock never completes. Its ring is a rate: ten points is full output,
+and full output is 14 t of water a month.
+
+Place one unit on the plant.
+"""
+
+[[when]]
+fired = "tut_hand"
+
+[[when]]
+turn_min = 3
+
+[[option]]
+id = "haul"
+label = "Haul units first"
+text = "Four haul units. They feed the hopper, and the plant bakes what arrives at it."
+tags = ["extraction", "water"]
+chronicle = "MM {turn}. Autonomous units entered on the allocation board: eleven, fixed faces. Directive: haul units to the BOP ahead of the plant class."
+[[option.effect]]
+flag = "ui:robots"
+[[option.effect]]
+flag = "ui:project:bake_out"
+[[option.effect]]
+flag = "require:place_robot:bake_out"
+[[option.effect]]
+unflag = "require:place_person:shelter_first"
+[[option.effect]]
+flag = "seat:extraction"
+[[option.effect]]
+q = "stocks.water"
+add = 4
+
+[[option]]
+id = "plant"
+label = "Plant units first"
+text = "Three plant units. They hold the bake temperature, and yield per tonne of regolith rises."
+tags = ["extraction", "closure"]
+chronicle = "MM {turn}. Autonomous units entered on the allocation board: eleven, fixed faces. Directive: plant units to the BOP ahead of the haul class."
+[[option.effect]]
+flag = "ui:robots"
+[[option.effect]]
+flag = "ui:project:bake_out"
+[[option.effect]]
+flag = "require:place_robot:bake_out"
+[[option.effect]]
+unflag = "require:place_person:shelter_first"
+[[option.effect]]
+flag = "seat:extraction"
+[[option.effect]]
+q = "closure"
+add = 0.01

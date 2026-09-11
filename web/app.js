@@ -73,7 +73,8 @@ const CAPTIONS = {
   "control:throw": "MDLS position: ship, hold at reserve, stop.",
   "control:roster": "Roster order: which crew upkeep takes first when hours are short.",
   "control:auto_deal": "Auto-deal: the station places free dice on standing work.",
-  "project:dig_keep": "KEEP excavation: a one-time clock. Twenty-four segments. Six pips fill one.",
+  "project:shelter_first": "Shelter, first chamber: a one-time clock. Six segments. Pips from the dice on it fill them.",
+  "project:dig_keep": "Shelter (KEEP): the full excavation. Twenty-four segments.",
   "project:align_driver": "MDLS alignment: eight segments. Unstructured work; only dex units fit.",
   "project:bake_out": "BOP: a standing clock. Its ring is a rate, not a progress. It never completes.",
   "project:throw": "MDLS operations: a standing clock. Its rate is tonnes thrown per month.",
@@ -128,7 +129,7 @@ function render() {
     .filter((c) => (c.id === "grace" || c.id === "conjunction") ? revealed("countdowns") : revealed(`clock:${c.id}`))
     .map((c) => `<div class="clock${c.urgent ? " urgent" : ""}" title="${c.why}">${ring(c.filled, c.segments)}<div><div class="label">${c.label}</div><div class="sub">${c.remaining == null ? "" : c.remaining + " left"}${c.id === "rsw" && revealed("control:manifest") ? ` · manifest <select data-control="manifest"><option${v.controls.manifest === "throughput" ? " selected" : ""}>throughput</option><option${v.controls.manifest === "balanced" ? " selected" : ""}>balanced</option><option${v.controls.manifest === "capability" ? " selected" : ""}>capability</option><option${v.controls.manifest === "people" ? " selected" : ""}>people</option></select>` : ""}</div></div></div>`)
     .join("");
-  const lessonProjects = new Set(["dig_keep", "align_driver", "bake_out", "throw"]);
+  const lessonProjects = new Set(["shelter_first", "dig_keep", "align_driver", "bake_out", "throw"]);
   v.countdowns.forEach((c) => noteReveal(`clock:${c.id}`, el("countdowns")));
   v.projects.forEach((p) => {
     if (lessonProjects.has(p.id)) { noteReveal(`project:${p.id}`, el("projects")); return; }

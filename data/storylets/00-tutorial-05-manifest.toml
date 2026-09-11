@@ -1,50 +1,42 @@
 id = "tut_manifest"
-title = "MM 10: Resupply Request, RSW-1"
+title = "Resupply Request, RSW-1"
 act = 1
 once = true
-priority = 132
+priority = 150
 tags = ["tutorial", "sponsor", "manifest"]
 text = """
-On confirmation a manifest control appears on the RSW clock. It sets the class
-of what the next hull carries. Whatever it reads on the day the window opens is
-what flies. The option chosen here sets it; it can be moved on the clock at any
-count after.
+Resupply window (RSW) 1 opens within four counts. A request transmitted this
+month flies on it. Nothing sent between windows arrives.
 
-Constraint: the request must transmit this month to make RSW-1. Every tonne is
-one of two classes. Throughput hardware — pods, propellant, units — moves the one
-figure the sponsor reads. Capability hardware — spares, formulary, tooling —
-moves nothing the sponsor reads until a loop fails.
+The manifest control sets the class of what the hull carries. Throughput
+hardware is pods, propellant and units: it moves the figure the sponsor reads.
+Capability hardware is spares, formulary and tooling: it moves nothing the
+sponsor reads until a loop fails.
 
-The reply will answer the pre-launch request, not this one. The file runs one
-window behind and does not catch up.
-
-New question at the board: who answers to the sponsor. {liaison} has held the
-post for another agency.
+The answer arrives with the ship. New seat: liaison, held by {liaison}.
 """
 
 [[when]]
-turn_min = 10
+fired = "tut_ring"
+
+[[when]]
+q = "counts_to_window"
+le = 4
 
 [[when]]
 turn_max = 11
 
-[[when]]
-fired = "tut_nitrogen"
-
-[[cast]]
-role = "hours"
-seat = "hours"
-
 [[cast]]
 role = "liaison"
 skill = "logistics"
+top = true
 
 [[option]]
 id = "throughput"
 label = "Request throughput hardware"
 text = "Pods, propellant, one dexterous unit. The class the sponsor's model expects."
 tags = ["throughput", "sponsor"]
-chronicle = "MM {turn}. RSW-1 request transmitted: throughput hardware. Manifest control set to throughput."
+chronicle = "MM {turn}. RSW-1 request transmitted: throughput hardware. Manifest control set to throughput. Liaison seat constituted under {liaison}."
 [[option.effect]]
 flag = "ui:control:manifest"
 [[option.effect]]
@@ -52,11 +44,11 @@ flag = "seat:liaison"
 [[option.effect]]
 flag = "manifest_throughput"
 [[option.effect]]
+unflag = "manifest_balanced"
+[[option.effect]]
 unflag = "manifest_capability"
 [[option.effect]]
 unflag = "manifest_people"
-[[option.effect]]
-unflag = "manifest_balanced"
 [[option.effect]]
 q = "sponsor.confidence"
 add = 0.03
@@ -70,7 +62,7 @@ id = "balanced"
 label = "Request a balanced manifest"
 text = "Half throughput, half spares and formulary. No line the sponsor will query."
 tags = ["capability", "throughput"]
-chronicle = "MM {turn}. RSW-1 request transmitted: balanced manifest. Manifest control set to balanced."
+chronicle = "MM {turn}. RSW-1 request transmitted: balanced manifest. Manifest control set to balanced. Liaison seat constituted under {liaison}."
 [[option.effect]]
 flag = "ui:control:manifest"
 [[option.effect]]
@@ -78,20 +70,20 @@ flag = "seat:liaison"
 [[option.effect]]
 flag = "manifest_balanced"
 [[option.effect]]
-unflag = "manifest_capability"
-[[option.effect]]
 unflag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_capability"
 [[option.effect]]
 unflag = "manifest_people"
 [[option.advice]]
 seat = "extraction"
 stance = "for"
-text = "Recommends the split. Pods cannot be filled until the plant is at rated. A haul unit arrives either way, which is the only line that matters here."
+text = "Recommends the split. Pods cannot be filled until the plant is at rated output. A haul unit arrives under either heading, which is the only line that matters here."
 
 [[option]]
 id = "capability"
 label = "Request capability hardware"
-text = "Spares, formulary, fabrication tooling, one boron crate. Invisible on the quarterly."
+text = "Spares, formulary, fabrication tooling. Invisible on the quarterly until a loop fails."
 tags = ["capability", "spares", "independence"]
 chronicle = "MM {turn}. RSW-1 request transmitted: capability hardware including fabrication tooling. Manifest control set to capability. Sponsor query anticipated."
 [[option.effect]]
@@ -103,9 +95,9 @@ flag = "manifest_capability"
 [[option.effect]]
 unflag = "manifest_throughput"
 [[option.effect]]
-unflag = "manifest_people"
-[[option.effect]]
 unflag = "manifest_balanced"
+[[option.effect]]
+unflag = "manifest_people"
 [[option.effect]]
 q = "menace.suspicion"
 add = 0.8
@@ -119,7 +111,7 @@ id = "people"
 label = "Request crew"
 text = "Four additional hands. Each new die also consumes upkeep."
 tags = ["people", "hours"]
-chronicle = "MM {turn}. RSW-1 request transmitted: crew augmentation. Manifest control set to crew."
+chronicle = "MM {turn}. RSW-1 request transmitted: crew augmentation, four hands. Manifest control set to crew. Liaison seat constituted under {liaison}."
 [[option.effect]]
 flag = "ui:control:manifest"
 [[option.effect]]
@@ -127,12 +119,12 @@ flag = "seat:liaison"
 [[option.effect]]
 flag = "manifest_people"
 [[option.effect]]
-unflag = "manifest_capability"
-[[option.effect]]
 unflag = "manifest_throughput"
 [[option.effect]]
 unflag = "manifest_balanced"
+[[option.effect]]
+unflag = "manifest_capability"
 [[option.advice]]
-seat = "bodies"
-stance = "for"
-text = "Recommends hands. Fourteen is at the floor of every isolation study for a rotation of this length. Four more is a margin against one illness."
+seat = "hours"
+stance = "against"
+text = "Notes that four hands are four more upkeep draws before they are four more dice. The board should expect the free count to fall in the month they land."

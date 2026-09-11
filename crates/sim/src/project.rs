@@ -722,7 +722,11 @@ pub fn preview_rates(game: &mut Game, defs: &[ProjectDef]) {
 
 /// Opens projects whose conditions hold and closes none; content opens manual ones.
 pub fn open_eligible(game: &mut Game, defs: &[ProjectDef]) {
+    let lesson = crate::tutorial::active(game) && !game.flags.contains("tutorial_open");
     for def in defs {
+        if lesson && def.id.0 != "dig_keep" {
+            continue;
+        }
         if def.manual || game.projects.iter().any(|s| s.id == def.id) {
             continue;
         }

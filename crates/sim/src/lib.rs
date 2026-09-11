@@ -116,18 +116,7 @@ impl Engine {
             roles: firing.roles.clone(),
         };
         storylet::apply(game, storylet, option, &casting);
-        let to_open: Vec<String> = game
-            .flags
-            .iter()
-            .filter_map(|f| f.strip_prefix("open_project:").map(str::to_owned))
-            .collect();
-        for id in to_open {
-            if let Some(def) = self.projects.iter().find(|d| d.id.0 == id) {
-                project::open(game, def, None);
-                game.flags.remove(&format!("open_project:{id}"));
-            }
-        }
-        project::refresh_hand(game, &self.projects);
+        self.settle(game);
         game.chronicle.last().map(lexicon::render_entry)
     }
 
@@ -140,6 +129,23 @@ impl Engine {
         v
     }
 
+    fn settle(&self, game: &mut Game) {
+        let to_open: Vec<String> = game
+            .flags
+            .iter()
+            .filter_map(|f| f.strip_prefix("open_project:").map(str::to_owned))
+            .collect();
+        for id in to_open {
+            if let Some(def) = self.projects.iter().find(|d| d.id.0 == id) {
+                project::open(game, def, None);
+                game.flags.remove(&format!("open_project:{id}"));
+            }
+        }
+        project::refresh_hand(game, &self.projects);
+        tutorial::disclose(game);
+        tutorial::required(game, &self.projects);
+    }
+
     /// The pending required action, clearing it if the state now satisfies it.
     pub fn required(&self, game: &mut Game) -> Option<tutorial::Required> {
         tutorial::required(game, &self.projects)
@@ -147,7 +153,9 @@ impl Engine {
 
     /// Moves a die onto a project, or back to the hand (`target == "hand"`).
     pub fn assign(&self, game: &mut Game, die: &str, target: &str) -> Result<(), String> {
-        project::assign(game, &self.projects, die, target)
+        project::assign(game, &self.projects, die, target)?;
+        tutorial::required(game, &self.projects);
+        Ok(())
     }
 
     /// Sets a standing control: `manifest`, `throw`, `roster`, or `auto_deal`.

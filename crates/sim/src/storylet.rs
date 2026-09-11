@@ -1060,9 +1060,10 @@ pub fn apply(game: &mut Game, storylet: &Storylet, option: &Option_, casting: &C
             Effect::Assign(role, target) => {
                 if let Some(id) = person(game, role) {
                     let die = crate::project::DieId::Person(id);
+                    let opening = game.flags.contains(&format!("open_project:{target}"));
                     if target == "hand" {
                         game.assignments.remove(&die);
-                    } else if game.projects.iter().any(|s| s.id.0 == *target) {
+                    } else if opening || game.projects.iter().any(|s| s.id.0 == *target) {
                         game.assignments
                             .insert(die, crate::project::ProjectId(target.clone()));
                     }

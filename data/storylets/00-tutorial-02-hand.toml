@@ -1,0 +1,65 @@
+id = "tut_hand"
+title = "MM 2: Allocation Board"
+act = 1
+once = true
+priority = 160
+tags = ["tutorial", "hours"]
+text = """
+Allocation board open. Each crew member is one die for the month; the face is
+their rating in the clock's domain. Shelter, first chamber reads engineering:
+six segments, five points each.
+
+{eng1} holds the highest engineering rating on station, {eng2} the second.
+
+Drag a die onto the shelter clock to task it, Commander.
+"""
+
+[[when]]
+fired = "tut_arrival"
+
+[[when]]
+turn_min = 2
+
+[[cast]]
+role = "eng1"
+skill = "engineering"
+top = true
+
+[[cast]]
+role = "eng2"
+skill = "engineering"
+
+[[option]]
+id = "both"
+label = "Recommend {eng1} and {eng2} to the chamber"
+text = "Both ratings on one clock. The shortest route to two metres of regolith overhead."
+tags = ["hulls", "dose"]
+chronicle = "MM {turn}. Allocation board opened: fourteen adults, two consumed by upkeep. Recommendation minuted: {eng1} and {eng2} to the first chamber."
+[[option.effect]]
+flag = "ui:hand"
+[[option.effect]]
+flag = "ui:projects"
+[[option.effect]]
+flag = "ui:project:shelter_first"
+[[option.effect]]
+flag = "require:place_person:shelter_first"
+[[option.effect]]
+person = "eng2"
+strain = 0.03
+
+[[option]]
+id = "one"
+label = "Recommend {eng1} to the chamber and hold {eng2} free"
+text = "One rating digs. The second stays free for the bake-out plant next month."
+tags = ["hours", "water"]
+chronicle = "MM {turn}. Allocation board opened: fourteen adults, two consumed by upkeep. Recommendation minuted: {eng1} to the first chamber, {eng2} held free against the plant."
+[[option.effect]]
+flag = "ui:hand"
+[[option.effect]]
+flag = "ui:projects"
+[[option.effect]]
+flag = "ui:project:shelter_first"
+[[option.effect]]
+flag = "require:place_person:shelter_first"
+[[option.effect]]
+counter = "held_free"

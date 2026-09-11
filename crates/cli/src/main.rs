@@ -482,6 +482,9 @@ fn run_one(
 
 /// Performs whatever the tutorial requires before the count may end, as a page would make a player do.
 fn satisfy_required(engine: &Engine, game: &mut Game) {
+    if game.flags.contains("tutorial") && game.turn >= 4 && !game.controls.auto_deal {
+        let _ = engine.set_control(game, "auto_deal", "on");
+    }
     for _ in 0..4 {
         let Some(req) = engine.required(game) else {
             return;
@@ -489,13 +492,18 @@ fn satisfy_required(engine: &Engine, game: &mut Game) {
         let Some(project) = req.project.clone() else {
             return;
         };
+        let domain = engine
+            .projects
+            .iter()
+            .find(|d| d.id.0 == project)
+            .map_or("engineering", |d| d.domain.key());
         let die = match req.kind.as_str() {
             "place_person" => game
                 .hand
                 .dice
                 .iter()
                 .filter(|d| !d.robot && d.place != "upkeep")
-                .max_by_key(|d| d.face)
+                .max_by_key(|d| d.faces.get(domain).copied().unwrap_or(0))
                 .map(|d| d.id.clone()),
             "place_robot" => game
                 .hand

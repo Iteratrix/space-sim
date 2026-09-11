@@ -2,28 +2,17 @@ id = "tut_arrival"
 title = "MM 1: Site Handover"
 act = 1
 once = true
-priority = 150
-tags = ["tutorial", "hulls", "hours"]
+priority = 160
+tags = ["tutorial", "hulls"]
 text = """
-SX-19F reporting. Mission month 1. Fourteen crew landed. Robotic site work is
+SX-19F reporting. Mission month 1. Fourteen crew are down. Robotic site work is
 handed over.
 
-Status: the Bake-Out Plant (BOP) is assembled and idle. Nothing is tasked to it
-and it makes nothing. The Mass Driver Launch System (MDLS) is assembled,
-unaligned, and has never thrown a pod that was caught. The photovoltaic array is
-unrolled to 3,200 square metres. Two dexterous units are non-responsive. There is
-no Kilotonne-class Excavated Environmental Protection habitat (KEEP). Surface
-dose is 120 mSv/yr under regolith bags.
+Status: the bake-out plant is assembled and idle. The mass driver is assembled
+and unaligned; no pod has been caught. Surface dose is 120 mSv/yr under regolith
+bags. There is no shelter.
 
-This screen is the station log. One entry is one month. Decisions are logged when
-made. End count advances the month.
-
-Station Management Board (SMB) constituted on two questions: who answers for the
-hulls, and who answers for the hours. {hulls} holds the highest engineering
-rating on station and {hours} the highest in logistics. The board seats the
-question, not the person; the holder changes when the rating does.
-
-First item: the first surface task.
+One surface task can be worked this month, Commander.
 """
 
 [[when]]
@@ -32,65 +21,24 @@ turn_min = 1
 [[when]]
 turn_max = 2
 
-[[cast]]
-role = "hulls"
-skill = "engineering"
-top = true
-
-[[cast]]
-role = "hours"
-skill = "logistics"
-top = true
-
 [[option]]
-id = "engineer_first"
-label = "Survey the MDLS"
-text = "The alignment log ends at MM -4 with a checksum error. Establish what the robots built."
+id = "survey"
+label = "Survey the mass driver"
+text = "The alignment log ends at MM -4 with a checksum error. Establish what the robots built before anything is thrown."
 tags = ["hulls", "capability"]
-chronicle = "MM {turn}. Site handover complete. SMB constituted on two questions: hulls, hours. First surface task: MDLS survey. Two dexterous units confirmed non-responsive."
+chronicle = "MM {turn}. Site handover complete. First surface task: mass driver survey. The alignment log was found to end at MM -4 with a checksum error."
 [[option.effect]]
-flag = "ui:chronicle"
+counter = "surveys"
 [[option.effect]]
-flag = "seat:hulls"
-[[option.effect]]
-flag = "seat:hours"
-[[option.effect]]
-flag = "tut_survey_first"
-[[option.effect]]
-person = "hulls"
-strain = 0.05
+q = "menace.suspicion"
+add = -0.2
 
 [[option]]
-id = "plant_first"
-label = "Restart the BOP haul loop"
+id = "plant"
+label = "Restart the bake-out haul loop"
 text = "Rated output is 14 t of water a month. Present output is nothing."
-tags = ["throughput", "hours", "water"]
-chronicle = "MM {turn}. Site handover complete. SMB constituted on two questions: hulls, hours. First surface task: BOP haul loop restart. Rated output not reached."
-[[option.effect]]
-flag = "ui:chronicle"
-[[option.effect]]
-flag = "seat:hulls"
-[[option.effect]]
-flag = "seat:hours"
-[[option.effect]]
-flag = "tut_plant_first"
+tags = ["throughput", "water"]
+chronicle = "MM {turn}. Site handover complete. First surface task: bake-out haul loop restarted by hand. Output below rated."
 [[option.effect]]
 q = "stocks.water"
 add = 6
-
-[[option]]
-id = "all_hands"
-label = "Stand the crew down one month"
-text = "Fourteen crew, nine months in transit. Tasking deferred to MM 2."
-tags = ["people", "risk"]
-chronicle = "MM {turn}. Site handover complete. SMB constituted on two questions: hulls, hours. Tasking deferred one month. Crew rest logged."
-[[option.effect]]
-flag = "ui:chronicle"
-[[option.effect]]
-flag = "seat:hulls"
-[[option.effect]]
-flag = "seat:hours"
-[[option.effect]]
-flag = "tut_all_hands"
-[[option.effect]]
-all_strain = -0.08

@@ -71,11 +71,13 @@ pub fn required(game: &mut Game, defs: &[ProjectDef]) -> Option<Required> {
             .iter()
             .find(|d| d.id.0 == project)
             .map_or(project, |d| d.title.as_str());
-        let satisfied = match kind {
-            "place_person" => has_person_on(game, project),
-            "place_robot" => has_robot_on(game, project),
-            _ => true,
-        };
+        let open = game.projects.iter().any(|s| s.id.0 == project);
+        let satisfied = !open
+            || match kind {
+                "place_person" => has_person_on(game, project),
+                "place_robot" => has_robot_on(game, project),
+                _ => true,
+            };
         if satisfied {
             game.flags.remove(&flag);
             continue;
@@ -134,6 +136,7 @@ pub fn disclose(game: &mut Game) -> Vec<String> {
     let aligned = game.flags.contains("driver_aligned");
     let keep_done = game.flags.contains("keep_dug") || game.flags.contains("shelter_chamber");
     let align_open = game.projects.iter().any(|s| s.id.0 == "align_driver");
+    let keep_open = game.projects.iter().any(|s| s.id.0 == "dig_keep");
 
     reveal(game, "chronicle", chronicle_started);
     reveal(game, "ring", seats_exist);
@@ -152,6 +155,7 @@ pub fn disclose(game: &mut Game) -> Vec<String> {
     reveal(game, "ledger", convoyed);
     reveal(game, "bar:spares", convoyed);
     reveal(game, "project:align_driver", align_open);
+    reveal(game, "project:dig_keep", keep_open);
     reveal(game, "project:throw", aligned);
     reveal(game, "control:throw", aligned);
     reveal(game, "bar:throw", aligned);

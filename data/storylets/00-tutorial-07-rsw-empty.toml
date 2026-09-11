@@ -1,0 +1,102 @@
+id = "tut_rsw_empty"
+title = "RSW-1 Off-Nominal"
+act = 1
+once = true
+priority = 155
+tags = ["tutorial", "sponsor"]
+text = """
+RSW-1 opened and closed. No hull. {liaison} has the message: launch slipped, the
+next window carries the combined manifest. The request stays on file. The
+manifest control is the one thing at this table that can still be moved.
+
+The Mass Driver Launch System (MDLS) alignment clock opens on this entry: eight
+segments, engineering, unstaffed. The work is unstructured; dexterous units and
+crew only.
+
+New seat: bodies. Place a crew die on the alignment clock.
+"""
+
+[[when]]
+turn_min = 13
+
+[[when]]
+turn_max = 22
+
+[[when]]
+q = "missed_convoys"
+ge = 1
+
+[[when]]
+not_fired = "tut_first_rsw"
+
+[[cast]]
+role = "liaison"
+seat = "liaison"
+
+[[option]]
+id = "conserve"
+label = "Issue a conservation directive"
+text = "The plant ahead of the driver. Nothing shipped below the 120 t water reserve."
+tags = ["water", "caution", "people"]
+chronicle = "MM {turn}. RSW-1 slipped; no hull. The SMB issued a conservation directive: BOP ahead of the MDLS, nothing shipped below the water reserve."
+[[option.effect]]
+project = "align_driver"
+[[option.effect]]
+flag = "ui:project:align_driver"
+[[option.effect]]
+flag = "require:place_person:align_driver"
+[[option.effect]]
+flag = "tutorial_open"
+[[option.effect]]
+flag = "seat:bodies"
+[[option.effect]]
+flag = "conservation"
+[[option.effect]]
+flag = "throw_hold"
+[[option.effect]]
+unflag = "throw_ship"
+[[option.effect]]
+unflag = "throw_stop"
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.04
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Recommends conservation. The tank and the shelf are what the station has until a hull lands, and neither of them is on the sponsor's schedule."
+
+[[option]]
+id = "remark"
+label = "Re-mark the manifest for the combined hull"
+text = "One hull will carry two windows of tonnage. Spend it on spares and formulary."
+tags = ["capability", "spares", "independence"]
+chronicle = "MM {turn}. RSW-1 slipped; no hull. Manifest control moved to capability for the combined window and the request re-transmitted against the standing file."
+[[option.effect]]
+project = "align_driver"
+[[option.effect]]
+flag = "ui:project:align_driver"
+[[option.effect]]
+flag = "require:place_person:align_driver"
+[[option.effect]]
+flag = "tutorial_open"
+[[option.effect]]
+flag = "seat:bodies"
+[[option.effect]]
+flag = "manifest_capability"
+[[option.effect]]
+unflag = "manifest_throughput"
+[[option.effect]]
+unflag = "manifest_balanced"
+[[option.effect]]
+unflag = "manifest_people"
+[[option.effect]]
+q = "menace.suspicion"
+add = 0.5
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends capability. If the hull comes once, it should carry what cannot be made here. Tooling over pods, and the objection minuted either way."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Reports the sponsor's schedule now shows the next hull as first delivery, with the station assumed to have continued. Recommends the file be left as transmitted."

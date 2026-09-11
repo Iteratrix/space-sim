@@ -1,0 +1,122 @@
+id = "tut_driver_aligned"
+title = "MDLS Alignment Complete"
+act = 1
+once = true
+priority = 170
+tags = ["tutorial", "throughput", "sponsor"]
+text = """
+MDLS alignment and catch calibration complete. The rail is true.
+
+The mass driver clock is standing and reads operations. An engineering face
+counts for nothing on it. {op1} carries the highest operations rating on
+station.
+
+Throughput ratio (φ) is tonnes shipped per tonne received. It stands at zero and
+rises only in the months the clock is staffed and the position is not Stop.
+
+New seat: air. Place a die on the mass driver, or stop the rail.
+"""
+
+[[when]]
+flag = "driver_aligned"
+
+[[cast]]
+role = "op1"
+skill = "operations"
+top = true
+
+[[option]]
+id = "ship"
+label = "Staff the clock and set the position to Ship"
+text = "Everything above the 120 t water reserve goes into the pods each month."
+tags = ["throughput", "sponsor"]
+chronicle = "MM {turn}. MDLS alignment complete and the rail declared true. Throw position set to Ship: everything above the water reserve is pod cargo. Throughput reporting begins."
+[[option.effect]]
+unflag = "driver_unaligned"
+[[option.effect]]
+unflag = "require:place_person:align_driver"
+[[option.effect]]
+flag = "require:place_person:throw"
+[[option.effect]]
+flag = "seat:air"
+[[option.effect]]
+flag = "throw_ship"
+[[option.effect]]
+unflag = "throw_hold"
+[[option.effect]]
+unflag = "throw_stop"
+[[option.effect]]
+assign_robots = { class = "arm", project = "throw", count = 2 }
+[[option.effect]]
+q = "sponsor.confidence"
+add = 0.05
+[[option.advice]]
+seat = "liaison"
+stance = "for"
+text = "Recommends Ship and a staffed clock. As of this month the station can produce the figure the sponsor reads. A rail that is true and idle reads worse in the packet than a rail that was never built."
+
+[[option]]
+id = "hold"
+label = "Staff the clock and set the position to Hold"
+text = "Only what the plant makes above station draw leaves the site."
+tags = ["water", "caution", "capability"]
+chronicle = "MM {turn}. MDLS alignment complete and the rail declared true. Throw position set to Hold at the reserve. Throughput reporting begins."
+[[option.effect]]
+unflag = "driver_unaligned"
+[[option.effect]]
+unflag = "require:place_person:align_driver"
+[[option.effect]]
+flag = "require:place_person:throw"
+[[option.effect]]
+flag = "seat:air"
+[[option.effect]]
+flag = "throw_hold"
+[[option.effect]]
+unflag = "throw_ship"
+[[option.effect]]
+unflag = "throw_stop"
+[[option.effect]]
+assign_robots = { class = "arm", project = "throw", count = 2 }
+[[option.effect]]
+q = "stocks.water"
+add = 8
+[[option.advice]]
+seat = "extraction"
+stance = "for"
+text = "Recommends Hold with the clock staffed. The tank should see a full month of the plant before the driver does. Staffing is not the same question as position."
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends a staffed clock under either position. The clock is rated at eight points, and two ratings with two arm units is the fastest the board reaches that from here."
+
+[[option]]
+id = "stop"
+label = "Leave the clock unstaffed and the rail stopped"
+text = "No dice on the clock. Nothing is thrown and the ratio stays at zero."
+tags = ["capability", "caution", "risk"]
+chronicle = "MM {turn}. MDLS alignment complete and the rail declared true. The operations clock was left unstaffed and the position set to Stop; nothing thrown, ratio zero."
+[[option.effect]]
+unflag = "driver_unaligned"
+[[option.effect]]
+unflag = "require:place_person:align_driver"
+[[option.effect]]
+flag = "seat:air"
+[[option.effect]]
+flag = "throw_stop"
+[[option.effect]]
+unflag = "throw_ship"
+[[option.effect]]
+unflag = "throw_hold"
+[[option.effect]]
+flag = "throw_unstaffed"
+[[option.effect]]
+q = "sponsor.confidence"
+add = -0.05
+[[option.advice]]
+seat = "hulls"
+stance = "for"
+text = "Recommends holding the dice. One pod on an unproven rail is a test; sixteen is a practice, and the tug confirms the first catch in sixteen months."
+[[option.advice]]
+seat = "liaison"
+stance = "against"
+text = "Reports the review scores tonnes shipped per tonne received against an expectation of 1.0. An unstaffed clock reports zero, and zero is the entry that moves the sponsor's stage."
