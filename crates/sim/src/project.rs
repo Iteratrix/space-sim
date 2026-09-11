@@ -616,11 +616,10 @@ pub fn deal(game: &mut Game, defs: &[ProjectDef], upkeep_h: f64, per_die: f64) -
                 && visible(game, &def.id.0)
                 && state.pips_this_count < def.pips_per_segment / 2
             {
-                let months = if state.pips_this_count == 0 {
-                    "no".to_owned()
-                } else {
-                    (def.pips_per_segment / state.pips_this_count).to_string()
-                };
+                let months = def
+                    .pips_per_segment
+                    .checked_div(state.pips_this_count)
+                    .map_or_else(|| "no".to_owned(), |m| m.to_string());
                 lines.push(format!(
                     "{} at {} pips a month: {months} months to the next segment.",
                     def.title, state.pips_this_count
