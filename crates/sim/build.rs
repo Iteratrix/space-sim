@@ -8,8 +8,7 @@ fn bundle(sub: &str, out_name: &str) {
         .join(sub);
     println!("cargo:rerun-if-changed={}", dir.display());
     let mut files: Vec<_> = std::fs::read_dir(&dir)
-        .map(|rd| rd.filter_map(Result::ok).map(|e| e.path()).collect())
-        .unwrap_or_default();
+        .map_or_default(|rd| rd.filter_map(Result::ok).map(|e| e.path()).collect());
     files.retain(|p| p.extension().is_some_and(|x| x == "toml"));
     files.sort();
     let mut out = String::from("[\n");
