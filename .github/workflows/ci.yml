@@ -64,3 +64,14 @@ jobs:
       - run: cargo build --release
       - run: ./target/release/space-sim feel --games 40 --scenario tutorial --max-turns 50
       - run: ./target/release/space-sim feel --games 60 --scenario act1
+
+  advisories:
+    # RustSec advisories for every crate in Cargo.lock (see deny.toml). Not a
+    # required check: a new advisory turns it red without blocking other PRs.
+    name: Advisories
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check advisories
