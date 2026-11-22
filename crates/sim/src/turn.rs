@@ -5,7 +5,7 @@ use crate::person::{Estate, GroupIndices, PersonId, Tenure};
 use crate::project::ManifestSplit;
 use crate::state::{Ending, Game, Licence, SponsorStage};
 use az::{Az, SaturatingAs};
-use rand::Rng;
+use rand::{Rng, RngExt};
 
 /// What happened this count, before any storylet fires.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]

@@ -3,7 +3,7 @@
 use crate::person::{PersonId, Skill};
 use crate::state::Game;
 use crate::storylet::{Option_, Stance, Storylet};
-use rand::Rng;
+use rand::{Rng, RngExt};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 

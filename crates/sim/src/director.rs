@@ -6,7 +6,7 @@ use crate::ring::{self, Counsel, Seat};
 use crate::state::Game;
 use crate::storylet::{Casting, Storylet};
 use az::Az;
-use rand::Rng;
+use rand::{Rng, RngExt};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
