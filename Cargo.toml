@@ -13,8 +13,8 @@ az = "1"
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }
 toml = "1.2"
-rand = { version = "0.9", default-features = false, features = ["std"] }
-rand_chacha = "0.9"
+rand = { version = "0.10", default-features = false, features = ["std"] }
+rand_chacha = "0.10"
 thiserror = "2"
 orbit = { path = "crates/orbit" }
 sim = { path = "crates/sim" }

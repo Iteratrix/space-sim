@@ -9,7 +9,7 @@ use crate::state::{
 };
 use az::Az;
 use orbit::{Arrival, Catalogue, Departure, Jd};
-use rand::{Rng, SeedableRng};
+use rand::{Rng, RngExt, SeedableRng};
 use rand_chacha::ChaCha8Rng;
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -89,7 +89,7 @@ pub fn calendar(params: &Params, cat: &Catalogue) -> Result<Calendar, SetupError
 }
 
 fn draw_traits(rng: &mut impl Rng) -> Traits {
-    let d = |rng: &mut dyn rand::RngCore| -> f64 {
+    let d = |rng: &mut dyn rand::Rng| -> f64 {
         let a: f64 = rng.random();
         let b: f64 = rng.random();
         f64::midpoint(a, b).clamp(0.02, 0.98)

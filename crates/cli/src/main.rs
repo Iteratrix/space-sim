@@ -10,6 +10,7 @@
 //! ```
 
 use az::Az;
+use rand::RngExt;
 use serde::Serialize;
 use sim::director::Firing;
 use sim::state::Ending;

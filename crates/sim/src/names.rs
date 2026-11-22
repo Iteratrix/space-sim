@@ -1,7 +1,7 @@
 //! Name generation for persons and minds.
 
 use crate::state::Game;
-use rand::Rng;
+use rand::{Rng, RngExt};
 
 const GIVEN: &[&str] = &[
     "Okonkwo",

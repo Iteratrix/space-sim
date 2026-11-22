@@ -4,7 +4,7 @@ use crate::person::{PersonId, Skill};
 use crate::state::{Game, RobotClass};
 use crate::storylet::{Condition, ContentError};
 use az::{Az, SaturatingAs};
-use rand::Rng;
+use rand::{Rng, RngExt};
 use serde::{Deserialize, Serialize};
 
 /// Content identifier of a project.

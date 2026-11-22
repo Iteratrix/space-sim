@@ -8,6 +8,7 @@ use crate::person::{PersonId, Skill};
 use crate::quality::Quality;
 use crate::ring::Seat;
 use crate::state::{Ending, Game};
+use rand::RngExt;
 use serde::Deserialize;
 use std::collections::BTreeMap;
 
